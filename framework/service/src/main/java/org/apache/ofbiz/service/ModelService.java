@@ -1264,9 +1264,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
         var allowHtmls = List.of("none", "safe");
         var modes = List.of(IN_OUT_PARAM, IN_PARAM);
 
-        return Gatherer.of(
-                () -> new ArrayList<String>(), // error message collector
-                (acc, param, downstream) -> {
+        return Gatherer.of(() -> new ArrayList<String>(), (acc, param, downstream) -> {
                     if (param.getAllowHtml() == null) return true;
                     if (!allowHtmls.contains(param.getAllowHtml())) return true;
                     if (!modes.contains(param.getMode())) return true;
@@ -1282,15 +1280,11 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
                         UtilCodec.checkStringForHtmlSafe(param.getName(), value, acc, locale, sanitizerEnabled);
                     }
                     return true;
-                },
-                (acc1, acc2) -> {
+                }, (acc1, acc2) -> {
                     acc1.addAll(acc2);
                     return acc1;
-                },
-                (a, _) -> a.stream()
-        );
+                }, (a, _) -> a.stream());
     }
-
 
     /**
      * Check that all required service parameters are present and not null in context

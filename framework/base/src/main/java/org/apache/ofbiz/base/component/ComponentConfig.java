@@ -35,7 +35,6 @@ import java.util.function.BiFunction;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.stream.Gatherer;
 
 import org.apache.ofbiz.base.container.ContainerConfig;
 import org.apache.ofbiz.base.location.FlexibleLocation;
