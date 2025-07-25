@@ -39,7 +39,6 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
-import java.util.stream.Gatherer;
 
 import javax.wsdl.Binding;
 import javax.wsdl.BindingInput;
@@ -1257,6 +1256,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     }
 
+    /*
     private static Gatherer<ModelParam, ?, String> htmlValidationGatherer(
             Map<String, Object> values,
             Locale locale,
@@ -1265,26 +1265,27 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
         var modes = List.of(IN_OUT_PARAM, IN_PARAM);
 
         return Gatherer.of(() -> new ArrayList<String>(), (acc, param, downstream) -> {
-                    if (param.getAllowHtml() == null) return true;
-                    if (!allowHtmls.contains(param.getAllowHtml())) return true;
-                    if (!modes.contains(param.getMode())) return true;
-                    if (!param.getType().endsWith("String")) return true;
+            if (param.getAllowHtml() == null) return true;
+            if (!allowHtmls.contains(param.getAllowHtml())) return true;
+            if (!modes.contains(param.getMode())) return true;
+            if (!param.getType().endsWith("String")) return true;
 
-                    Object rawValue = values.get(param.getName());
-                    if (rawValue == null) return true;
+            Object rawValue = values.get(param.getName());
+            if (rawValue == null) return true;
 
-                    String value = String.valueOf(rawValue);
-                    if ("none".equals(param.getAllowHtml())) {
-                        UtilCodec.checkStringForHtmlStrictNone(param.getName(), value, acc, locale);
-                    } else {
-                        UtilCodec.checkStringForHtmlSafe(param.getName(), value, acc, locale, sanitizerEnabled);
-                    }
-                    return true;
-                }, (acc1, acc2) -> {
-                    acc1.addAll(acc2);
-                    return acc1;
-                }, (a, _) -> a.stream());
+            String value = String.valueOf(rawValue);
+            if ("none".equals(param.getAllowHtml())) {
+                UtilCodec.checkStringForHtmlStrictNone(param.getName(), value, acc, locale);
+            } else {
+                UtilCodec.checkStringForHtmlSafe(param.getName(), value, acc, locale, sanitizerEnabled);
+            }
+            return true;
+        }, (acc1, acc2) -> {
+            acc1.addAll(acc2);
+            return acc1;
+        }, (a, b) -> a.stream());
     }
+     */
 
     /**
      * Check that all required service parameters are present and not null in context
