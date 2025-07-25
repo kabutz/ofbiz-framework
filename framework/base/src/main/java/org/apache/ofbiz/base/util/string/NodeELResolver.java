@@ -64,11 +64,6 @@ public class NodeELResolver extends ELResolver {
     }
 
     @Override
-    public Iterator<FeatureDescriptor> getFeatureDescriptors(ELContext context, Object base) {
-        return null;
-    }
-
-    @Override
     public Class<?> getType(ELContext context, Object base, Object property) {
         if (context == null) {
             throw new NullPointerException("context is null");

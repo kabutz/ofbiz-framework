@@ -129,15 +129,12 @@ public final class AuthHelper {
      * non-secure source.
      */
     private static ClassLoader getContextClassLoader() {
-        return AccessController.doPrivileged(
-                (PrivilegedAction<ClassLoader>) () -> {
-                    ClassLoader cl = null;
-                    try {
-                        cl = Thread.currentThread().getContextClassLoader();
-                    } catch (SecurityException e) {
-                        Debug.logError(e, e.getMessage(), MODULE);
-                    }
-                    return cl;
-                });
+        ClassLoader cl = null;
+        try {
+            cl = Thread.currentThread().getContextClassLoader();
+        } catch (SecurityException e) {
+            Debug.logError(e, e.getMessage(), MODULE);
+        }
+        return cl;
     }
 }

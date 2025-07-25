@@ -136,7 +136,7 @@ javadoc {
     title="OFBiz " + getCurrentGitBranch() + " API"
     failOnError = true
     options {
-        source '21'
+        source '24'
         encoding 'UTF-8'
         charSet 'UTF-8'
         // Those external Javadoc links should correspond to the actual
@@ -153,17 +153,17 @@ javadoc {
 }
 
 java {
-    sourceCompatibility(JavaVersion.VERSION_21)
-    targetCompatibility(JavaVersion.VERSION_21)
+    sourceCompatibility(JavaVersion.VERSION_24)
+    targetCompatibility(JavaVersion.VERSION_24)
 }
 
 // Java compile options, syntax gradlew -PXlint:none build
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
     if (!project.hasProperty('Xlint:none')) {
-        options.compilerArgs << '-Xlint:all'
+//        options.compilerArgs << '-Xlint:all'
         // Exclude varargs warnings which are not silenced by @SafeVarargs.
-        options.compilerArgs << '-Xlint:-varargs'
+//        options.compilerArgs << '-Xlint:-varargs'
     }
 }
 
