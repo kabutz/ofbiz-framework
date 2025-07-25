@@ -422,6 +422,7 @@ public final class ScriptUtil {
         boolean currentScriptAlreadyAllowed = allowedScript.contains(scriptHash);
         if (!currentScriptAlreadyAllowed) {
             if (!checkIfScriptIsSafe(script)) {
+                // REFACTOR: Replace fragmented Strings with Text Blocks
                 Debug.logWarning(String.format("Tried to execute unauthorized script \n **** \n%s\n **** "
                                 + "\nif it's safe script you can add the following hash to security.allowedScriptletHashes: %s",
                         script, scriptHash), MODULE);

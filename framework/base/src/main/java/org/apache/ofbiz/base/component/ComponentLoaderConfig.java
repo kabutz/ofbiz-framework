@@ -138,6 +138,7 @@ public final class ComponentLoaderConfig {
          */
         private static ComponentDef of(Element element, URL configUrl) throws ComponentException {
             String nodeName = element.getNodeName();
+            // REFACTOR: Replace old style switch with switch expressions
             switch (nodeName) {
             case "load-component":
                 return new ComponentDef(locationToPath(element.getAttribute("component-location")),

@@ -23,6 +23,7 @@ import java.util.Objects;
 
 import org.apache.ofbiz.base.util.UtilObject;
 
+// REFACTOR: Replace simple data class with record
 public class GenericMapEntry<K, V> implements Map.Entry<K, V> {
     private final GenericMap<K, V> map;
     private final K key;

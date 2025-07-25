@@ -396,6 +396,7 @@ public class CoreEvents {
             if (servicePathObject instanceof Map<?, ?>) {
                 servicePathMap = UtilGenerics.cast(servicePathObject);
             } else if (servicePathObject instanceof GenericEntity) {
+                // REFACTOR: Pattern Matching for instanceof
                 GenericEntity servicePathEntity = (GenericEntity) servicePathObject;
                 servicePathMap = new HashMap<>();
                 for (Map.Entry<String, Object> entry: servicePathEntity.entrySet()) {

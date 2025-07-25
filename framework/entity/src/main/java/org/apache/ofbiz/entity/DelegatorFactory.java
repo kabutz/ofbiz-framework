@@ -65,6 +65,7 @@ public abstract class DelegatorFactory implements Factory<Delegator, String> {
         } while (true);
     }
 
+    // REFACTOR: Replace simple data class with record
     public static final class DelegatorConfigurable implements Callable<Delegator> {
         private final String delegatorName;
 

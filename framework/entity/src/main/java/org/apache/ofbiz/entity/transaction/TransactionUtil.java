@@ -501,6 +501,7 @@ public final class TransactionUtil implements Status {
          * STATUS_COMMITTING       8
          * STATUS_ROLLING_BACK     9
          */
+        // REFACTOR: Replace old style switch with switch expressions
         switch (state) {
         case Status.STATUS_ACTIVE:
             return "Transaction Active (" + state + ")";

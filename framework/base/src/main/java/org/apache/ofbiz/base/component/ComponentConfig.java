@@ -35,6 +35,7 @@ import java.util.function.BiFunction;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.Gatherer;
 
 import org.apache.ofbiz.base.container.ContainerConfig;
 import org.apache.ofbiz.base.location.FlexibleLocation;
@@ -452,7 +453,29 @@ public final class ComponentConfig {
                     }
                 })
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
+        // Heinz: Solution
+        // return UtilXml.childElementList(ofbizComponentElement, elemName).stream()
+        //         .gather(StreamGatherers.safeMapGatherer(mapper, this))
+        //         .toList();
+
     }
+
+    /*
+    public static <T, C> Gatherer<Element, ?, T> safeMapGatherer(
+            BiFunction<C, Element, T> mapper,
+            C c) {
+        return Gatherer.of(
+                (state, element, downstream) -> {
+                    try {
+                        return downstream.push(mapper.apply(c, element));
+                    } catch (IllegalArgumentException e) {
+                        Debug.log(e.getMessage());
+                        return true;
+                    }
+                }
+        );
+    }
+     */
 
     public boolean enabled() {
         return this.enabled;

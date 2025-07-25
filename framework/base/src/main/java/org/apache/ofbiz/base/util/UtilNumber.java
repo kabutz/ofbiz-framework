@@ -40,6 +40,7 @@ public final class UtilNumber {
 
     // ICU4J rule sets for the en_US locale. To add more rules, expand this string.
     // For reference, see the RbnfSampleRuleSets.java file distributed with ICU4J
+    // REFACTOR: Replace fragmented Strings with Text Blocks
     private static final String RULE_SET_EN_US =
         /*
          * These rules format a number in one of the two styles often used
@@ -79,6 +80,7 @@ public final class UtilNumber {
 
     // ICU4J rule sets for the th_TH locale. To add more rules, expand this string.
     // For reference, see the RbnfSampleRuleSets.java file distributed with ICU4J
+    // REFACTOR: Replace fragmented Strings with Text Blocks
     private static final String RULE_SET_TH_TH =
         /*
          * These rules format a number in one of the two styles often used
@@ -118,6 +120,7 @@ public final class UtilNumber {
 
         // ICU4J rule sets for the en_IN locale. To add more rules, expand this string.
         // For reference, see the RbnfSampleRuleSets.java file distributed with ICU4J
+    // REFACTOR: Replace fragmented Strings with Text Blocks
     public static final String RULE_SET_EN_IN =
              /*
              * These rules format a number in one of the two styles often used

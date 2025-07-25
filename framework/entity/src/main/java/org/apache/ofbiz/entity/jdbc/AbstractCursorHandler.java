@@ -23,6 +23,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
+// REFACTOR: Tighten up hierarchy with sealed classes
 public abstract class AbstractCursorHandler implements InvocationHandler {
 
     private String cursorName;

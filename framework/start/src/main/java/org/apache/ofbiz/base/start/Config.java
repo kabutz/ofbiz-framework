@@ -189,6 +189,7 @@ public final class Config {
         String localeString = getProperty(props, "ofbiz.locale.default", defaultLocale);
         String locales[] = localeString.split("_");
         Locale locale = null;
+        // REFACTOR: Replace old style switch with switch expressions
         switch (locales.length) {
         case 1:
             locale = new Locale(locales[0]);

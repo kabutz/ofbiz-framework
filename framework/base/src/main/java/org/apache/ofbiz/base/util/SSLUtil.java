@@ -256,6 +256,7 @@ public final class SSLUtil {
     }
 
     public static HostnameVerifier getHostnameVerifier(int level) {
+        // REFACTOR: Replace old style switch with switch expressions
         switch (level) {
         case HOSTCERT_MIN_CHECK:
             return (hostname, session) -> {

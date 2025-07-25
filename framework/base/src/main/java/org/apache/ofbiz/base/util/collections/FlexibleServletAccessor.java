@@ -186,6 +186,7 @@ public class FlexibleServletAccessor<T> implements Serializable {
         if (!(obj instanceof FlexibleServletAccessor<?>)) {
             return false;
         } else {
+            // REFACTOR: Pattern Matching for instanceof
             FlexibleServletAccessor<?> flexibleServletAccessor = (FlexibleServletAccessor<?>) obj;
             if (name == null) {
                 return flexibleServletAccessor.name == null;

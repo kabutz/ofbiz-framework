@@ -22,6 +22,7 @@ package org.apache.ofbiz.base.concurrent;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+// REFACTOR: Replace simple data class with record
 public class ConstantFuture<V> implements Future<V> {
     private final V value;
 

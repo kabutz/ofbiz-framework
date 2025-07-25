@@ -322,6 +322,7 @@ public final class ModelUtil {
         if (modelEntity == null) return false;
         if (modelEntity instanceof ModelViewEntity) {
             //  now try to retrieve with the field heading from the real entity linked to the view
+            // REFACTOR: Pattern Matching for instanceof
             ModelViewEntity modelViewEntity = (ModelViewEntity) modelEntity;
             Iterator<ModelAlias> it = modelViewEntity.getAliasesIterator();
             while (it.hasNext()) {

@@ -213,7 +213,8 @@ public final class Converters {
      * types are the same. The <code>convert</code> method returns the
      * source object.
      */
-    protected static class PassThruConverter<S, T> implements Converter<S, T> {
+    // REFACTOR: Replace simple data class with record
+    protected static final class PassThruConverter<S, T> implements Converter<S, T> {
         private final Class<S> sourceClass;
         private final Class<T> targetClass;
 

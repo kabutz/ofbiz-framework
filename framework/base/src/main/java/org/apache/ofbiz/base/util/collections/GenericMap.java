@@ -91,6 +91,7 @@ public abstract class GenericMap<K, V> implements Appender<StringBuilder>, Map<K
         if (this == o) {
             return true;
         }
+        // REFACTOR: Pattern Matching for instanceof
         Map<?, ?> map = (Map<?, ?>) o;
         if (size() != map.size()) {
             return false;

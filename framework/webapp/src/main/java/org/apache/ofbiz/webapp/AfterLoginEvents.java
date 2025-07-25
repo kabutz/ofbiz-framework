@@ -42,6 +42,7 @@ public class AfterLoginEvents {
     private static final String SCRIPT_SHOW_LAST_VISIT_DATE;
 
     static {
+        // REFACTOR: Replace fragmented Strings with Text Blocks
         SCRIPT_SHOW_LAST_VISIT_DATE = "<span id='showLastVisit'></span><script>"
                 + "importLibrary(%s, function () {\n"
                 + "var dateFormat = Date.CultureInfo.formatPatterns.shortDate + ' ' + Date.CultureInfo.formatPatterns.longTime;\n"

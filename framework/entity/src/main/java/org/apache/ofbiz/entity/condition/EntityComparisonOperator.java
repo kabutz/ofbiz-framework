@@ -69,10 +69,12 @@ public abstract class EntityComparisonOperator<L, R> extends EntityOperator<L, R
     @Override
     public void validateSql(ModelEntity entity, L lhs, R rhs) throws GenericModelException {
         if (lhs instanceof EntityConditionValue) {
+            // REFACTOR: Pattern Matching for instanceof
             EntityConditionValue ecv = (EntityConditionValue) lhs;
             ecv.validateSql(entity);
         }
         if (rhs instanceof EntityConditionValue) {
+            // REFACTOR: Pattern Matching for instanceof
             EntityConditionValue ecv = (EntityConditionValue) rhs;
             ecv.validateSql(entity);
         }
@@ -91,6 +93,7 @@ public abstract class EntityComparisonOperator<L, R> extends EntityOperator<L, R
 
         ModelField field;
         if (lhs instanceof EntityConditionValue) {
+            // REFACTOR: Pattern Matching for instanceof
             EntityConditionValue ecv = (EntityConditionValue) lhs;
             ecv.addSqlValue(sql, entity, entityConditionParams, false, datasourceInfo);
             field = ecv.getModelField(entity);
@@ -141,6 +144,7 @@ public abstract class EntityComparisonOperator<L, R> extends EntityOperator<L, R
     protected void makeRHSWhereStringValue(ModelEntity entity, List<EntityConditionParam> entityConditionParams, StringBuilder sql,
                                            ModelField field, R rhs, Datasource datasourceInfo) {
         if (rhs instanceof EntityConditionValue) {
+            // REFACTOR: Pattern Matching for instanceof
             EntityConditionValue ecv = (EntityConditionValue) rhs;
             if (ecv.getModelField(entity) == null) {
                 ecv.setModelField(field);
@@ -169,6 +173,7 @@ public abstract class EntityComparisonOperator<L, R> extends EntityOperator<L, R
      public boolean mapMatches(Delegator delegator, Map<String, ? extends Object> map, L lhs, R rhs) {
         Object leftValue;
         if (lhs instanceof EntityConditionValue) {
+            // REFACTOR: Pattern Matching for instanceof
             EntityConditionValue ecv = (EntityConditionValue) lhs;
             leftValue = ecv.getValue(delegator, map);
         } else if (lhs instanceof String) {
@@ -178,6 +183,7 @@ public abstract class EntityComparisonOperator<L, R> extends EntityOperator<L, R
         }
         Object rightValue;
         if (rhs instanceof EntityConditionValue) {
+            // REFACTOR: Pattern Matching for instanceof
             EntityConditionValue ecv = (EntityConditionValue) rhs;
             rightValue = ecv.getValue(delegator, map);
         } else {
@@ -200,6 +206,7 @@ public abstract class EntityComparisonOperator<L, R> extends EntityOperator<L, R
      */
     protected Object freeze(Object item) {
         if (item instanceof EntityConditionValue) {
+            // REFACTOR: Pattern Matching for instanceof
             EntityConditionValue ecv = (EntityConditionValue) item;
             return ecv.freeze();
         }

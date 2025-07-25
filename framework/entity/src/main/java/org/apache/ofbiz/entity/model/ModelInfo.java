@@ -32,6 +32,7 @@ import org.w3c.dom.Element;
  *
  */
 @ThreadSafe
+// REFACTOR: Replace simple data class with record
 public final class ModelInfo {
 
     public static final ModelInfo DEFAULT = new ModelInfo("None", "None", getCopyrightString(), "None", "1.0", "");

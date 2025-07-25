@@ -1310,6 +1310,7 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
      *@param prefix A prefix to put in front of the entity name in the tag name
      */
     public void writeXmlText(PrintWriter writer, String prefix) {
+        // REFACTOR: String.repeat() can be used
         int indent = 4;
         StringBuilder indentStrBuf = new StringBuilder();
         for (int i = 0; i < indent; i++) {

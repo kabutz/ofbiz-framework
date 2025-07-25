@@ -880,6 +880,7 @@ public class ModelViewEntity extends ModelEntity {
         return "ModelViewEntity[" + getEntityName() + "]";
     }
 
+    // REFACTOR: Replace simple data class with record
     public static final class ModelMemberEntity implements Serializable {
         private final String entityAlias;
         private final String entityName;

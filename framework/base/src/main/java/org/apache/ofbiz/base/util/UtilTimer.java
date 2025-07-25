@@ -195,8 +195,8 @@ public class UtilTimer {
         // String retString = "[[" + message + ": seconds since start: " + secondsSinceStart() + ",since last(" + lastMessage + "):"
         // + secondsSinceLast() + "]]";
 
+        // REFACTOR: String.repeat() can be used
         StringBuilder retStringBuf = new StringBuilder();
-
         for (int i = 0; i < level; i++) {
             retStringBuf.append("| ");
         }
@@ -211,6 +211,7 @@ public class UtilTimer {
         retStringBuf.append(")");
         int spacecount = 12 + (2 * level) - retStringBuf.length();
 
+        // REFACTOR: String.repeat() can be used
         for (int i = 0; i < spacecount; i++) {
             retStringBuf.append(' ');
         }
