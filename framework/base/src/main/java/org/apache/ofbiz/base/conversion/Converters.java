@@ -145,6 +145,7 @@ public final class Converters {
                         continue;
                     }
                     if (value instanceof ConverterLoader) {
+                        // REFACTOR: Pattern Matching for instanceof
                         ConverterLoader loader = (ConverterLoader) value;
                         loader.loadConverters();
                     }

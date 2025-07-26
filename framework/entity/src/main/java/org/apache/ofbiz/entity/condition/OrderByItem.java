@@ -238,6 +238,7 @@ public class OrderByItem implements Comparator<GenericEntity> {
         if (!(obj instanceof OrderByItem)) {
             return false;
         }
+        // REFACTOR: Pattern Matching for instanceof
         OrderByItem that = (OrderByItem) obj;
 
         return getValue().equals(that.getValue()) && getDescending() == that.getDescending();

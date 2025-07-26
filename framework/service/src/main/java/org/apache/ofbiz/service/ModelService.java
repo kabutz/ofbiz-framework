@@ -874,6 +874,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
             if (!(o instanceof ModelServiceMapEntry)) {
                 return false;
             }
+            // REFACTOR: Pattern Matching for instanceof
             ModelServiceMapEntry other = (ModelServiceMapEntry) o;
             return field.equals(other.field) && ModelService.this == other.getModelService();
         }

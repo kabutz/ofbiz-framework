@@ -93,6 +93,7 @@ public class RunningService {
     @Override
     public boolean equals(Object o) {
         if (o != null && o instanceof RunningService) {
+            // REFACTOR: Pattern Matching for instanceof
             RunningService x = (RunningService) o;
             if (this.model.equals(x.getModelService()) && this.mode == x.getMode() && this.startStamp.equals(x.getStartStamp())) {
                 return true;

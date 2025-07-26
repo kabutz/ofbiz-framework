@@ -1366,6 +1366,7 @@ public class ModelViewEntity extends ModelEntity {
         @Override
         public boolean equals(Object obj) {
             if (!(obj instanceof ModelConversion)) return false;
+            // REFACTOR: Pattern Matching for instanceof
             ModelConversion other = (ModelConversion) obj;
             return fromModelEntity.equals(other.fromModelEntity);
         }

@@ -102,6 +102,7 @@ public final class MainResourceHandler implements ResourceHandler {
             return false;
         }
 
+        // REFACTOR: Pattern Matching for instanceof
         MainResourceHandler other = (MainResourceHandler) obj;
         return this.loaderName.equals(other.loaderName) && this.xmlFilename.equals(other.xmlFilename) && this.location.equals(other.location);
     }

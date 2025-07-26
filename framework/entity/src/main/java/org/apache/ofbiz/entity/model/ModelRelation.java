@@ -223,6 +223,7 @@ public final class ModelRelation extends ModelChild {
             return true;
         }
         if (obj instanceof ModelRelation) {
+            // REFACTOR: Pattern Matching for instanceof
             ModelRelation that = (ModelRelation) obj;
             return this.fullName.equals(that.fullName);
         }

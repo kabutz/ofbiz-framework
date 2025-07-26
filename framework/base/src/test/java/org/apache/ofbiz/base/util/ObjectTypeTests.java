@@ -108,6 +108,7 @@ public class ObjectTypeTests {
                 simpleTypeOrObjectConvert(null, type, null, null, null, true));
         assertEquals(label, wanted, simpleTypeOrObjectConvert(toConvert, type, null, null, null, true));
         if (toConvert instanceof String) {
+            // REFACTOR: Pattern Matching for instanceof
             String str = (String) toConvert;
             Document doc = UtilXml.makeEmptyXmlDocument();
             assertEquals(label + ":text-node proxy", wanted,

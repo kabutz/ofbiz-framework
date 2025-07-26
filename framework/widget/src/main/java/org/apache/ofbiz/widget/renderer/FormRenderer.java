@@ -1253,6 +1253,7 @@ public class FormRenderer {
         }
         int itemIndex = -1;
         if (iter instanceof EntityListIterator) {
+            // REFACTOR: Pattern Matching for instanceof
             EntityListIterator eli = (EntityListIterator) iter; // INFO Spotbugs reports here "'eli' is never closed" but that's on purpose
             try {
                 if (eli.getResultsSizeAfterPartialList() > 0) {

@@ -122,6 +122,7 @@ public final class SqlJdbcUtil {
         StringBuilder sql = new StringBuilder(" FROM ");
 
         if (modelEntity instanceof ModelViewEntity) {
+            // REFACTOR: Pattern Matching for instanceof
             ModelViewEntity modelViewEntity = (ModelViewEntity) modelEntity;
 
             if ("ansi".equals(datasourceInfo.getJoinStyle()) || "ansi-no-parenthesis".equals(datasourceInfo.getJoinStyle())) {
@@ -391,6 +392,7 @@ public final class SqlJdbcUtil {
     public static String makeViewWhereClause(ModelEntity modelEntity, String joinStyle) throws GenericEntityException {
         if (modelEntity instanceof ModelViewEntity) {
             StringBuilder whereString = new StringBuilder();
+            // REFACTOR: Pattern Matching for instanceof
             ModelViewEntity modelViewEntity = (ModelViewEntity) modelEntity;
 
             if ("ansi".equals(joinStyle) || "ansi-no-parenthesis".equals(joinStyle)) {
@@ -500,6 +502,7 @@ public final class SqlJdbcUtil {
             }
             sql.append(makeFromClause(modelEntity, modelFieldTypeReader, datasourceInfo));
             String viewWhereClause = makeViewWhereClause(modelEntity, datasourceInfo.getJoinStyle());
+            // REFACTOR: Pattern Matching for instanceof
             ModelViewEntity modelViewEntity = (ModelViewEntity) modelEntity;
             List<EntityCondition> whereConditions = new LinkedList<>();
             List<EntityCondition> havingConditions = new LinkedList<>();
@@ -608,6 +611,7 @@ public final class SqlJdbcUtil {
 
         ModelEntity model = entity.getModelEntity();
         while (curField.getEncryptMethod().isEncrypted() && model instanceof ModelViewEntity) {
+            // REFACTOR: Pattern Matching for instanceof
             ModelViewEntity modelView = (ModelViewEntity) model;
             String entityName = modelView.getAliasedEntity(
                     modelView.getAlias(curField.getName()).getEntityAlias(), entity.getDelegator().getModelReader()).getEntityName();

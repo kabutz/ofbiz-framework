@@ -65,6 +65,7 @@ public class OfbizUrlTransform implements TemplateTransformModel {
     private static boolean checkBooleanArg(Map args, String key, boolean defaultValue) {
         Object o = args.get(key);
         if (o instanceof SimpleScalar) {
+            // REFACTOR: Pattern Matching for instanceof
             SimpleScalar s = (SimpleScalar) o;
             return "true".equalsIgnoreCase(s.getAsString());
         }
@@ -78,6 +79,7 @@ public class OfbizUrlTransform implements TemplateTransformModel {
                 Debug.logVerbose("Arg Object : " + o.getClass().getName(), MODULE);
             }
             if (o instanceof TemplateScalarModel) {
+                // REFACTOR: Pattern Matching for instanceof
                 TemplateScalarModel s = (TemplateScalarModel) o;
                 try {
                     result = s.getAsString();

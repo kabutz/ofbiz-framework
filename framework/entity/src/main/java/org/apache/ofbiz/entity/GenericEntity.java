@@ -742,6 +742,7 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
         if (obj instanceof Boolean) {
             return (Boolean) obj;
         } else if (obj instanceof String) {
+            // REFACTOR: Pattern Matching for instanceof
             String value = (String) obj;
 
             if ("Y".equalsIgnoreCase(value) || "T".equalsIgnoreCase(value)) {
@@ -892,6 +893,7 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
         }
         if (value instanceof Blob) {
             try {
+                // REFACTOR: Pattern Matching for instanceof
                 Blob valueBlob = (Blob) value;
                 return valueBlob.getBytes(1, (int) valueBlob.length());
             } catch (SQLException e) {
@@ -946,6 +948,7 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
         if (resourceValue == null) {
             if (modelEntityToUse instanceof ModelViewEntity) {
                 //  now try to retrieve with the field heading from the real entity linked to the view
+                // REFACTOR: Pattern Matching for instanceof
                 ModelViewEntity modelViewEntity = (ModelViewEntity) modelEntityToUse;
                 Iterator<ModelAlias> it = modelViewEntity.getAliasesIterator();
                 while (it.hasNext()) {
@@ -1004,6 +1007,7 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
         // finish off by adding the values of all PK fields
         if (modelEntity instanceof ModelViewEntity) {
             // retrieve pkNames of realEntity
+            // REFACTOR: Pattern Matching for instanceof
             ModelViewEntity modelViewEntity = (ModelViewEntity) modelEntity;
             List<String> pkNamesToUse = new LinkedList<>();
             // iterate on realEntity for pkField
@@ -1139,6 +1143,7 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
                     if (field != null) {
                         // if it's a String then we need to check length, otherwise set it because it's not null
                         if (field instanceof String) {
+                            // REFACTOR: Pattern Matching for instanceof
                             String fieldStr = (String) field;
 
                             if (!fieldStr.isEmpty()) {
@@ -1477,6 +1482,7 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
             return true;
         }
         if (obj instanceof GenericEntity) {
+            // REFACTOR: Pattern Matching for instanceof
             GenericEntity that = (GenericEntity) obj;
             return this.entityName.equals(that.entityName) && this.fields.equals(that.fields);
         }
@@ -1516,6 +1522,7 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
             Object curValue = fields.get(curKey);
             ModelField field = this.getModelEntity().getField(curKey);
             if (field.getEncryptMethod().isEncrypted() && curValue instanceof String) {
+                // REFACTOR: Pattern Matching for instanceof
                 String encryptField = (String) curValue;
                 // the encryptField may not actually be UTF8, it could be any
                 // random encoding; just treat it as a series of raw bytes.

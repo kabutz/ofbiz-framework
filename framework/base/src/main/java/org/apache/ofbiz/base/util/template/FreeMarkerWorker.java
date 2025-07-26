@@ -326,6 +326,7 @@ public final class FreeMarkerWorker {
                 if (obj == TemplateModel.NOTHING) {
                     obj = null;
                 } else if (obj instanceof BeanModel) {
+                    // REFACTOR: Pattern Matching for instanceof
                     BeanModel bean = (BeanModel) obj;
                     obj = bean.getWrappedObject();
                 } else if (obj instanceof SimpleScalar) {

@@ -70,6 +70,7 @@ public class DBCPConnectionFactory implements ConnectionFactory {
         if (!(abstractJdbc instanceof InlineJdbc)) {
             throw new GenericEntityConfException("DBCP requires an <inline-jdbc> child element in the <datasource> element");
         }
+        // REFACTOR: Pattern Matching for instanceof
         InlineJdbc jdbcElement = (InlineJdbc) abstractJdbc;
         // connection properties
         TransactionManager txMgr = TransactionFactoryLoader.getInstance().getTransactionManager();

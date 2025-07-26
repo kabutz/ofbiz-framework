@@ -118,6 +118,7 @@ public class ControllerViewArtifactInfo extends ArtifactInfoBase {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof ControllerViewArtifactInfo) {
+            // REFACTOR: Pattern Matching for instanceof
             ControllerViewArtifactInfo that = (ControllerViewArtifactInfo) obj;
             return Objects.equals(this.controllerXmlUrl, that.controllerXmlUrl)
                     && Objects.equals(this.viewUri, that.viewUri);

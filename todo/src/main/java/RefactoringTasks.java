@@ -1,43 +1,46 @@
-import org.apache.ofbiz.entity.model.ModelEntity;
-import org.apache.ofbiz.entity.model.ModelReader;
 import org.apache.ofbiz.base.component.ComponentLoaderConfig;
 import org.apache.ofbiz.base.concurrent.ConstantFuture;
+import org.apache.ofbiz.base.config.ResourceLoader;
+import org.apache.ofbiz.base.conversion.Converter;
 import org.apache.ofbiz.base.conversion.Converters;
+import org.apache.ofbiz.base.html.SanitizerCustomPolicy;
 import org.apache.ofbiz.base.start.Config;
+import org.apache.ofbiz.base.util.*;
 import org.apache.ofbiz.base.util.collections.FlexibleServletAccessor;
 import org.apache.ofbiz.base.util.collections.GenericMap;
 import org.apache.ofbiz.base.util.collections.GenericMapEntry;
-import org.apache.ofbiz.base.util.ScriptHelper;
-import org.apache.ofbiz.base.util.ScriptUtil;
-import org.apache.ofbiz.base.util.SSLUtil;
-import org.apache.ofbiz.base.util.UtilNumber;
-import org.apache.ofbiz.base.util.UtilProperties;
-import org.apache.ofbiz.base.util.UtilTimer;
+import org.apache.ofbiz.entity.DelegatorFactory;
+import org.apache.ofbiz.entity.GenericEntity;
 import org.apache.ofbiz.entity.condition.EntityComparisonOperator;
 import org.apache.ofbiz.entity.condition.EntityConditionVisitor;
-import org.apache.ofbiz.entity.DelegatorFactory;
+import org.apache.ofbiz.entity.config.model.JdbcElement;
+import org.apache.ofbiz.entity.connection.DBCPConnectionFactory;
+import org.apache.ofbiz.entity.connection.DebugManagedDataSource;
+import org.apache.ofbiz.entity.datasource.GenericHelperInfo;
 import org.apache.ofbiz.entity.finder.EntityFinderUtil;
-import org.apache.ofbiz.entity.GenericEntity;
 import org.apache.ofbiz.entity.jdbc.AbstractCursorHandler;
-import org.apache.ofbiz.entity.model.ModelFieldTypeReader;
-import org.apache.ofbiz.entity.model.ModelInfo;
-import org.apache.ofbiz.entity.model.ModelUtil;
-import org.apache.ofbiz.entity.model.ModelViewEntity;
+import org.apache.ofbiz.entity.model.*;
+import org.apache.ofbiz.entity.serialize.XmlSerializer;
 import org.apache.ofbiz.entity.transaction.TransactionUtil;
 import org.apache.ofbiz.webapp.AfterLoginEvents;
 import org.apache.ofbiz.webapp.control.RequestHandler;
 import org.apache.ofbiz.webapp.event.CoreEvents;
+import org.apache.ofbiz.webapp.ftl.OfbizCurrencyTransform;
+import org.apache.ofbiz.webapp.ftl.OfbizNumberTransform;
+import org.apache.ofbiz.widget.model.ModelForm;
 import org.apache.ofbiz.widget.renderer.FormRenderer;
-
+import org.apache.ofbiz.widget.renderer.Paginator;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import java.util.*;
 import javax.transaction.Transaction;
+import java.util.*;
 
 public class RefactoringTasks {
     public static void main(String... args) {
         System.out.println("Enjoy the refactoring!");
     }
+
     /*
     Java25:
         506: Scoped Values
@@ -138,14 +141,20 @@ public class RefactoringTasks {
      * {@link ModelUtil#isPotentialLocalizedFields(ModelEntity, List)}
      * {@link FlexibleServletAccessor#equals(Object)}
      * {@link EntityComparisonOperator#validateSql(ModelEntity, Object, Object)} (and others)
+     * {@link DBCPConnectionFactory#getConnection(GenericHelperInfo, JdbcElement)}
+     * {@link DebugManagedDataSource#getConnection()}
      */
     public static void task6_patternMatchingForInstanceof() {
+
     }
 
     /**
      * // Java 17
      * Tighten up hierarchies with sealed classes - JEP 409
+     * {@link ResourceLoader}
      * {@link AbstractCursorHandler}
+     * {@link SanitizerCustomPolicy}
+     * {@link Converter}
      */
     public static void task7_sealedClasses() {
     }
@@ -182,9 +191,14 @@ public class RefactoringTasks {
 
     /**
      * // Java 21
-     * REFACTOR: Pattern Matching for switch - JEP 441
+     * Pattern Matching for switch - JEP 441
+     * {@link OfbizCurrencyTransform#getInteger(Map, String)}
+     * {@link OfbizNumberTransform#getNumber(Map, String)}
+     * {@link Paginator#getListLimits(ModelForm, Map, Object)}
+     * {@link XmlSerializer#serializeSingle(Object, Document)}
      */
     public static void task11_patternMatchingForSwitch() {
+
     }
 
     /**

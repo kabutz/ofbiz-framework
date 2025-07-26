@@ -91,6 +91,7 @@ public class JspViewHandler extends AbstractViewHandler {
             Throwable throwable = e.getRootCause() != null ? e.getRootCause() : e;
 
             if (throwable instanceof JspException) {
+                // REFACTOR: Pattern Matching for instanceof
                 JspException jspe = (JspException) throwable;
 
                 throwable = jspe.getCause() != null ? jspe.getCause() : jspe;

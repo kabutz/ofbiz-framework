@@ -303,6 +303,7 @@ public class ServiceEcaAction implements java.io.Serializable {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof ServiceEcaAction) {
+            // REFACTOR: Pattern Matching for instanceof
             ServiceEcaAction other = (ServiceEcaAction) obj;
 
             if (!Objects.equals(this.eventName, other.eventName)) return false;

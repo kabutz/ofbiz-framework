@@ -53,6 +53,7 @@ public class OfbizNumberTransform implements TemplateTransformModel {
                 Debug.logVerbose("Arg Object : " + o.getClass().getName(), MODULE);
             }
             if (o instanceof TemplateScalarModel) {
+                // REFACTOR: Pattern Matching for instanceof
                 TemplateScalarModel s = (TemplateScalarModel) o;
                 try {
                     result = s.getAsString();
@@ -73,6 +74,7 @@ public class OfbizNumberTransform implements TemplateTransformModel {
                 Debug.logVerbose("Number Object : " + o.getClass().getName(), MODULE);
             }
 
+            // REFACTOR: Pattern Matching for switch
             // handle nulls better
             if (o == null) {
                 o = 0.00;

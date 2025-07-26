@@ -31,6 +31,7 @@ public abstract class GenericMapSet<K, V, M extends Map<K, V>, I> extends Generi
         if (!(o instanceof Set<?>)) {
             return false;
         }
+        // REFACTOR: Pattern Matching for instanceof
         Set<?> other = (Set<?>) o;
         if (getSource().size() != other.size()) {
             return false;

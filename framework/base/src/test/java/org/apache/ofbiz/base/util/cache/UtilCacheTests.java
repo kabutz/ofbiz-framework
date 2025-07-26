@@ -70,6 +70,7 @@ public class UtilCacheTests implements Serializable {
         @Override
         public boolean equals(Object o) {
             if (o instanceof Removal<?>) {
+                // REFACTOR: Pattern Matching for instanceof
                 Removal<?> other = (Removal<?>) o;
                 return Objects.equals(oldValue, other.oldValue);
             }
@@ -92,6 +93,7 @@ public class UtilCacheTests implements Serializable {
         @Override
         public boolean equals(Object o) {
             if (o instanceof Addition<?>) {
+                // REFACTOR: Pattern Matching for instanceof
                 Addition<?> other = (Addition<?>) o;
                 return Objects.equals(newValue, other.newValue);
             }
@@ -116,6 +118,7 @@ public class UtilCacheTests implements Serializable {
         @Override
         public boolean equals(Object o) {
             if (o instanceof Update<?>) {
+                // REFACTOR: Pattern Matching for instanceof
                 Update<?> other = (Update<?>) o;
                 if (!Objects.equals(newValue, other.newValue)) {
                     return false;
@@ -164,6 +167,7 @@ public class UtilCacheTests implements Serializable {
             if (!(o instanceof Listener)) {
                 return false;
             }
+            // REFACTOR: Pattern Matching for instanceof
             Listener<?, ?> other = (Listener<?, ?>) o;
             return changeMap.equals(other.changeMap);
         }

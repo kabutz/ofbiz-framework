@@ -103,6 +103,7 @@ public final class ModelKeyMap implements Comparable<ModelKeyMap>, Serializable 
             return true;
         }
         if (other instanceof ModelKeyMap) {
+            // REFACTOR: Pattern Matching for instanceof
             ModelKeyMap otherKeyMap = (ModelKeyMap) other;
             return this.fullName.equals(otherKeyMap.fullName);
         }

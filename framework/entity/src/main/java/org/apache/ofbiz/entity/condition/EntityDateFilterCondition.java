@@ -81,6 +81,7 @@ public final class EntityDateFilterCondition implements EntityCondition {
         if (!(obj instanceof EntityDateFilterCondition)) {
             return false;
         }
+        // REFACTOR: Pattern Matching for instanceof
         EntityDateFilterCondition other = (EntityDateFilterCondition) obj;
         return Objects.equals(fromDateName, other.fromDateName) && Objects.equals(thruDateName, other.thruDateName);
     }

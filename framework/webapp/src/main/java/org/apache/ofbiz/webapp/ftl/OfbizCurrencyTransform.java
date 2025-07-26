@@ -58,6 +58,7 @@ public class OfbizCurrencyTransform implements TemplateTransformModel {
                 Debug.logVerbose("Arg Object : " + o.getClass().getName(), MODULE);
             }
             if (o instanceof TemplateScalarModel) {
+                // REFACTOR: Pattern Matching for instanceof
                 TemplateScalarModel s = (TemplateScalarModel) o;
                 try {
                     result = s.getAsString();
@@ -84,6 +85,7 @@ public class OfbizCurrencyTransform implements TemplateTransformModel {
             }
 
             if (o instanceof SimpleScalar) {
+                // REFACTOR: Pattern Matching for instanceof
                 SimpleScalar s = (SimpleScalar) o;
                 return new BigDecimal(s.getAsString());
             }
@@ -99,20 +101,24 @@ public class OfbizCurrencyTransform implements TemplateTransformModel {
                 Debug.logVerbose("Amount Object : " + o.getClass().getName(), MODULE);
             }
 
+            // REFACTOR: Pattern Matching for switch
             // handle nulls better
             if (o == null) {
                 return null;
             }
 
             if (o instanceof NumberModel) {
+                // REFACTOR: Pattern Matching for instanceof
                 NumberModel s = (NumberModel) o;
                 return s.getAsNumber().intValue();
             }
             if (o instanceof SimpleNumber) {
+                // REFACTOR: Pattern Matching for instanceof
                 SimpleNumber s = (SimpleNumber) o;
                 return s.getAsNumber().intValue();
             }
             if (o instanceof SimpleScalar) {
+                // REFACTOR: Pattern Matching for instanceof
                 SimpleScalar s = (SimpleScalar) o;
                 return Integer.valueOf(s.getAsString());
             }

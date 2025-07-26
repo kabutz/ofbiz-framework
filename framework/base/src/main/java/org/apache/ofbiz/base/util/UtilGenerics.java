@@ -53,6 +53,7 @@ public final class UtilGenerics {
             if (!(object instanceof Map<?, ?>)) {
                 throw new ClassCastException("Not a map");
             }
+            // REFACTOR: Pattern Matching for instanceof
             Map<?, ?> map = (Map<?, ?>) object;
             int i = 0;
             for (Map.Entry<?, ?> entry: map.entrySet()) {

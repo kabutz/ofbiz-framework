@@ -129,6 +129,7 @@ public class EntityFieldValue extends EntityConditionValue {
         if (!(obj instanceof EntityFieldValue)) {
             return false;
         }
+        // REFACTOR: Pattern Matching for instanceof
         EntityFieldValue otherValue = (EntityFieldValue) obj;
         return fieldName.equals(otherValue.fieldName) && !(UtilMisc.compare(this.entityAlias, otherValue.entityAlias) != 0)
                 && !(UtilMisc.compare(this.entityAliasStack, otherValue.entityAliasStack) != 0);
@@ -211,6 +212,7 @@ public class EntityFieldValue extends EntityConditionValue {
         // If this is a view entity and we are configured to alias the views, use the alias here
         // instead of the composite (i.e. table.column) field name.
         if (datasourceInfo != null && datasourceInfo.getAliasViewColumns() && modelEntity instanceof ModelViewEntity) {
+            // REFACTOR: Pattern Matching for instanceof
             ModelViewEntity modelViewEntity = (ModelViewEntity) modelEntity;
             ModelAlias modelAlias = modelViewEntity.getAlias(fieldName);
             if (modelAlias != null) {

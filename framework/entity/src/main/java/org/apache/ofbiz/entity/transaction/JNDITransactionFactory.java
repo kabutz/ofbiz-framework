@@ -158,6 +158,7 @@ public class JNDITransactionFactory implements TransactionFactory {
         DataSource ds = DS_CACHE.get(jndiName);
         if (ds != null) {
             if (ds instanceof XADataSource) {
+                // REFACTOR: Pattern Matching for instanceof
                 XADataSource xads = (XADataSource) ds;
 
                 return TransactionUtil.enlistConnection(xads.getXAConnection());
@@ -188,6 +189,7 @@ public class JNDITransactionFactory implements TransactionFactory {
                     if (Debug.infoOn()) {
                         Debug.logInfo("Got XADataSource for name " + jndiName, MODULE);
                     }
+                    // REFACTOR: Pattern Matching for instanceof
                     XADataSource xads = (XADataSource) ds;
                     XAConnection xac = xads.getXAConnection();
 

@@ -225,6 +225,7 @@ public final class FlexibleMapAccessor<T> implements Serializable, IsEmpty {
             return true;
         }
         if (obj instanceof FlexibleMapAccessor) {
+            // REFACTOR: Pattern Matching for instanceof
             FlexibleMapAccessor<?> that = (FlexibleMapAccessor<?>) obj;
             return Objects.equals(this.original, that.original);
         }

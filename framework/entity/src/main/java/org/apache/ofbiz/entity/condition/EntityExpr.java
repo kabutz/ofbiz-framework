@@ -319,6 +319,7 @@ public final class EntityExpr implements EntityCondition {
         if (!(obj instanceof EntityExpr)) {
             return false;
         }
+        // REFACTOR: Pattern Matching for instanceof
         EntityExpr ee = (EntityExpr) obj;
         return Objects.equals(lhs, ee.lhs) && Objects.equals(operator, ee.operator) && Objects.equals(rhs, ee.rhs);
 

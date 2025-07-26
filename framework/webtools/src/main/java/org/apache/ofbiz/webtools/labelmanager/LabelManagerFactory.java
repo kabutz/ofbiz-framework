@@ -112,6 +112,7 @@ public final class LabelManagerFactory {
             String labelKeyComment = "";
             for (Node propertyNode : UtilXml.childNodeList(resourceElem.getFirstChild())) {
                 if (propertyNode instanceof Element) {
+                    // REFACTOR: Pattern Matching for instanceof
                     Element propertyElem = (Element) propertyNode;
                     String labelKey = UtilCodec.canonicalize(propertyElem.getAttribute("key"));
                     if (onlyNotUsedLabels
@@ -139,6 +140,7 @@ public final class LabelManagerFactory {
                     String labelComment = "";
                     for (Node valueNode : UtilXml.childNodeList(propertyElem.getFirstChild())) {
                         if (valueNode instanceof Element) {
+                            // REFACTOR: Pattern Matching for instanceof
                             Element valueElem = (Element) valueNode;
                             // No longer supporting old way of specifying xml:lang value.
                             // Old way: en_AU, new way: en-AU

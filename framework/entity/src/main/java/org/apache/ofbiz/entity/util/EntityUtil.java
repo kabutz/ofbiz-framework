@@ -70,6 +70,7 @@ public final class EntityUtil {
             for (int i = 0; i < args.length;) {
                 V keyValue = args[i];
                 if (!(keyValue instanceof String)) throw new IllegalArgumentException("Key(" + i + "), with value(" + args[i] + ") is not a String.");
+                // REFACTOR: Pattern Matching for instanceof
                 String key = (String) keyValue;
                 i++;
                 V value = args[i];

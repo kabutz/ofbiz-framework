@@ -165,6 +165,7 @@ public class OrderByList implements Comparator<GenericEntity> {
         if (!(obj instanceof OrderByList)) {
             return false;
         }
+        // REFACTOR: Pattern Matching for instanceof
         OrderByList that = (OrderByList) obj;
         return orderByList.equals(that.orderByList);
     }

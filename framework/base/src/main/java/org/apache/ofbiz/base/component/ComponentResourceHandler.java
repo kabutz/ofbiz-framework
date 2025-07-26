@@ -101,6 +101,7 @@ public class ComponentResourceHandler implements ResourceHandler {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof ComponentResourceHandler) {
+            // REFACTOR: Pattern Matching for instanceof
             ComponentResourceHandler other = (ComponentResourceHandler) obj;
 
             if (this.loaderName.equals(other.loaderName)

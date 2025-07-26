@@ -334,6 +334,7 @@ public final class ModelFormField {
             Object retVal = null;
             if (UtilValidate.isNotEmpty(this.entryAcsr)) {
                 if (dataMap instanceof GenericEntity) {
+                    // REFACTOR: Pattern Matching for instanceof
                     GenericEntity genEnt = (GenericEntity) dataMap;
                     if (genEnt.getModelEntity().isField(this.entryAcsr.getOriginalName())) {
                         retVal = genEnt.get(this.entryAcsr.getOriginalName(), locale);
@@ -939,6 +940,7 @@ public final class ModelFormField {
             boolean condTrue = false;
             // retVal should be a Boolean, if not something weird is up...
             if (retVal instanceof Boolean) {
+                // REFACTOR: Pattern Matching for instanceof
                 Boolean boolVal = (Boolean) retVal;
                 condTrue = boolVal;
             } else {
@@ -5507,6 +5509,7 @@ public final class ModelFormField {
 
                     // retVal should be a Boolean, if not something weird is up...
                     if (retVal instanceof Boolean) {
+                        // REFACTOR: Pattern Matching for instanceof
                         Boolean boolVal = (Boolean) retVal;
                         shouldUse = boolVal;
                     } else {

@@ -58,6 +58,7 @@ public class GenericMapEntry<K, V> implements Map.Entry<K, V> {
         if (this == o) {
             return true;
         }
+        // REFACTOR: Pattern Matching for instanceof
         Map.Entry<?, ?> other = (Map.Entry<?, ?>) o;
         return Objects.equals(getKey(), other.getKey()) && Objects.equals(getValue(), other.getValue());
     }

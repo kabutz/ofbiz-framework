@@ -423,6 +423,7 @@ public final class UtilHttp {
     public static Map<String, Object> canonicalizeParameterMap(Map<String, Object> paramMap) {
         for (Map.Entry<String, Object> paramEntry : paramMap.entrySet()) {
             if (paramEntry.getValue() instanceof String) {
+                // REFACTOR: Pattern Matching for instanceof
                 String paramEntries = (String) paramEntry.getValue();
                 String[] stringValues = paramEntries.split(" ");
                 String params = "";
@@ -649,6 +650,7 @@ public final class UtilHttp {
                     if (parameterName.endsWith(suffix)) {
                         String key = parameterName.substring(prefix.length(), parameterName.length() - (suffix.length()));
                         if (entry.getValue() instanceof ByteBuffer) {
+                            // REFACTOR: Pattern Matching for instanceof
                             ByteBuffer value = (ByteBuffer) entry.getValue();
                             paramMap.put(key, value);
                         } else {

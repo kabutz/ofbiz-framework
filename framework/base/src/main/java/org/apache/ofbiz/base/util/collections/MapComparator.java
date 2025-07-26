@@ -81,6 +81,7 @@ public class MapComparator implements Comparator<Map<Object, Object>> {
                 o2 = fmaKey.get(UtilGenerics.cast(map2));
             } else {
                 if (key instanceof String) {
+                    // REFACTOR: Pattern Matching for instanceof
                     String keyStr = (String) key;
                     if (keyStr.charAt(0) == '-') {
                         ascending = false;

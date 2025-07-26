@@ -102,6 +102,7 @@ public class MimeMessageWrapper implements java.io.Serializable {
                 // see if this is a multi-part message
                 Object content = message.getContent();
                 if (content instanceof Multipart) {
+                    // REFACTOR: Pattern Matching for instanceof
                     Multipart mp = (Multipart) content;
                     this.parts = mp.getCount();
                 } else {

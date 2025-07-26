@@ -33,6 +33,7 @@ public abstract class GenericMapEntrySet<K, V, M extends GenericMap<K, V>> exten
         if (!(item instanceof Map.Entry<?, ?>)) {
             return false;
         }
+        // REFACTOR: Pattern Matching for instanceof
         Map.Entry<?, ?> other = (Map.Entry<?, ?>) item;
         return contains(other.getKey(), other.getValue());
     }
@@ -47,6 +48,7 @@ public abstract class GenericMapEntrySet<K, V, M extends GenericMap<K, V>> exten
         if (!(item instanceof Map.Entry<?, ?>)) {
             return false;
         }
+        // REFACTOR: Pattern Matching for instanceof
         Map.Entry<?, ?> other = (Map.Entry<?, ?>) item;
         Object key = other.getKey();
         if (!getSource().containsKey(key)) {

@@ -73,6 +73,7 @@ public class OfbizScreenTransform implements TemplateTransformModel {
                 Debug.logVerbose("Arg Object : " + o.getClass().getName(), MODULE);
             }
             if (o instanceof TemplateScalarModel) {
+                // REFACTOR: Pattern Matching for instanceof
                 TemplateScalarModel s = (TemplateScalarModel) o;
                 try {
                     result = s.getAsString();

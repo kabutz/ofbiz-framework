@@ -244,6 +244,7 @@ public class ServiceEcaCondition implements java.io.Serializable {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof ServiceEcaCondition) {
+            // REFACTOR: Pattern Matching for instanceof
             ServiceEcaCondition other = (ServiceEcaCondition) obj;
 
             if (!Objects.equals(this.conditionService, other.conditionService)) return false;

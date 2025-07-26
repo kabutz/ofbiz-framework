@@ -355,6 +355,7 @@ public class EmailServices {
             Exception nestedException = null;
             while ((nestedException = e.getNextException()) != null && nestedException instanceof MessagingException) {
                 if (nestedException instanceof SMTPAddressFailedException) {
+                    // REFACTOR: Pattern Matching for instanceof
                     SMTPAddressFailedException safe = (SMTPAddressFailedException) nestedException;
                     Debug.logError("Failed to send message to [" + safe.getAddress() + "], return code [" + safe.getReturnCode()
                             + "], return message [" + safe.getMessage() + "]", MODULE);

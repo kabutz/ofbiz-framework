@@ -28,6 +28,7 @@ import org.owasp.html.PolicyFactory;
  * used in
  * {@link org.apache.ofbiz.base.util.UtilCodec.HtmlEncoder#sanitize(String, String)}
  */
+// REFACTOR: Tighten up hierarchy with sealed classes
 public interface SanitizerCustomPolicy {
 
     PolicyFactory POLICY_DEFINITION = new HtmlPolicyBuilder().toFactory();

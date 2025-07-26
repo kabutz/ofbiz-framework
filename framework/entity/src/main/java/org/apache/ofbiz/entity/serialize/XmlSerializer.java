@@ -137,6 +137,7 @@ public class XmlSerializer {
             return makeElement("null", null, document);
         }
 
+        // REFACTOR: Pattern Matching for switch
         // - Standard Objects -
         if (object instanceof String) {
             return makeElement("std-String", object, document);

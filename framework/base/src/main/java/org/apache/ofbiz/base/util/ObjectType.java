@@ -286,6 +286,7 @@ public class ObjectType {
             return obj.toString();
         }
         if (obj instanceof Node) {
+            // REFACTOR: Pattern Matching for instanceof
             Node node = (Node) obj;
             String nodeValue = node.getTextContent();
 
@@ -426,6 +427,7 @@ public class ObjectType {
 
         // have converted value 2, now before converting value 1 see if it is a Collection and we are doing a contains comparison
         if ("contains".equals(operator) && value1 instanceof Collection<?>) {
+            // REFACTOR: Pattern Matching for instanceof
             Collection<?> col1 = (Collection<?>) value1;
             return col1.contains(convertedValue2) ? Boolean.TRUE : Boolean.FALSE;
         }

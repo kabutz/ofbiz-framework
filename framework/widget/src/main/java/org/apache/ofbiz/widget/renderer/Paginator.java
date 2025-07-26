@@ -59,6 +59,7 @@ public final class Paginator {
         int lowIndex = 0;
         int highIndex = 0;
         int listSize = modelForm.getOverrideListSize(context);
+        // REFACTOR: Pattern Matching for switch
         if (listSize > 0) {
             Debug.logVerbose("If listSize > 0, do nothing", MODULE);
         } else if (entryList instanceof EntityListIterator) {

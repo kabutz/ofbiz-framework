@@ -24,7 +24,7 @@ package org.apache.ofbiz.base.conversion;
  * @param <S> The source object type
  * @param <T> The target object type
  */
-// REFACTOR: Tighten up hierarchies with sealed classes
+// REFACTOR: Tighten up hierarchies with sealed classes.
 public interface Converter<S, T> {
     /** Returns <code>true</code> if this object can convert
      * <code>sourceClass</code> to <code>targetClass</code>.

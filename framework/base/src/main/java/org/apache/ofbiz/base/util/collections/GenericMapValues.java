@@ -52,6 +52,7 @@ public abstract class GenericMapValues<K, V, M extends Map<K, V>> extends Generi
         if (o instanceof List<?> || o instanceof Set<?>) {
             return false;
         }
+        // REFACTOR: Pattern Matching for instanceof
         Collection<?> other = (Collection<?>) o;
         if (getSource().size() != other.size()) {
             return false;

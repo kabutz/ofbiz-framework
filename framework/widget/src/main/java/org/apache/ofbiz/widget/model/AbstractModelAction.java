@@ -337,6 +337,7 @@ public abstract class AbstractModelAction implements Serializable, ModelAction {
                 Debug.logError(errMsg, MODULE);
                 throw new IllegalArgumentException(errMsg);
             }
+            // REFACTOR: Pattern Matching for instanceof
             GenericValue value = (GenericValue) valueObject;
             List<String> orderByNames = null;
             if (!orderByListAcsr.isEmpty()) {
@@ -443,6 +444,7 @@ public abstract class AbstractModelAction implements Serializable, ModelAction {
                 Debug.logError(errMsg, MODULE);
                 throw new IllegalArgumentException(errMsg);
             }
+            // REFACTOR: Pattern Matching for instanceof
             GenericValue value = (GenericValue) valueObject;
             try {
                 toValueNameAcsr.put(context, value.getRelatedOne(relationName, useCache));

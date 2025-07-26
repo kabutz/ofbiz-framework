@@ -246,6 +246,7 @@ public final class UelUtil {
                 return true;
             }
             if (obj instanceof ReadOnlyExpression) {
+                // REFACTOR: Pattern Matching for instanceof
                 ReadOnlyExpression other = (ReadOnlyExpression) obj;
                 return this.object.equals(other.object);
             }
@@ -283,6 +284,7 @@ public final class UelUtil {
                 return true;
             }
             if (obj instanceof BasicValueExpression) {
+                // REFACTOR: Pattern Matching for instanceof
                 BasicValueExpression other = (BasicValueExpression) obj;
                 return this.varName.equals(other.varName);
             }

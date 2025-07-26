@@ -1658,6 +1658,7 @@ public abstract class ModelForm extends ModelWidget {
                 Object retVal = GroovyUtil.eval(StringUtil.convertOperatorSubstitutions(altRowStyle.useWhen), context);
                 // retVal should be a Boolean, if not something weird is up...
                 if (retVal instanceof Boolean) {
+                    // REFACTOR: Pattern Matching for instanceof
                     Boolean boolVal = (Boolean) retVal;
                     if (boolVal) {
                         styles += altRowStyle.style;
@@ -1699,6 +1700,7 @@ public abstract class ModelForm extends ModelWidget {
                 boolean condTrue = false;
                 // retVal should be a Boolean, if not something weird is up...
                 if (retVal instanceof Boolean) {
+                    // REFACTOR: Pattern Matching for instanceof
                     Boolean boolVal = (Boolean) retVal;
                     condTrue = boolVal;
                 } else {
@@ -2225,6 +2227,7 @@ public abstract class ModelForm extends ModelWidget {
             for (String fieldName : modelForm.fieldGroupMap.keySet()) {
                 FieldGroupBase group = modelForm.fieldGroupMap.get(fieldName);
                 if (group instanceof FieldGroup) {
+                    // REFACTOR: Pattern Matching for instanceof
                     FieldGroup fieldgroup = (FieldGroup) group;
                     if (this.id.equals(fieldgroup.getId())) {
                         for (ModelFormField modelField : modelForm.fieldList) {

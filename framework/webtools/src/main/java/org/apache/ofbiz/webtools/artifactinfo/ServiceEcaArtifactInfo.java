@@ -207,6 +207,7 @@ public class ServiceEcaArtifactInfo extends ArtifactInfoBase {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof ServiceEcaArtifactInfo) {
+            // REFACTOR: Pattern Matching for instanceof
             ServiceEcaArtifactInfo that = (ServiceEcaArtifactInfo) obj;
             return this.serviceEcaRule.equals(that.serviceEcaRule);
         } else {

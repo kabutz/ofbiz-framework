@@ -31,6 +31,7 @@ import org.w3c.dom.Element;
 /**
  * Loads resources using dynamically specified resource loader classes.
  */
+// REFACTOR: Tighten up hierarchy with sealed classes
 public abstract class ResourceLoader {
 
     private static final String MODULE = ResourceLoader.class.getName();

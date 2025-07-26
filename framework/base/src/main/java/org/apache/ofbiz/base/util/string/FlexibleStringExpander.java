@@ -69,6 +69,7 @@ public abstract class FlexibleStringExpander implements Serializable, IsEmpty {
             return true;
         }
         if (fse instanceof Elements) {
+            // REFACTOR: Pattern Matching for instanceof
             Elements fseElements = (Elements) fse;
             for (FlexibleStringExpander childElement : fseElements.childElems) {
                 if (containsConstant(childElement)) {
@@ -98,6 +99,7 @@ public abstract class FlexibleStringExpander implements Serializable, IsEmpty {
             return true;
         }
         if (fse instanceof Elements) {
+            // REFACTOR: Pattern Matching for instanceof
             Elements fseElements = (Elements) fse;
             for (FlexibleStringExpander childElement : fseElements.childElems) {
                 if (containsScript(childElement)) {

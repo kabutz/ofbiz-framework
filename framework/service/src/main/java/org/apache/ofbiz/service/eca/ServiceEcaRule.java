@@ -151,6 +151,7 @@ public final class ServiceEcaRule implements java.io.Serializable {
         if (allCondTrue) {
             for (Object setOrAction: actionsAndSets) {
                 if (setOrAction instanceof ServiceEcaAction) {
+                    // REFACTOR: Pattern Matching for instanceof
                     ServiceEcaAction ea = (ServiceEcaAction) setOrAction;
                     // in order to enable OR logic without multiple calls to the given service,
                     // only execute a given service name once per service call phase
@@ -197,6 +198,7 @@ public final class ServiceEcaRule implements java.io.Serializable {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof ServiceEcaRule) {
+            // REFACTOR: Pattern Matching for instanceof
             ServiceEcaRule other = (ServiceEcaRule) obj;
             if (!Objects.equals(this.serviceName, other.serviceName)) {
                 return false;
