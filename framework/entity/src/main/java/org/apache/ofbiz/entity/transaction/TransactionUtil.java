@@ -501,31 +501,20 @@ public final class TransactionUtil implements Status {
          * STATUS_COMMITTING       8
          * STATUS_ROLLING_BACK     9
          */
-        // REFACTOR: Replace old style switch with switch expressions
-        switch (state) {
-        case Status.STATUS_ACTIVE:
-            return "Transaction Active (" + state + ")";
-        case Status.STATUS_COMMITTED:
-            return "Transaction Committed (" + state + ")";
-        case Status.STATUS_COMMITTING:
-            return "Transaction Committing (" + state + ")";
-        case Status.STATUS_MARKED_ROLLBACK:
-            return "Transaction Marked Rollback (" + state + ")";
-        case Status.STATUS_NO_TRANSACTION:
-            return "No Transaction (" + state + ")";
-        case Status.STATUS_PREPARED:
-            return "Transaction Prepared (" + state + ")";
-        case Status.STATUS_PREPARING:
-            return "Transaction Preparing (" + state + ")";
-        case Status.STATUS_ROLLEDBACK:
-            return "Transaction Rolledback (" + state + ")";
-        case Status.STATUS_ROLLING_BACK:
-            return "Transaction Rolling Back (" + state + ")";
-        case Status.STATUS_UNKNOWN:
-            return "Transaction Status Unknown (" + state + ")";
-        default:
-            return "Not a valid state code (" + state + ")";
-        }
+        // REFACTO: Replace old style switch with switch expressions
+        return switch (state) {
+            case Status.STATUS_ACTIVE -> "Transaction Active";
+            case Status.STATUS_MARKED_ROLLBACK -> "Transaction Marked Rollback";
+            case Status.STATUS_PREPARED -> "Transaction Prepared";
+            case Status.STATUS_COMMITTED -> "Transaction Committed";
+            case Status.STATUS_ROLLEDBACK -> "Transaction Rolledback";
+            case Status.STATUS_UNKNOWN -> "Transaction Status Unknown";
+            case Status.STATUS_NO_TRANSACTION -> "No Transaction";
+            case Status.STATUS_PREPARING -> "Transaction Preparing";
+            case Status.STATUS_COMMITTING -> "Transaction Committing";
+            case Status.STATUS_ROLLING_BACK -> "Transaction Rolling Back";
+            default -> "Not a valid state code";
+        } + " (" + state + ")";
     }
 
     private static boolean readDebugResources() {

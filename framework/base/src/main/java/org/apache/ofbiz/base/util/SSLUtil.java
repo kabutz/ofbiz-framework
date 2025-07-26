@@ -256,10 +256,9 @@ public final class SSLUtil {
     }
 
     public static HostnameVerifier getHostnameVerifier(int level) {
-        // REFACTOR: Replace old style switch with switch expressions
-        switch (level) {
-        case HOSTCERT_MIN_CHECK:
-            return (hostname, session) -> {
+        // REFACTO: Replace old style switch with switch expressions
+        return switch (level) {
+            case HOSTCERT_MIN_CHECK -> (hostname, session) -> {
                 Certificate[] peerCerts;
                 try {
                     peerCerts = session.getPeerCertificates();
@@ -288,11 +287,9 @@ public final class SSLUtil {
                 }
                 return true;
             };
-        case HOSTCERT_NO_CHECK:
-            return (hostname, session) -> true;
-        default:
-            return null;
-        }
+            case HOSTCERT_NO_CHECK -> (hostname, session) -> true;
+            default -> null;
+        };
     }
 
     public static void loadJsseProperties() {
