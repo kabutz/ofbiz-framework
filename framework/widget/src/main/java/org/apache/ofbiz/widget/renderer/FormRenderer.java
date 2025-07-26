@@ -310,14 +310,14 @@ public class FormRenderer {
 
     private int renderHeaderRow(Appendable writer, Map<String, Object> context)
             throws IOException {
-        // REFACTOR: Replace all the local variable declarations with "var"
-        int maxNumOfColumns = 0;
+        // REFACTO: Replace all the local variable declarations with "var"
+        var maxNumOfColumns = 0;
 
         // We will render one title/column for all the fields with the same name
         // in this model: we can have more fields with the same name when use-when
         // conditions are used or when a form is extended or when the fields are
         // automatically retrieved by a service or entity definition.
-        Collection<List<ModelFormField>> fieldListsByPosition = modelForm.getFieldList().stream()
+        var fieldListsByPosition = modelForm.getFieldList().stream()
                 .filter(filteringDuplicateNames())
                 .collect(groupingByPosition)
                 .values();
@@ -326,13 +326,13 @@ public class FormRenderer {
         // Preprocessing
         // ===========================
         // `fieldRowsByPosition` will contain maps containing the list of fields for a position
-        List<Map<String, List<ModelFormField>>> fieldRowsByPosition = new LinkedList<>();
-        for (List<ModelFormField> mainFieldList : fieldListsByPosition) {
-            int numOfColumns = 0;
+        var fieldRowsByPosition = new LinkedList<Map<String, List<ModelFormField>>>();
+        for (var mainFieldList : fieldListsByPosition) {
+            var numOfColumns = 0;
 
-            List<ModelFormField> innerDisplayHyperlinkFieldsBegin = new LinkedList<>();
-            List<ModelFormField> innerFormFields = new LinkedList<>();
-            List<ModelFormField> innerDisplayHyperlinkFieldsEnd = new LinkedList<>();
+            var innerDisplayHyperlinkFieldsBegin = new LinkedList<ModelFormField>();
+            var innerFormFields = new LinkedList<ModelFormField>();
+            var innerDisplayHyperlinkFieldsEnd = new LinkedList<ModelFormField>();
 
             // render title for each field, except hidden & ignored, etc
 
@@ -346,15 +346,15 @@ public class FormRenderer {
             // the fields in the first list will be rendered as columns before the
             // combined column for the input fields; the fields in the second list
             // will be rendered as columns after it
-            boolean inputFieldFound = false;
-            for (ModelFormField modelFormField : mainFieldList) {
-                FieldInfo fieldInfo = modelFormField.getFieldInfo();
+            var inputFieldFound = false;
+            for (var modelFormField : mainFieldList) {
+                var fieldInfo = modelFormField.getFieldInfo();
 
                 // if the field's title is explicitly set to "" (title= "") then
                 // the header is not created for it; this is useful for position list
                 // where one line can be rendered with more than one row, and we
                 // only want to display the title header for the main row
-                String modelFormFieldTitle = modelFormField.getTitle(context);
+                var modelFormFieldTitle = modelFormField.getTitle(context);
                 if ("".equals(modelFormFieldTitle)) {
                     continue;
                 }
@@ -383,8 +383,8 @@ public class FormRenderer {
             }
 
             // prepare the combined title for the column that will contain the form/input fields
-            for (ModelFormField modelFormField : mainFieldList) {
-                FieldInfo fieldInfo = modelFormField.getFieldInfo();
+            for (var modelFormField : mainFieldList) {
+                var fieldInfo = modelFormField.getFieldInfo();
 
                 // don't do any header for hidden or ignored fields
                 if (fieldInfo.getFieldType() == FieldInfo.HIDDEN
@@ -407,7 +407,7 @@ public class FormRenderer {
                 maxNumOfColumns = numOfColumns;
             }
 
-            Map<String, List<ModelFormField>> fieldRow = UtilMisc.toMap("displayBefore", innerDisplayHyperlinkFieldsBegin,
+            var fieldRow = UtilMisc.<String, List<ModelFormField>>toMap("displayBefore", innerDisplayHyperlinkFieldsBegin,
                     "inputFields", innerFormFields, "displayAfter", innerDisplayHyperlinkFieldsEnd, "mainFieldList",
                     mainFieldList);
             fieldRowsByPosition.add(fieldRow);

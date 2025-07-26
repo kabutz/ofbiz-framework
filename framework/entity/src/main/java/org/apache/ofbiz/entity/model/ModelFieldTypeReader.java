@@ -50,16 +50,16 @@ public class ModelFieldTypeReader implements Serializable {
     protected static final UtilCache<String, ModelFieldTypeReader> READERS = UtilCache.createUtilCache("entity.ModelFieldTypeReader", 0, 0);
 
     protected static Map<String, ModelFieldType> createFieldTypeCache(Element docElement, String location) {
-        // REFACTOR: Replace all the local variable declarations with "var"
+        // REFACTO: Replace all the local variable declarations with "var"
         docElement.normalize();
-        Map<String, ModelFieldType> fieldTypeMap = new HashMap<>();
-        List<? extends Element> fieldTypeList = UtilXml.childElementList(docElement, "field-type-def");
-        for (Element curFieldType: fieldTypeList) {
-            String fieldTypeName = curFieldType.getAttribute("type");
+        var fieldTypeMap = new HashMap<String, ModelFieldType>();
+        var fieldTypeList = UtilXml.childElementList(docElement, "field-type-def");
+        for (var curFieldType: fieldTypeList) {
+            var fieldTypeName = curFieldType.getAttribute("type");
             if (UtilValidate.isEmpty(fieldTypeName)) {
                 Debug.logError("Invalid field-type element, type attribute is missing in file " + location, MODULE);
             } else {
-                ModelFieldType fieldType = new ModelFieldType(curFieldType);
+                var fieldType = new ModelFieldType(curFieldType);
                 fieldTypeMap.put(fieldTypeName.intern(), fieldType);
             }
         }
