@@ -35,6 +35,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import javax.transaction.Transaction;
+import java.io.PrintWriter;
 import java.util.*;
 
 public class RefactoringTasks {
