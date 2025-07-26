@@ -467,6 +467,7 @@ public final class ScriptUtil {
 
     private ScriptUtil() { }
 
+    // REFACTOR: Replace simple data class with record
     private static final class ProtectedBindings implements Bindings {
         private final Map<String, Object> bindings;
         private final Set<String> protectedKeys;

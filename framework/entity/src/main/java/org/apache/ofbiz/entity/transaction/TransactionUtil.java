@@ -972,6 +972,7 @@ public final class TransactionUtil implements Status {
         }
     }
 
+    // REFACTOR: Replace simple data class with record
     public static final class NoTransaction<V> implements Callable<V> {
         private final Callable<V> callable;
 
@@ -1001,6 +1002,7 @@ public final class TransactionUtil implements Status {
         }
     }
 
+    // REFACTOR: Replace simple data class with record
     public static final class InTransaction<V> implements Callable<V> {
         private final Callable<V> callable;
         private final String ifErrorMessage;

@@ -1117,6 +1117,7 @@ public class MacroFormRendererTest {
         }
     }
 
+    // REFACTOR: Replace simple data class with record
     static class FreemarkerRawString {
         private final String rawString;
 

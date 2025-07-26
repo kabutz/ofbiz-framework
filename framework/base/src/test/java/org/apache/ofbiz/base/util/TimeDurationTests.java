@@ -63,6 +63,7 @@ public class TimeDurationTests {
         }
     }
 
+    // REFACTOR: Replace simple data class with record
     private static final class DateTuple {
         private final int years;
         private final int months;

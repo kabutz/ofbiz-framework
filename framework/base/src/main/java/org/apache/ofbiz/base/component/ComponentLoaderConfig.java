@@ -90,6 +90,7 @@ public final class ComponentLoaderConfig {
     /**
      * Represents a simple component or a component directory.
      */
+    // REFACTOR: Replace simple data class with record
     public static final class ComponentDef {
         /** The location of the component. */
         private final Path location;

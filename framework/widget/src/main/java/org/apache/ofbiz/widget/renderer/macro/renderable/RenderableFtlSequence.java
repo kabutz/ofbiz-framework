@@ -24,6 +24,7 @@ import java.util.List;
 /**
  * Class for composing multiple RenderableFtl objects in a sequence.
  */
+// REFACTOR: Replace simple data class with record
 public final class RenderableFtlSequence implements RenderableFtl {
     private final List<RenderableFtl> renderableFtls;
 

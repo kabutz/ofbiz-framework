@@ -24,6 +24,7 @@ import java.util.Map;
 /**
  * Represents an FTL macro call.
  */
+// REFACTOR: Replace simple data class with record
 public final class RenderableFtlMacroCall implements RenderableFtl {
     private final String name;
     private final Map<String, Object> parameters;

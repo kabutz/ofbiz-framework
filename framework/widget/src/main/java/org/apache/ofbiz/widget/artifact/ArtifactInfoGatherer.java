@@ -112,6 +112,7 @@ import org.apache.ofbiz.widget.model.ModelWidgetVisitor;
 /**
  * An object that gathers artifact information from screen widgets.
  */
+// REFACTOR: Replace simple data class with record
 public final class ArtifactInfoGatherer implements ModelWidgetVisitor, ModelActionVisitor {
 
     private final ArtifactInfoContext infoContext;

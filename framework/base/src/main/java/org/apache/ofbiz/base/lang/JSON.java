@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /** A JSON object. */
 @ThreadSafe
+// REFACTOR: Replace simple data class with record
 public final class JSON {
 
     // TODO: Find a generic way to modify MAPPER options

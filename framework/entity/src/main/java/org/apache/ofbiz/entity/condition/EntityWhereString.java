@@ -42,6 +42,7 @@ import org.apache.ofbiz.entity.model.ModelEntity;
  * encapsulate where conditions and don't require you to directly write SQL.
  */
 @SuppressWarnings("serial")
+// REFACTOR: Replace simple data class with record
 public final class EntityWhereString implements EntityCondition {
     /** The raw SQL string that is embedded.  */
     private final String sqlString;

@@ -46,6 +46,7 @@ import org.apache.ofbiz.service.ServiceUtil;
 /**
  * An implementation of the <code>ScriptHelper</code> interface.
  */
+// REFACTOR: Replace simple data class with record
 public final class ScriptHelperImpl implements ScriptHelper {
 
     private static final String MODULE = ScriptHelperImpl.class.getName();

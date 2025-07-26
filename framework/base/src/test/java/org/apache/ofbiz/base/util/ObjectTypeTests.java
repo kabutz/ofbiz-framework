@@ -80,6 +80,7 @@ public class ObjectTypeTests {
         sqlDt = new java.sql.Date(cal.getTimeInMillis());
     }
 
+    // REFACTOR: Replace simple data class with record
     public static class LocaleData {
         private final Locale goodLocale;
         private final TimeZone goodTimeZone;

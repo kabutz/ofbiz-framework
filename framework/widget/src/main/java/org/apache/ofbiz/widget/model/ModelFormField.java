@@ -4837,6 +4837,7 @@ public final class ModelFormField {
         }
     }
 
+    // REFACTOR: Replace simple data class with record
     public static class OptionValue {
         private final String description;
         private final String key;

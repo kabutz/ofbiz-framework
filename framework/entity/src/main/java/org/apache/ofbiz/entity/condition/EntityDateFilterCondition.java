@@ -35,6 +35,7 @@ import org.apache.ofbiz.entity.model.ModelEntity;
  * This is used to filter rows that are valid in a particular range.
  */
 @SuppressWarnings("serial")
+// REFACTOR: Replace simple data class with record
 public final class EntityDateFilterCondition implements EntityCondition {
     /** The column containing dates before which a row is considered invalid.  */
     private final String fromDateName;

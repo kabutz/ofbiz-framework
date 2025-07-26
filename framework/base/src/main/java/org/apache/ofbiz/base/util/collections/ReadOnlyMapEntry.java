@@ -26,6 +26,7 @@ import org.apache.ofbiz.base.util.UtilObject;
 /** this class can go away when ofbiz switches to java 1.6, replaced by
  *  AbstractMap.SimpleImmutableEntry
  */
+// REFACTOR: Replace simple data class with record
 public class ReadOnlyMapEntry<K, V> implements Map.Entry<K, V> {
     private final K key;
     private final V value;

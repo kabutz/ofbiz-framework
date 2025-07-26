@@ -31,6 +31,7 @@ import org.apache.ofbiz.widget.model.ModelForm;
 import org.apache.ofbiz.widget.renderer.FormRenderer;
 import org.apache.ofbiz.widget.renderer.Paginator;
 import org.apache.ofbiz.widget.renderer.html.HtmlWidgetRenderer;
+import org.apache.ofbiz.widget.renderer.macro.renderable.RenderableFtl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -131,6 +132,7 @@ public class RefactoringTasks {
      * {@link GenericMapEntry}
      * {@link ModelInfo}
      * {@link ModelViewEntity.ModelMemberEntity}
+     * {@link ScriptUtil.ProtectedBindings}
      */
     public static void task5_replaceDataClassesWithRecords() {
     }
@@ -158,9 +160,11 @@ public class RefactoringTasks {
      * {@link AbstractCursorHandler}
      * {@link SanitizerCustomPolicy}
      * {@link Converter}
+     * {@link RenderableFtl}
      */
     public static void task7_sealedClasses() {
     }
+
 
     /**
      * // Java 18

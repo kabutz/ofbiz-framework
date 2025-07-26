@@ -141,6 +141,7 @@ public final class ModelIndex extends ModelChild {
         return root;
     }
 
+    // REFACTOR: Replace simple data class with record
     public static final class Field {
         private final String fieldName;
         private final Function function;

@@ -43,6 +43,7 @@ import org.w3c.dom.Element;
  *
  */
 @SuppressWarnings("serial")
+// REFACTOR: Replace simple data class with record
 public class ModelFieldTypeReader implements Serializable {
 
     private static final String MODULE = ModelFieldTypeReader.class.getName();

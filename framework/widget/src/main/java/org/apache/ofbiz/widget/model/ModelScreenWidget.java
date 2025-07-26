@@ -118,6 +118,7 @@ public abstract class ModelScreenWidget extends ModelWidget {
         return this.modelScreen;
     }
 
+    // REFACTOR: Replace simple data class with record
     public static final class SectionsRenderer implements Map<String, ModelScreenWidget> {
         private final Map<String, ModelScreenWidget> sectionMap;
         private final ScreenStringRenderer screenStringRenderer;

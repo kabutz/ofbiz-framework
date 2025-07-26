@@ -25,6 +25,7 @@ import freemarker.cache.CacheStorage;
 /**
  * A custom cache wrapper for caching FreeMarker templates
  */
+// REFACTOR: Replace simple data class with record
 public class OfbizCacheStorage implements CacheStorage {
     //can't have global cache because names/keys are relative to the webapp
     private final UtilCache<Object, Object> localCache;

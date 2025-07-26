@@ -20,6 +20,7 @@ package org.apache.ofbiz.widget.renderer.macro.renderable;
 
 import java.util.function.Consumer;
 
+// REFACTOR: Replace simple data class with record
 public final class RenderableFtlString implements RenderableFtl {
     private final String ftlString;
 

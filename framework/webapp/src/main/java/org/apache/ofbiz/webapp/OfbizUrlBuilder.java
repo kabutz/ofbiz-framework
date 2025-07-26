@@ -39,6 +39,7 @@ import org.xml.sax.SAXException;
 /**
  * OFBiz URL builder.
  */
+// REFACTOR: Replace simple data class with record
 public final class OfbizUrlBuilder {
 
     private static final String MODULE = OfbizUrlBuilder.class.getName();

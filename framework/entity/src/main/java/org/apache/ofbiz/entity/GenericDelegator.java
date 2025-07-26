@@ -2787,6 +2787,7 @@ public class GenericDelegator implements Delegator {
         this.testMode = true;
     }
 
+    // REFACTOR: Replace simple data class with record
     public static final class TestOperation {
         private final OperationType operation;
         private final GenericValue value;
