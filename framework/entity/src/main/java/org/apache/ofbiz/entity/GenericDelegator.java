@@ -148,6 +148,7 @@ public class GenericDelegator implements Delegator {
             return;
         }
         List<String> curValList = getUserIdentifierStack();
+        // REFACTOR: Use sequenced collection method instead
         curValList.add(0, userIdentifier);
     }
 
@@ -156,6 +157,7 @@ public class GenericDelegator implements Delegator {
         if (curValList.isEmpty()) {
             return null;
         }
+        // REFACTOR: Use sequenced collection method instead
         return curValList.remove(0);
     }
 
@@ -178,6 +180,7 @@ public class GenericDelegator implements Delegator {
             return;
         }
         List<String> curValList = getSessionIdentifierStack();
+        // REFACTOR: Use sequenced collection method instead
         curValList.add(0, sessionIdentifier);
     }
 
@@ -186,6 +189,7 @@ public class GenericDelegator implements Delegator {
         if (curValList.isEmpty()) {
             return null;
         }
+        // REFACTOR: Use sequenced collection method instead
         return curValList.remove(0);
     }
 
@@ -2872,12 +2876,14 @@ public class GenericDelegator implements Delegator {
     @Override
     public String getCurrentSessionIdentifier() {
         List<String> curValList = getSessionIdentifierStack();
+        // REFACTOR: Use sequenced collection method instead
         return !curValList.isEmpty() ? curValList.get(0) : null;
     }
 
     @Override
     public String getCurrentUserIdentifier() {
         List<String> curValList = getUserIdentifierStack();
+        // REFACTOR: Use sequenced collection method instead
         return !curValList.isEmpty() ? curValList.get(0) : null;
     }
 }

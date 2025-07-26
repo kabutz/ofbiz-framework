@@ -114,6 +114,7 @@ public class EntityConditionBuilder extends BuilderSupport {
             conditionList.add(EntityCondition.makeCondition(entry.getKey(), operator, entry.getValue()));
         }
         if (conditionList.size() == 1) {
+            // REFACTOR: Use sequenced collection method instead
             return new ConditionHolder(conditionList.get(0));
         }
         return new ConditionHolder(EntityCondition.makeCondition(conditionList));

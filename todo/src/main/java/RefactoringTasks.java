@@ -1,10 +1,38 @@
-import org.apache.ofbiz.entity.config.model.Datasource;
 import org.apache.ofbiz.entity.model.ModelEntity;
+import org.apache.ofbiz.entity.model.ModelReader;
+import org.apache.ofbiz.base.component.ComponentLoaderConfig;
+import org.apache.ofbiz.base.concurrent.ConstantFuture;
+import org.apache.ofbiz.base.conversion.Converters;
+import org.apache.ofbiz.base.start.Config;
+import org.apache.ofbiz.base.util.collections.FlexibleServletAccessor;
+import org.apache.ofbiz.base.util.collections.GenericMap;
+import org.apache.ofbiz.base.util.collections.GenericMapEntry;
+import org.apache.ofbiz.base.util.ScriptHelper;
+import org.apache.ofbiz.base.util.ScriptUtil;
+import org.apache.ofbiz.base.util.SSLUtil;
+import org.apache.ofbiz.base.util.UtilNumber;
+import org.apache.ofbiz.base.util.UtilProperties;
+import org.apache.ofbiz.base.util.UtilTimer;
+import org.apache.ofbiz.entity.condition.EntityComparisonOperator;
+import org.apache.ofbiz.entity.condition.EntityConditionVisitor;
+import org.apache.ofbiz.entity.DelegatorFactory;
+import org.apache.ofbiz.entity.finder.EntityFinderUtil;
+import org.apache.ofbiz.entity.GenericEntity;
+import org.apache.ofbiz.entity.jdbc.AbstractCursorHandler;
+import org.apache.ofbiz.entity.model.ModelFieldTypeReader;
+import org.apache.ofbiz.entity.model.ModelInfo;
+import org.apache.ofbiz.entity.model.ModelUtil;
+import org.apache.ofbiz.entity.model.ModelViewEntity;
+import org.apache.ofbiz.entity.transaction.TransactionUtil;
+import org.apache.ofbiz.webapp.AfterLoginEvents;
+import org.apache.ofbiz.webapp.control.RequestHandler;
+import org.apache.ofbiz.webapp.event.CoreEvents;
+import org.apache.ofbiz.widget.renderer.FormRenderer;
+
 import org.w3c.dom.Element;
 
-import java.io.PrintWriter;
-import java.net.URL;
 import java.util.*;
+import javax.transaction.Transaction;
 
 public class RefactoringTasks {
     public static void main(String... args) {
@@ -48,8 +76,8 @@ public class RefactoringTasks {
     /**
      * // Java 10 & 11
      * Replace all the local variable declarations with "var" (JEP 286 and 323)
-     * {@link org.apache.ofbiz.entity.model.ModelFieldTypeReader#createFieldTypeCache(Element, String)}
-     * {@link org.apache.ofbiz.widget.renderer.FormRenderer#renderHeaderRow(Appendable, Map)}
+     * {@link ModelFieldTypeReader#createFieldTypeCache(Element, String)}
+     * {@link FormRenderer#renderHeaderRow(Appendable, Map)}
      *
      */
     public static void task1_localVariableVar() {
@@ -58,8 +86,8 @@ public class RefactoringTasks {
     /**
      * // Java 11
      * String.repeat() can be used
-     * {@link org.apache.ofbiz.entity.GenericEntity#writeXmlText(PrintWriter, String)}
-     * {@link org.apache.ofbiz.base.util.UtilTimer#timerString(int, String)}
+     * {@link GenericEntity#writeXmlText(PrintWriter, String)}
+     * {@link UtilTimer#timerString(int, String)}
      */
     public static void task2_StringRepeat() {
         System.out.println("-:".repeat(10));
@@ -68,10 +96,10 @@ public class RefactoringTasks {
     /**
      * // Java 14
      * Replace old style switch with switch expressions (Standard) - JEP 361
-     * {@link org.apache.ofbiz.base.component.ComponentLoaderConfig.ComponentDef#of(Element, URL)}
-     * {@link org.apache.ofbiz.base.start.Config#getDefaultLocale(Properties, String)}
-     * {@link org.apache.ofbiz.base.util.SSLUtil#getHostnameVerifier(int)}
-     * {@link org.apache.ofbiz.entity.transaction.TransactionUtil#getTransactionStateString(int)}
+     * {@link ComponentLoaderConfig.ComponentDef#of(Element, URL)}
+     * {@link Config#getDefaultLocale(Properties, String)}
+     * {@link SSLUtil#getHostnameVerifier(int)}
+     * {@link TransactionUtil#getTransactionStateString(int)}
      */
     public static void task3_switchExpressions() {
     }
@@ -79,11 +107,11 @@ public class RefactoringTasks {
     /**
      * // Java 15
      * Replace fragmented Strings with Text Blocks - JEP 378
-     * {@link org.apache.ofbiz.webapp.AfterLoginEvents}}
-     * {@link org.apache.ofbiz.base.util.ScriptUtil#isSafeScript(String, String)}}
-     * {@link org.apache.ofbiz.base.util.UtilNumber#RULE_SET_EN_US}
-     * {@link org.apache.ofbiz.base.util.UtilNumber#RULE_SET_EN_IN}
-     * {@link org.apache.ofbiz.base.util.UtilNumber#RULE_SET_TH_TH}
+     * {@link AfterLoginEvents}
+     * {@link ScriptUtil#isSafeScript(String, String)}
+     * {@link UtilNumber#RULE_SET_EN_US}
+     * {@link UtilNumber#RULE_SET_EN_IN}
+     * {@link UtilNumber#RULE_SET_TH_TH}
      */
     public static void task4_textBlocks() {
     }
@@ -91,12 +119,12 @@ public class RefactoringTasks {
     /**
      * // Java 16
      * Replace simple data classes with records - JEP 395
-     * {@link org.apache.ofbiz.base.concurrent.ConstantFuture}
-     * {@link org.apache.ofbiz.base.conversion.Converters.PassThruConverter}
-     * {@link org.apache.ofbiz.entity.DelegatorFactory.DelegatorConfigurable}
-     * {@link org.apache.ofbiz.base.util.collections.GenericMapEntry}
-     * {@link org.apache.ofbiz.entity.model.ModelInfo}
-     * {@link org.apache.ofbiz.entity.model.ModelViewEntity.ModelMemberEntity}
+     * {@link ConstantFuture}
+     * {@link Converters.PassThruConverter}
+     * {@link DelegatorFactory.DelegatorConfigurable}
+     * {@link GenericMapEntry}
+     * {@link ModelInfo}
+     * {@link ModelViewEntity.ModelMemberEntity}
      */
     public static void task5_replaceDataClassesWithRecords() {
     }
@@ -104,12 +132,12 @@ public class RefactoringTasks {
     /**
      * // Java 16
      * Pattern Matching for instanceof - JEP 394
-     * {@link org.apache.ofbiz.webapp.event.CoreEvents#getObjectFromServicePath(String, Map)}
-     * {@link org.apache.ofbiz.entity.finder.EntityFinderUtil#expandFieldMapToContext(Map, Map, Map)}
-     * {@link org.apache.ofbiz.base.util.collections.GenericMap#equals(Object)}
-     * {@link org.apache.ofbiz.entity.model.ModelUtil#isPotentialLocalizedFields(ModelEntity, List)}
-     * {@link org.apache.ofbiz.base.util.collections.FlexibleServletAccessor#equals(Object)}
-     * {@link org.apache.ofbiz.entity.condition.EntityComparisonOperator#validateSql(ModelEntity, Object, Object)} (and others)
+     * {@link CoreEvents#getObjectFromServicePath(String, Map)}
+     * {@link EntityFinderUtil#expandFieldMapToContext(Map, Map, Map)}
+     * {@link GenericMap#equals(Object)}
+     * {@link ModelUtil#isPotentialLocalizedFields(ModelEntity, List)}
+     * {@link FlexibleServletAccessor#equals(Object)}
+     * {@link EntityComparisonOperator#validateSql(ModelEntity, Object, Object)} (and others)
      */
     public static void task6_patternMatchingForInstanceof() {
     }
@@ -117,24 +145,30 @@ public class RefactoringTasks {
     /**
      * // Java 17
      * Tighten up hierarchies with sealed classes - JEP 409
-     * {@link org.apache.ofbiz.entity.jdbc.AbstractCursorHandler}
+     * {@link AbstractCursorHandler}
      */
     public static void task7_sealedClasses() {
     }
 
     /**
      * // Java 18
-     * REFACTOR: Code Snippets in Java API Documentation - JEP 413
-     *
-     * @see EntityConditionVisitor
-     * @see ScriptHelper
+     * Code Snippets in Java API Documentation - JEP 413
+     * <p>
+     * {@link EntityConditionVisitor}
+     * {@link ScriptHelper}
      */
     public static void task8_codeSnippetsInAPIDocumentation() {
     }
 
     /**
      * // Java 21
-     * REFACTOR: Sequenced Collections - JEP 431
+     * Use sequenced collection method instead - JEP 431
+     * {@link ModelEntity#getOnlyPk()}
+     * {@link ModelEntity#createEoModelMap(String, String, Set, ModelReader)}
+     * {@link RequestHandler#getRequestUri(String) (4x)}
+     * {@link TransactionUtil#pushSuspendedTransaction(Transaction)}
+     * {@link TransactionUtil#popSuspendedTransaction()}
+     * {@link UtilProperties.UtilResourceBundle#getBundle(String, Locale, ClassLoader)}
      */
     public static void task9_sequencedCollections() {
     }
@@ -184,8 +218,8 @@ public class RefactoringTasks {
      * // Java 24
      * REFACTOR: Stream Gatherers - JEP 485
      *
-     * @see org.apache.ofbiz.base.component.ComponentConfig#collectElements(Element, String, BiFunction)  (maybe)
-     * @see org.apache.ofbiz.service.ModelService#allowHtmlValidation(Map, Map, Locale)
+     * @see ComponentConfig#collectElements(Element, String, BiFunction)  (maybe)
+     * @see ModelService#allowHtmlValidation(Map, Map, Locale)
      */
     public static void task15_streamGatherers() {
     }

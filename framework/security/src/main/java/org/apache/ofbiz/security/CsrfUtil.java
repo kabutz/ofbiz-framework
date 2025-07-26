@@ -229,9 +229,11 @@ public final class CsrfUtil {
         if (UtilValidate.isNotEmpty(webappInfos)) {
             try {
                 if (StringUtils.countMatches(requestUri, "/") == 1) {
+                    // REFACTOR: Use sequenced collection method instead
                     requestMap = ConfigXMLReader.getControllerConfig(webappInfos.get(0)).getRequestMapMap()
                             .get(requestUri.substring(0, requestUri.indexOf("/")));
                 } else {
+                    // REFACTOR: Use sequenced collection method instead
                     requestMap = ConfigXMLReader.getControllerConfig(webappInfos.get(0)).getRequestMapMap()
                             .get(requestUri);
                 }

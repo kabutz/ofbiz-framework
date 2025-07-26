@@ -229,6 +229,7 @@ public class ServiceEcaAction implements java.io.Serializable {
                         origErrorMessageList = new LinkedList<>();
                         result.put(ModelService.ERROR_MESSAGE_LIST, origErrorMessageList);
                     }
+                    // REFACTOR: Use sequenced collection method instead
                     origErrorMessageList.add(0, errorMessage);
                 }
             }

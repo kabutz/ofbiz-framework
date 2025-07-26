@@ -717,6 +717,7 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
                     + "] that does not have a single primary key field, instead has [" + pkFieldNameList.size() + "]");
         }
 
+        // REFACTOR: Use sequenced collection method instead
         String pkFieldName = pkFieldNameList.get(0);
         //if (this.get(pkFieldName) != null) {
             // don't throw exception, too much of a pain and usually intended: throw new IllegalArgumentException("Cannot setNextSeqId, pk field ["

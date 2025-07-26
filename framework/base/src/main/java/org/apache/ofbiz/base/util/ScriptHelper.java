@@ -31,8 +31,8 @@ import javax.script.ScriptException;
  * <code>partyValue = ofbiz.findOne("Party");</code><br>
  * while other languages might access it as a native method or function:<br>
  * <code>partyValue = findOne("Party");</code>
- *
  */
+// REFACTOR: Code Snippets in Java API Documentation
 public interface ScriptHelper {
 
     /**

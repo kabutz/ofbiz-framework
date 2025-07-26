@@ -822,6 +822,7 @@ public class FindServices {
         try (EntityListIterator it = (EntityListIterator) result.get("listIt")) {
             list = it.getPartialList(1, 1); // list starts at '1'
             if (UtilValidate.isNotEmpty(list)) {
+                // REFACTOR: Use sequenced collection method instead
                 item = list.get(0);
             }
         } catch (ClassCastException | NullPointerException | GenericEntityException e) {

@@ -367,6 +367,7 @@ public final class ModelServiceReader implements Serializable {
     private static void createGroupDefs(Element baseElement, ModelService service) {
         List<? extends Element> group = UtilXml.childElementList(baseElement, "group");
         if (UtilValidate.isNotEmpty(group)) {
+            // REFACTOR: Use sequenced collection method instead
             Element groupElement = group.get(0);
             groupElement.setAttribute("name", "_" + service.getName() + ".group");
             service.setInternalGroup(new GroupModel(groupElement));
@@ -693,6 +694,7 @@ public final class ModelServiceReader implements Serializable {
             // always clear out old ones; never append
             param.setValidators(new LinkedList<>());
 
+            // REFACTOR: Use sequenced collection method instead
             Element validate = validateElements.get(0);
             String methodName = validate.getAttribute("method").intern();
             String className = validate.getAttribute("class").intern();

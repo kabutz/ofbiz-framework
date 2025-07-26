@@ -48,6 +48,7 @@ public class MultivaluedMapContextAdapter<K, V> implements Map<K, V> {
 
     @Override
     public boolean containsValue(Object value) {
+        // REFACTOR: Use sequenced collection method instead
         return adaptee.values().stream()
                 .map(l -> l.get(0))
                 .anyMatch(value::equals);
@@ -89,6 +90,7 @@ public class MultivaluedMapContextAdapter<K, V> implements Map<K, V> {
 
     @Override
     public Collection<V> values() {
+        // REFACTOR: Use sequenced collection method instead
         return adaptee.values().stream()
                 .map(l -> l.get(0))
                 .collect(Collectors.toList());

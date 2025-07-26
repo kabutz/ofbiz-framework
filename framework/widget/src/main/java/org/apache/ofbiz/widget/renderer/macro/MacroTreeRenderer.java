@@ -175,6 +175,7 @@ public class MacroTreeRenderer implements TreeStringRenderer {
                 }
             } else {
                 context.put("processChildren", Boolean.TRUE);
+                // REFACTOR: Use sequenced collection method instead
                 String lastContentId = currentNodeTrail.remove(currentNodeTrail.size() - 1);
                 currentNodeTrailPiped = StringUtil.join(currentNodeTrail, "|");
                 if (currentNodeTrailPiped == null) {

@@ -372,6 +372,7 @@ public class ServiceMultiEventHandler implements EventHandler {
                         Debug.logError(e, "Could not rollback multi-service global transaction", MODULE);
                     }
                 }
+                // REFACTOR: Use sequenced collection method instead
                 errorMessages.add(0, errorPrefixStr);
                 errorMessages.add(errorSuffixStr);
                 StringBuilder errorBuf = new StringBuilder();

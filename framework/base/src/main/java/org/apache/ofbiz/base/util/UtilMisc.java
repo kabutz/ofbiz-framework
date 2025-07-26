@@ -282,6 +282,7 @@ public final class UtilMisc {
     }
 
     public static <T> T removeFirst(List<T> lst) {
+        // REFACTOR: Use sequenced collection method instead
         return lst.remove(0);
     }
 

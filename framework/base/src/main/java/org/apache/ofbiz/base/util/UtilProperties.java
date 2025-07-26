@@ -1046,6 +1046,7 @@ public final class UtilProperties implements Serializable {
                 UtilResourceBundle parentBundle = null;
                 int numProperties = 0;
                 while (!candidateLocales.isEmpty()) {
+                    // REFACTOR: Use sequenced collection method instead
                     Locale candidateLocale = candidateLocales.remove(candidateLocales.size() - 1);
                     // ResourceBundles are connected together as a singly-linked list
                     String lookupName = createResourceName(resource, candidateLocale, true);

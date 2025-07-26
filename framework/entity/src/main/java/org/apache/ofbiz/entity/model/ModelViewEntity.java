@@ -1156,6 +1156,7 @@ public class ModelViewEntity extends ModelEntity {
             if (complexAliasMembers.isEmpty()) {
                 return;
             } else if (complexAliasMembers.size() == 1) {
+                // REFACTOR: Use sequenced collection method instead
                 ComplexAliasMember complexAliasMember = complexAliasMembers.iterator().next();
                 complexAliasMember.makeAliasColName(colNameBuffer, fieldTypeBuffer, modelViewEntity, modelReader);
             } else {
@@ -1478,6 +1479,7 @@ public class ModelViewEntity extends ModelEntity {
         }
 
         public static Element makeViewEntityCondition(List<Element> children) {
+            // REFACTOR: Use sequenced collection method instead
             Document doc = children.get(0).getOwnerDocument();
             Element entityConditionElement = doc.createElement("entity-condition");
             for (Element child : children) {
@@ -1490,6 +1492,7 @@ public class ModelViewEntity extends ModelEntity {
         }
 
         public static Element makeViewEntityConditionList(String combine, List<Element> children) {
+            // REFACTOR: Use sequenced collection method instead
             Document doc = children.get(0).getOwnerDocument();
             Element conditionListElement = doc.createElement("condition-list");
             if (UtilValidate.isNotEmpty(combine)) {
@@ -1727,6 +1730,7 @@ public class ModelViewEntity extends ModelEntity {
                 return null;
             }
             if (this.conditionList.size() == 1) {
+                // REFACTOR: Use sequenced collection method instead
                 ViewCondition condition = this.conditionList.get(0);
                 return condition.createCondition(modelFieldTypeReader, entityAliasStack);
             }

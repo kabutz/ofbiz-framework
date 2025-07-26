@@ -129,6 +129,7 @@ public class GenericDAO {
      * @throws GenericEntityException
      */
     public int insertAll(List<GenericValue> entities) throws GenericEntityException {
+        // REFACTOR: Use sequenced collection method instead
         GenericEntity entity = entities.get(0);
         ModelEntity modelEntity = entity.getModelEntity();
 
@@ -527,6 +528,7 @@ public class GenericDAO {
                 }
             } else if (meResult.size() == 1) {
                 // Update existing value
+                // REFACTOR: Use sequenced collection method instead
                 meGenericValue = meResult.iterator().next();
             } else {
                 throw new GenericEntityException("Found more than one result for member entity " + meName + " in view "
@@ -1241,6 +1243,7 @@ public class GenericDAO {
               * find options)
              */
             if (selectFields != null && !selectFields.isEmpty()) {
+                // REFACTOR: Use sequenced collection method instead
                 ModelField firstSelectField = selectFields.get(0);
                 ModelViewEntity.ModelAlias firstModelAlias = modelViewEntity != null ? modelViewEntity.getAlias(firstSelectField.getName()) : null;
                 if (firstModelAlias != null && UtilValidate.isNotEmpty(firstModelAlias.getFunction())) {

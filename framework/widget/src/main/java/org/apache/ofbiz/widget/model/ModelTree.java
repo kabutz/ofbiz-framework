@@ -280,6 +280,7 @@ public class ModelTree extends ModelWidget {
             if (UtilValidate.isEmpty(trail)) {
                 throw new RuntimeException("Tree 'trail' value is empty.");
             }
+            // REFACTOR: Use sequenced collection method instead
             context.put("rootEntityId", trail.get(0));
             context.put(getDefaultPkName(context), trail.get(0));
         } else {

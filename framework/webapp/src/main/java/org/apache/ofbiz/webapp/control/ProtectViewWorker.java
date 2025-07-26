@@ -83,6 +83,7 @@ public final class ProtectViewWorker {
                                                                         .queryList();
                     String viewNameUserLoginId = viewNameId + userLoginId;
                     if (UtilValidate.isNotEmpty(tarpittedLoginViews)) {
+                        // REFACTOR: Use sequenced collection method instead
                         GenericValue tarpittedLoginView = tarpittedLoginViews.get(0);
                         Long tarpitReleaseDateTime = (Long) tarpittedLoginView.get("tarpitReleaseDateTime");
                         if (now < tarpitReleaseDateTime) {
@@ -93,6 +94,7 @@ public final class ProtectViewWorker {
                             return ":_protect_:" + tarpittedMessage;
                         }
                     }
+                    // REFACTOR: Use sequenced collection method instead
                     GenericValue protectedView = protectedViews.get(0);
                     // 1st hit ?
                     Long curMaxHits = HITS_BY_VIEW_ACCESSED.get(viewNameUserLoginId);

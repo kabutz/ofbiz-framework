@@ -405,6 +405,7 @@ public final class UtilHttp {
                 .collect(groupingBy(kv -> kv[0], mapping(kv -> kv[1], toList())));
 
         // Filter and canonicalize the parameter map.
+        // REFACTOR: Use sequenced collection method instead
         Function<List<String>, Object> canonicalize = val -> (val.size() == 1) ? val.get(0) : val;
         return allParams.entrySet().stream()
                 .filter(pair -> pred.test(pair.getKey()))
@@ -433,6 +434,7 @@ public final class UtilHttp {
                             params = params + s + " ";
                         } else if (UtilValidate.isUrlInString(s) && !s.isEmpty()) {
                             // if the string contains not only an URL => concatenate possible canonicalized before and after, w/o changing the URL
+                            // REFACTOR: Use sequenced collection method instead
                             String url = extractUrls(s).get(0); // There should be only 1 URL in a block, makes no sense else
                             int start = s.indexOf(url);
                             String after = (String) s.subSequence(start + url.length(), s.length());

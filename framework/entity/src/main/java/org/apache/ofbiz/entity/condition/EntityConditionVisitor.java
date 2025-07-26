@@ -102,6 +102,7 @@ package org.apache.ofbiz.entity.condition;
  *
  * @see EntityCondition
  */
+// REFACTOR: Code Snippets in Java API Documentation
 public interface EntityConditionVisitor {
     /**
      * Visits an entity NOT expression.

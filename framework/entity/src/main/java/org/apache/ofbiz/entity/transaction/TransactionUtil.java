@@ -615,8 +615,10 @@ public final class TransactionUtil implements Status {
 
     protected static void pushSuspendedTransaction(Transaction t) {
         List<Transaction> tl = getSuspendedTxStack();
+        // REFACTOR: Use sequenced collection method instead
         tl.add(0, t);
         List<Exception> stls = getSuspendedTxLocationsStack();
+        // REFACTOR: Use sequenced collection method instead
         stls.add(0, new Exception("TX Suspend Location"));
         // save the current transaction start stamp
         pushTransactionStartStamp(t);
@@ -629,8 +631,10 @@ public final class TransactionUtil implements Status {
             popTransactionStartStamp();
             List<Exception> stls = suspendedTxLocationStack.get();
             if (UtilValidate.isNotEmpty(stls)) {
+                // REFACTOR: Use sequenced collection method instead
                 stls.remove(0);
             }
+            // REFACTOR: Use sequenced collection method instead
             return tl.remove(0);
         }
         return null;
@@ -642,6 +646,7 @@ public final class TransactionUtil implements Status {
             tl.remove(t);
             List<Exception> stls = suspendedTxLocationStack.get();
             if (UtilValidate.isNotEmpty(stls)) {
+                // REFACTOR: Use sequenced collection method instead
                 stls.remove(0);
             }
             popTransactionStartStamp(t);
@@ -658,6 +663,7 @@ public final class TransactionUtil implements Status {
             el = new LinkedList<>();
             transactionBeginStackSave.set(el);
         }
+        // REFACTOR: Use sequenced collection method instead
         el.add(0, e);
 
         if (Debug.infoOn()) {
@@ -667,6 +673,7 @@ public final class TransactionUtil implements Status {
                 ctEl = new LinkedList<>();
                 allThreadsTransactionBeginStackSave.put(curThreadId, ctEl);
             }
+            // REFACTOR: Use sequenced collection method instead
             ctEl.add(0, e);
         }
     }
@@ -677,12 +684,14 @@ public final class TransactionUtil implements Status {
             Long curThreadId = Thread.currentThread().getId();
             List<Exception> ctEl = allThreadsTransactionBeginStackSave.get(curThreadId);
             if (UtilValidate.isNotEmpty(ctEl)) {
+                // REFACTOR: Use sequenced collection method instead
                 ctEl.remove(0);
             }
         }
         // then do the more reliable ThreadLocal one
         List<Exception> el = transactionBeginStackSave.get();
         if (UtilValidate.isNotEmpty(el)) {
+            // REFACTOR: Use sequenced collection method instead
             return el.remove(0);
         }
         return null;
@@ -811,12 +820,14 @@ public final class TransactionUtil implements Status {
             el = new LinkedList<>();
             setRollbackOnlyCauseSave.set(el);
         }
+        // REFACTOR: Use sequenced collection method instead
         el.add(0, e);
     }
 
     private static RollbackOnlyCause popSetRollbackOnlyCauseSave() {
         List<RollbackOnlyCause> el = setRollbackOnlyCauseSave.get();
         if (UtilValidate.isNotEmpty(el)) {
+            // REFACTOR: Use sequenced collection method instead
             return el.remove(0);
         }
         return null;

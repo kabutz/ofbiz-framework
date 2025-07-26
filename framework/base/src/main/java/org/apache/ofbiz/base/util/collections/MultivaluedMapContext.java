@@ -79,6 +79,7 @@ public class MultivaluedMapContext<K, V> extends MapContext<K, List<V>> {
      */
     public V getFirst(Object key) {
         List<V> res = get(key);
+        // REFACTOR: Use sequenced collection method instead
         return res == null ? null : res.get(0);
     }
 }

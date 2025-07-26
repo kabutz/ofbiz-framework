@@ -309,6 +309,7 @@ public final class EntityFinderUtil {
                 return null;
             }
             if (this.conditionList.size() == 1) {
+                // REFACTOR: Use sequenced collection method instead
                 Condition condition = this.conditionList.get(0);
                 return condition.createCondition(context, modelEntity, modelFieldTypeReader);
             }

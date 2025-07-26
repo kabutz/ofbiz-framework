@@ -152,6 +152,7 @@ public class ModelParam implements Serializable {
      */
     public String getPrimaryFailMessage(Locale locale) {
         if (UtilValidate.isNotEmpty(validators)) {
+            // REFACTOR: Use sequenced collection method instead
             return validators.get(0).getFailMessage(locale);
         }
         return null;

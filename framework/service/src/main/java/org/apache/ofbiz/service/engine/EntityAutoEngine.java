@@ -293,6 +293,7 @@ public final class EntityAutoEngine extends GenericAsyncEngine {
              */
             if (pkFieldNameOutOnly != null && pkFieldNameOutOnly.size() == 1) {
                 newEntity.setPKFields(parameters, true);
+                // REFACTOR: Use sequenced collection method instead
                 String pkFieldName = pkFieldNameOutOnly.get(0);
                 //if it's a fromDate, don't update it now, it's will be done next step
                 if (!"fromDate".equals(pkFieldName)) {

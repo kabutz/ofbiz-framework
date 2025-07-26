@@ -89,6 +89,7 @@ public class PortalPageWorker {
                                 .where("ownerUserLoginId", userLoginId, "originalPortalPageId", portalPage.getString("portalPageId"))
                                 .queryList();
                         if (UtilValidate.isNotEmpty(privatePortalPages)) {
+                            // REFACTOR: Use sequenced collection method instead
                             userPortalPages.add(privatePortalPages.get(0));
                         } else {
                             userPortalPages.add(portalPage);
