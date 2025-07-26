@@ -274,7 +274,7 @@ public class EntityTestSuite extends EntityTestCase {
                               .cache(true)
                               .queryList();
         assertEquals("Delegator findList returned one value", 1, testList.size());
-        testValue = testList.get(0);
+        testValue = testList.getFirst();
         assertEquals("Retrieved from cache value has the correct description", "Testing Type #Cache-2", testValue.getString("description"));
         // Test immutable
         try {
@@ -307,7 +307,7 @@ public class EntityTestSuite extends EntityTestCase {
                               .queryList();
         assertEquals("Delegator findList returned one value", 1, testList.size());
         // Test entity value remove operation updates the cache
-        testValue = testList.get(0);
+        testValue = testList.getFirst();
         testValue = (GenericValue) testValue.clone();
         testValue.remove();
         testList = EntityQuery.use(delegator)

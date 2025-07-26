@@ -207,11 +207,11 @@ public class EntityCryptoTestSuite extends EntityTestCase {
         condition = makeSubSelectCondition(nanoTime);
         results = EntityQuery.use(delegator).from("TestingCrypto").where(condition).orderBy("testingCryptoId").queryList();
         assertEquals(1, results.size());
-        assertEquals("SUB_1", results.get(0).get("testingCryptoId"));
+        assertEquals("SUB_1", results.getFirst().get("testingCryptoId"));
 
         condition = EntityCondition.makeCondition("testingCryptoId", EntityOperator.EQUALS, makeSubSelect(nanoTime));
         results = EntityQuery.use(delegator).from("TestingCrypto").where(condition).orderBy("testingCryptoId").queryList();
         assertEquals(1, results.size());
-        assertEquals("SUB_1", results.get(0).get("testingCryptoId"));
+        assertEquals("SUB_1", results.getFirst().get("testingCryptoId"));
     }
 }

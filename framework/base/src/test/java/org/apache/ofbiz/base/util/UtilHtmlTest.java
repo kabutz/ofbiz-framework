@@ -29,7 +29,7 @@ public class UtilHtmlTest {
     @Test
     public void parseHtmlFragmentUnclosedDiv() {
         List<String> errorList = UtilHtml.hasUnclosedTag("<div><div></div>");
-        assertEquals(true, errorList.get(0).contains("Unexpected close tag"));
+        assertEquals(true, errorList.getFirst().contains("Unexpected close tag"));
     }
 
     @Test

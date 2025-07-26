@@ -299,7 +299,7 @@ public abstract class GenericTestCaseBase extends TestCase {
         }
         while (!wantedExtra.isEmpty()) {
             assertTrue(label + ":wanted-extra(" + wantedExtra + ")-hasNext", wantedIt.hasNext());
-            assertEquals(label + ":wanted-extra(" + wantedExtra + ")", wantedExtra.remove(0), wantedIt.next());
+            assertEquals(label + ":wanted-extra(" + wantedExtra + ")", wantedExtra.removeFirst(), wantedIt.next());
             if (removeWanted) {
                 wantedIt.remove();
             }
@@ -307,7 +307,7 @@ public abstract class GenericTestCaseBase extends TestCase {
         assertFalse(label + ":wanted-done", wantedIt.hasNext());
         while (!gotExtra.isEmpty()) {
             assertTrue(label + ":got-extra(" + gotExtra + ")-hasNext", gotIt.hasNext());
-            assertEquals(label + ":got-extra(" + gotExtra + ")", gotExtra.remove(0), gotIt.next());
+            assertEquals(label + ":got-extra(" + gotExtra + ")", gotExtra.removeFirst(), gotIt.next());
             if (removeGot) {
                 gotIt.remove();
             }

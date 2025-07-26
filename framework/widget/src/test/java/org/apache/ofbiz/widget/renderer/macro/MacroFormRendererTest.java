@@ -998,7 +998,7 @@ public class MacroFormRendererTest {
                 ftlWriter.processFtlString(withNotNull(), withNull(), withCapture(macros));
 
                 assertThat(macros, not(empty()));
-                final String macro = macros.get(0);
+                final String macro = macros.getFirst();
                 assertThat(macro, startsWith("<@" + expectedName));
 
                 expectedAttributes.forEach((name, value) -> assertMacroAttribute(macro, name, value));

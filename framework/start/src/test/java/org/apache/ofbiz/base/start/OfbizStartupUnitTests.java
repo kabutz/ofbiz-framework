@@ -82,6 +82,6 @@ public class OfbizStartupUnitTests {
         List<StartupCommand> startupCommands = StartupCommandUtil.parseOfbizCommands(multiArgCommand);
 
         assertThat(startupCommands.size(), equalTo(1));
-        assertThat(startupCommands.get(0).getProperties().size(), equalTo(3));
+        assertThat(startupCommands.getFirst().getProperties().size(), equalTo(3));
     }
 }

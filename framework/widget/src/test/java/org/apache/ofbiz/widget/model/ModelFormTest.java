@@ -88,7 +88,7 @@ public class ModelFormTest {
     private static CommonWidgetModels.Parameter getParameterOnly(ModelForm.UpdateArea updateArea) {
         Assert.assertNotNull(updateArea.getParameterList());
         Assert.assertEquals("Parameter size should be one", updateArea.getParameterList().size(), 1);
-        return updateArea.getParameterList().get(0);
+        return updateArea.getParameterList().getFirst();
     }
 
 }

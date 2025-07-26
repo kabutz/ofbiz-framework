@@ -46,7 +46,7 @@ public class UtilCodecTests {
         assertEquals("<script>alert(\"XSS vector\");</script>", canonicalizedXssVector);
         assertEquals(1, errorList.size());
         assertEquals("In field [fieldName] less-than (<) and greater-than (>) symbols are not allowed.",
-                errorList.get(0));
+                errorList.getFirst());
     }
 
     @Test
@@ -104,6 +104,6 @@ public class UtilCodecTests {
         assertEquals("<script>alert('XSS vector');</script>", canonicalizedXssVector);
         assertEquals(1, errorList.size());
         assertEquals("In field [fieldName] by our input policy, your input has not been accepted for security reason. "
-                + "Please check and modify accordingly, thanks.", errorList.get(0));
+                + "Please check and modify accordingly, thanks.", errorList.getFirst());
     }
 }

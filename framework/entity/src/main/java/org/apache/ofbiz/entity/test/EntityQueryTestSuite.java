@@ -82,10 +82,10 @@ public class EntityQueryTestSuite extends EntityTestCase {
 
         assertEquals("where(): Number of records fetched by Entity Engine and by EntityQuery matched", listByEntityEngine.size(),
                 listByEntityQuery.size());
-        assertEquals("where(): Record matched = testingTypeId", listByEntityEngine.get(0).getString("testingTypeId"),
-                listByEntityQuery.get(0).getString("testingTypeId"));
-        assertEquals("where(): Record matched = description", listByEntityEngine.get(0).getString("description"),
-                listByEntityQuery.get(0).getString("description"));
+        assertEquals("where(): Record matched = testingTypeId", listByEntityEngine.getFirst().getString("testingTypeId"),
+                listByEntityQuery.getFirst().getString("testingTypeId"));
+        assertEquals("where(): Record matched = description", listByEntityEngine.getFirst().getString("description"),
+                listByEntityQuery.getFirst().getString("description"));
     }
 
     /**
@@ -107,10 +107,10 @@ public class EntityQueryTestSuite extends EntityTestCase {
 
         assertEquals("queryList(): Number of records fetched by Entity Engine and by EntityQuery matched", listByEntityEngine.size(),
                 listByEntityQuery.size());
-        assertEquals("queryList(): Record matched = testingTypeId", listByEntityEngine.get(0).getString("testingTypeId"),
-                listByEntityQuery.get(0).getString("testingTypeId"));
-        assertEquals("queryList(): Record matched = description", listByEntityEngine.get(0).getString("description"),
-                listByEntityQuery.get(0).getString("description"));
+        assertEquals("queryList(): Record matched = testingTypeId", listByEntityEngine.getFirst().getString("testingTypeId"),
+                listByEntityQuery.getFirst().getString("testingTypeId"));
+        assertEquals("queryList(): Record matched = description", listByEntityEngine.getFirst().getString("description"),
+                listByEntityQuery.getFirst().getString("description"));
     }
 
     /**
@@ -200,9 +200,9 @@ public class EntityQueryTestSuite extends EntityTestCase {
         List<GenericValue> selectByEntityQuery = EntityQuery.use(delegator).select("description").from("TestingType")
                 .orderBy("description").queryList();
 
-        assertEquals("select(): Record matched = description", selectByEntityEngine.get(0).getString("description"),
-                selectByEntityQuery.get(0).getString("description"));
-        assertNull(selectByEntityQuery.get(0).getString("testingTypeId"));
+        assertEquals("select(): Record matched = description", selectByEntityEngine.getFirst().getString("description"),
+                selectByEntityQuery.getFirst().getString("description"));
+        assertNull(selectByEntityQuery.getFirst().getString("testingTypeId"));
     }
 
     /**
@@ -229,9 +229,9 @@ public class EntityQueryTestSuite extends EntityTestCase {
 
         assertEquals("distinct(): Number of records found by EntityEngine method are matching with records found by EntityQuery distinct method",
                 distinctByEntityEngine.size(), distinctByEntityQuery.size());
-        assertEquals("distinct(): Record matched = description", distinctByEntityEngine.get(0).getString("description"),
-                distinctByEntityQuery.get(0).getString("description"));
-        assertNull(distinctByEntityQuery.get(0).getString("testingTypeId"));
+        assertEquals("distinct(): Record matched = description", distinctByEntityEngine.getFirst().getString("description"),
+                distinctByEntityQuery.getFirst().getString("description"));
+        assertNull(distinctByEntityQuery.getFirst().getString("testingTypeId"));
     }
 
     /**
@@ -254,10 +254,10 @@ public class EntityQueryTestSuite extends EntityTestCase {
                 EntityOperator.LIKE, "orderBy-%")).orderBy("description").queryList();
 
         assertEquals("orderBy(): Number of records found by both the methods matched", orderedByEntityEngine.size(), orderedByEntityQuery.size());
-        assertEquals("orderBy(): Record matched = testingTypeId", orderedByEntityEngine.get(0).getString("testingTypeId"),
-                orderedByEntityQuery.get(0).getString("testingTypeId"));
-        assertEquals("orderBy(): Record matched = description", orderedByEntityEngine.get(0).getString("description"),
-                orderedByEntityQuery.get(0).getString("description"));
+        assertEquals("orderBy(): Record matched = testingTypeId", orderedByEntityEngine.getFirst().getString("testingTypeId"),
+                orderedByEntityQuery.getFirst().getString("testingTypeId"));
+        assertEquals("orderBy(): Record matched = description", orderedByEntityEngine.getFirst().getString("description"),
+                orderedByEntityQuery.getFirst().getString("description"));
     }
 
     /**
@@ -298,14 +298,14 @@ public class EntityQueryTestSuite extends EntityTestCase {
 
         assertEquals("filterByDate(): Number of records found by both the methods matched", filteredByEntityUtil.size(),
                 filteredByEntityQuery.size());
-        assertEquals("filterByDate(): Record matched = testingNodeId", filteredByEntityUtil.get(0).getString("testingNodeId"),
-                filteredByEntityQuery.get(0).getString("testingNodeId"));
-        assertEquals("filterByDate(): Record matched = testingId", filteredByEntityUtil.get(0).getString("testingId"),
-                filteredByEntityQuery.get(0).getString("testingId"));
-        assertEquals("filterByDate(): Record matched = fromDate", filteredByEntityUtil.get(0).getString("fromDate"),
-                filteredByEntityQuery.get(0).getString("fromDate"));
-        assertEquals("filterByDate(): Record matched = thruDate", filteredByEntityUtil.get(0).getString("thruDate"),
-                filteredByEntityQuery.get(0).getString("thruDate"));
+        assertEquals("filterByDate(): Record matched = testingNodeId", filteredByEntityUtil.getFirst().getString("testingNodeId"),
+                filteredByEntityQuery.getFirst().getString("testingNodeId"));
+        assertEquals("filterByDate(): Record matched = testingId", filteredByEntityUtil.getFirst().getString("testingId"),
+                filteredByEntityQuery.getFirst().getString("testingId"));
+        assertEquals("filterByDate(): Record matched = fromDate", filteredByEntityUtil.getFirst().getString("fromDate"),
+                filteredByEntityQuery.getFirst().getString("fromDate"));
+        assertEquals("filterByDate(): Record matched = thruDate", filteredByEntityUtil.getFirst().getString("thruDate"),
+                filteredByEntityQuery.getFirst().getString("thruDate"));
     }
 
     /**
@@ -328,10 +328,10 @@ public class EntityQueryTestSuite extends EntityTestCase {
         List<GenericValue> maxRowsByEntityQuery = EntityQuery.use(delegator).from("TestingType").maxRows(2).orderBy("description").queryList();
 
         assertEquals("maxRows(): Number of records found by both the methods matched", maxRowsByEntityEngine.size(), maxRowsByEntityQuery.size());
-        assertEquals("maxRows(): Record matched = testingTypeId", maxRowsByEntityEngine.get(0).getString("testingTypeId"),
-                maxRowsByEntityQuery.get(0).getString("testingTypeId"));
-        assertEquals("maxRows(): Record matched = description", maxRowsByEntityEngine.get(0).getString("description"),
-                maxRowsByEntityQuery.get(0).getString("description"));
+        assertEquals("maxRows(): Record matched = testingTypeId", maxRowsByEntityEngine.getFirst().getString("testingTypeId"),
+                maxRowsByEntityQuery.getFirst().getString("testingTypeId"));
+        assertEquals("maxRows(): Record matched = description", maxRowsByEntityEngine.getFirst().getString("description"),
+                maxRowsByEntityQuery.getFirst().getString("description"));
     }
 
     /**
@@ -356,10 +356,10 @@ public class EntityQueryTestSuite extends EntityTestCase {
 
         assertEquals("fetchSize(): Number of records found by both the methods matched", fetchSizeByEntityEngine.size(),
                 fetchSizeByEntityQuery.size());
-        assertEquals("fetchSize(): Record matched = testingTypeId", fetchSizeByEntityEngine.get(0).getString("testingTypeId"),
-                fetchSizeByEntityQuery.get(0).getString("testingTypeId"));
-        assertEquals("fetchSize(): Record matched = description", fetchSizeByEntityEngine.get(0).getString("description"),
-                fetchSizeByEntityQuery.get(0).getString("description"));
+        assertEquals("fetchSize(): Record matched = testingTypeId", fetchSizeByEntityEngine.getFirst().getString("testingTypeId"),
+                fetchSizeByEntityQuery.getFirst().getString("testingTypeId"));
+        assertEquals("fetchSize(): Record matched = description", fetchSizeByEntityEngine.getFirst().getString("description"),
+                fetchSizeByEntityQuery.getFirst().getString("description"));
     }
 
     /**

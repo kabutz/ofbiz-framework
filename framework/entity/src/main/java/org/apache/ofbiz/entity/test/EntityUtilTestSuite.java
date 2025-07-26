@@ -56,12 +56,12 @@ public class EntityUtilTestSuite extends EntityTestCase {
         List<GenericValue> newValues = prepareGenericValueList();
         List<String> descriptionList = EntityUtil.getFieldListFromEntityList(newValues, "description", false);
         assertEquals("Get not distinct field list from " + TEST_COUNT + " entity", TEST_COUNT, descriptionList.size());
-        assertEquals("Get first description value", "Description 0", descriptionList.get(0));
+        assertEquals("Get first description value", "Description 0", descriptionList.getFirst());
         assertEquals("Get tens description value", "Description 0", descriptionList.get(10));
 
         descriptionList = EntityUtil.getFieldListFromEntityList(newValues, "description", true);
         assertEquals("Get distinct field list from " + TEST_COUNT + " entity, modulo 10 values", 10, descriptionList.size());
-        assertEquals("Get first description value", "Description 0", descriptionList.get(0));
+        assertEquals("Get first description value", "Description 0", descriptionList.getFirst());
     }
 
     /**
@@ -72,11 +72,11 @@ public class EntityUtilTestSuite extends EntityTestCase {
         EntityExpr condition = EntityCondition.makeCondition("description", "Description 0");
         List<GenericValue> filteredValues = EntityUtil.filterByCondition(newValues, condition);
         assertEquals("Filter on 10% description condition " + TEST_COUNT + " entity", TEST_COUNT / 10, filteredValues.size());
-        assertEquals("Get first description value", "Description 0", filteredValues.get(0).get("description"));
+        assertEquals("Get first description value", "Description 0", filteredValues.getFirst().get("description"));
 
         filteredValues = EntityUtil.filterOutByCondition(newValues, condition);
         assertEquals("Filter out on 10% description condition " + TEST_COUNT + " entity", TEST_COUNT - TEST_COUNT / 10, filteredValues.size());
-        assertEquals("Get first description value", "Description 1", filteredValues.get(0).get("description"));
+        assertEquals("Get first description value", "Description 1", filteredValues.getFirst().get("description"));
     }
 
     /**
