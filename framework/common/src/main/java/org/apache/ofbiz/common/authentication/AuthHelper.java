@@ -19,8 +19,6 @@
 
 package org.apache.ofbiz.common.authentication;
 
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

@@ -18,9 +18,7 @@
  */
 package org.apache.ofbiz.base.util.string;
 
-import java.beans.FeatureDescriptor;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import jakarta.el.ELContext;
