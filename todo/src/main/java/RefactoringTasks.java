@@ -30,6 +30,7 @@ import org.apache.ofbiz.webapp.ftl.OfbizNumberTransform;
 import org.apache.ofbiz.widget.model.ModelForm;
 import org.apache.ofbiz.widget.renderer.FormRenderer;
 import org.apache.ofbiz.widget.renderer.Paginator;
+import org.apache.ofbiz.widget.renderer.html.HtmlWidgetRenderer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -103,6 +104,7 @@ public class RefactoringTasks {
      * {@link Config#getDefaultLocale(Properties, String)}
      * {@link SSLUtil#getHostnameVerifier(int)}
      * {@link TransactionUtil#getTransactionStateString(int)}
+     * {@link HtmlWidgetRenderer#beginNamedBorder(String, String, String)}
      */
     public static void task3_switchExpressions() {
     }

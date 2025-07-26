@@ -279,6 +279,7 @@ public final class EntityCrypto {
 
         @Override
         protected byte[] decryptValue(byte[] key, EncryptMethod encryptMethod, String encryptedString) throws GeneralException {
+            // REFACTOR: Replace old style switch with switch expressions
             switch (encryptMethod) {
             case SALT:
                 return saltedCipherService.decrypt(Base64.decodeBase64(encryptedString), key).getClonedBytes();
@@ -289,6 +290,7 @@ public final class EntityCrypto {
 
         @Override
         protected String encryptValue(EncryptMethod encryptMethod, byte[] key, byte[] objBytes) throws GeneralException {
+            // REFACTOR: Replace old style switch with switch expressions
             switch (encryptMethod) {
             case SALT:
                 return saltedCipherService.encrypt(objBytes, key).toBase64();

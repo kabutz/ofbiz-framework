@@ -26,6 +26,7 @@ public final class JsLanguageFilesMappingUtil {
     private JsLanguageFilesMappingUtil() { }
 
     public static String getFile(String libraryName, String localeString) {
+        // REFACTOR: Replace old style switch with switch expressions
         switch (libraryName) {
         case "datejs":
             return JsLanguageFilesMapping.DateJs.getFilePath(localeString);

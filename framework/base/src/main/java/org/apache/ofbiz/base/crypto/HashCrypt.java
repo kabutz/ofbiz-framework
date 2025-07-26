@@ -177,6 +177,7 @@ public class HashCrypt {
             SecretKeyFactory skf = SecretKeyFactory.getInstance(hashType);
             byte[] hash = Base64.encodeBase64(skf.generateSecret(spec).getEncoded());
             String pbkdf2Type = null;
+            // REFACTOR: Replace old style switch with switch expressions
             switch (hashType) {
             case "PBKDF2WithHmacSHA1":
                 pbkdf2Type = PBKDF2_SHA1;
@@ -217,6 +218,7 @@ public class HashCrypt {
             byte[] hash = Base64.decodeBase64(parts[2].getBytes(StandardCharsets.UTF_8));
 
             PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), salt, iterations, hash.length * 8);
+            // REFACTOR: Replace old style switch with switch expressions
             switch (hashType.substring(hashType.indexOf("-") + 1)) {
             case "SHA256":
                 hashType = "PBKDF2WithHmacSHA256";

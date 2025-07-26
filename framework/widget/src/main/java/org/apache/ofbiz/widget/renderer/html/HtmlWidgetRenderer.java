@@ -92,6 +92,7 @@ public class HtmlWidgetRenderer {
         List<String> themeBasePathsToExempt = UtilHtml.getVisualThemeFolderNamesToExempt();
         if (!themeBasePathsToExempt.stream().anyMatch(location::contains)) {
             String fileName = location.substring(location.lastIndexOf("/") + 1);
+            // REFACTOR: Replace old style switch with switch expressions
             switch (NAMED_BORDER_TYPE) {
             case SOURCE:
                 return "<div class='info-container'><span class='info-overlay-item info-cursor-none info-"

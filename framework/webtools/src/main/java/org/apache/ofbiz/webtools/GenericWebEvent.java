@@ -106,6 +106,7 @@ public class GenericWebEvent {
         String updateMode = request.getParameter("UPDATE_MODE");
         Map<String, Object> pkFields = null;
         if (updateMode == null) {
+            // REFACTOR: Replace old style switch with switch expressions
             switch (UtilHttp.getRequestMethod(request)) {
             case "PUT": updateMode = "UPDATE"; break;
             case "DELETE": updateMode = "DELETE"; break;

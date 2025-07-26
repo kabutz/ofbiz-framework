@@ -150,6 +150,7 @@ public final class ServerHitBin {
         ServerHitBin bin = null;
         Deque<ServerHitBin> binList = null;
 
+        // REFACTOR: Replace old style switch with switch expressions
         switch (type) {
         case REQUEST:
             binList = REQ_HISTORY.get(id);
@@ -175,6 +176,7 @@ public final class ServerHitBin {
         if (binList == null) {
             binList = new ConcurrentLinkedDeque<>();
             Deque<ServerHitBin> listFromMap = null;
+            // REFACTOR: Replace old style switch with switch expressions
             switch (type) {
             case REQUEST:
                 listFromMap = REQ_HISTORY.putIfAbsent(id, binList);
@@ -273,6 +275,7 @@ public final class ServerHitBin {
     private static void countHitSinceStart(String id, int type, long runningTime, Delegator delegator) {
         ServerHitBin bin = null;
 
+        // REFACTOR: Replace old style switch with switch expressions
         switch (type) {
         case REQUEST:
             bin = REQ_SINCE_STARTED.get(id);
@@ -298,6 +301,7 @@ public final class ServerHitBin {
         if (bin == null) {
             bin = new ServerHitBin(id, type, false, delegator);
             ServerHitBin binFromMap = null;
+            // REFACTOR: Replace old style switch with switch expressions
             switch (type) {
             case REQUEST:
                 binFromMap = REQ_SINCE_STARTED.putIfAbsent(id, bin);

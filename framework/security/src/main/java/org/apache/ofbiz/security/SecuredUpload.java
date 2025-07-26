@@ -459,6 +459,7 @@ public class SecuredUpload {
                     ImageParser<?> imageParser;
                     // Handle only formats for which Apache Commons Imaging can successfully write (YES in Write column of the reference link)
                     // the image format. See reference link in the class header
+                    // REFACTOR: Replace old style switch with switch expressions
                     switch (formatName) {
                     case "TIFF":
                         imageParser = new TiffImageParser();
@@ -615,6 +616,7 @@ public class SecuredUpload {
         Reader in = new StringReader(content);
         String cvsFormatString = UtilProperties.getPropertyValue("security", "csvformat");
         CSVFormat cvsFormat = CSVFormat.DEFAULT;
+        // REFACTOR: Replace old style switch with switch expressions
         switch (cvsFormatString) {
         case "EXCEL":
             cvsFormat = CSVFormat.EXCEL;
