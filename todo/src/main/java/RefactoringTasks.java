@@ -133,6 +133,7 @@ public class RefactoringTasks {
      * {@link GenericMapEntry}
      * {@link ModelInfo}
      * {@link ModelViewEntity.ModelMemberEntity}
+     * {@link ModelViewEntity.ModelAliasAll} (more difficult)
      * {@link ScriptUtil.ProtectedBindings}
      */
     public static void task5_replaceDataClassesWithRecords() {
