@@ -614,7 +614,7 @@ public final class SqlJdbcUtil {
             // REFACTOR: Pattern Matching for instanceof
             ModelViewEntity modelView = (ModelViewEntity) model;
             String entityName = modelView.getAliasedEntity(
-                    modelView.getAlias(curField.getName()).getEntityAlias(), entity.getDelegator().getModelReader()).getEntityName();
+                    modelView.getAlias(curField.getName()).entityAlias(), entity.getDelegator().getModelReader()).getEntityName();
             model = entity.getDelegator().getModelEntity(entityName);
         }
         String encryptionKeyName = model.getEntityName();
@@ -654,7 +654,7 @@ public final class SqlJdbcUtil {
                 switch (typeValue) {
                 case 1:
                     if (java.sql.Types.CLOB == colType) {
-                        // Debug.logInfo("For field " + curField.getName() + " of entity " + entity.getEntityName() + " getString is a CLOB,
+                        // Debug.logInfo("For field " + curField.name() + " of entity " + entity.getEntityName() + " getString is a CLOB,
                         // trying getCharacterStream", MODULE);
                         // if the String is empty, try to get a text input stream, this is required for some databases for larger fields, like CLOBs
 

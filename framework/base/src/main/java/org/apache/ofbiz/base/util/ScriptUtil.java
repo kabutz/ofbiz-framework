@@ -471,14 +471,9 @@ public final class ScriptUtil {
 
     private ScriptUtil() { }
 
-    // REFACTOR: Replace simple data class with record
-    private static final class ProtectedBindings implements Bindings {
-        private final Map<String, Object> bindings;
-        private final Set<String> protectedKeys;
-        private ProtectedBindings(Map<String, Object> bindings, Set<String> protectedKeys) {
-            this.bindings = bindings;
-            this.protectedKeys = protectedKeys;
-        }
+    // REFACTO: Replace simple data class with record
+    private record ProtectedBindings(Map<String, Object> bindings,
+                                     Set<String> protectedKeys) implements Bindings {
         @Override
         public void clear() {
             for (String key : bindings.keySet()) {
@@ -487,38 +482,47 @@ public final class ScriptUtil {
                 }
             }
         }
+
         @Override
         public boolean containsKey(Object key) {
             return bindings.containsKey(key);
         }
+
         @Override
         public boolean containsValue(Object value) {
             return bindings.containsValue(value);
         }
+
         @Override
-        public Set<java.util.Map.Entry<String, Object>> entrySet() {
+        public Set<Entry<String, Object>> entrySet() {
             return bindings.entrySet();
         }
+
         @Override
         public boolean equals(Object o) {
             return bindings.equals(o);
         }
+
         @Override
         public Object get(Object key) {
             return bindings.get(key);
         }
+
         @Override
         public int hashCode() {
             return bindings.hashCode();
         }
+
         @Override
         public boolean isEmpty() {
             return bindings.isEmpty();
         }
+
         @Override
         public Set<String> keySet() {
             return bindings.keySet();
         }
+
         @Override
         public Object put(String key, Object value) {
             Assert.notNull("key", key);
@@ -529,15 +533,17 @@ public final class ScriptUtil {
             }
             return bindings.put(key, value);
         }
+
         @Override
         public void putAll(Map<? extends String, ? extends Object> map) {
-            for (Map.Entry<? extends String, ? extends Object> entry : map.entrySet()) {
+            for (Entry<? extends String, ? extends Object> entry : map.entrySet()) {
                 Assert.notNull("key", entry.getKey());
                 if (!protectedKeys.contains(entry.getKey())) {
                     bindings.put(entry.getKey(), entry.getValue());
                 }
             }
         }
+
         @Override
         public Object remove(Object key) {
             if (protectedKeys.contains(key)) {
@@ -547,10 +553,12 @@ public final class ScriptUtil {
             }
             return bindings.remove(key);
         }
+
         @Override
         public int size() {
             return bindings.size();
         }
+
         @Override
         public Collection<Object> values() {
             return bindings.values();

@@ -18,37 +18,17 @@
  */
 package org.apache.ofbiz.entity.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.ofbiz.base.util.Debug;
-import org.apache.ofbiz.base.util.StringUtil;
-import org.apache.ofbiz.base.util.UtilFormatOut;
-import org.apache.ofbiz.base.util.UtilTimer;
-import org.apache.ofbiz.base.util.UtilValidate;
-import org.apache.ofbiz.base.util.UtilXml;
-import org.apache.ofbiz.entity.condition.EntityComparisonOperator;
-import org.apache.ofbiz.entity.condition.EntityCondition;
-import org.apache.ofbiz.entity.condition.EntityConditionValue;
-import org.apache.ofbiz.entity.condition.EntityFieldValue;
-import org.apache.ofbiz.entity.condition.EntityFunction;
-import org.apache.ofbiz.entity.condition.EntityJoinOperator;
-import org.apache.ofbiz.entity.condition.EntityOperator;
+import org.apache.ofbiz.base.util.*;
+import org.apache.ofbiz.entity.condition.*;
 import org.apache.ofbiz.entity.jdbc.SqlJdbcUtil;
 import org.apache.ofbiz.entity.util.EntityUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
+import java.io.Serializable;
+import java.util.*;
+import java.util.stream.*;
 
 /**
  * This class extends ModelEntity and provides additional information appropriate to view entities
@@ -59,6 +39,7 @@ public class ModelViewEntity extends ModelEntity {
 
     private static final Map<String, String> FUNCTION_PREFIX_MAP = new HashMap<>();
     private static final Set<String> NUMERIC_FUNCTION_SET = new HashSet<>(); // names of functions that return a numeric type
+
     static {
         FUNCTION_PREFIX_MAP.put("min", "MIN(");
         FUNCTION_PREFIX_MAP.put("max", "MAX(");
@@ -78,28 +59,44 @@ public class ModelViewEntity extends ModelEntity {
         NUMERIC_FUNCTION_SET.add("extract-day");
     }
 
-    /** Contains member-entity alias name definitions: key is alias, value is ModelMemberEntity */
+    /**
+     * Contains member-entity alias name definitions: key is alias, value is ModelMemberEntity
+     */
     private Map<String, ModelMemberEntity> memberModelMemberEntities = new HashMap<>();
 
-    /** A list of all ModelMemberEntity entries; this is mainly used to preserve the original order of member entities from the XML file */
+    /**
+     * A list of all ModelMemberEntity entries; this is mainly used to preserve the original order of member entities from the XML file
+     */
     private List<ModelMemberEntity> allModelMemberEntities = new LinkedList<>();
 
-    /** Contains member-entity ModelEntities: key is alias, value is ModelEntity; populated with fields */
+    /**
+     * Contains member-entity ModelEntities: key is alias, value is ModelEntity; populated with fields
+     */
     private Map<String, String> memberModelEntities = new HashMap<>();
 
-    /** List of alias-alls which act as a shortcut for easily pulling over member entity fields */
+    /**
+     * List of alias-alls which act as a shortcut for easily pulling over member entity fields
+     */
     private List<ModelAliasAll> aliasAlls = new LinkedList<>();
 
-    /** List of aliases with information in addition to what is in the standard field list */
+    /**
+     * List of aliases with information in addition to what is in the standard field list
+     */
     private List<ModelAlias> aliases = new LinkedList<>();
 
-    /** List of view links to define how entities are connected (or "joined") */
+    /**
+     * List of view links to define how entities are connected (or "joined")
+     */
     private List<ModelViewLink> viewLinks = new LinkedList<>();
 
-    /** A List of the Field objects for the View Entity, one for each GROUP BY field */
+    /**
+     * A List of the Field objects for the View Entity, one for each GROUP BY field
+     */
     private List<ModelField> groupBys = new LinkedList<>();
 
-    /** List of field names to group by */
+    /**
+     * List of field names to group by
+     */
     private List<String> groupByFields = new LinkedList<>();
 
     private Map<String, ModelConversion[]> conversions = new HashMap<>();
@@ -109,13 +106,17 @@ public class ModelViewEntity extends ModelEntity {
     public ModelViewEntity(ModelReader reader, Element entityElement, UtilTimer utilTimer, ModelInfo def) {
         super(reader, entityElement, def);
 
-        if (utilTimer != null) utilTimer.timerString("  createModelViewEntity: before general/basic info");
+        if (utilTimer != null)
+            utilTimer.timerString("  createModelViewEntity: before general/basic info");
         this.populateBasicInfo(entityElement);
 
-        if (utilTimer != null) utilTimer.timerString("  createModelViewEntity: before \"member-entity\"s");
-        for (Element memberEntityElement: UtilXml.childElementList(entityElement, "member-entity")) {
-            String alias = UtilXml.checkEmpty(memberEntityElement.getAttribute("entity-alias")).intern();
-            String name = UtilXml.checkEmpty(memberEntityElement.getAttribute("entity-name")).intern();
+        if (utilTimer != null)
+            utilTimer.timerString("  createModelViewEntity: before \"member-entity\"s");
+        for (Element memberEntityElement : UtilXml.childElementList(entityElement, "member-entity")) {
+            String alias = UtilXml.checkEmpty(memberEntityElement.getAttribute("entity-alias"))
+                    .intern();
+            String name = UtilXml.checkEmpty(memberEntityElement.getAttribute("entity-name"))
+                    .intern();
             if (name.length() <= 0 || alias.length() <= 0) {
                 Debug.logError("[new ModelViewEntity]: entity-alias or entity-name missing on member-entity element of the view-entity "
                         + this.getEntityName(), MODULE);
@@ -127,23 +128,25 @@ public class ModelViewEntity extends ModelEntity {
 
         // when reading aliases and alias-alls, just read them into the alias list, there will be a pass
         // after loading all entities to go back and fill in all of the ModelField entries
-        for (Element aliasElement: UtilXml.childElementList(entityElement, "alias-all")) {
+        for (Element aliasElement : UtilXml.childElementList(entityElement, "alias-all")) {
             ModelViewEntity.ModelAliasAll aliasAll = new ModelAliasAll(aliasElement);
             this.aliasAlls.add(aliasAll);
         }
 
-        if (utilTimer != null) utilTimer.timerString("  createModelViewEntity: before aliases");
-        for (Element aliasElement: UtilXml.childElementList(entityElement, "alias")) {
-            ModelViewEntity.ModelAlias alias = new ModelAlias(aliasElement);
+        if (utilTimer != null)
+            utilTimer.timerString("  createModelViewEntity: before aliases");
+        for (Element aliasElement : UtilXml.childElementList(entityElement, "alias")) {
+            ModelViewEntity.ModelAlias alias = ModelAlias.of(aliasElement);
             this.aliases.add(alias);
         }
 
-        for (Element viewLinkElement: UtilXml.childElementList(entityElement, "view-link")) {
+        for (Element viewLinkElement : UtilXml.childElementList(entityElement, "view-link")) {
             ModelViewLink viewLink = new ModelViewLink(this, viewLinkElement);
             this.addViewLink(viewLink);
         }
 
-        if (utilTimer != null) utilTimer.timerString("  createModelEntity: before relations");
+        if (utilTimer != null)
+            utilTimer.timerString("  createModelEntity: before relations");
         this.populateRelated(reader, entityElement);
 
         Element entityConditionElement = UtilXml.firstChildElement(entityElement, "entity-condition");
@@ -158,10 +161,10 @@ public class ModelViewEntity extends ModelEntity {
     public ModelViewEntity(DynamicViewEntity dynamicViewEntity, ModelReader modelReader) {
         super(modelReader, new ModelInfo(
                 dynamicViewEntity.getTitle(),
-                ModelInfo.DEFAULT.getDescription(),
-                ModelInfo.DEFAULT.getCopyright(),
-                ModelInfo.DEFAULT.getAuthor(),
-                ModelInfo.DEFAULT.getVersion(),
+                ModelInfo.DEFAULT.description(),
+                ModelInfo.DEFAULT.copyright(),
+                ModelInfo.DEFAULT.author(),
+                ModelInfo.DEFAULT.version(),
                 dynamicViewEntity.getDefaultResourceName()));
         this.setEntityName(dynamicViewEntity.getEntityName());
         this.setPackageName(dynamicViewEntity.getPackageName());
@@ -195,6 +198,7 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Gets member model member entities.
+     *
      * @return the member model member entities
      */
     public Map<String, ModelMemberEntity> getMemberModelMemberEntities() {
@@ -203,6 +207,7 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Gets all model member entities.
+     *
      * @return the all model member entities
      */
     public List<ModelMemberEntity> getAllModelMemberEntities() {
@@ -211,6 +216,7 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Gets member model member entity.
+     *
      * @param alias the alias
      * @return the member model member entity
      */
@@ -220,25 +226,29 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Gets member model entity.
+     *
      * @param alias the alias
      * @return the member model entity
      */
     public ModelEntity getMemberModelEntity(String alias) {
         String entityName = this.memberModelEntities.get(alias);
-        return entityName != null ? this.getModelReader().getModelEntityNoCheck(entityName) : null;
+        return entityName != null ? this.getModelReader()
+                .getModelEntityNoCheck(entityName) : null;
     }
 
     /**
      * Add member model member entity.
+     *
      * @param modelMemberEntity the model member entity
      */
     public void addMemberModelMemberEntity(ModelMemberEntity modelMemberEntity) {
-        this.memberModelMemberEntities.put(modelMemberEntity.getEntityAlias(), modelMemberEntity);
+        this.memberModelMemberEntities.put(modelMemberEntity.entityAlias(), modelMemberEntity);
         this.allModelMemberEntities.add(modelMemberEntity);
     }
 
     /**
      * Remove member model member entity.
+     *
      * @param alias the alias
      */
     public void removeMemberModelMemberEntity(String alias) {
@@ -248,25 +258,30 @@ public class ModelViewEntity extends ModelEntity {
         this.allModelMemberEntities.remove(modelMemberEntity);
     }
 
-    /** The col-name of the Field, the alias of the field if this is on a view-entity */
+    /**
+     * The col-name of the Field, the alias of the field if this is on a view-entity
+     */
     @Override
     public String getColNameOrAlias(String fieldName) {
         ModelField modelField = this.getField(fieldName);
         String fieldString = modelField.getColName();
         ModelViewEntity.ModelAlias alias = getAlias(fieldName);
         if (alias != null) {
-            fieldString = alias.getColAlias();
+            fieldString = alias.colAlias();
         }
         return fieldString;
     }
 
-    /** List of aliases with information in addition to what is in the standard field list */
+    /**
+     * List of aliases with information in addition to what is in the standard field list
+     */
     public ModelAlias getAlias(int index) {
         return this.aliases.get(index);
     }
 
     /**
      * Gets alias.
+     *
      * @param name the name
      * @return the alias
      */
@@ -283,6 +298,7 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Gets aliases size.
+     *
      * @return the aliases size
      */
     public int getAliasesSize() {
@@ -291,6 +307,7 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Gets aliases iterator.
+     *
      * @return the aliases iterator
      */
     public Iterator<ModelAlias> getAliasesIterator() {
@@ -299,6 +316,7 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Gets aliases copy.
+     *
      * @return the aliases copy
      */
     public List<ModelAlias> getAliasesCopy() {
@@ -308,6 +326,7 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Gets group bys size.
+     *
      * @return the group bys size
      */
     public int getGroupBysSize() {
@@ -316,6 +335,7 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Gets group bys copy.
+     *
      * @return the group bys copy
      */
     public List<ModelField> getGroupBysCopy() {
@@ -324,6 +344,7 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Gets group bys copy.
+     *
      * @param selectFields the select fields
      * @return the group bys copy
      */
@@ -332,7 +353,7 @@ public class ModelViewEntity extends ModelEntity {
         if (UtilValidate.isEmpty(selectFields)) {
             newList.addAll(this.groupBys);
         } else {
-            for (ModelField groupByField: this.groupBys) {
+            for (ModelField groupByField : this.groupBys) {
                 if (selectFields.contains(groupByField)) {
                     newList.add(groupByField);
                 }
@@ -341,13 +362,16 @@ public class ModelViewEntity extends ModelEntity {
         return newList;
     }
 
-    /** List of view links to define how entities are connected (or "joined") */
+    /**
+     * List of view links to define how entities are connected (or "joined")
+     */
     public ModelViewLink getViewLink(int index) {
         return this.viewLinks.get(index);
     }
 
     /**
      * Gets view links size.
+     *
      * @return the view links size
      */
     public int getViewLinksSize() {
@@ -356,6 +380,7 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Gets view links iterator.
+     *
      * @return the view links iterator
      */
     public Iterator<ModelViewLink> getViewLinksIterator() {
@@ -364,6 +389,7 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Gets view links copy.
+     *
      * @return the view links copy
      */
     public List<ModelViewLink> getViewLinksCopy() {
@@ -373,6 +399,7 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Add view link.
+     *
      * @param viewLink the view link
      */
     public void addViewLink(ModelViewLink viewLink) {
@@ -381,6 +408,7 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Populate view entity condition information.
+     *
      * @param modelFieldTypeReader the model field type reader
      * @param whereConditions      the where conditions
      * @param havingConditions     the having conditions
@@ -388,7 +416,7 @@ public class ModelViewEntity extends ModelEntity {
      * @param entityAliasStack     the entity alias stack
      */
     public void populateViewEntityConditionInformation(ModelFieldTypeReader modelFieldTypeReader, List<EntityCondition> whereConditions,
-            List<EntityCondition> havingConditions, List<String> orderByList, List<String> entityAliasStack) {
+                                                       List<EntityCondition> havingConditions, List<String> orderByList, List<String> entityAliasStack) {
         if (entityAliasStack == null) {
             entityAliasStack = new LinkedList<>();
         }
@@ -412,7 +440,8 @@ public class ModelViewEntity extends ModelEntity {
         }
     }
 
-    @Deprecated @Override
+    @Deprecated
+    @Override
     public String colNameString(String separator, String afterLast, boolean alias, ModelField... flds) {
         return colNameString(Arrays.asList(flds), separator, afterLast, alias);
     }
@@ -422,7 +451,8 @@ public class ModelViewEntity extends ModelEntity {
         return colNameString(Arrays.asList(flds), sb, prefix, separator, afterLast, alias);
     }
 
-    @Deprecated @Override
+    @Deprecated
+    @Override
     public String colNameString(List<ModelField> flds, String separator, String afterLast, boolean alias) {
         return colNameString(flds, new StringBuilder(), "", separator, afterLast, alias).toString();
     }
@@ -441,7 +471,7 @@ public class ModelViewEntity extends ModelEntity {
             if (alias) {
                 ModelAlias modelAlias = this.getAlias(field.getName());
                 if (modelAlias != null) {
-                    sb.append(" AS ").append(modelAlias.getColAlias());
+                    sb.append(" AS ").append(modelAlias.colAlias());
                 }
             }
             if (fldsIt.hasNext()) {
@@ -457,6 +487,7 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Gets aliased model entity.
+     *
      * @return the aliased model entity
      */
     public ModelEntity getAliasedModelEntity() {
@@ -465,6 +496,7 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Gets aliased entity.
+     *
      * @param entityAlias the entity alias
      * @param modelReader the model reader
      * @return the aliased entity
@@ -477,7 +509,7 @@ public class ModelViewEntity extends ModelEntity {
             return null;
         }
 
-        String aliasedEntityName = modelMemberEntity.getEntityName();
+        String aliasedEntityName = modelMemberEntity.entityName();
         ModelEntity aliasedEntity = modelReader.getModelEntityNoCheck(aliasedEntityName);
         if (aliasedEntity == null) {
             Debug.logError("[" + this.getEntityName() + "]: [ModelViewEntity.populateFields] ERROR: could not find ModelEntity for entity name: "
@@ -490,6 +522,7 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Gets aliased field.
+     *
      * @param aliasedEntity the aliased entity
      * @param field         the field
      * @param modelReader   the model reader
@@ -507,6 +540,7 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Populate fields.
+     *
      * @param modelReader the model reader
      */
     public void populateFields(ModelReader modelReader) {
@@ -516,13 +550,14 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Populate fields basic.
+     *
      * @param modelReader the model reader
      */
     public void populateFieldsBasic(ModelReader modelReader) {
-        for (Map.Entry<String, ModelMemberEntity> entry: memberModelMemberEntities.entrySet()) {
+        for (Map.Entry<String, ModelMemberEntity> entry : memberModelMemberEntities.entrySet()) {
 
             ModelMemberEntity modelMemberEntity = entry.getValue();
-            String aliasedEntityName = modelMemberEntity.getEntityName();
+            String aliasedEntityName = modelMemberEntity.entityName();
             ModelEntity aliasedEntity = modelReader.getModelEntityNoCheck(aliasedEntityName);
             if (aliasedEntity == null) {
                 continue;
@@ -532,8 +567,8 @@ public class ModelViewEntity extends ModelEntity {
             while (aliasedFieldIterator.hasNext()) {
                 ModelField aliasedModelField = aliasedFieldIterator.next();
                 ModelField newModelField = ModelField.create(this, aliasedModelField.getDescription(), modelMemberEntity
-                                .getEntityAlias() + "." + aliasedModelField.getName(),
-                        aliasedModelField.getType(), modelMemberEntity.getEntityAlias() + "." + aliasedModelField.getColName(), null,
+                                .entityAlias() + "." + aliasedModelField.getName(),
+                        aliasedModelField.getType(), modelMemberEntity.entityAlias() + "." + aliasedModelField.getColName(), null,
                         null, false, false, false, false,
                         false, aliasedModelField.getValidators());
                 aliasedModelEntity.addField(newModelField);
@@ -542,7 +577,7 @@ public class ModelViewEntity extends ModelEntity {
 
         expandAllAliasAlls(modelReader);
 
-        for (ModelAlias alias: aliases) {
+        for (ModelAlias alias : aliases) {
             // show a warning if function is specified and groupBy is true
             if (UtilValidate.isNotEmpty(alias.function) && alias.groupBy) {
                 Debug.logWarning("[" + this.getEntityName() + "]: The view-entity alias with name=" + alias.name
@@ -569,7 +604,7 @@ public class ModelViewEntity extends ModelEntity {
                 colName = ModelUtil.javaNameToDbName(alias.name);
                 type = fieldTypeBuffer.toString();
                 isPk = false;
-                fieldSet = alias.getFieldSet();
+                fieldSet = alias.fieldSet();
             } else {
                 ModelEntity aliasedEntity = getAliasedEntity(alias.entityAlias, modelReader);
                 ModelField aliasedField = getAliasedField(aliasedEntity, alias.field, modelReader);
@@ -591,7 +626,7 @@ public class ModelViewEntity extends ModelEntity {
                 if (description.isEmpty()) {
                     description = aliasedField.getDescription();
                 }
-                if (alias.getFieldSet().isEmpty()) {
+                if (alias.fieldSet().isEmpty()) {
                     String aliasedFieldSet = aliasedField.getFieldSet();
                     if (!aliasedFieldSet.isEmpty()) {
                         StringBuilder fieldSetBuffer = new StringBuilder(alias.entityAlias);
@@ -602,7 +637,7 @@ public class ModelViewEntity extends ModelEntity {
                         Debug.logInfo("[" + this.getEntityName() + "]: copied field set on [" + name + "]: " + fieldSet, MODULE);
                     }
                 } else {
-                    fieldSet = alias.getFieldSet();
+                    fieldSet = alias.fieldSet();
                 }
             }
             if (NUMERIC_FUNCTION_SET.contains(alias.function)) {
@@ -613,7 +648,7 @@ public class ModelViewEntity extends ModelEntity {
                 String prefix = FUNCTION_PREFIX_MAP.get(alias.function);
                 if (prefix == null) {
                     Debug.logWarning("[" + this.getEntityName() + "]: Specified alias function [" + alias.function
-                            + "] not valid; must be: min, max, sum, avg, count or count-distinct; using a column name with no function function",
+                                    + "] not valid; must be: min, max, sum, avg, count or count-distinct; using a column name with no function function",
                             MODULE);
                 } else {
                     colValue = prefix + colValue + ")";
@@ -631,6 +666,7 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Gets or create model conversion.
+     *
      * @param aliasName the alias name
      * @return the or create model conversion
      */
@@ -645,10 +681,10 @@ public class ModelViewEntity extends ModelEntity {
         ModelConversion[] allConversions = conversions.get(member.getEntityName());
         if (allConversions == null) {
             ModelConversion conversion = new ModelConversion(aliasName, member);
-            conversions.put(member.getEntityName(), new ModelConversion[] {conversion});
+            conversions.put(member.getEntityName(), new ModelConversion[]{conversion});
             return conversion;
         }
-        for (ModelConversion conversion: allConversions) {
+        for (ModelConversion conversion : allConversions) {
             if (conversion.aliasName.equals(aliasName)) {
                 return conversion;
             }
@@ -672,18 +708,18 @@ public class ModelViewEntity extends ModelEntity {
             if (alias.isComplexAlias()) {
                 // TODO: conversion for complex-alias needs to be implemented for cache and in-memory eval stuff to work correctly
                 Debug.logWarning("[" + this.getEntityName() + "]: Conversion for complex-alias needs to be implemented for cache and "
-                        + "in-memory eval stuff to work correctly, will not work for alias: " + alias.getName(), MODULE);
+                        + "in-memory eval stuff to work correctly, will not work for alias: " + alias.name(), MODULE);
             } else {
-                ModelConversion conversion = getOrCreateModelConversion(alias.getEntityAlias());
-                conversion.addConversion(alias.getField(), alias.getName());
+                ModelConversion conversion = getOrCreateModelConversion(alias.entityAlias());
+                conversion.addConversion(alias.field(), alias.name());
             }
 
-            List<String> aliases = containedModelFields.get(alias.getField());
+            List<String> aliases = containedModelFields.get(alias.field());
             if (aliases == null) {
                 aliases = new LinkedList<>();
-                containedModelFields.put(alias.getField(), aliases);
+                containedModelFields.put(alias.field(), aliases);
             }
-            aliases.add(alias.getName());
+            aliases.add(alias.name());
         }
 
         Iterator<ModelViewLink> it2 = getViewLinksIterator();
@@ -708,7 +744,7 @@ public class ModelViewEntity extends ModelEntity {
         int[] maxIndex = new int[conversions.size()];
         ModelConversion[][] allConversions = new ModelConversion[conversions.size()][];
         int i = 0;
-        for (ModelConversion[] aliasConversions: conversions.values()) {
+        for (ModelConversion[] aliasConversions : conversions.values()) {
             currentIndex[i] = 0;
             maxIndex[i] = aliasConversions.length;
             allConversions[i] = new ModelConversion[aliasConversions.length];
@@ -718,7 +754,7 @@ public class ModelViewEntity extends ModelEntity {
         int ptr = 0;
         ModelConversion[] currentConversions = new ModelConversion[conversions.size()];
         for (int j = 0, k; j < currentIndex.length; j++) {
-            for (int l = 0; l < maxIndex[ j ]; l++) {
+            for (int l = 0; l < maxIndex[j]; l++) {
                 while (true) {
                     for (i = 0, k = 0; i < currentIndex.length; i++) {
                         if (i == j && currentIndex[i] == l) continue;
@@ -739,15 +775,16 @@ public class ModelViewEntity extends ModelEntity {
 
     /**
      * Convert list.
+     *
      * @param fromEntityName the from entity name
-     * @param data the data
+     * @param data           the data
      * @return the list
      */
     public List<Map<String, Object>> convert(String fromEntityName, Map<String, ? extends Object> data) {
         ModelConversion[] conversions = this.conversions.get(fromEntityName);
         if (conversions == null) return null;
         List<Map<String, Object>> values = new LinkedList<>();
-        for (ModelConversion conversion: conversions) {
+        for (ModelConversion conversion : conversions) {
             conversion.convert(values, data);
         }
         return values;
@@ -757,12 +794,12 @@ public class ModelViewEntity extends ModelEntity {
      * Go through all aliasAlls and create an alias for each field of each member entity
      */
     private void expandAllAliasAlls(ModelReader modelReader) {
-        for (ModelAliasAll aliasAll: aliasAlls) {
-            String entityAlias = aliasAll.getEntityAlias();
-            String prefix = aliasAll.getPrefix();
-            String function = aliasAll.getFunction();
-            boolean groupBy = aliasAll.getGroupBy();
-            String aliasAllFieldSet = aliasAll.getFieldSet();
+        for (ModelAliasAll aliasAll : aliasAlls) {
+            String entityAlias = aliasAll.entityAlias();
+            String prefix = aliasAll.prefix();
+            String function = aliasAll.function();
+            boolean groupBy = aliasAll.groupBy();
+            String aliasAllFieldSet = aliasAll.fieldSet();
 
             ModelMemberEntity modelMemberEntity = memberModelMemberEntities.get(entityAlias);
             if (modelMemberEntity == null) {
@@ -770,7 +807,7 @@ public class ModelViewEntity extends ModelEntity {
                 continue;
             }
 
-            String aliasedEntityName = modelMemberEntity.getEntityName();
+            String aliasedEntityName = modelMemberEntity.entityName();
             ModelEntity aliasedEntity = modelReader.getModelEntityNoCheck(aliasedEntityName);
             if (aliasedEntity == null) {
                 Debug.logError("[" + this.getEntityName() + "]: Entity referred to in member-entity " + entityAlias
@@ -785,7 +822,7 @@ public class ModelViewEntity extends ModelEntity {
                 continue;
             }
 
-            for (String fieldName: entFieldList) {
+            for (String fieldName : entFieldList) {
                 // now merge the lists, leaving out any that duplicate an existing alias name
                 String aliasName = fieldName;
                 ModelField modelField = aliasedEntity.getField(fieldName);
@@ -800,7 +837,7 @@ public class ModelViewEntity extends ModelEntity {
 
                 if (UtilValidate.isNotEmpty(prefix)) {
                     StringBuilder newAliasBuffer = new StringBuilder(prefix);
-                    //make sure the first letter is uppercase to delineate the field name
+                    // make sure the first letter is uppercase to delineate the field name
                     newAliasBuffer.append(Character.toUpperCase(aliasName.charAt(0)));
                     newAliasBuffer.append(aliasName.substring(1));
                     aliasName = newAliasBuffer.toString();
@@ -829,35 +866,39 @@ public class ModelViewEntity extends ModelEntity {
 
                 ModelAlias existingAlias = this.getAlias(aliasName);
                 if (existingAlias != null) {
-                    //log differently if this is part of a view-link key-map because that is a common case when a field
+                    // log differently if this is part of a view-link key-map because that is a common case when a field
                     // will be auto-expanded multiple times
                     boolean isInViewLink = false;
                     Iterator<ModelViewLink> viewLinkIter = this.getViewLinksIterator();
                     while (viewLinkIter.hasNext() && !isInViewLink) {
                         ModelViewLink modelViewLink = viewLinkIter.next();
                         boolean isRel = false;
-                        if (modelViewLink.getRelEntityAlias().equals(aliasAll.getEntityAlias())) {
+                        if (modelViewLink.getRelEntityAlias()
+                                .equals(aliasAll.entityAlias())) {
                             isRel = true;
-                        } else if (!modelViewLink.getEntityAlias().equals(aliasAll.getEntityAlias())) {
+                        } else if (!modelViewLink.getEntityAlias()
+                                .equals(aliasAll.entityAlias())) {
                             // not the rel-entity-alias or the entity-alias, so move along
                             continue;
                         }
                         Iterator<ModelKeyMap> keyMapIter = modelViewLink.getKeyMapsIterator();
                         while (keyMapIter.hasNext() && !isInViewLink) {
                             ModelKeyMap modelKeyMap = keyMapIter.next();
-                            if (!isRel && modelKeyMap.getFieldName().equals(fieldName)) {
+                            if (!isRel && modelKeyMap.getFieldName()
+                                    .equals(fieldName)) {
                                 isInViewLink = true;
-                            } else if (isRel && modelKeyMap.getRelFieldName().equals(fieldName)) {
+                            } else if (isRel && modelKeyMap.getRelFieldName()
+                                    .equals(fieldName)) {
                                 isInViewLink = true;
                             }
                         }
                     }
 
-                    //already exists, oh well... probably an override, but log just in case
+                    // already exists, oh well... probably an override, but log just in case
                     String warnMsg = "[" + this.getEntityName()
                             + "]: Throwing out field alias in view entity because one already exists with the alias name [" + aliasName
-                            + "] and field name [" + modelMemberEntity.getEntityAlias() + "(" + aliasedEntity.getEntityName() + ")." + fieldName
-                            + "], existing field name is [" + existingAlias.getEntityAlias() + "." + existingAlias.getField() + "]";
+                            + "] and field name [" + modelMemberEntity.entityAlias() + "(" + aliasedEntity.getEntityName() + ")." + fieldName
+                            + "], existing field name is [" + existingAlias.entityAlias() + "." + existingAlias.field() + "]";
                     if (isInViewLink) {
                         Debug.logVerbose(warnMsg, MODULE);
                     } else {
@@ -866,9 +907,9 @@ public class ModelViewEntity extends ModelEntity {
                     continue;
                 }
 
-                ModelAlias expandedAlias = new ModelAlias(aliasAll.getEntityAlias(), aliasName, fieldName, ModelUtil
-                        .javaNameToDbName(UtilXml.checkEmpty(aliasName)), null, groupBy, function, fieldSet, true);
-                expandedAlias.setDescription(modelField.getDescription());
+                ModelAlias expandedAlias = new ModelAlias(aliasAll.entityAlias(), aliasName, fieldName, ModelUtil
+                        .javaNameToDbName(UtilXml.checkEmpty(aliasName)), null, groupBy, function, fieldSet, true,
+                        modelField.getDescription());
 
                 aliases.add(expandedAlias);
             }
@@ -880,187 +921,117 @@ public class ModelViewEntity extends ModelEntity {
         return "ModelViewEntity[" + getEntityName() + "]";
     }
 
-    // REFACTOR: Replace simple data class with record
-    public static final class ModelMemberEntity implements Serializable {
-        private final String entityAlias;
-        private final String entityName;
-
-        public ModelMemberEntity(String entityAlias, String entityName) {
-            this.entityAlias = entityAlias;
-            this.entityName = entityName;
-        }
-
-        public String getEntityAlias() {
-            return this.entityAlias;
-        }
-
-        public String getEntityName() {
-            return this.entityName;
-        }
+    // REFACTO: Replace simple data class with record
+    public record ModelMemberEntity(String entityAlias,
+                                    String entityName) implements Serializable {
     }
 
-    // REFACTOR: Replace simple data class with record
-    public static final class ModelAliasAll implements Serializable, Iterable<String> {
-        private final String entityAlias;
-        private final String prefix;
-        private final Set<String> fieldsToExclude;
-        private final boolean groupBy;
-        // is specified this alias is a calculated value; can be: min, max, sum, avg, count, count-distinct
-        private final String function;
-        private final String fieldSet;
-
-        @Deprecated
-        public ModelAliasAll(String entityAlias, String prefix) {
-            this(entityAlias, prefix, false, null, null, null);
+    // REFACTO: Replace simple data class with record
+    public record ModelAliasAll(String entityAlias,
+                                String prefix,
+                                boolean groupBy,
+                                // is specified this alias is a calculated value; can be: min, max, sum, avg, count, count-distinct
+                                String function,
+                                String fieldSet,
+                                Set<String> fieldsToExclude) implements Serializable, Iterable<String> {
+        public ModelAliasAll {
+            if (fieldsToExclude == null) fieldsToExclude = Set.of();
         }
 
-        @Deprecated
-        public ModelAliasAll(String entityAlias, String prefix, boolean groupBy, String function, Collection<String> excludes) {
-            this(entityAlias, prefix, groupBy, function, null, excludes);
-        }
-
-        public ModelAliasAll(String entityAlias, String prefix, boolean groupBy, String function, String fieldSet, Collection<String> excludes) {
-            this.entityAlias = entityAlias;
-            this.prefix = prefix;
-            this.groupBy = groupBy;
-            this.function = function;
-            this.fieldSet = fieldSet;
-            if (UtilValidate.isNotEmpty(excludes)) {
-                this.fieldsToExclude = new HashSet<>(excludes.size());
-                this.fieldsToExclude.addAll(excludes);
-            } else {
-                this.fieldsToExclude = null;
-            }
+        // Only used to allow Collection for fieldsToExclude.
+        public ModelAliasAll(String entityAlias, String prefix, boolean groupBy, String function, String fieldSet, Collection<String> fieldsToExclude) {
+            this(entityAlias, prefix, groupBy, function, fieldSet, fieldsToExclude == null ? null : Set.copyOf(fieldsToExclude));
         }
 
         public ModelAliasAll(Element aliasAllElement) {
-            this.entityAlias = UtilXml.checkEmpty(aliasAllElement.getAttribute("entity-alias")).intern();
-            this.prefix = UtilXml.checkEmpty(aliasAllElement.getAttribute("prefix")).intern();
-            this.groupBy = "true".equals(UtilXml.checkEmpty(aliasAllElement.getAttribute("group-by")));
-            this.function = UtilXml.checkEmpty(aliasAllElement.getAttribute("function"));
-            this.fieldSet = UtilXml.checkEmpty(aliasAllElement.getAttribute("field-set")).intern();
-
-            List<? extends Element> excludes = UtilXml.childElementList(aliasAllElement, "exclude");
-            if (UtilValidate.isNotEmpty(excludes)) {
-                this.fieldsToExclude = new HashSet<>();
-                for (Element excludeElement: excludes) {
-                    this.fieldsToExclude.add(excludeElement.getAttribute("field").intern());
-                }
-            } else {
-                this.fieldsToExclude = null;
-            }
-
-        }
-
-        public String getEntityAlias() {
-            return this.entityAlias;
-        }
-
-        public String getPrefix() {
-            return this.prefix;
-        }
-
-        public boolean getGroupBy() {
-            return this.groupBy;
-        }
-
-        public String getFunction() {
-            return this.function;
-        }
-
-        public String getFieldSet() {
-            return this.fieldSet;
+            this(UtilXml.checkEmpty(aliasAllElement.getAttribute("entity-alias"))
+                            .intern(),
+                    UtilXml.checkEmpty(aliasAllElement.getAttribute("prefix"))
+                            .intern(),
+                    "true".equals(UtilXml.checkEmpty(aliasAllElement.getAttribute("group-by"))),
+                    UtilXml.checkEmpty(aliasAllElement.getAttribute("function")),
+                    UtilXml.checkEmpty(aliasAllElement.getAttribute("field-set"))
+                            .intern(),
+                    UtilXml.childElementList(aliasAllElement, "exclude")
+                            .stream()
+                            .map(excludeElement -> excludeElement.getAttribute("field")
+                                    .intern())
+                            .collect(Collectors.toUnmodifiableSet())
+            );
         }
 
         public boolean shouldExclude(String fieldName) {
-            if (this.fieldsToExclude == null) {
-                return false;
-            } else {
-                return this.fieldsToExclude.contains(fieldName);
-            }
+            return fieldsToExclude.contains(fieldName);
         }
 
         @Override
         public Iterator<String> iterator() {
-            if (this.fieldsToExclude == null) {
-                return Collections.<String>emptySet().iterator();
-            } else {
-                return fieldsToExclude.iterator();
-            }
+            return fieldsToExclude.iterator();
         }
     }
 
-    // REFACTOR: Replace simple data class with record
-    public static final class ModelAlias implements Serializable {
-        private final String entityAlias;
-        private final String name;
-        private final String field;
-        private final String colAlias;
-        // this is a Boolean object for a tri-state: null, true or false
-        private final Boolean isPk;
-        private final boolean groupBy;
-        // is specified this alias is a calculated value; can be: min, max, sum, avg, count, count-distinct
-        private final String function;
-        private final String fieldSet;
-        private final boolean isFromAliasAll;
-        private ComplexAliasMember complexAliasMember;
-        // The description for documentation purposes
-        private String description = "";
-
-        public ModelAlias(Element aliasElement) {
-            this.entityAlias = UtilXml.checkEmpty(aliasElement.getAttribute("entity-alias")).intern();
-            this.name = UtilXml.checkEmpty(aliasElement.getAttribute("name")).intern();
-            this.field = UtilXml.checkEmpty(aliasElement.getAttribute("field"), this.name).intern();
-            this.colAlias = UtilXml.checkEmpty(aliasElement.getAttribute("col-alias"),
-                    ModelUtil.javaNameToDbName(UtilXml.checkEmpty(this.name))).intern();
+    // REFACTO: Replace simple data class with record
+    public record ModelAlias(String entityAlias, String name, String field,
+                             String colAlias,
+                             // this is a Boolean object for a tri-state: null, true or false
+                             Boolean isPk,
+                             boolean groupBy,
+                             // is specified this alias is a calculated value, can be: min, max, sum, avg, count, count-distinct
+                             String function,
+                             String fieldSet, boolean isFromAliasAll,
+                             ComplexAliasMember complexAliasMember,
+                             // The description for documentation purposes
+                             String description) implements Serializable {
+        public static ModelAlias of(Element aliasElement) {
+            var entityAlias = UtilXml.checkEmpty(aliasElement.getAttribute("entity-alias"))
+                    .intern();
+            var name = UtilXml.checkEmpty(aliasElement.getAttribute("name"))
+                    .intern();
+            var field = UtilXml.checkEmpty(aliasElement.getAttribute("field"), name)
+                    .intern();
+            var colAlias = UtilXml.checkEmpty(aliasElement.getAttribute("col-alias"),
+                            ModelUtil.javaNameToDbName(UtilXml.checkEmpty(name)))
+                    .intern();
             String primKeyValue = UtilXml.checkEmpty(aliasElement.getAttribute("prim-key"));
 
+            Boolean isPk;
             if (UtilValidate.isNotEmpty(primKeyValue)) {
-                this.isPk = "true".equals(primKeyValue);
+                isPk = "true".equals(primKeyValue);
             } else {
-                this.isPk = null;
+                isPk = null;
             }
-            this.groupBy = "true".equals(UtilXml.checkEmpty(aliasElement.getAttribute("group-by")));
-            this.function = UtilXml.checkEmpty(aliasElement.getAttribute("function")).intern();
-            this.fieldSet = UtilXml.checkEmpty(aliasElement.getAttribute("field-set")).intern();
-            this.isFromAliasAll = false;
-            this.description = UtilXml.checkEmpty(UtilXml.childElementValue(aliasElement, "description")).intern();
+            var groupBy = "true".equals(UtilXml.checkEmpty(aliasElement.getAttribute("group-by")));
+            var function = UtilXml.checkEmpty(aliasElement.getAttribute("function"))
+                    .intern();
+            var fieldSet = UtilXml.checkEmpty(aliasElement.getAttribute("field-set"))
+                    .intern();
+            var isFromAliasAll = false;
+            var description = UtilXml.checkEmpty(UtilXml.childElementValue(aliasElement, "description"))
+                    .intern();
 
             Element complexAliasElement = UtilXml.firstChildElement(aliasElement, "complex-alias");
+            ComplexAliasMember complexAliasMember = null;
             if (complexAliasElement != null) {
                 complexAliasMember = new ComplexAlias(complexAliasElement);
+            } else {
+                complexAliasMember = null;
             }
-        }
-
-        @Deprecated
-        public ModelAlias(String entityAlias, String name, String field, String colAlias, Boolean isPk, Boolean groupBy, String function) {
-            this(entityAlias, name, field, colAlias, isPk, groupBy, function, null, false);
+            return new ModelAlias(entityAlias, name, field, colAlias, isPk, groupBy, function, fieldSet, isFromAliasAll,
+                    complexAliasMember, description);
         }
 
         public ModelAlias(String entityAlias, String name, String field, String colAlias, Boolean isPk, Boolean groupBy,
-                          String function, String fieldSet) {
-            this(entityAlias, name, field, colAlias, isPk, groupBy, function, fieldSet, false);
+                          String function, String fieldSet, ComplexAliasMember complexAliasMember) {
+            this(entityAlias, name, field, colAlias, isPk, groupBy, function, fieldSet, false, complexAliasMember, "");
         }
 
-        protected ModelAlias(String entityAlias, String name, String field, String colAlias, Boolean isPk, Boolean groupBy, String function,
-                             String fieldSet, boolean isFromAliasAll) {
-            this.entityAlias = entityAlias;
-            this.name = name;
-            this.field = UtilXml.checkEmpty(field, this.name);
-            this.colAlias = UtilXml.checkEmpty(colAlias, ModelUtil.javaNameToDbName(UtilXml.checkEmpty(this.name)));
-            this.isPk = isPk;
-            if (groupBy != null) {
-                this.groupBy = groupBy;
-            } else {
-                this.groupBy = false;
-            }
-            this.function = function;
-            this.fieldSet = UtilXml.checkEmpty(fieldSet).intern();
-            this.isFromAliasAll = isFromAliasAll;
-        }
-
-        public void setComplexAliasMember(ComplexAliasMember complexAliasMember) {
-            this.complexAliasMember = complexAliasMember;
+        public ModelAlias(String entityAlias, String name, String field, String colAlias, Boolean isPk, Boolean groupBy, String function,
+                          String fieldSet, boolean isFromAliasAll, String description) {
+            this(entityAlias, name, UtilXml.checkEmpty(field, name),
+                    UtilXml.checkEmpty(colAlias, ModelUtil.javaNameToDbName(UtilXml.checkEmpty(name))),
+                    isPk, groupBy == null ? false : groupBy, function, UtilXml.checkEmpty(fieldSet)
+                            .intern(),
+                    false, null, description);
         }
 
         public boolean isComplexAlias() {
@@ -1072,50 +1043,6 @@ public class ModelViewEntity extends ModelEntity {
             if (complexAliasMember != null) {
                 complexAliasMember.makeAliasColName(colNameBuffer, fieldTypeBuffer, modelViewEntity, modelReader);
             }
-        }
-
-        public String getEntityAlias() {
-            return this.entityAlias;
-        }
-
-        public String getName() {
-            return this.name;
-        }
-
-        public String getColAlias() {
-            return this.colAlias;
-        }
-
-        public String getField() {
-            return this.field;
-        }
-
-        public Boolean getIsPk() {
-            return this.isPk;
-        }
-
-        public boolean getGroupBy() {
-            return this.groupBy;
-        }
-
-        public String getFunction() {
-            return this.function;
-        }
-
-        public String getFieldSet() {
-            return fieldSet;
-        }
-
-        public String getDescription() {
-            return this.description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public boolean getIsFromAliasAll() {
-            return this.isFromAliasAll;
         }
     }
 
@@ -1133,9 +1060,10 @@ public class ModelViewEntity extends ModelEntity {
         }
 
         public ComplexAlias(Element complexAliasElement) {
-            this.operator = complexAliasElement.getAttribute("operator").intern();
+            this.operator = complexAliasElement.getAttribute("operator")
+                    .intern();
             // handle all complex-alias and complex-alias-field sub-elements
-            for (Element subElement: UtilXml.childElementList(complexAliasElement)) {
+            for (Element subElement : UtilXml.childElementList(complexAliasElement)) {
                 String nodeName = subElement.getNodeName();
                 if ("complex-alias".equals(nodeName)) {
                     this.addComplexAliasMember(new ComplexAlias(subElement));
@@ -1160,7 +1088,8 @@ public class ModelViewEntity extends ModelEntity {
                 return;
             } else if (complexAliasMembers.size() == 1) {
                 // REFACTOR: Use sequenced collection method instead
-                ComplexAliasMember complexAliasMember = complexAliasMembers.iterator().next();
+                ComplexAliasMember complexAliasMember = complexAliasMembers.iterator()
+                        .next();
                 complexAliasMember.makeAliasColName(colNameBuffer, fieldTypeBuffer, modelViewEntity, modelReader);
             } else {
                 colNameBuffer.append('(');
@@ -1179,35 +1108,21 @@ public class ModelViewEntity extends ModelEntity {
         }
     }
 
-    // REFACTOR: Replace simple data class with record
-    public static final class ComplexAliasField implements ComplexAliasMember {
-        private final String entityAlias;
-        private final String field;
-        private final String defaultValue;
-        private final String function;
-        private final String value;
-
+    // REFACTO: Replace simple data class with record
+    public record ComplexAliasField(String entityAlias, String field,
+                                    String defaultValue, String function,
+                                    String value) implements ComplexAliasMember {
         public ComplexAliasField(Element complexAliasFieldElement) {
-            this.entityAlias = complexAliasFieldElement.getAttribute("entity-alias").intern();
-            this.field = complexAliasFieldElement.getAttribute("field").intern();
-            this.defaultValue = complexAliasFieldElement.getAttribute("default-value").intern();
-            this.function = complexAliasFieldElement.getAttribute("function").intern();
-            this.value = complexAliasFieldElement.getAttribute("value").intern();
+            this(complexAliasFieldElement.getAttribute("entity-alias").intern(),
+                    complexAliasFieldElement.getAttribute("field").intern(),
+                    complexAliasFieldElement.getAttribute("default-value")
+                            .intern(),
+                    complexAliasFieldElement.getAttribute("function").intern(),
+                    complexAliasFieldElement.getAttribute("value").intern());
         }
 
         public ComplexAliasField(String entityAlias, String field, String defaultValue, String function) {
-            this.entityAlias = entityAlias;
-            this.field = field;
-            this.defaultValue = defaultValue;
-            this.function = function;
-            this.value = null;
-        }
-        public ComplexAliasField(String entityAlias, String field, String defaultValue, String function, String value) {
-            this.entityAlias = entityAlias;
-            this.field = field;
-            this.defaultValue = defaultValue;
-            this.function = function;
-            this.value = value;
+            this(entityAlias, field, defaultValue, function, null);
         }
 
         /**
@@ -1233,7 +1148,7 @@ public class ModelViewEntity extends ModelEntity {
                     String prefix = FUNCTION_PREFIX_MAP.get(function);
                     if (prefix == null) {
                         Debug.logWarning("[" + modelViewEntity.getEntityName() + "]: Specified alias function [" + function
-                                + "] not valid; must be: min, max, sum, avg, count or count-distinct; using a column name with no function function",
+                                        + "] not valid; must be: min, max, sum, avg, count or count-distinct; using a column name with no function function",
                                 MODULE);
                     } else {
                         colName = prefix + colName + ")";
@@ -1241,7 +1156,7 @@ public class ModelViewEntity extends ModelEntity {
                 }
 
                 colNameBuffer.append(colName);
-                //set fieldTypeBuffer if not already set
+                // set fieldTypeBuffer if not already set
                 if (fieldTypeBuffer.length() == 0) {
                     fieldTypeBuffer.append(modelField.getType());
                 }
@@ -1257,8 +1172,10 @@ public class ModelViewEntity extends ModelEntity {
         private final transient ViewEntityCondition viewEntityCondition;
 
         public ModelViewLink(ModelViewEntity modelViewEntity, Element viewLinkElement) {
-            this.entityAlias = UtilXml.checkEmpty(viewLinkElement.getAttribute("entity-alias")).intern();
-            this.relEntityAlias = UtilXml.checkEmpty(viewLinkElement.getAttribute("rel-entity-alias")).intern();
+            this.entityAlias = UtilXml.checkEmpty(viewLinkElement.getAttribute("entity-alias"))
+                    .intern();
+            this.relEntityAlias = UtilXml.checkEmpty(viewLinkElement.getAttribute("rel-entity-alias"))
+                    .intern();
             // if anything but true will be false; ie defaults to false
             this.relOptional = "true".equals(viewLinkElement.getAttribute("rel-optional"));
 
@@ -1382,16 +1299,16 @@ public class ModelViewEntity extends ModelEntity {
 
         @Override
         public String toString() {
-            //return fromModelEntity.getEntityName() + ":" + fieldMap + ":" + wildcards;
+            // return fromModelEntity.getEntityName() + ":" + fieldMap + ":" + wildcards;
             return aliasName + "(" + fromModelEntity.getEntityName() + ")";
         }
 
         public void convert(List<Map<String, Object>> values, Map<String, ? extends Object> value) {
             Map<String, Object> newValue = new HashMap<>();
-            for (Map.Entry<String, String> entry: fieldMap.entrySet()) {
+            for (Map.Entry<String, String> entry : fieldMap.entrySet()) {
                 newValue.put(entry.getValue(), value.get(entry.getKey()));
             }
-            for (String key: wildcards) {
+            for (String key : wildcards) {
                 newValue.put(key, EntityOperator.WILDCARD);
             }
             values.add(newValue);
@@ -1403,7 +1320,7 @@ public class ModelViewEntity extends ModelEntity {
 
         public void addAllAliasConversions(List<String> aliases, String fieldName) {
             if (aliases != null) {
-                for (String alias: aliases) {
+                for (String alias : aliases) {
                     addConversion(fieldName, alias);
                 }
             }
@@ -1429,7 +1346,7 @@ public class ModelViewEntity extends ModelEntity {
             List<? extends Element> orderByElementList = UtilXml.childElementList(element, "order-by");
             if (!orderByElementList.isEmpty()) {
                 orderByList = new ArrayList<>(orderByElementList.size());
-                for (Element orderByElement: orderByElementList) {
+                for (Element orderByElement : orderByElementList) {
                     orderByList.add(orderByElement.getAttribute("field-name"));
                 }
             } else {
@@ -1517,12 +1434,12 @@ public class ModelViewEntity extends ModelEntity {
         }
 
         public static Element makeViewEntityConditionExpr(String entityAlias, String fieldName, String operator,
-                String relEntityAlias, String relFieldName) {
+                                                          String relEntityAlias, String relFieldName) {
             return makeViewEntityConditionExpr(entityAlias, fieldName, operator, null, relEntityAlias, relFieldName);
         }
 
         public static Element makeViewEntityConditionExpr(String entityAlias, String fieldName, String operator,
-                String value, String relEntityAlias, String relFieldName) {
+                                                          String value, String relEntityAlias, String relFieldName) {
             Document doc = UtilXml.makeEmptyXmlDocument();
             Element conditionExprElement = doc.createElement("condition-expr");
             if (UtilValidate.isNotEmpty(entityAlias)) {
@@ -1704,7 +1621,7 @@ public class ModelViewEntity extends ModelEntity {
             }
 
             List<? extends Element> subElements = UtilXml.childElementList(conditionListElement);
-            for (Element subElement: subElements) {
+            for (Element subElement : subElements) {
                 if ("condition-expr".equals(subElement.getNodeName())) {
                     conditionList.add(new ViewConditionExpr(this.viewEntityCondition, subElement));
                 } else if ("condition-list".equals(subElement.getNodeName())) {
@@ -1741,7 +1658,7 @@ public class ModelViewEntity extends ModelEntity {
             }
 
             List<EntityCondition> entityConditionList = new LinkedList<>();
-            for (ViewCondition curCondition: conditionList) {
+            for (ViewCondition curCondition : conditionList) {
                 EntityCondition econd = curCondition.createCondition(modelFieldTypeReader, entityAliasStack);
                 if (econd != null) {
                     entityConditionList.add(econd);

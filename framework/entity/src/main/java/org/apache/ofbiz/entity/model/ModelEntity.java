@@ -2325,7 +2325,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
      * @return the author
      */
     public String getAuthor() {
-        return modelInfo.getAuthor();
+        return modelInfo.author();
     }
 
     /**
@@ -2333,7 +2333,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
      * @return the copyright
      */
     public String getCopyright() {
-        return modelInfo.getCopyright();
+        return modelInfo.copyright();
     }
 
     /**
@@ -2341,7 +2341,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
      * @return the default resource name
      */
     public String getDefaultResourceName() {
-        return modelInfo.getDefaultResourceName();
+        return modelInfo.defaultResourceName();
     }
 
     /**
@@ -2349,7 +2349,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
      * @return the description
      */
     public String getDescription() {
-        return modelInfo.getDescription();
+        return modelInfo.description();
     }
 
     /**
@@ -2365,7 +2365,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
      * @return the title
      */
     public String getTitle() {
-        return modelInfo.getTitle();
+        return modelInfo.title();
     }
 
     /**
@@ -2373,7 +2373,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
      * @return the version
      */
     public String getVersion() {
-        return modelInfo.getVersion();
+        return modelInfo.version();
     }
 
 }

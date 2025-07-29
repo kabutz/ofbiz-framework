@@ -443,8 +443,8 @@ public class GenericDAO {
 
         // Construct insert/update for each model entity
         for (ModelViewEntity.ModelMemberEntity modelMemberEntity : modelViewEntity.getMemberModelMemberEntities().values()) {
-            String meName = modelMemberEntity.getEntityName();
-            String meAlias = modelMemberEntity.getEntityAlias();
+            String meName = modelMemberEntity.entityName();
+            String meAlias = modelMemberEntity.entityAlias();
 
             if (Debug.verboseOn()) {
                 Debug.logVerbose("[singleUpdateView]: Processing MemberEntity " + meName + " with Alias " + meAlias, MODULE);
@@ -1246,7 +1246,7 @@ public class GenericDAO {
                 // REFACTOR: Use sequenced collection method instead
                 ModelField firstSelectField = selectFields.get(0);
                 ModelViewEntity.ModelAlias firstModelAlias = modelViewEntity != null ? modelViewEntity.getAlias(firstSelectField.getName()) : null;
-                if (firstModelAlias != null && UtilValidate.isNotEmpty(firstModelAlias.getFunction())) {
+                if (firstModelAlias != null && UtilValidate.isNotEmpty(firstModelAlias.function())) {
                     // if the field has a function already we don't want to count just it, would be meaningless
                     sqlBuffer.append("COUNT(DISTINCT *) ");
                 } else {

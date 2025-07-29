@@ -84,8 +84,8 @@ public class EntityFieldValue extends EntityConditionValue {
             // the entity-alias and field-name for the alias
             ModelAlias modelAlias = this.modelViewEntity.getAlias(this.fieldName);
             if (modelAlias != null) {
-                this.entityAlias = modelAlias.getEntityAlias();
-                this.fieldName = modelAlias.getField();
+                this.entityAlias = modelAlias.entityAlias();
+                this.fieldName = modelAlias.field();
             }
             // TODO/NOTE: this will ignore function, group-by, etc... should maybe support those in conditions too at some point
         }
@@ -216,7 +216,7 @@ public class EntityFieldValue extends EntityConditionValue {
             ModelViewEntity modelViewEntity = (ModelViewEntity) modelEntity;
             ModelAlias modelAlias = modelViewEntity.getAlias(fieldName);
             if (modelAlias != null) {
-                return modelAlias.getColAlias();
+                return modelAlias.colAlias();
             }
         }
 

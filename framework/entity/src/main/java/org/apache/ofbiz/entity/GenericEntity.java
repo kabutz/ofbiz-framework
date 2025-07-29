@@ -953,9 +953,9 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
                 Iterator<ModelAlias> it = modelViewEntity.getAliasesIterator();
                 while (it.hasNext()) {
                     ModelAlias modelAlias = it.next();
-                    if (modelAlias.getName().equalsIgnoreCase(name)) {
-                        modelEntityToUse = modelViewEntity.getMemberModelEntity(modelAlias.getEntityAlias());
-                        name = modelAlias.getField();
+                    if (modelAlias.name().equalsIgnoreCase(name)) {
+                        modelEntityToUse = modelViewEntity.getMemberModelEntity(modelAlias.entityAlias());
+                        name = modelAlias.field();
                         break;
                     }
                 }
@@ -1019,10 +1019,10 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
                 //search aliasName for pkField of realEntity
                 while (iterAlias != null && iterAlias.hasNext()) {
                     ModelAlias aliasField = iterAlias.next();
-                    if (aliasField.getField().equals(curField.getName())) {
-                        ModelEntity memberModelEntity = modelViewEntity.getMemberModelEntity(aliasField.getEntityAlias());
+                    if (aliasField.field().equals(curField.getName())) {
+                        ModelEntity memberModelEntity = modelViewEntity.getMemberModelEntity(aliasField.entityAlias());
                         if (memberModelEntity.getEntityName().equals(modelEntityToUse.getEntityName())) {
-                            pkName = aliasField.getName();
+                            pkName = aliasField.name();
                             break;
                         }
                     }

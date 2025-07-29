@@ -252,7 +252,7 @@ public final class UtilHttp {
                     String fieldName = item.getFieldName();
                     //byte[] itemBytes = item.get();
                     /*
-                    Debug.logInfo("Item Info [" + fieldName + "] : " + item.getName() + " / " + item.getSize() + " / " +
+                    Debug.logInfo("Item Info [" + fieldName + "] : " + item.name() + " / " + item.getSize() + " / " +
                             item.getContentType() + " FF: " + item.isFormField(), MODULE);
                     */
                     if (item.isFormField() || item.getName() == null) {

@@ -53,7 +53,7 @@ public class CursorStatement extends AbstractCursorHandler {
             TransactionUtil.commit(beganTransaction);
             stmt.close();
             return null;
-        // } else if ("execute".equals(method.getName())) {
+        // } else if ("execute".equals(method.name())) {
         } else if ("executeQuery".equals(method.getName()) && args == null) {
             PreparedStatement pstmt = (PreparedStatement) stmt;
             pstmt.executeUpdate();

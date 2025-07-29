@@ -24,7 +24,7 @@ import org.apache.ofbiz.base.component.ComponentConfig.KeystoreInfo
 cert = org.apache.ofbiz.base.util.KeyStoreUtil.pemToCert(certString)
 if (cert) {
     context.certType = cert.getType()
-    context.certName = cert.getSubjectX500Principal().getName()
+    context.certName = cert.getSubjectX500Principal().name()
     context.certSerialNumber = cert.getSerialNumber().toString(16)
     context.certPublicKey = cert.getPublicKey()
 }

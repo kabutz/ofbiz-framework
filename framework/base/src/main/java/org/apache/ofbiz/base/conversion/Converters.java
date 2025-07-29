@@ -210,20 +210,14 @@ public final class Converters {
         }
     }
 
-    /** Pass thru converter used when the source and target java object
+    /**
+     * Pass thru converter used when the source and target java object
      * types are the same. The <code>convert</code> method returns the
      * source object.
      */
-    // REFACTOR: Replace simple data class with record
-    protected static final class PassThruConverter<S, T> implements Converter<S, T> {
-        private final Class<S> sourceClass;
-        private final Class<T> targetClass;
-
-        PassThruConverter(Class<S> sourceClass, Class<T> targetClass) {
-            this.sourceClass = sourceClass;
-            this.targetClass = targetClass;
-        }
-
+    // REFACTO: Replace simple data class with record
+    protected record PassThruConverter<S, T>(Class<S> sourceClass,
+                                             Class<T> targetClass) implements Converter<S, T> {
         @Override
         public boolean canConvert(Class<?> sourceClass, Class<?> targetClass) {
             return this.sourceClass == sourceClass && this.targetClass == targetClass;

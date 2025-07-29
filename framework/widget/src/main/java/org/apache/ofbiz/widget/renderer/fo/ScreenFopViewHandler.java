@@ -101,8 +101,8 @@ public class ScreenFopViewHandler extends AbstractViewHandler {
                     modelTheme.getScreenRendererLocation(getName()));
             FormStringRenderer formStringRenderer = new MacroFormRenderer(modelTheme.getFormRendererLocation(getName()), request, response);
             // TODO: uncomment these lines when the renderers are implemented
-            //TreeStringRenderer treeStringRenderer = new MacroTreeRenderer(modelTheme.getTreeRendererLocation(getName()), writer);
-            //MenuStringRenderer menuStringRenderer = new MacroMenuRenderer(modelTheme.getMenuRendererLocation(getName()), writer);
+            //TreeStringRenderer treeStringRenderer = new MacroTreeRenderer(modelTheme.getTreeRendererLocation(name()), writer);
+            //MenuStringRenderer menuStringRenderer = new MacroMenuRenderer(modelTheme.getMenuRendererLocation(name()), writer);
             ScreenRenderer screens = new ScreenRenderer(writer, UtilGenerics.cast(context), screenStringRenderer);
 
             // this is the object used to render forms from their definitions

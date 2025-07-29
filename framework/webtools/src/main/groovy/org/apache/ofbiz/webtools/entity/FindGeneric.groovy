@@ -152,10 +152,10 @@ List<String> getFieldsToSelect(ModelEntity modelEntity) {
     if (modelEntity instanceof ModelViewEntity) {
         aliases = modelEntity.getAliasesCopy()
         for (ModelAlias alias : aliases) {
-            if (alias.getGroupBy()) {
-                groupByFields.add(alias.getName())
-            } else if (alias.getFunction()) {
-                functionFields.add(alias.getName())
+            if (alias.groupBy()) {
+                groupByFields.add(alias.name())
+            } else if (alias.function()) {
+                functionFields.add(alias.name())
             }
         }
     }

@@ -22,14 +22,8 @@ package org.apache.ofbiz.base.concurrent;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-// REFACTOR: Replace simple data class with record
-public class ConstantFuture<V> implements Future<V> {
-    private final V value;
-
-    public ConstantFuture(V value) {
-        this.value = value;
-    }
-
+// REFACTO: Replace simple data class with record
+public record ConstantFuture<V>(V value) implements Future<V> {
     @Override
     public boolean cancel(boolean mayInterruptIfRunning) {
         return false;

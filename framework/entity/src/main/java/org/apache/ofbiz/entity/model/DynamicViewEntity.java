@@ -113,16 +113,16 @@ public class DynamicViewEntity {
 
         for (ModelMemberEntity member: memberModelMemberEntities.values()) {
             Element memberElement = doc.createElement("member-entity");
-            memberElement.setAttribute("entity-alias", member.getEntityAlias());
-            memberElement.setAttribute("entity-name", member.getEntityName());
+            memberElement.setAttribute("entity-alias", member.entityAlias());
+            memberElement.setAttribute("entity-name", member.entityName());
             viewElement.appendChild(memberElement);
         }
         for (ModelAliasAll aliasAll: aliasAlls) {
             Element aliasAllElement = doc.createElement("alias-all");
-            aliasAllElement.setAttribute("entity-alias", aliasAll.getEntityAlias());
-            if (UtilValidate.isNotEmpty(aliasAll.getPrefix())) aliasAllElement.setAttribute("prefix", aliasAll.getPrefix());
-            if (aliasAll.getGroupBy()) aliasAllElement.setAttribute("group-by", "true");
-            if (UtilValidate.isNotEmpty(aliasAll.getFunction())) aliasAllElement.setAttribute("function", aliasAll.getFunction());
+            aliasAllElement.setAttribute("entity-alias", aliasAll.entityAlias());
+            if (UtilValidate.isNotEmpty(aliasAll.prefix())) aliasAllElement.setAttribute("prefix", aliasAll.prefix());
+            if (aliasAll.groupBy()) aliasAllElement.setAttribute("group-by", "true");
+            if (UtilValidate.isNotEmpty(aliasAll.function())) aliasAllElement.setAttribute("function", aliasAll.function());
             for (String excludeField: aliasAll) {
                 Element excludeElement = doc.createElement("exclude");
                 excludeElement.setAttribute("field", excludeField);
@@ -132,14 +132,14 @@ public class DynamicViewEntity {
         }
         for (ModelAlias alias: aliases) {
             Element aliasElement = doc.createElement("alias");
-            aliasElement.setAttribute("entity-alias", alias.getEntityAlias());
-            aliasElement.setAttribute("name", alias.getName());
-            if (!alias.getName().equals(alias.getField())) aliasElement.setAttribute("field", alias.getField());
-            String colAlias = ModelUtil.dbNameToVarName(alias.getColAlias());
-            if (!alias.getName().equals(colAlias)) aliasElement.setAttribute("col-alias", colAlias);
-            if (alias.getIsPk() != null) aliasElement.setAttribute("prim-key", alias.getIsPk().toString());
-            if (alias.getGroupBy()) aliasElement.setAttribute("group-by", "true");
-            if (UtilValidate.isNotEmpty(alias.getFunction())) aliasElement.setAttribute("function", alias.getFunction());
+            aliasElement.setAttribute("entity-alias", alias.entityAlias());
+            aliasElement.setAttribute("name", alias.name());
+            if (!alias.name().equals(alias.field())) aliasElement.setAttribute("field", alias.field());
+            String colAlias = ModelUtil.dbNameToVarName(alias.colAlias());
+            if (!alias.name().equals(colAlias)) aliasElement.setAttribute("col-alias", colAlias);
+            if (alias.isPk() != null) aliasElement.setAttribute("prim-key", alias.isPk().toString());
+            if (alias.groupBy()) aliasElement.setAttribute("group-by", "true");
+            if (UtilValidate.isNotEmpty(alias.function())) aliasElement.setAttribute("function", alias.function());
             // TODO: description, complex-alias
             viewElement.appendChild(aliasElement);
         }
@@ -174,7 +174,7 @@ public class DynamicViewEntity {
         }
 
         ModelMemberEntity modelMemberEntity = this.memberModelMemberEntities.entrySet().iterator().next().getValue();
-        return modelMemberEntity.getEntityName();
+        return modelMemberEntity.entityName();
     }
 
     /** Getter for property entityName.
@@ -329,10 +329,7 @@ public class DynamicViewEntity {
             throw new IllegalArgumentException("name cannot be null in call to DynamicViewEntity.addAlias");
         }
 
-        ModelAlias alias = new ModelAlias(entityAlias, name, field, colAlias, primKey, groupBy, function, fieldSet);
-        if (complexAliasMember != null) {
-            alias.setComplexAliasMember(complexAliasMember);
-        }
+        ModelAlias alias = new ModelAlias(entityAlias, name, field, colAlias, primKey, groupBy, function, fieldSet, complexAliasMember);
         this.aliases.add(alias);
     }
 

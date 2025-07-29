@@ -327,8 +327,8 @@ public final class ModelUtil {
             Iterator<ModelAlias> it = modelViewEntity.getAliasesIterator();
             while (it.hasNext()) {
                 ModelAlias modelAlias = it.next();
-                if (fieldNames.contains(modelAlias.getName())) {
-                    ModelEntity memberModelEntity = modelViewEntity.getMemberModelEntity(modelAlias.getEntityAlias());
+                if (fieldNames.contains(modelAlias.name())) {
+                    ModelEntity memberModelEntity = modelViewEntity.getMemberModelEntity(modelAlias.entityAlias());
                     if (UtilValidate.isNotEmpty(memberModelEntity.getDefaultResourceName())) {
                         return true;
                     }

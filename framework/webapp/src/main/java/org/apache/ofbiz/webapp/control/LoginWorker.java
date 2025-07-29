@@ -1238,7 +1238,7 @@ public final class LoginWorker {
 
                     for (int i = 0; i < clientCerts.length; i++) {
                         //X500Principal x500 = clientCerts[i].getSubjectX500Principal();
-                        //Debug.logInfo("Checking client certification for authentication: " + x500.getName(), MODULE);
+                        //Debug.logInfo("Checking client certification for authentication: " + x500.name(), MODULE);
 
                         Map<String, String> x500Map = KeyStoreUtil.getCertX500Map(clientCerts[i]);
                         if (i == 0) {

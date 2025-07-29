@@ -28,7 +28,7 @@ try {
     type = Integer.valueOf(typeStr)
 } catch (NumberFormatException nfe) {
     logError(nfe, 'Caught an exception : ' + nfe)
-    errMsgList.add('Entered value is non-numeric for numeric field: ' + field.getName())
+    errMsgList.add('Entered value is non-numeric for numeric field: ' + field.name())
 }
 
 binList = null
