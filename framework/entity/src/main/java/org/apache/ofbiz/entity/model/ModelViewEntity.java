@@ -1124,7 +1124,6 @@ public class ModelViewEntity extends ModelEntity {
         void makeAliasColName(StringBuilder colNameBuffer, StringBuilder fieldTypeBuffer, ModelViewEntity modelViewEntity, ModelReader modelReader);
     }
 
-    // REFACTOR: Replace simple data class with record
     public static final class ComplexAlias implements ComplexAliasMember {
         private final List<ComplexAliasMember> complexAliasMembers = new LinkedList<>();
         private final String operator;
@@ -1250,7 +1249,6 @@ public class ModelViewEntity extends ModelEntity {
         }
     }
 
-    // REFACTOR: Replace simple data class with record
     public static final class ModelViewLink implements Serializable, Iterable<ModelKeyMap> {
         private final String entityAlias;
         private final String relEntityAlias;
