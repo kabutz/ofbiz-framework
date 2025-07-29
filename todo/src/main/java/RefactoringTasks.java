@@ -163,6 +163,7 @@ public class RefactoringTasks {
      * {@link SanitizerCustomPolicy}
      * {@link Converter}
      * {@link RenderableFtl}
+     * {@link ModelViewEntity.ComplexAliasMember}
      */
     public static void task7_sealedClasses() {
     }

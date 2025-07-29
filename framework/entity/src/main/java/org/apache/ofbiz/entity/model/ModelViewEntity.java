@@ -899,6 +899,7 @@ public class ModelViewEntity extends ModelEntity {
         }
     }
 
+    // REFACTOR: Replace simple data class with record
     public static final class ModelAliasAll implements Serializable, Iterable<String> {
         private final String entityAlias;
         private final String prefix;
@@ -989,6 +990,7 @@ public class ModelViewEntity extends ModelEntity {
         }
     }
 
+    // REFACTOR: Replace simple data class with record
     public static final class ModelAlias implements Serializable {
         private final String entityAlias;
         private final String name;
@@ -1117,10 +1119,12 @@ public class ModelViewEntity extends ModelEntity {
         }
     }
 
+    // REFACTOR: Tighten up hierarchy with sealed classes
     public interface ComplexAliasMember extends Serializable {
         void makeAliasColName(StringBuilder colNameBuffer, StringBuilder fieldTypeBuffer, ModelViewEntity modelViewEntity, ModelReader modelReader);
     }
 
+    // REFACTOR: Replace simple data class with record
     public static final class ComplexAlias implements ComplexAliasMember {
         private final List<ComplexAliasMember> complexAliasMembers = new LinkedList<>();
         private final String operator;
@@ -1176,6 +1180,7 @@ public class ModelViewEntity extends ModelEntity {
         }
     }
 
+    // REFACTOR: Replace simple data class with record
     public static final class ComplexAliasField implements ComplexAliasMember {
         private final String entityAlias;
         private final String field;
@@ -1245,6 +1250,7 @@ public class ModelViewEntity extends ModelEntity {
         }
     }
 
+    // REFACTOR: Replace simple data class with record
     public static final class ModelViewLink implements Serializable, Iterable<ModelKeyMap> {
         private final String entityAlias;
         private final String relEntityAlias;
