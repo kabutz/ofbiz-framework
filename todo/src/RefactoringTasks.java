@@ -256,9 +256,11 @@ public class RefactoringTasks {
      * // Java 25
      * REFACTOR: Flexible Constructor Bodies - JEP 513
      * @see EntityFieldMap constructors
+     * @see DateRange constructor
      */
     public static void task16_flexibleConstructorBodies() {
         EntityFieldMap entityFieldMap;
+        DateRange dateRange;
     }
 
     /**
