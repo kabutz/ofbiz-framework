@@ -53,8 +53,15 @@ public class DateRange extends ComparableRange<Date> implements Serializable {
         // REFACTOR: Flexible Constructor Bodies - Make a method sanitiseDate()
         //  that we can use to set the start and end dates to their defaults
         //  if null.
-        super(start == null ? MIN_DATE : UtilDateTime.unmodifiableDate(timestampToDate(start)), end == null ? MAX_DATE
-                : UtilDateTime.unmodifiableDate(timestampToDate(end)));
+        start = sanitiseDate(start, MIN_DATE);
+        end = sanitiseDate(end, MAX_DATE);
+        super(start, end);
+    }
+
+    private static Date sanitiseDate(Date date, Date defaultValue) {
+        return date == null ?
+                defaultValue :
+                UtilDateTime.unmodifiableDate(timestampToDate(date));
     }
 
     @Override

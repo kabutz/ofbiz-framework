@@ -940,7 +940,8 @@ public class ModelViewEntity extends ModelEntity {
 
         // Only used to allow Collection for fieldsToExclude.
         public ModelAliasAll(String entityAlias, String prefix, boolean groupBy, String function, String fieldSet, Collection<String> fieldsToExclude) {
-            this(entityAlias, prefix, groupBy, function, fieldSet, fieldsToExclude == null ? null : Set.copyOf(fieldsToExclude));
+            var fieldsToExcludeSet = fieldsToExclude == null ? null : Set.copyOf(fieldsToExclude);
+            this(entityAlias, prefix, groupBy, function, fieldSet, fieldsToExcludeSet);
         }
 
         public ModelAliasAll(Element aliasAllElement) {
