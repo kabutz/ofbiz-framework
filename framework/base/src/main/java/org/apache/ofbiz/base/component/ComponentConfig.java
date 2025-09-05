@@ -18,23 +18,8 @@
  */
 package org.apache.ofbiz.base.component;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.security.KeyStore;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import module java.base;
+import module java.xml;
 
 import org.apache.ofbiz.base.container.ContainerConfig;
 import org.apache.ofbiz.base.location.FlexibleLocation;
@@ -46,8 +31,6 @@ import org.apache.ofbiz.base.util.StringUtil;
 import org.apache.ofbiz.base.util.UtilURL;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.base.util.UtilXml;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
  * An object that models the <code>&lt;ofbiz-component&gt;</code> element.

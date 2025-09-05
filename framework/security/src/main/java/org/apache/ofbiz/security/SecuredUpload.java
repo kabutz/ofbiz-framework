@@ -19,38 +19,11 @@
  */
 package org.apache.ofbiz.security;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Transparency;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.nio.ByteBuffer;
-import java.nio.charset.CharacterCodingException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import module java.base;
+import module java.desktop;
 
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
-import javax.xml.parsers.ParserConfigurationException;
+import java.util.List;
+import org.w3c.dom.Document;
 
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.util.XMLResourceDescriptor;
@@ -93,8 +66,6 @@ import org.apache.tika.sax.BasicContentHandlerFactory;
 import org.apache.tika.sax.ContentHandlerFactory;
 import org.apache.tika.sax.RecursiveParserWrapperHandler;
 import org.mustangproject.ZUGFeRD.ZUGFeRDImporter;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 import com.lowagie.text.pdf.PdfReader;
 
@@ -142,11 +113,13 @@ public class SecuredUpload {
         } else {
             // Check the query string is safe, notably no reverse shell
             List<String> queryParameters = StringUtil.split(content, "&");
-            return DENIEDWEBSHELLTOKENS.stream().allMatch(token -> isValid(queryParameters, token.toLowerCase(), allowed));
+            return DENIEDWEBSHELLTOKENS.stream()
+                    .allMatch(token -> isValid(queryParameters, token.toLowerCase(), allowed));
         }
 
         // Check there is no web shell in an uploaded file
-        return DENIEDWEBSHELLTOKENS.stream().allMatch(token -> isValid(content.toLowerCase(), token.toLowerCase(), allowed));
+        return DENIEDWEBSHELLTOKENS.stream()
+                .allMatch(token -> isValid(content.toLowerCase(), token.toLowerCase(), allowed));
     }
 
     public static boolean isValidFileName(String fileToCheck, Delegator delegator) throws IOException {
@@ -162,8 +135,10 @@ public class SecuredUpload {
 
         // Check extensions
         if (p != null && p.getFileName() != null) {
-            String fileName = p.getFileName().toString(); // The file name is the farthest element from the root in the directory hierarchy.
-            String extension = FilenameUtils.getExtension(fileToCheck).toLowerCase();
+            String fileName = p.getFileName()
+                    .toString(); // The file name is the farthest element from the root in the directory hierarchy.
+            String extension = FilenameUtils.getExtension(fileToCheck)
+                    .toLowerCase();
             // Prevents null byte in filename
             if (extension.contains("%00")
                     || extension.contains("%0a")
@@ -186,20 +161,21 @@ public class SecuredUpload {
                 // More about that: https://docs.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation
                 if (fileToCheck.length() > 259) {
                     Debug.logError("Uploaded file name too long", MODULE);
-                } else if (p.toString().contains(imageServerUrl.replace("/", "\\"))) {
+                } else if (p.toString()
+                        .contains(imageServerUrl.replace("/", "\\"))) {
                     // TODO check this is still useful in at least 1 case
                     if (fileName.matches(
                             FILENAMEVALIDCHARACTERS_DUPLICATES
-                            .concat("{1,249}.")
-                            .concat(FILENAMEVALIDCHARACTERS)
-                            .concat("{1,10}"))) {
+                                    .concat("{1,249}.")
+                                    .concat(FILENAMEVALIDCHARACTERS)
+                                    .concat("{1,10}"))) {
                         wrongFile = false;
                     }
                 } else if (fileName.matches(
                         FILENAMEVALIDCHARACTERS
-                        .concat("{1,249}.")
-                        .concat(FILENAMEVALIDCHARACTERS)
-                        .concat("{1,10}"))) {
+                                .concat("{1,249}.")
+                                .concat(FILENAMEVALIDCHARACTERS)
+                                .concat("{1,10}"))) {
                     wrongFile = false;
                 }
             } else { // Suppose a *nix system
@@ -209,16 +185,16 @@ public class SecuredUpload {
                     // TODO check this is still useful in at least 1 case
                     if (fileName.matches(
                             FILENAMEVALIDCHARACTERS_DUPLICATES
-                            .concat("{1,4086}.")
-                            .concat(FILENAMEVALIDCHARACTERS)
-                            .concat("{1,10}"))) {
+                                    .concat("{1,4086}.")
+                                    .concat(FILENAMEVALIDCHARACTERS)
+                                    .concat("{1,10}"))) {
                         wrongFile = false;
                     }
                 } else if (fileName.matches(
                         FILENAMEVALIDCHARACTERS
-                        .concat("{1,4086}.")
-                        .concat(FILENAMEVALIDCHARACTERS)
-                        .concat("{1,10}"))) {
+                                .concat("{1,4086}.")
+                                .concat(FILENAMEVALIDCHARACTERS)
+                                .concat("{1,10}"))) {
                     wrongFile = false;
                 }
             }
@@ -226,9 +202,9 @@ public class SecuredUpload {
 
         if (wrongFile) {
             Debug.logError("Uploaded file "
-                    + " should contain only Alpha-Numeric characters, hyphen, underscore and spaces,"
-                    + " only 1 dot as an input for the file name and the extension."
-                    + "The file name and extension should not be empty at all",
+                            + " should contain only Alpha-Numeric characters, hyphen, underscore and spaces,"
+                            + " only 1 dot as an input for the file name and the extension."
+                            + "The file name and extension should not be empty at all",
                     MODULE);
             deleteBadFile(fileToCheck);
             return false;
@@ -299,74 +275,74 @@ public class SecuredUpload {
         }
 
         switch (fileType) {
-        case "Image":
-            if (isValidImageFile(fileToCheck)) {
-                return true;
-            }
-            break;
+            case "Image":
+                if (isValidImageFile(fileToCheck)) {
+                    return true;
+                }
+                break;
 
-        case "ImageAndSvg":
-            if (isValidImageIncludingSvgFile(fileToCheck)) {
-                return true;
-            }
-            break;
+            case "ImageAndSvg":
+                if (isValidImageIncludingSvgFile(fileToCheck)) {
+                    return true;
+                }
+                break;
 
-        case "PDF":
-            if (isValidPdfFile(fileToCheck)) {
-                return true;
-            }
-            break;
+            case "PDF":
+                if (isValidPdfFile(fileToCheck)) {
+                    return true;
+                }
+                break;
 
-        case "Compressed":
-            if (isValidCompressedFile(fileToCheck, delegator)) {
-                return true;
-            }
-            break;
+            case "Compressed":
+                if (isValidCompressedFile(fileToCheck, delegator)) {
+                    return true;
+                }
+                break;
 
-        case "AllButCompressed":
-            if (isValidTextFile(fileToCheck, true)
-                    || isValidImageIncludingSvgFile(fileToCheck)
-                    || isValidPdfFile(fileToCheck)) {
-                return true;
-            }
-            break;
+            case "AllButCompressed":
+                if (isValidTextFile(fileToCheck, true)
+                        || isValidImageIncludingSvgFile(fileToCheck)
+                        || isValidPdfFile(fileToCheck)) {
+                    return true;
+                }
+                break;
 
-        case "Text":
-            // The philosophy for isValidTextFile() is that
-            // we can't presume of all possible text contents used for attacks with payloads
-            // At least there is an easy way to prevent them in isValidTextFile
-            if (isValidTextFile(fileToCheck, true)) {
-                return true;
-            }
-            break;
+            case "Text":
+                // The philosophy for isValidTextFile() is that
+                // we can't presume of all possible text contents used for attacks with payloads
+                // At least there is an easy way to prevent them in isValidTextFile
+                if (isValidTextFile(fileToCheck, true)) {
+                    return true;
+                }
+                break;
 
-        case "Audio":
-            if (isValidAudioFile(fileToCheck)) {
-                return true;
-            }
-            break;
-        case "Video":
-            if (isValidVideoFile(fileToCheck)) {
-                return true;
-            }
-            break;
-        case "CSV":
-            if (isValidCsvFile(fileToCheck)) {
-                return true;
-            }
-            break;
+            case "Audio":
+                if (isValidAudioFile(fileToCheck)) {
+                    return true;
+                }
+                break;
+            case "Video":
+                if (isValidVideoFile(fileToCheck)) {
+                    return true;
+                }
+                break;
+            case "CSV":
+                if (isValidCsvFile(fileToCheck)) {
+                    return true;
+                }
+                break;
 
-        default: // All
-            if (isValidTextFile(fileToCheck, true)
-                    || isValidImageIncludingSvgFile(fileToCheck)
-                    || isValidCompressedFile(fileToCheck, delegator)
-                    || isValidAudioFile(fileToCheck)
-                    || isValidVideoFile(fileToCheck)
-                    || isValidPdfFile(fileToCheck)
-                    || isValidCsvFile(fileToCheck)) {
-                return true;
-            }
-            break;
+            default: // All
+                if (isValidTextFile(fileToCheck, true)
+                        || isValidImageIncludingSvgFile(fileToCheck)
+                        || isValidCompressedFile(fileToCheck, delegator)
+                        || isValidAudioFile(fileToCheck)
+                        || isValidVideoFile(fileToCheck)
+                        || isValidPdfFile(fileToCheck)
+                        || isValidCsvFile(fileToCheck)) {
+                    return true;
+                }
+                break;
         }
         deleteBadFile(fileToCheck);
         return false;
@@ -374,6 +350,7 @@ public class SecuredUpload {
 
     /**
      * Is it a supported image format?
+     *
      * @param fileName
      * @return true if it's a valid image file
      * @throws IOException ImageReadException
@@ -410,7 +387,8 @@ public class SecuredUpload {
                 // If there not ImageReader instance found so it's means that the current format is not supported by the Java built-in API
                 if (!imageReaderIterator.hasNext()) {
                     ImageInfo imageInfo = Imaging.getImageInfo(file);
-                    if (imageInfo != null && imageInfo.getFormat() != null && imageInfo.getFormat().getName() != null) {
+                    if (imageInfo != null && imageInfo.getFormat() != null && imageInfo.getFormat()
+                            .getName() != null) {
                         formatName = imageInfo.getFormat().getName();
                         fallbackOnApacheCommonsImaging = true;
                     } else {
@@ -461,20 +439,20 @@ public class SecuredUpload {
                     // the image format. See reference link in the class header
                     // REFACTOR: Replace old style switch with switch expressions
                     switch (formatName) {
-                    case "TIFF":
-                        imageParser = new TiffImageParser();
-                        break;
-                    case "GIF":
-                        imageParser = new GifImageParser();
-                        break;
-                    case "PNG":
-                        imageParser = new PngImageParser();
-                        break;
-                    // case "JPEG":
-                    // imageParser = new JpegImageParser(); // Does not provide imageParser.writeImage used below
-                    // break;
-                    default:
-                        throw new IOException("Format of the original image " + fileName + " is not supported for write operation !");
+                        case "TIFF":
+                            imageParser = new TiffImageParser();
+                            break;
+                        case "GIF":
+                            imageParser = new GifImageParser();
+                            break;
+                        case "PNG":
+                            imageParser = new PngImageParser();
+                            break;
+                        // case "JPEG":
+                        // imageParser = new JpegImageParser(); // Does not provide imageParser.writeImage used below
+                        // break;
+                        default:
+                            throw new IOException("Format of the original image " + fileName + " is not supported for write operation !");
                     }
                     imageParser.writeImage(sanitizedImage, fos, null);
                 }
@@ -489,6 +467,7 @@ public class SecuredUpload {
 
     /**
      * Is it a supported image format, including SVG?
+     *
      * @param fileName
      * @return true if it's a valid image file
      * @throws IOException ImageReadException
@@ -499,6 +478,7 @@ public class SecuredUpload {
 
     /**
      * Is it an SVG file?
+     *
      * @param fileName
      * @return true if it's a valid SVG file
      * @throws IOException
@@ -578,17 +558,19 @@ public class SecuredUpload {
                     } else {
                         try {
                             Document document = UtilXml.readXmlDocument(importer.getUTF8());
-                            if (document.toString().equals("[#document: null]")) {
+                            if (document.toString()
+                                    .equals("[#document: null]")) {
                                 safeState = false;
                                 Debug.logInfo("The file " + file.getAbsolutePath()
-                                        + " is not a readable (valid and secure) PDF file. For security reason it's not accepted as a such file",
+                                                + " is not a readable (valid and secure) PDF file. For security reason it's not accepted as a such file",
                                         MODULE);
 
                             }
-                        } catch (SAXException | ParserConfigurationException | IOException e) {
+                        } catch (SAXException | ParserConfigurationException |
+                                 IOException e) {
                             safeState = false;
                             Debug.logInfo(e, "The file " + file.getAbsolutePath()
-                                    + " is not a readable (valid and secure) PDF file. For security reason it's not accepted as a such file",
+                                            + " is not a readable (valid and secure) PDF file. For security reason it's not accepted as a such file",
                                     MODULE);
                         }
                     }
@@ -598,7 +580,7 @@ public class SecuredUpload {
         } catch (Exception e) {
             safeState = false;
             Debug.logInfo(e, "The file " + file.getAbsolutePath() + " is not a readable (valid and secure) PDF file. "
-                    + "For security reason it's not accepted as a such file",
+                            + "For security reason it's not accepted as a such file",
                     MODULE);
         }
         return safeState;
@@ -606,6 +588,7 @@ public class SecuredUpload {
 
     /**
      * Is it a CVS file?
+     *
      * @param fileName
      * @return true if it's a valid CVS file
      * @throws IOException
@@ -618,20 +601,20 @@ public class SecuredUpload {
         CSVFormat cvsFormat = CSVFormat.DEFAULT;
         // REFACTOR: Replace old style switch with switch expressions
         switch (cvsFormatString) {
-        case "EXCEL":
-            cvsFormat = CSVFormat.EXCEL;
-            break;
-        case "MYSQL":
-            cvsFormat = CSVFormat.MYSQL;
-            break;
-        case "ORACLE":
-            cvsFormat = CSVFormat.ORACLE;
-            break;
-        case "POSTGRESQL_CSV":
-            cvsFormat = CSVFormat.POSTGRESQL_CSV;
-            break;
-        default:
-            cvsFormat = CSVFormat.DEFAULT;
+            case "EXCEL":
+                cvsFormat = CSVFormat.EXCEL;
+                break;
+            case "MYSQL":
+                cvsFormat = CSVFormat.MYSQL;
+                break;
+            case "ORACLE":
+                cvsFormat = CSVFormat.ORACLE;
+                break;
+            case "POSTGRESQL_CSV":
+                cvsFormat = CSVFormat.POSTGRESQL_CSV;
+                break;
+            default:
+                cvsFormat = CSVFormat.DEFAULT;
         }
 
         // cf. https://commons.apache.org/proper/commons-csv/apidocs/org/apache/commons/csv/CSVFormat.html
@@ -669,6 +652,7 @@ public class SecuredUpload {
      * bzip, rar, tar or/and 7z file formats they can be handled by Apache commons-compress: Types based on
      * https://developer.mozilla.org/fr/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types For code explanations see
      * http://commons.apache.org/proper/commons-compress/examples.html
+     *
      * @param fileName
      * @return true if it's a valid compressed file
      * @throws IOException ImageReadException
@@ -690,7 +674,8 @@ public class SecuredUpload {
 
         // Handles only Zip format OOTB
         File fileToCheck = new File(fileName);
-        String folderName = fileToCheck.getParentFile().toString() + File.separator + UUID.randomUUID();
+        String folderName = fileToCheck.getParentFile()
+                .toString() + File.separator + UUID.randomUUID();
         if ("application/octet-stream".equals(mimeType)
                 || "application/java-archive".equals(mimeType)
                 || "application/zip".equals(mimeType)
@@ -761,6 +746,7 @@ public class SecuredUpload {
      * <p>
      * The drawback to the RecursiveParserWrapper is that it caches metadata and contents in memory. This should not be used on files whose contents
      * are too big to be handled in memory.
+     *
      * @return a list of metadata object, one each for the container file and each embedded file
      * @throws IOException
      * @throws SAXException
@@ -792,6 +778,7 @@ public class SecuredUpload {
 
     /**
      * Is this a valid Audio file?
+     *
      * @param fileName must be an UTF-8 encoded text file
      * @return true if it's a valid Audio file?
      * @throws IOException
@@ -816,6 +803,7 @@ public class SecuredUpload {
 
     /**
      * Is this a valid Audio file?
+     *
      * @param fileName must be an UTF-8 encoded text file
      * @return true if it's a valid Audio file?
      * @throws IOException
@@ -841,7 +829,8 @@ public class SecuredUpload {
 
     /**
      * Does this text file contains a Freemarker Server-Side Template Injection (SSTI) using freemarker.template.utility.Execute? Etc.
-     * @param fileName must be an UTF-8 encoded text file
+     *
+     * @param fileName       must be an UTF-8 encoded text file
      * @param encodedContent TODO
      * @return true if the text file does not contains a Freemarker SSTI
      * @throws IOException
@@ -851,14 +840,18 @@ public class SecuredUpload {
         byte[] bytesFromFile = Files.readAllBytes(filePath);
         if (encodedContent) {
             try {
-                Charset.availableCharsets().get("UTF-8").newDecoder().decode(ByteBuffer.wrap(bytesFromFile));
+                Charset.availableCharsets()
+                        .get("UTF-8")
+                        .newDecoder()
+                        .decode(ByteBuffer.wrap(bytesFromFile));
             } catch (CharacterCodingException e) {
                 return false;
             }
         }
         String content = new String(bytesFromFile);
         if (content.toLowerCase().contains("xlink:href=\"http")
-                || content.toLowerCase().contains("<!ENTITY ")) { // Billions laugh attack
+                || content.toLowerCase()
+                .contains("<!ENTITY ")) { // Billions laugh attack
             Debug.logInfo("Linked images inside or Entity in SVG are not allowed for security reason", MODULE);
             return false;
         }
@@ -881,7 +874,8 @@ public class SecuredUpload {
 
         for (String parameter : queryParameters) {
             if (!parameter.contains(string)
-                    || allowed.contains(HashCrypt.cryptBytes("SHA", "OFBiz", parameter.toLowerCase().getBytes(StandardCharsets.UTF_8)))) {
+                    || allowed.contains(HashCrypt.cryptBytes("SHA", "OFBiz", parameter.toLowerCase()
+                    .getBytes(StandardCharsets.UTF_8)))) {
                 continue;
             } else {
                 isOK = false;

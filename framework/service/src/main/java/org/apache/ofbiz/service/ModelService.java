@@ -18,27 +18,8 @@
  */
 package org.apache.ofbiz.service;
 
-import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.AbstractMap;
-import java.util.AbstractSet;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
-import java.util.TimeZone;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
+import module java.base;
+import module java.xml;
 
 import javax.wsdl.Binding;
 import javax.wsdl.BindingInput;
@@ -60,9 +41,6 @@ import javax.wsdl.extensions.soap.SOAPBinding;
 import javax.wsdl.extensions.soap.SOAPBody;
 import javax.wsdl.extensions.soap.SOAPOperation;
 import javax.wsdl.factory.WSDLFactory;
-import javax.xml.namespace.QName;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.ofbiz.base.metrics.Metrics;
 import org.apache.ofbiz.base.util.Debug;
@@ -77,8 +55,6 @@ import org.apache.ofbiz.entity.util.EntityUtilProperties;
 import org.apache.ofbiz.service.group.GroupModel;
 import org.apache.ofbiz.service.group.GroupServiceModel;
 import org.apache.ofbiz.service.group.ServiceGroupReader;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 import com.ibm.wsdl.extensions.soap.SOAPAddressImpl;
 import com.ibm.wsdl.extensions.soap.SOAPBindingImpl;
@@ -92,12 +68,14 @@ import com.ibm.wsdl.extensions.soap.SOAPOperationImpl;
 public class ModelService extends AbstractMap<String, Object> implements Serializable {
     private static final Field[] MODEL_SERVICE_FIELDS;
     private static final Map<String, Field> MODEL_SERVICE_FIELD_MAP = new LinkedHashMap<>();
+
     static {
         MODEL_SERVICE_FIELDS = ModelService.class.getFields();
-        for (Field field: MODEL_SERVICE_FIELDS) {
+        for (Field field : MODEL_SERVICE_FIELDS) {
             MODEL_SERVICE_FIELD_MAP.put(field.getName(), field);
         }
     }
+
     private static final String MODULE = ModelService.class.getName();
 
     public static final String XSD = "http://www.w3.org/2001/XMLSchema";
@@ -118,102 +96,166 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     private static final String RESOURCE = "ServiceErrorUiLabels";
 
-    /** The name of this service */
+    /**
+     * The name of this service
+     */
     private String name;
 
-    /** The location of the definition this service */
+    /**
+     * The location of the definition this service
+     */
     private String definitionLocation;
 
-    /** The description of this service */
+    /**
+     * The description of this service
+     */
     private String description;
 
-    /** The name of the service engine */
+    /**
+     * The name of the service engine
+     */
     private String engineName;
 
-    /** The namespace of this service */
+    /**
+     * The namespace of this service
+     */
     private String nameSpace;
 
-    /** The corresponding REST verb behaviour for this service */
+    /**
+     * The corresponding REST verb behaviour for this service
+     */
     private String action;
 
-    /** The package name or location of this service */
+    /**
+     * The package name or location of this service
+     */
     private String location;
 
-    /** The method or function to invoke for this service */
+    /**
+     * The method or function to invoke for this service
+     */
     private String invoke;
 
-    /** The default Entity to use for auto-attributes */
+    /**
+     * The default Entity to use for auto-attributes
+     */
     private String defaultEntityName;
 
-    /** The loader which loaded this definition */
+    /**
+     * The loader which loaded this definition
+     */
     private String fromLoader;
 
-    /** Does this service require authorization */
+    /**
+     * Does this service require authorization
+     */
     private boolean auth;
 
-    /** Can this service be exported via RPC, RMI, SOAP, etc */
+    /**
+     * Can this service be exported via RPC, RMI, SOAP, etc
+     */
     private boolean export;
 
-    /** Enable verbose debugging when calling this service */
+    /**
+     * Enable verbose debugging when calling this service
+     */
     private boolean debug;
 
-    /** Validate the context info for this service */
+    /**
+     * Validate the context info for this service
+     */
     private boolean validate;
 
-    /** Create a transaction for this service (if one is not already in place...)? */
+    /**
+     * Create a transaction for this service (if one is not already in place...)?
+     */
     private boolean useTransaction;
 
-    /** Require a new transaction for this service */
+    /**
+     * Require a new transaction for this service
+     */
     private boolean requireNewTransaction;
 
-    /** Override the default transaction timeout, only works if we start the transaction */
+    /**
+     * Override the default transaction timeout, only works if we start the transaction
+     */
     private int transactionTimeout;
 
-    /** Sets the max number of times this service will retry when failed (persisted async only) */
+    /**
+     * Sets the max number of times this service will retry when failed (persisted async only)
+     */
     private int maxRetry = 0;
 
-    /** Permission service*/
+    /**
+     * Permission service
+     */
     private ModelPermission modelPermission = null;
 
-    /** Semaphore setting (wait, fail, none) */
+    /**
+     * Semaphore setting (wait, fail, none)
+     */
     private String semaphore;
 
-    /** Semaphore wait time (in milliseconds) */
+    /**
+     * Semaphore wait time (in milliseconds)
+     */
     private int semaphoreWait;
 
-    /** Semaphore sleep time (in milliseconds) */
+    /**
+     * Semaphore sleep time (in milliseconds)
+     */
     private int semaphoreSleep;
 
-    /** Require a new transaction for this service */
+    /**
+     * Require a new transaction for this service
+     */
     private boolean hideResultInLog;
 
-    /** Set of services this service implements */
+    /**
+     * Set of services this service implements
+     */
     private transient Set<ModelServiceIface> implServices = new LinkedHashSet<>();
 
-    /** Set of override parameters */
+    /**
+     * Set of override parameters
+     */
     private Set<ModelParam> overrideParameters = new LinkedHashSet<>();
 
-    /** List of permission groups for service invocation */
+    /**
+     * List of permission groups for service invocation
+     */
     private List<ModelPermGroup> permissionGroups = new LinkedList<>();
 
-    /** List of email-notifications for this service */
+    /**
+     * List of email-notifications for this service
+     */
     private transient List<ModelNotification> notifications = new LinkedList<>();
 
-    /** Internal Service Group */
+    /**
+     * Internal Service Group
+     */
     private transient GroupModel internalGroup = null;
 
-    /**Deprecated information*/
+    /**
+     * Deprecated information
+     */
     private String deprecatedUseInstead = null;
     private String deprecatedSince = null;
     private String deprecatedReason = null;
 
-    /** Context Information, a Map of parameters used by the service, contains ModelParam objects */
+    /**
+     * Context Information, a Map of parameters used by the service, contains ModelParam objects
+     */
     private Map<String, ModelParam> contextInfo = new LinkedHashMap<>();
 
-    /** Context Information, a List of parameters used by the service, contains ModelParam objects */
+    /**
+     * Context Information, a List of parameters used by the service, contains ModelParam objects
+     */
     private List<ModelParam> contextParamList = new LinkedList<>();
 
-    /** Flag to say if we have pulled in our addition parameters from our implemented service(s) */
+    /**
+     * Flag to say if we have pulled in our addition parameters from our implemented service(s)
+     */
     private boolean inheritedParameters = false;
 
     /**
@@ -223,6 +265,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets name.
+     *
      * @param name the name
      */
     public void setName(String name) {
@@ -231,6 +274,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets definition location.
+     *
      * @param definitionLocation the definition location
      */
     public void setDefinitionLocation(String definitionLocation) {
@@ -239,6 +283,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets description.
+     *
      * @param description the description
      */
     public void setDescription(String description) {
@@ -247,6 +292,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets engine name.
+     *
      * @param engineName the engine name
      */
     public void setEngineName(String engineName) {
@@ -255,6 +301,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets name space.
+     *
      * @param nameSpace the name space
      */
     public void setNameSpace(String nameSpace) {
@@ -263,6 +310,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets action.
+     *
      * @param action the action
      */
     public void setAction(String action) {
@@ -271,6 +319,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets location.
+     *
      * @param location the location
      */
     public void setLocation(String location) {
@@ -279,6 +328,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets invoke.
+     *
      * @param invoke the invoke
      */
     public void setInvoke(String invoke) {
@@ -287,6 +337,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets default entity name.
+     *
      * @param defaultEntityName the default entity name
      */
     public void setDefaultEntityName(String defaultEntityName) {
@@ -295,6 +346,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets from loader.
+     *
      * @param fromLoader the from loader
      */
     public void setFromLoader(String fromLoader) {
@@ -303,6 +355,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets auth.
+     *
      * @param auth the auth
      */
     public void setAuth(boolean auth) {
@@ -311,6 +364,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets export.
+     *
      * @param export the export
      */
     public void setExport(boolean export) {
@@ -319,6 +373,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets debug.
+     *
      * @param debug the debug
      */
     public void setDebug(boolean debug) {
@@ -327,6 +382,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets validate.
+     *
      * @param validate the validate
      */
     public void setValidate(boolean validate) {
@@ -335,6 +391,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets use transaction.
+     *
      * @param useTransaction the use transaction
      */
     public void setUseTransaction(boolean useTransaction) {
@@ -343,6 +400,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets require new transaction.
+     *
      * @param requireNewTransaction the require new transaction
      */
     public void setRequireNewTransaction(boolean requireNewTransaction) {
@@ -351,6 +409,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets transaction timeout.
+     *
      * @param transactionTimeout the transaction timeout
      */
     public void setTransactionTimeout(int transactionTimeout) {
@@ -359,6 +418,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets max retry.
+     *
      * @param maxRetry the max retry
      */
     public void setMaxRetry(int maxRetry) {
@@ -367,6 +427,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets model permission.
+     *
      * @param modelPermission the model permission
      */
     public void setModelPermission(ModelPermission modelPermission) {
@@ -375,6 +436,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets semaphore.
+     *
      * @param semaphore the semaphore
      */
     public void setSemaphore(String semaphore) {
@@ -383,6 +445,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets semaphore wait.
+     *
      * @param semaphoreWait the semaphore wait
      */
     public void setSemaphoreWait(int semaphoreWait) {
@@ -391,6 +454,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets semaphore sleep.
+     *
      * @param semaphoreSleep the semaphore sleep
      */
     public void setSemaphoreSleep(int semaphoreSleep) {
@@ -399,6 +463,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets hide result in log.
+     *
      * @param hideResultInLog the hide result in log
      */
     public void setHideResultInLog(boolean hideResultInLog) {
@@ -407,6 +472,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets definition location.
+     *
      * @return the definition location
      */
     public String getDefinitionLocation() {
@@ -415,6 +481,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets impl services.
+     *
      * @param implServices the impl services
      */
     public void setImplServices(Set<ModelServiceIface> implServices) {
@@ -423,6 +490,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets override parameters.
+     *
      * @param overrideParameters the override parameters
      */
     public void setOverrideParameters(Set<ModelParam> overrideParameters) {
@@ -431,6 +499,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets permission groups.
+     *
      * @param permissionGroups the permission groups
      */
     public void setPermissionGroups(List<ModelPermGroup> permissionGroups) {
@@ -439,6 +508,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets notifications.
+     *
      * @param notifications the notifications
      */
     public void setNotifications(List<ModelNotification> notifications) {
@@ -447,6 +517,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets internal group.
+     *
      * @param internalGroup the internal group
      */
     public void setInternalGroup(GroupModel internalGroup) {
@@ -455,6 +526,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets deprecated use instead.
+     *
      * @param deprecatedUseInstead the deprecated use instead
      */
     public void setDeprecatedUseInstead(String deprecatedUseInstead) {
@@ -463,6 +535,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets deprecated since.
+     *
      * @param deprecatedSince the deprecated since
      */
     public void setDeprecatedSince(String deprecatedSince) {
@@ -471,6 +544,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets deprecated reason.
+     *
      * @param deprecatedReason the deprecated reason
      */
     public void setDeprecatedReason(String deprecatedReason) {
@@ -479,6 +553,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets context info.
+     *
      * @param contextInfo the context info
      */
     public void setContextInfo(Map<String, ModelParam> contextInfo) {
@@ -487,6 +562,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets context param list.
+     *
      * @param contextParamList the context param list
      */
     public void setContextParamList(List<ModelParam> contextParamList) {
@@ -495,6 +571,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets inherited parameters.
+     *
      * @param inheritedParameters the inherited parameters
      */
     public void setInheritedParameters(boolean inheritedParameters) {
@@ -503,6 +580,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Sets metrics.
+     *
      * @param metrics the metrics
      */
     public void setMetrics(Metrics metrics) {
@@ -511,6 +589,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets description.
+     *
      * @return the description
      */
     public String getDescription() {
@@ -519,6 +598,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets name space.
+     *
      * @return the name space
      */
     public String getNameSpace() {
@@ -527,6 +607,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets action.
+     *
      * @return the action
      */
     public String getAction() {
@@ -535,6 +616,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets default entity name.
+     *
      * @return the default entity name
      */
     public String getDefaultEntityName() {
@@ -543,6 +625,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets from loader.
+     *
      * @return the from loader
      */
     public String getFromLoader() {
@@ -551,6 +634,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Is export boolean.
+     *
      * @return the boolean
      */
     public boolean isExport() {
@@ -559,6 +643,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets semaphore wait.
+     *
      * @return the semaphore wait
      */
     public int getSemaphoreWait() {
@@ -567,6 +652,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets semaphore sleep.
+     *
      * @return the semaphore sleep
      */
     public int getSemaphoreSleep() {
@@ -575,6 +661,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets impl services.
+     *
      * @return the impl services
      */
     public Set<ModelServiceIface> getImplServices() {
@@ -583,6 +670,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets override parameters.
+     *
      * @return the override parameters
      */
     public Set<ModelParam> getOverrideParameters() {
@@ -591,6 +679,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets permission groups.
+     *
      * @return the permission groups
      */
     public List<ModelPermGroup> getPermissionGroups() {
@@ -599,6 +688,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets notifications.
+     *
      * @return the notifications
      */
     public List<ModelNotification> getNotifications() {
@@ -607,6 +697,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets internal group.
+     *
      * @return the internal group
      */
     public GroupModel getInternalGroup() {
@@ -615,6 +706,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets deprecated use instead.
+     *
      * @return the deprecated use instead
      */
     public String getDeprecatedUseInstead() {
@@ -623,6 +715,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets deprecated since.
+     *
      * @return the deprecated since
      */
     public String getDeprecatedSince() {
@@ -631,6 +724,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets deprecated reason.
+     *
      * @return the deprecated reason
      */
     public String getDeprecatedReason() {
@@ -639,6 +733,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets context info.
+     *
      * @return the context info
      */
     public Map<String, ModelParam> getContextInfo() {
@@ -647,6 +742,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets context param list.
+     *
      * @return the context param list
      */
     public List<ModelParam> getContextParamList() {
@@ -655,6 +751,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Is inherited parameters boolean.
+     *
      * @return the boolean
      */
     public boolean isInheritedParameters() {
@@ -663,6 +760,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets name.
+     *
      * @return the name
      */
     public String getName() {
@@ -671,6 +769,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets invoke.
+     *
      * @return the invoke
      */
     public String getInvoke() {
@@ -679,6 +778,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Is hide result in log boolean.
+     *
      * @return the boolean
      */
     public boolean isHideResultInLog() {
@@ -687,6 +787,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets metrics.
+     *
      * @return the metrics
      */
     public Metrics getMetrics() {
@@ -695,6 +796,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Is auth boolean.
+     *
      * @return the boolean
      */
     public boolean isAuth() {
@@ -703,6 +805,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Is validate boolean.
+     *
      * @return the boolean
      */
     public boolean isValidate() {
@@ -711,6 +814,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets model permission.
+     *
      * @return the model permission
      */
     public ModelPermission getModelPermission() {
@@ -719,6 +823,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Is use transaction boolean.
+     *
      * @return the boolean
      */
     public boolean isUseTransaction() {
@@ -727,6 +832,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Is require new transaction boolean.
+     *
      * @return the boolean
      */
     public boolean isRequireNewTransaction() {
@@ -735,6 +841,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets transaction timeout.
+     *
      * @return the transaction timeout
      */
     public int getTransactionTimeout() {
@@ -743,6 +850,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets max retry.
+     *
      * @return the max retry
      */
     public int getMaxRetry() {
@@ -751,6 +859,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets engine name.
+     *
      * @return the engine name
      */
     public String getEngineName() {
@@ -759,6 +868,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets location.
+     *
      * @return the location
      */
     public String getLocation() {
@@ -767,6 +877,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Is debug boolean.
+     *
      * @return the boolean
      */
     public boolean isDebug() {
@@ -775,13 +886,15 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets semaphore.
+     *
      * @return the semaphore
      */
     public String getSemaphore() {
         return semaphore;
     }
 
-    public ModelService() { }
+    public ModelService() {
+    }
 
     public ModelService(ModelService model) {
         this.name = model.name;
@@ -820,7 +933,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
         this.hideResultInLog = model.hideResultInLog;
         this.metrics = model.metrics;
         List<ModelParam> modelParamList = model.getModelParamList();
-        for (ModelParam param: modelParamList) {
+        for (ModelParam param : modelParamList) {
             this.addParamClone(param);
         }
     }
@@ -948,6 +1061,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Debug info string.
+     *
      * @return the string
      */
     public String debugInfo() {
@@ -959,6 +1073,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Test if we have already inherited our interface parameters
+     *
      * @return boolean
      */
     public synchronized boolean inheritedParameters() {
@@ -967,6 +1082,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets the ModelParam by name
+     *
      * @param name The name of the parameter to get
      * @return ModelParam object with the specified name
      */
@@ -997,11 +1113,12 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets all param names.
+     *
      * @return the all param names
      */
     public Set<String> getAllParamNames() {
         Set<String> nameList = new TreeSet<>();
-        for (ModelParam p: this.contextParamList) {
+        for (ModelParam p : this.contextParamList) {
             nameList.add(p.getName());
         }
         return nameList;
@@ -1009,11 +1126,12 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets in param names.
+     *
      * @return the in param names
      */
     public Set<String> getInParamNames() {
         Set<String> nameList = new TreeSet<>();
-        for (ModelParam p: this.contextParamList) {
+        for (ModelParam p : this.contextParamList) {
             // don't include OUT parameters in this list, only IN and INOUT
             if (p.isIn()) {
                 nameList.add(p.getName());
@@ -1021,36 +1139,42 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
         }
         return nameList;
     }
+
     /**
      * Creates a map of service IN parameters using Name as key and Type as value.
      * Skips internal parameters
+     *
      * @return Map of IN parameters
      */
     public Map<String, String> getInParamNamesMap() {
         // TODO : Does not yet support getting nested parameters
-        return getInModelParamList().stream().filter(param -> !param.getInternal())
+        return getInModelParamList().stream()
+                .filter(param -> !param.getInternal())
                 .collect(Collectors.toMap(ModelParam::getName, param -> param.getType(), (existingValue, newValue) -> newValue));
     }
 
     /**
      * Creates a map of service OUT parameters using Name as key and Type as value.
      * Skips internal parameters
+     *
      * @return Map of OUT parameters
      */
     public Map<String, String> getOutParamNamesMap() {
         // TODO : Does not yet support getting nested parameters
-        return getModelParamList().stream().filter(param -> param.isOut() && !param.getInternal())
+        return getModelParamList().stream()
+                .filter(param -> param.isOut() && !param.getInternal())
                 .collect(Collectors.toMap(ModelParam::getName, param -> param.getType(), (existingValue, newValue) -> newValue));
     }
 
     /**
      * Gets defined in count.
+     *
      * @return the defined in count
      */
     public int getDefinedInCount() {
         int count = 0;
 
-        for (ModelParam p: this.contextParamList) {
+        for (ModelParam p : this.contextParamList) {
             // don't include OUT parameters in this list, only IN and INOUT
             if (p.isIn() && !p.getInternal()) {
                 count++;
@@ -1062,11 +1186,12 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets out param names.
+     *
      * @return the out param names
      */
     public Set<String> getOutParamNames() {
         Set<String> nameList = new TreeSet<>();
-        for (ModelParam p: this.contextParamList) {
+        for (ModelParam p : this.contextParamList) {
             // don't include IN parameters in this list, only OUT and INOUT
             if (p.isOut()) {
                 nameList.add(p.getName());
@@ -1075,11 +1200,13 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
         return nameList;
     }
 
-    /** only returns number of defined parameters (not internal) */
+    /**
+     * only returns number of defined parameters (not internal)
+     */
     public int getDefinedOutCount() {
         int count = 0;
 
-        for (ModelParam p: this.contextParamList) {
+        for (ModelParam p : this.contextParamList) {
             // don't include IN parameters in this list, only OUT and INOUT
             if (p.isOut() && !p.getInternal()) {
                 count++;
@@ -1091,12 +1218,13 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Update default values.
+     *
      * @param context the context
      * @param mode    the mode
      */
     public void updateDefaultValues(Map<String, Object> context, String mode) {
         List<ModelParam> params = this.getModelParamList();
-        for (ModelParam param: params) {
+        for (ModelParam param : params) {
             if (param.getDefaultValue() != null
                     && (IN_OUT_PARAM.equals(param.getMode()) || mode.equals(param.getMode()))) {
                 Object defaultValueObj = param.getDefaultValue(context);
@@ -1181,9 +1309,10 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Check the presence of not desired parameters in context.
+     *
      * @param modelParamList List of parameters
-     * @param context the context
-     * @param mode The mode (IN/OUT)
+     * @param context        the context
+     * @param mode           The mode (IN/OUT)
      * @throws ServiceValidationException When parameters should not be present in context
      */
     private void checkUnwantedParameter(List<ModelParam> modelParamList, Map<String, Object> context, String mode)
@@ -1191,7 +1320,9 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
         if (context == null) {
             return;
         }
-        List<String> paramNames = modelParamList.stream().map(ModelParam::getName).collect(Collectors.toList());
+        List<String> paramNames = modelParamList.stream()
+                .map(ModelParam::getName)
+                .collect(Collectors.toList());
         // This is to see if the info set contains all from the test set
         List<String> unwantedParamNames = context.keySet().stream()
                 .filter(k -> !paramNames.contains(k))
@@ -1206,9 +1337,10 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Validate IN String service parameters according HTML data
-     * @param values all values
+     *
+     * @param values      all values
      * @param modelParams service parameters to analyse
-     * @param locale the locale
+     * @param locale      the locale
      * @throws ServiceValidationException
      */
     private void allowHtmlValidation(Map<String, Object> values, Map<String, ModelParam> modelParams, Locale locale)
@@ -1243,10 +1375,11 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
     /**
      * Check that all required service parameters are present and not null in context
      * and Build a map with all required values if true.
+     *
      * @param requiredInfo Map of requiredParameters
-     * @param context the context
-     * @param locale the locale
-     * @param mode The mode (IN/OUT)
+     * @param context      the context
+     * @param locale       the locale
+     * @param mode         The mode (IN/OUT)
      * @return Map of required values
      * @throws ServiceValidationException when required values are found null
      */
@@ -1278,8 +1411,9 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Build a map with all optional values
+     *
      * @param optionalInfo Map of optional parameters
-     * @param context the context
+     * @param context      the context
      * @return Map of optional values
      */
     private Map<String, Object> resolveOptionalValues(Map<String, ModelParam> optionalInfo, Map<String, Object> context) {
@@ -1301,16 +1435,19 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Return map of required service parameters in given mode
-     * @param mode The mode (IN/OUT)
+     *
+     * @param mode        The mode (IN/OUT)
      * @param modelParams List of parameters to analyse
      * @return Map of name and ModelParam object that are required
      */
     private Map<String, ModelParam> prepareRequiredParamsMap(String mode, List<ModelParam> modelParams) {
         return prepareParamsMap(mode, modelParams, false);
     }
+
     /**
      * Return map of optional service parameters in given mode
-     * @param mode The mode (IN/OUT)
+     *
+     * @param mode        The mode (IN/OUT)
      * @param modelParams List of parameters to analyse
      * @return Map of name and ModelParam object that are optional
      */
@@ -1320,9 +1457,10 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Return map of service parameters in given mode
-     * @param mode The mode (IN/OUT)
+     *
+     * @param mode        The mode (IN/OUT)
      * @param modelParams List of parameters to analyse
-     * @param optional boolean that indicates if optional
+     * @param optional    boolean that indicates if optional
      * @return Map of filtered name and ModelParam object
      */
     private Map<String, ModelParam> prepareParamsMap(String mode, List<ModelParam> modelParams, boolean optional) {
@@ -1381,8 +1519,9 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
             missing.removeAll(valuesSet);
             List<String> missingMsgs = new LinkedList<>();
-            for (String key: missing) {
-                String msg = modelParamMap.get(key).getPrimaryFailMessage(locale);
+            for (String key : missing) {
+                String msg = modelParamMap.get(key)
+                        .getPrimaryFailMessage(locale);
                 if (msg == null) {
                     String errMsg = UtilProperties.getMessage(ServiceUtil.getResource(), "ModelService.following_required_parameter_missing",
                             locale);
@@ -1397,14 +1536,14 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
         // * Validate types next
         List<String> typeFailMsgs = new LinkedList<>();
-        for (String key: valuesSet) {
+        for (String key : valuesSet) {
             ModelParam param = modelParamMap.get(key);
 
             Object testObject = values.get(key);
             String infoType = modelParamMap.get(key).getType();
 
             if (UtilValidate.isNotEmpty(param.getValidators())) {
-                for (ModelParam.ModelParamValidator val: param.getValidators()) {
+                for (ModelParam.ModelParamValidator val : param.getValidators()) {
                     if (UtilValidate.isNotEmpty(val.getMethodName())) {
                         try {
                             if (!typeValidate(dispatcher, val, testObject)) {
@@ -1434,7 +1573,8 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
                 }
             } else {
                 if (!ObjectType.instanceOf(testObject, infoType, null)) {
-                    String testType = testObject == null ? "null" : testObject.getClass().getName();
+                    String testType = testObject == null ? "null" : testObject.getClass()
+                            .getName();
                     String msg = "Type check failed for field [" + model.name + "." + key + "]; expected type is [" + infoType
                             + "]; actual type is [" + testType + "]";
                     typeFailMsgs.add(msg);
@@ -1447,14 +1587,17 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
         }
 
         for (String paramName : modelParamSet) {
-            List<ModelParam> childrenModelParams = modelParamMap.get(paramName).getChildren();
+            List<ModelParam> childrenModelParams = modelParamMap.get(paramName)
+                    .getChildren();
             if (UtilValidate.isNotEmpty(childrenModelParams)
                     && UtilValidate.isNotEmpty(values.get(paramName))) {
                 if (modelParamMap.get(paramName).getType().endsWith("Map")) {
                     validate(dispatcher,
                             childrenModelParams,
                             UtilGenerics.cast(values.get(paramName)), mode, locale);
-                } else if (modelParamMap.get(paramName).getType().endsWith("List")) {
+                } else if (modelParamMap.get(paramName)
+                        .getType()
+                        .endsWith("List")) {
                     List<Map<String, Object>> subParameters = UtilGenerics.cast(values.get(paramName));
                     if (UtilValidate.isNotEmpty(subParameters)) {
                         for (Map<String, Object> paramMap : subParameters) {
@@ -1488,12 +1631,15 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
             throw new GeneralException("Unable to find validation method [" + vali.getMethodName() + "] in class [" + vali.getClassName() + "]");
         }
         validatorMethod = validatorMethodOp.get();
-        for (Class<?> paramType: validatorMethod.getParameterTypes()) {
+        for (Class<?> paramType : validatorMethod.getParameterTypes()) {
             switch (paramType.getName()) {
-            case "org.apache.ofbiz.entity.Delegator" -> params.add(dispatcher.getDelegator());
-            case "org.apache.ofbiz.service.LocalDispatcher" -> params.add(dispatcher);
-            case "java.lang.String" -> params.add(ObjectType.simpleTypeOrObjectConvert(testValue, "String", null, null));
-            default -> params.add(vali);
+                case "org.apache.ofbiz.entity.Delegator" ->
+                        params.add(dispatcher.getDelegator());
+                case "org.apache.ofbiz.service.LocalDispatcher" ->
+                        params.add(dispatcher);
+                case "java.lang.String" ->
+                        params.add(ObjectType.simpleTypeOrObjectConvert(testValue, "String", null, null));
+                default -> params.add(vali);
             }
         }
 
@@ -1515,7 +1661,8 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
      * Gets the parameter names of the specified mode (IN/OUT). The
      * parameters will be returned in the order specified in the file.
      * Note: IN and OUT will also contains INOUT parameters.
-     * @param mode The mode (IN/OUT)
+     *
+     * @param mode     The mode (IN/OUT)
      * @param optional True if to include optional parameters
      * @param internal True to include internal parameters
      * @return List of parameter names
@@ -1529,8 +1676,9 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
         if (contextInfo.isEmpty()) {
             return names;
         }
-        for (ModelParam param: contextParamList) {
-            if (param.getMode().equals(IN_OUT_PARAM) || param.getMode().equals(mode)) {
+        for (ModelParam param : contextParamList) {
+            if (param.getMode().equals(IN_OUT_PARAM) || param.getMode()
+                    .equals(mode)) {
                 if (optional || !param.isOptional()) {
                     if (internal || !param.getInternal()) {
                         names.add(param.getName());
@@ -1543,6 +1691,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets parameter names.
+     *
      * @param mode     the mode
      * @param optional the optional
      * @return the parameter names
@@ -1554,8 +1703,9 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
     /**
      * Creates a new Map based from an existing map with just valid parameters.
      * Tries to convert parameters to required type.
+     *
      * @param source The source map
-     * @param mode The mode which to build the new map
+     * @param mode   The mode which to build the new map
      */
     public Map<String, Object> makeValid(Map<String, ? extends Object> source, String mode) {
         return makeValid(source, mode, true, null);
@@ -1564,8 +1714,9 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
     /**
      * Creates a new Map based from an existing map with just valid parameters.
      * Tries to convert parameters to required type.
-     * @param source The source map
-     * @param mode The mode which to build the new map
+     *
+     * @param source          The source map
+     * @param mode            The mode which to build the new map
      * @param includeInternal When false will exclude internal fields
      */
     public Map<String, Object> makeValid(Map<String, ? extends Object> source, String mode, boolean includeInternal, List<Object> errorMessages) {
@@ -1575,10 +1726,11 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
     /**
      * Creates a new Map based from an existing map with just valid parameters.
      * Tries to convert parameters to required type.
-     * @param source The source map
-     * @param mode The mode which to build the new map
+     *
+     * @param source          The source map
+     * @param mode            The mode which to build the new map
      * @param includeInternal When false will exclude internal fields
-     * @param locale Locale to use to do some type conversion
+     * @param locale          Locale to use to do some type conversion
      */
     public Map<String, Object> makeValid(Map<String, ? extends Object> source, String mode, boolean includeInternal, List<Object> errorMessages,
                                          Locale locale) {
@@ -1588,35 +1740,39 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
     /**
      * Creates a new Map based from an existing map with just valid parameters.
      * Tries to convert parameters to required type.
-     * @param source The source map
-     * @param mode The mode which to build the new map
+     *
+     * @param source          The source map
+     * @param mode            The mode which to build the new map
      * @param includeInternal When false will exclude internal fields
-     * @param errorMessages List of errorMessages
-     * @param timeZone The TimeZone
-     * @param locale Locale to use to do some type conversion
+     * @param errorMessages   List of errorMessages
+     * @param timeZone        The TimeZone
+     * @param locale          Locale to use to do some type conversion
      * @return
      */
     public Map<String, Object> makeValid(Map<String, ? extends Object> source, String mode, boolean includeInternal, List<Object> errorMessages,
                                          TimeZone timeZone, Locale locale) {
         return makeValid(this.contextParamList, source, mode, includeInternal, errorMessages, timeZone, locale);
     }
+
     /**
      * Creates a new Map based from an existing map with just valid parameters.
      * Tries to convert parameters to required type.
-     * @param modelParams Model parameters to validate
-     * @param source The source map
-     * @param mode The mode which to build the new map
+     *
+     * @param modelParams     Model parameters to validate
+     * @param source          The source map
+     * @param mode            The mode which to build the new map
      * @param includeInternal When false will exclude internal fields
-     * @param errorMessages the list of error messages
-     * @param timeZone TimeZone to use to do some type conversion
-     * @param locale Locale to use to do some type conversion
+     * @param errorMessages   the list of error messages
+     * @param timeZone        TimeZone to use to do some type conversion
+     * @param locale          Locale to use to do some type conversion
      */
     public Map<String, Object> makeValid(List<ModelParam> modelParams, Map<String, ? extends Object> source, String mode,
                                          boolean includeInternal, List<Object> errorMessages,
                                          TimeZone timeZone, Locale locale) {
         Map<String, Object> target = new HashMap<>();
 
-        if (source == null || contextInfo.isEmpty() || !List.of(IN_PARAM, OUT_PARAM, IN_OUT_PARAM).contains(mode)) {
+        if (source == null || contextInfo.isEmpty() || !List.of(IN_PARAM, OUT_PARAM, IN_OUT_PARAM)
+                .contains(mode)) {
             return target;
         }
 
@@ -1642,8 +1798,10 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
             }
         }
 
-        for (ModelParam modelParam: modelParams) {
-            if (!modelParam.getMode().equals(IN_OUT_PARAM) && !modelParam.getMode().equals(mode)) {
+        for (ModelParam modelParam : modelParams) {
+            if (!modelParam.getMode()
+                    .equals(IN_OUT_PARAM) && !modelParam.getMode()
+                    .equals(mode)) {
                 continue;
             }
             String paramName = modelParam.getName();
@@ -1654,13 +1812,13 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
                 if (UtilValidate.isNotEmpty(paramMap)) {
                     target.put(paramName, paramMap);
                 }
-            // internal list of strings
+                // internal list of strings
             } else if (UtilValidate.isNotEmpty(modelParam.getStringListSuffix()) && !source.containsKey(paramName)) {
                 List<Object> paramList = makeSuffixList(source, modelParam);
                 if (UtilValidate.isNotEmpty(paramList)) {
                     target.put(paramName, paramList);
                 }
-            // other attributes
+                // other attributes
             } else if (source.containsKey(paramName)) {
                 if (!modelParam.getInternal() || includeInternal) {
                     Object value = source.get(paramName);
@@ -1701,7 +1859,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     private static Map<String, Object> makePrefixMap(Map<String, ? extends Object> source, ModelParam param) {
         Map<String, Object> paramMap = new HashMap<>();
-        for (Map.Entry<String, ? extends Object> entry: source.entrySet()) {
+        for (Map.Entry<String, ? extends Object> entry : source.entrySet()) {
             String key = entry.getKey();
             if (key.startsWith(param.getStringMapPrefix())) {
                 key = key.replace(param.getStringMapPrefix(), "");
@@ -1713,7 +1871,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     private static List<Object> makeSuffixList(Map<String, ? extends Object> source, ModelParam param) {
         List<Object> paramList = new LinkedList<>();
-        for (Map.Entry<String, ? extends Object> entry: source.entrySet()) {
+        for (Map.Entry<String, ? extends Object> entry : source.entrySet()) {
             String key = entry.getKey();
             if (key.endsWith(param.getStringListSuffix())) {
                 paramList.add(entry.getValue());
@@ -1724,6 +1882,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Contains permissions boolean.
+     *
      * @return the boolean
      */
     public boolean containsPermissions() {
@@ -1732,7 +1891,8 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Evaluates permission-service for this service.
-     * @param dctx DispatchContext from the invoked service
+     *
+     * @param dctx    DispatchContext from the invoked service
      * @param context Map containing userLogin and context information
      * @return result of permission service invocation
      */
@@ -1751,14 +1911,15 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
      * Evaluates notifications
      */
     public void evalNotifications(DispatchContext dctx, Map<String, ? extends Object> context, Map<String, Object> result) {
-        for (ModelNotification notify: this.notifications) {
+        for (ModelNotification notify : this.notifications) {
             notify.callNotify(dctx, this, context, result);
         }
     }
 
     /**
      * Evaluates permissions for a service.
-     * @param dctx DispatchContext from the invoked service
+     *
+     * @param dctx    DispatchContext from the invoked service
      * @param context Map containing userLogin information
      * @return Map if all permissions evaluate return success else return the error message list.
      */
@@ -1767,7 +1928,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
         // old permission checking
         if (this.containsPermissions()) {
-            for (ModelPermGroup group: this.permissionGroups) {
+            for (ModelPermGroup group : this.permissionGroups) {
                 if (Debug.verboseOn()) {
                     Debug.logVerbose(" Permission : Analyse " + group.toString(), MODULE);
                 }
@@ -1785,6 +1946,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets a list of required IN parameters in sequence.
+     *
      * @return A list of required IN parameters in the order which they were defined.
      */
     public List<Object> getInParameterSequence(Map<String, ? extends Object> source) {
@@ -1795,7 +1957,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
         if (UtilValidate.isEmpty(contextInfo)) {
             return target;
         }
-        for (ModelParam modelParam: this.contextParamList) {
+        for (ModelParam modelParam : this.contextParamList) {
             // don't include OUT parameters in this list, only IN and INOUT
             if (OUT_PARAM.equals(modelParam.getMode())) {
                 continue;
@@ -1825,7 +1987,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
      */
     public List<ModelParam> getInModelParamList() {
         List<ModelParam> inList = new LinkedList<>();
-        for (ModelParam modelParam: this.contextParamList) {
+        for (ModelParam modelParam : this.contextParamList) {
             // don't include OUT parameters in this list, only IN and INOUT
             if (OUT_PARAM.equals(modelParam.getMode())) {
                 continue;
@@ -1838,6 +2000,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Run the interface update and inherit all interface parameters
+     *
      * @param dctx The DispatchContext to use for service lookups
      */
     public synchronized void interfaceUpdate(DispatchContext dctx) throws GenericServiceException {
@@ -1849,7 +2012,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
                     group = ServiceGroupReader.getGroupModel(this.location);
                 }
                 if (group != null) {
-                    for (GroupServiceModel sm: group.getServices()) {
+                    for (GroupServiceModel sm : group.getServices()) {
                         implServices.add(new ModelServiceIface(sm.getName(), sm.isOptional()));
                         if (Debug.verboseOn()) {
                             Debug.logVerbose("Adding service [" + sm.getName() + "] as interface of: [" + this.name + "]", MODULE);
@@ -1860,20 +2023,21 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
             // handle interfaces
             if (UtilValidate.isNotEmpty(implServices) && dctx != null) {
-                for (ModelServiceIface iface: implServices) {
+                for (ModelServiceIface iface : implServices) {
                     String serviceName = iface.getService();
                     boolean optional = iface.isOptional();
 
                     ModelService model = dctx.getModelService(serviceName);
                     if (model != null) {
-                        for (ModelParam newParam: model.contextParamList) {
+                        for (ModelParam newParam : model.contextParamList) {
                             ModelParam existingParam = this.contextInfo.get(newParam.getName());
                             if (existingParam != null) {
                                 // if the existing param is not INOUT and the newParam.mode is different from existingParam.mode,
                                 // make the existing param optional and INOUT
                                 // TODO: this is another case where having different optional/required settings for IN and OUT
                                 //  would be quite valuable...
-                                if (!IN_OUT_PARAM.equals(existingParam.getMode()) && !existingParam.getMode().equals(newParam.getMode())) {
+                                if (!IN_OUT_PARAM.equals(existingParam.getMode()) && !existingParam.getMode()
+                                        .equals(newParam.getMode())) {
                                     existingParam.setMode(IN_OUT_PARAM);
                                     if (existingParam.isOptional() || newParam.isOptional()) {
                                         existingParam.setOptional(true);
@@ -1897,7 +2061,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
             // handle any override parameters
             if (UtilValidate.isNotEmpty(overrideParameters)) {
-                for (ModelParam overrideParam: overrideParameters) {
+                for (ModelParam overrideParam : overrideParameters) {
                     ModelParam existingParam = contextInfo.get(overrideParam.getName());
 
                     // keep the list clean, remove it then add it back
@@ -1950,12 +2114,16 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
     public void informIfDeprecated() {
         if (this.deprecatedUseInstead != null) {
             StringBuilder informMsg = new StringBuilder("DEPRECATED: the service ")
-                    .append(name).append(" has been deprecated and replaced by ").append(deprecatedUseInstead);
+                    .append(name)
+                    .append(" has been deprecated and replaced by ")
+                    .append(deprecatedUseInstead);
             if (this.deprecatedSince != null) {
                 informMsg.append(", since ").append(deprecatedSince);
             }
             if (deprecatedReason != null) {
-                informMsg.append(" because '").append(deprecatedReason).append("'");
+                informMsg.append(" because '")
+                        .append(deprecatedReason)
+                        .append("'");
             }
             Debug.logWarning(informMsg.toString(), MODULE);
         }
@@ -1963,6 +2131,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * To wsdl document.
+     *
      * @param locationURI the location uri
      * @return the document
      * @throws WSDLException the wsdl exception
@@ -1980,6 +2149,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets wsdl.
+     *
      * @param def         the def
      * @param locationURI the location uri
      * @throws WSDLException the wsdl exception
@@ -2014,8 +2184,10 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
                 Part part = param.getWSDLPart(def);
                 Element attribute = document.createElement("attribute");
                 attribute.setAttribute("name", paramName);
-                attribute.setAttribute("type", part.getTypeName().getLocalPart());
-                attribute.setAttribute("namespace", part.getTypeName().getNamespaceURI());
+                attribute.setAttribute("type", part.getTypeName()
+                        .getLocalPart());
+                attribute.setAttribute("namespace", part.getTypeName()
+                        .getNamespaceURI());
                 attribute.setAttribute("java-class", param.getType());
                 attribute.setAttribute("optional", Boolean.toString(param.isOptional()));
                 documentation.appendChild(attribute);
@@ -2058,8 +2230,10 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
                 Part part = param.getWSDLPart(def);
                 Element attribute = document.createElement("attribute");
                 attribute.setAttribute("name", paramName);
-                attribute.setAttribute("type", part.getTypeName().getLocalPart());
-                attribute.setAttribute("namespace", part.getTypeName().getNamespaceURI());
+                attribute.setAttribute("type", part.getTypeName()
+                        .getLocalPart());
+                attribute.setAttribute("namespace", part.getTypeName()
+                        .getNamespaceURI());
                 attribute.setAttribute("java-class", param.getType());
                 attribute.setAttribute("optional", Boolean.toString(param.isOptional()));
                 documentation.appendChild(attribute);
@@ -2140,8 +2314,9 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
     /**
      * Gets types.
+     *
      * @param document the document
-     * @param def the def
+     * @param def      the def
      * @return the types
      */
     public Types getTypes(Document document, Definition def) {
