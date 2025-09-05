@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="ofbiz:main" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="" external.system.module.type="sourceSet" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <output url="file://$MODULE_DIR$/../../build/classes/groovy/main" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../framework/base/config">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/base/config" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/base/dtd">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/base/dtd" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/base/src/main">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/base/src/main/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/base/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/base/src/main/resources" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/common/config">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/common/config" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/common/src/main">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/common/src/main/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/common/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/common/src/main/resources" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/entity/config">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/entity/config" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/entity/dtd">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/entity/dtd" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/entity/src/main">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/entity/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/entity/src/main/resources" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/security/config">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/security/config" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/security/dtd">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/security/dtd" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/security/src/main">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/security/src/main/java" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/service/config">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/service/config" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/service/dtd">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/service/dtd" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/service/src/main">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/service/src/main/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/service/src/main/java" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/start/src/main">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/start/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/start/src/main/resources" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/webapp/config">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/webapp/config" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/webapp/dtd">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/webapp/dtd" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/webapp/src/main">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/webapp/src/main/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/webapp/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/webapp/src/main/resources" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/webtools/config">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/webtools/config" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/webtools/src/main">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/webtools/src/main/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/webtools/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/webtools/src/main/resources" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/widget/config">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/widget/config" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/widget/dtd">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/widget/dtd" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../framework/widget/src/main">
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/widget/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../framework/widget/src/main/resources" type="java-resource" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Gradle: com.github.ben-manes.caffeine:caffeine:3.1.8" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.guava:guava:33.3.1-jre" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.zxing:core:3.5.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.googlecode.concurrentlinkedhashmap:concurrentlinkedhashmap-lru:1.4.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.googlecode.ez-vcard:ez-vcard:0.12.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.googlecode.owasp-java-html-sanitizer:owasp-java-html-sanitizer:20240325.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.googlecode.libphonenumber:libphonenumber:8.13.52" level="project" />
+    <orderEntry type="library" name="Gradle: com.ibm.icu:icu4j:76.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.lowagie:itext:2.1.7" level="project" />
+    <orderEntry type="library" name="Gradle: com.sun.mail:javax.mail:1.6.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.rometools:rome:2.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.thoughtworks.xstream:xstream:1.4.21" level="project" />
+    <orderEntry type="library" name="Gradle: commons-cli:commons-cli:1.5.0" level="project" />
+    <orderEntry type="library" name="Gradle: commons-net:commons-net:3.11.1" level="project" />
+    <orderEntry type="library" name="Gradle: commons-validator:commons-validator:1.9.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.axis2:axis2-kernel:1.8.2" level="project" />
+    <orderEntry type="library" name="Gradle: javax.transaction:javax.transaction-api:1.3" level="project" />
+    <orderEntry type="library" name="Gradle: net.fortuna.ical4j:ical4j:1.0-rc4-atlassian-12" level="project" />
+    <orderEntry type="library" name="Gradle: net.lingala.zip4j:zip4j:2.11.5" level="project" />
+    <orderEntry type="library" name="Gradle: org.activiti:activiti-juel-jakarta:8.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.ant:ant-junit:1.10.15" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.poi:poi:5.3.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.owasp.esapi:esapi:2.6.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.commons:commons-collections4:4.5.0-M2" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.commons:commons-csv:1.12.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.commons:commons-dbcp2:2.13.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.commons:commons-fileupload2-jakarta:2.0.0-M1" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.commons:commons-imaging:1.0-alpha3" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.commons:commons-text:1.12.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.geronimo.components:geronimo-transaction:3.1.5" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.geronimo.specs:geronimo-jms_1.1_spec:1.1.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.httpcomponents:httpclient-cache:4.5.14" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-core:2.24.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.24.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.tika:tika-parser-pdf-module:2.9.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.mustangproject:library:2.8.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.pdfbox:pdfbox:2.0.33" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.shiro:shiro-core:1.13.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.shiro:shiro-crypto-cipher:2.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.sshd:sshd-sftp:2.14.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.sshd:sshd-core:2.14.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.tika:tika-core:2.9.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.cxf:cxf-rt-frontend-jaxrs:3.6.4" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-catalina-ha:10.1.39" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-jasper:10.1.39" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:fop:2.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:batik-bridge:1.18" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:batik-anim:1.18" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:batik-util:1.18" level="project" />
+    <orderEntry type="library" name="Gradle: org.clojure:clojure:1.12.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.freemarker:freemarker:2.3.34" level="project" />
+    <orderEntry type="library" name="Gradle: org.cyberneko:html:1.9.8" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework:spring-test:6.1.16" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.18.2" level="project" />
+    <orderEntry type="library" name="Gradle: oro:oro:2.0.8" level="project" />
+    <orderEntry type="library" name="Gradle: wsdl4j:wsdl4j:1.6.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.auth0:java-jwt:4.4.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jdom:jdom2:2.0.6.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.re2j:re2j:1.7" level="project" />
+    <orderEntry type="library" name="Gradle: xerces:xercesImpl:2.12.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.checkerframework:checker-qual:3.43.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.errorprone:error_prone_annotations:2.28.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.guava:failureaccess:1.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.j2objc:j2objc-annotations:3.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.18.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.mangstadt:vinnie:2.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.jsoup:jsoup:1.16.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.googlecode.owasp-java-html-sanitizer:java10-shim:20240325.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.googlecode.owasp-java-html-sanitizer:java8-shim:20240325.1" level="project" />
+    <orderEntry type="library" name="Gradle: javax.activation:activation:1.1.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.rometools:rome-utils:2.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:2.0.16" level="project" />
+    <orderEntry type="library" name="Gradle: io.github.x-stream:mxparser:1.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: commons-beanutils:commons-beanutils:1.9.4" level="project" />
+    <orderEntry type="library" name="Gradle: commons-digester:commons-digester:2.1" level="project" />
+    <orderEntry type="library" name="Gradle: commons-logging:commons-logging:1.3.4" level="project" />
+    <orderEntry type="library" name="Gradle: commons-collections:commons-collections:3.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.ws.commons.axiom:axiom-api:1.4.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.woden:woden-core:1.0M10" level="project" />
+    <orderEntry type="library" name="Gradle: commons-fileupload:commons-fileupload:1.5" level="project" />
+    <orderEntry type="library" name="Gradle: commons-io:commons-io:2.18.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.geronimo.specs:geronimo-ws-metadata_2.0_spec:1.1.3" level="project" />
+    <orderEntry type="library" name="Gradle: javax.servlet:javax.servlet-api:3.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.ws.xmlschema:xmlschema-core:2.3.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.neethi:neethi:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: javax.ws.rs:jsr311-api:1.1.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.activiti:activiti-api-dependencies:pom:8.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.ant:ant:1.10.15" level="project" />
+    <orderEntry type="library" name="Gradle: junit:junit:4.13.2" level="project" />
+    <orderEntry type="library" name="Gradle: commons-codec:commons-codec:1.17.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.commons:commons-math3:3.6.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.zaxxer:SparseBitSet:1.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.owasp.antisamy:antisamy:1.7.7" level="project" />
+    <orderEntry type="library" name="Gradle: xom:xom:1.3.9" level="project" />
+    <orderEntry type="library" name="Gradle: commons-configuration:commons-configuration:1.10" level="project" />
+    <orderEntry type="library" name="Gradle: commons-lang:commons-lang:2.6" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache-extras.beanshell:bsh:2.0b6" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.commons:commons-pool2:2.12.0" level="project" />
+    <orderEntry type="library" name="Gradle: jakarta.transaction:jakarta.transaction-api:1.3.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.commons:commons-fileupload2-core:2.0.0-M1" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.commons:commons-lang3:3.14.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.geronimo.specs:geronimo-j2ee-connector_1.6_spec:1.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.httpcomponents:httpclient:4.5.14" level="project" />
+    <orderEntry type="library" name="Gradle: org.bouncycastle:bcmail-jdk18on:1.77" level="project" />
+    <orderEntry type="library" name="Gradle: org.bouncycastle:bcprov-jdk18on:1.78" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.tika:tika-parser-xmp-commons:2.9.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.pdfbox:pdfbox-tools:2.0.31" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.pdfbox:jempbox:1.8.17" level="project" />
+    <orderEntry type="library" name="Gradle: org.glassfish.jaxb:jaxb-runtime:2.3.6" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.pdfbox:preflight:2.0.27" level="project" />
+    <orderEntry type="library" name="Gradle: com.helger:en16931-cii2ubl:1.4.10" level="project" />
+    <orderEntry type="library" name="Gradle: net.sf.saxon:Saxon-HE:9.9.0-1" level="project" />
+    <orderEntry type="library" name="Gradle: org.dom4j:dom4j:2.1.3" level="project" />
+    <orderEntry type="library" name="Gradle: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.pdfbox:fontbox:2.0.33" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.shiro:shiro-config-ogdl:1.13.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.shiro:shiro-cache:1.13.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.shiro:shiro-crypto-hash:1.13.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.shiro:shiro-config-core:1.13.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.shiro:shiro-event:1.13.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.shiro:shiro-lang:2.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.shiro:shiro-crypto-core:2.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:jcl-over-slf4j:1.7.36" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.sshd:sshd-common:2.14.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.cxf:cxf-rt-transports-http:3.6.4" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.cxf:cxf-rt-security:3.6.4" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.cxf:cxf-core:3.6.4" level="project" />
+    <orderEntry type="library" name="Gradle: jakarta.ws.rs:jakarta.ws.rs-api:2.1.6" level="project" />
+    <orderEntry type="library" name="Gradle: jakarta.annotation:jakarta.annotation-api:1.3.5" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-catalina:10.1.39" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-coyote:10.1.39" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-util-scan:10.1.39" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-servlet-api:10.1.39" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-tribes:10.1.39" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-util:10.1.39" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-juli:10.1.39" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-jsp-api:10.1.39" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-api:10.1.39" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-jasper-el:10.1.39" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-el-api:10.1.39" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.jdt:ecj:3.33.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:batik-transcoder:1.10" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:batik-extension:1.10" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:batik-svg-dom:1.18" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:batik-gvt:1.18" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:batik-awt-util:1.18" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:xmlgraphics-commons:2.10" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:batik-ext:1.18" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.avalon.framework:avalon-framework-impl:4.3.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.avalon.framework:avalon-framework-api:4.3.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:batik-script:1.18" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:batik-parser:1.18" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:batik-dom:1.18" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:batik-css:1.18" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:batik-xml:1.18" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:batik-shared-resources:1.18" level="project" />
+    <orderEntry type="library" name="Gradle: xml-apis:xml-apis-ext:1.3.04" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:batik-constants:1.18" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:batik-i18n:1.18" level="project" />
+    <orderEntry type="library" name="Gradle: org.clojure:spec.alpha:0.5.238" level="project" />
+    <orderEntry type="library" name="Gradle: org.clojure:core.specs.alpha:0.4.74" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-cli-picocli:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-console:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-datetime:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-groovydoc:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-jmx:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-json:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-jsr223:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-macro:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-nio:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-servlet:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-sql:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-swing:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-templates:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-test:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-test-junit5:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-xml:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-yaml:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-docgenerator:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-groovysh:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.groovy:groovy-ant:5.0.0-alpha-11" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework:spring-core:6.1.16" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.18.2" level="project" />
+    <orderEntry type="library" name="Gradle: xmlpull:xmlpull:1.1.3.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.james:apache-mime4j-core:0.8.10" level="project" />
+    <orderEntry type="library" name="Gradle: jakarta.activation:jakarta.activation-api:1.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.ant:ant-launcher:1.10.15" level="project" />
+    <orderEntry type="library" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.httpcomponents.client5:httpclient5:5.4.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.httpcomponents.core5:httpcore5:5.3.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.htmlunit:neko-htmlunit:4.6.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.httpcomponents:httpcore:4.4.16" level="project" />
+    <orderEntry type="library" name="Gradle: org.bouncycastle:bcpkix-jdk18on:1.77" level="project" />
+    <orderEntry type="library" name="Gradle: org.bouncycastle:bcutil-jdk18on:1.77" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.pdfbox:xmpbox:2.0.31" level="project" />
+    <orderEntry type="library" name="Gradle: org.glassfish.jaxb:txw2:2.3.6" level="project" />
+    <orderEntry type="library" name="Gradle: com.sun.istack:istack-commons-runtime:3.0.12" level="project" />
+    <orderEntry type="library" name="Gradle: com.helger.cii:ph-cii-d16b:2.5.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.helger.ubl:ph-ubl21:6.7.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.helger.ubl:ph-ubl22:6.7.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.helger.ubl:ph-ubl23:6.7.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.helger.commons:ph-jaxb:10.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.helger.commons:ph-xml:10.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.helger.commons:ph-datetime:10.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.helger.commons:ph-commons:10.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.woodstox:woodstox-core:6.6.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-jni:10.1.39" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-annotations-api:10.1.39" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-jaspic-api:10.1.39" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.xmlgraphics:batik-svggen:1.10" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.javaparser:javaparser-core:3.26.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter-api:5.11.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework:spring-jcl:6.1.16" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.httpcomponents.core5:httpcore5-h2:5.3.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.helger.commons:ph-jaxb-adapter:10.1.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.helger.xsd:ph-xsds-xades141:2.6.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.helger.xsd:ph-xsds-xades132:2.6.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.helger.xsd:ph-xsds-xmldsig:2.6.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.helger.xsd:ph-xsds-ccts-cct-schemamodule:2.6.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.helger.xsd:ph-xsds-xmldsig11:2.6.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.codehaus.woodstox:stax2-api:4.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.opentest4j:opentest4j:1.3.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: net.sf.barcode4j:barcode4j-fop-ext:2.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: net.sf.barcode4j:barcode4j:2.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.axis2:axis2-transport-http:1.8.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.axis2:axis2-transport-local:1.8.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.logging.log4j:log4j-slf4j-impl:2.24.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.logging.log4j:log4j-web:2.24.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.logging.log4j:log4j-1.2-api:2.24.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.logging.log4j:log4j-jul:2.24.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.logging.log4j:log4j-jcl:2.24.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: javax.xml.soap:javax.xml.soap-api:1.4.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.derby:derby:10.16.1.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.derby:derbytools:10.16.1.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.geronimo.specs:geronimo-jaxrpc_1.1_spec:2.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: avalon-framework:avalon-framework-impl:4.2.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.ws.commons.axiom:axiom-impl:1.4.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.derby:derbyshared:10.16.1.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: info.picocli:picocli:4.7.6" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: jline:jline:2.14.6" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.ow2.asm:asm-util:9.7.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.abego.treelayout:org.abego.treelayout.core:1.0.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.ivy:ivy:2.5.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.thoughtworks.qdox:qdox:2.1.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.jupiter:junit-jupiter-engine:5.11.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.platform:junit-platform-launcher:1.11.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.ant:ant-antlr:1.10.15" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.activation:jakarta.activation:1.2.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: net.java.dev.msv:xsdlib:2013.6.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: javax.xml.bind:jaxb-api:2.2.12" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.ow2.asm:asm-analysis:9.7.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.ow2.asm:asm-tree:9.7.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.ow2.asm:asm:9.7.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.yaml:snakeyaml:2.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.platform:junit-platform-engine:1.11.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.platform:junit-platform-commons:1.11.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: relaxngDatatype:relaxngDatatype:20020414" level="project" />
+  </component>
+</module>
