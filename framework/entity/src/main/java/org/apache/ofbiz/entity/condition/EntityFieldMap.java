@@ -68,6 +68,8 @@ public final class EntityFieldMap extends EntityConditionListBase<EntityExpr> {
      */
     @SafeVarargs
     public <V> EntityFieldMap(EntityComparisonOperator<?, ?> compOp, EntityJoinOperator joinOp, V... keysValues) {
+        // REFACTOR: Flexible Constructor Bodies - don't call methods inside this(),
+        //  do it before the call to this(...)
         this(EntityUtil.makeFields(keysValues), UtilGenerics.cast(compOp), joinOp);
     }
 
@@ -80,6 +82,10 @@ public final class EntityFieldMap extends EntityConditionListBase<EntityExpr> {
      */
     public <V> EntityFieldMap(Map<String, V> fieldMap, EntityComparisonOperator<?, ?> compOp,
                               EntityJoinOperator joinOp) {
+        // REFACTOR: Flexible Constructor Bodies - don't call methods inside
+        //  super(), do it before the call to super(...).
+        //  Also sanitise the fieldMap parameter before sending to the
+        //  makeConditionList() method.
         super(makeConditionList(fieldMap, UtilGenerics.cast(compOp)), joinOp);
         this.fieldMap = (fieldMap == null) ? Collections.emptyMap() : fieldMap;
     }

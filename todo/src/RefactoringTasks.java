@@ -14,6 +14,7 @@ import org.apache.ofbiz.entity.DelegatorFactory;
 import org.apache.ofbiz.entity.GenericEntity;
 import org.apache.ofbiz.entity.condition.EntityComparisonOperator;
 import org.apache.ofbiz.entity.condition.EntityConditionVisitor;
+import org.apache.ofbiz.entity.condition.EntityFieldMap;
 import org.apache.ofbiz.entity.config.model.JdbcElement;
 import org.apache.ofbiz.entity.connection.DBCPConnectionFactory;
 import org.apache.ofbiz.entity.connection.DebugManagedDataSource;
@@ -239,8 +240,6 @@ public class RefactoringTasks {
      * @see ExecutionPool (maybe)
      */
     public static void task14_unnamedVariablesPatterns() {
-        ComponentConfig conf;
-        SecuredUpload su;
     }
 
     /**
@@ -251,15 +250,15 @@ public class RefactoringTasks {
      * @see ModelService#allowHtmlValidation(Map, Map, Locale)
      */
     public static void task15_streamGatherers() {
-        BiFunction b;
-        ModelService ms;
     }
 
     /**
      * // Java 25
      * REFACTOR: Flexible Constructor Bodies - JEP 513
+     * @see EntityFieldMap constructors
      */
     public static void task16_flexibleConstructorBodies() {
+        EntityFieldMap entityFieldMap;
     }
 
     /**
@@ -275,6 +274,8 @@ public class RefactoringTasks {
      *
      * @see ComponentConfig // java.base and java.xml
      * @see SecuredUpload // java.base and java.desktop
+     * @see ModelService
+     * @see UtilHttp
      */
     public static void task18_moduleImportDeclarations() {
     }
@@ -284,5 +285,15 @@ public class RefactoringTasks {
      * REFACTOR: Scoped Values - JEP 506
      */
     public static void task19_scopedValues() {
+    }
+
+    // IGNORE - just to help IntelliJ find the classes :-)
+    static {
+        UtilHttp utilHttp;
+        BiFunction biFunction;
+        ModelService modelService;
+        ComponentConfig componentConfig;
+        SecuredUpload securedUpload;
+
     }
 }
