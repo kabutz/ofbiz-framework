@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <output url="file:///production/todo" />
+    <output-test url="file:///test/todo" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="ofbiz" />
+    <orderEntry type="module" module-name="ofbiz.applications" />
+    <orderEntry type="module" module-name="ofbiz.applications.accounting" />
+    <orderEntry type="module" module-name="ofbiz.applications.commonext" />
+    <orderEntry type="module" module-name="ofbiz.applications.content" />
+    <orderEntry type="module" module-name="ofbiz.applications.datamodel" />
+    <orderEntry type="module" module-name="ofbiz.applications.humanres" />
+    <orderEntry type="module" module-name="ofbiz.applications.manufacturing" />
+    <orderEntry type="module" module-name="ofbiz.applications.marketing" />
+    <orderEntry type="module" module-name="ofbiz.applications.order" />
+    <orderEntry type="module" module-name="ofbiz.applications.party" />
+    <orderEntry type="module" module-name="ofbiz.applications.product" />
+    <orderEntry type="module" module-name="ofbiz.applications.securityext" />
+    <orderEntry type="module" module-name="ofbiz.applications.workeffort" />
+    <orderEntry type="module" module-name="ofbiz.buildSrc" />
+    <orderEntry type="module" module-name="ofbiz.buildSrc.main" />
+    <orderEntry type="module" module-name="ofbiz.buildSrc.test" />
+    <orderEntry type="module" module-name="ofbiz.framework" />
+    <orderEntry type="module" module-name="ofbiz.framework.base" />
+    <orderEntry type="module" module-name="ofbiz.framework.catalina" />
+    <orderEntry type="module" module-name="ofbiz.framework.common" />
+    <orderEntry type="module" module-name="ofbiz.framework.datafile" />
+    <orderEntry type="module" module-name="ofbiz.framework.entity" />
+    <orderEntry type="module" module-name="ofbiz.framework.entityext" />
+    <orderEntry type="module" module-name="ofbiz.framework.minilang" />
+    <orderEntry type="module" module-name="ofbiz.framework.security" />
+    <orderEntry type="module" module-name="ofbiz.framework.service" />
+    <orderEntry type="module" module-name="ofbiz.framework.start" />
+    <orderEntry type="module" module-name="ofbiz.framework.testtools" />
+    <orderEntry type="module" module-name="ofbiz.framework.webapp" />
+    <orderEntry type="module" module-name="ofbiz.framework.webtools" />
+    <orderEntry type="module" module-name="ofbiz.main" />
+    <orderEntry type="module" module-name="ofbiz.test" />
+    <orderEntry type="module" module-name="ofbiz.themes" />
+    <orderEntry type="module" module-name="ofbiz.themes.bluelight" />
+    <orderEntry type="module" module-name="ofbiz.themes.common-theme" />
+    <orderEntry type="module" module-name="ofbiz.themes.flatgrey" />
+    <orderEntry type="module" module-name="ofbiz.themes.helveticus" />
+    <orderEntry type="module" module-name="ofbiz.themes.rainbowstone" />
+    <orderEntry type="module" module-name="ofbiz.themes.tomahawk" />
+    <orderEntry type="library" name="Gradle: javax.transaction:javax.transaction-api:1.3" level="project" />
+  </component>
+</module>

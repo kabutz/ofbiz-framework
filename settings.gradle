@@ -63,4 +63,3 @@ activeComponents().each { File component ->
 
 }
 
-include 'todo'

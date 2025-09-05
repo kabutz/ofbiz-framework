@@ -226,8 +226,10 @@ public final class UelUtil {
         }
 
         @Override
-        public Object getValue(ELContext context) {
-            return this.object;
+        public <T> T getValue(ELContext context) {
+            @SuppressWarnings("unchecked")
+            T unchecked = (T) this.object;
+            return unchecked;
         }
 
         @Override
@@ -295,8 +297,10 @@ public final class UelUtil {
             return this.varName.hashCode();
         }
         @Override
-        public Object getValue(ELContext context) {
-            return this.elContext.variables.get(this.varName);
+        public <T> T getValue(ELContext context) {
+            @SuppressWarnings("unchecked")
+            T unchecked = (T) this.elContext.variables.get(this.varName);
+            return unchecked;
         }
         @Override
         public String getExpressionString() {
@@ -410,13 +414,13 @@ public final class UelUtil {
             super(isReadOnly);
         }
         @Override
-        @SuppressWarnings("unchecked")
         public Object getValue(ELContext context, Object base, Object property) {
             if (context == null) {
                 throw new NullPointerException();
             }
             if (base != null && base instanceof LocalizedMap) {
                 context.setPropertyResolved(true);
+                @SuppressWarnings("unchecked")
                 LocalizedMap<Object> map = (LocalizedMap<Object>) base;
                 Locale locale = null;
                 try {
@@ -441,11 +445,15 @@ public final class UelUtil {
                     }
                     locale = Locale.getDefault();
                 }
-                return resolveVariable(property.toString(), (Map<String, Object>) map, locale);
+                @SuppressWarnings("unchecked")
+                Map<String, Object> unchecked = (Map<String, Object>) map;
+                return resolveVariable(property.toString(), unchecked, locale);
             }
             if (base != null && base instanceof Map && property instanceof String) {
                 context.setPropertyResolved(true);
-                return resolveVariable(property.toString(), (Map<String, Object>) base, null);
+                @SuppressWarnings("unchecked")
+                Map<String, Object> unchecked = (Map<String, Object>) base;
+                return resolveVariable(property.toString(), unchecked, null);
             }
             return super.getValue(context, base, property);
         }
