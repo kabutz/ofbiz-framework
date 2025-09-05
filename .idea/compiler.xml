@@ -13,4 +13,11 @@
     </wildcardResourcePatterns>
     <bytecodeTargetLevel target="25" />
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ofbiz" options="-Xlint:unchecked" />
+      <module name="ofbiz.main" options="-Xlint:unchecked" />
+      <module name="ofbiz.test" options="-Xlint:unchecked" />
+    </option>
+  </component>
 </project>

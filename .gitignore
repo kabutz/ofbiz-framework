@@ -23,6 +23,7 @@ changelog
 .classpath
 .project
 .settings
+workspace.xml
 .gradle/
 .groovy
 .pc

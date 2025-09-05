@@ -1,3 +1,4 @@
+import org.apache.ofbiz.base.component.ComponentConfig;
 import org.apache.ofbiz.base.component.ComponentLoaderConfig;
 import org.apache.ofbiz.base.concurrent.ConstantFuture;
 import org.apache.ofbiz.base.config.ResourceLoader;
@@ -22,6 +23,8 @@ import org.apache.ofbiz.entity.jdbc.AbstractCursorHandler;
 import org.apache.ofbiz.entity.model.*;
 import org.apache.ofbiz.entity.serialize.XmlSerializer;
 import org.apache.ofbiz.entity.transaction.TransactionUtil;
+import org.apache.ofbiz.security.SecuredUpload;
+import org.apache.ofbiz.service.ModelService;
 import org.apache.ofbiz.webapp.AfterLoginEvents;
 import org.apache.ofbiz.webapp.control.RequestHandler;
 import org.apache.ofbiz.webapp.event.CoreEvents;
@@ -39,6 +42,7 @@ import javax.transaction.Transaction;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.util.*;
+import java.util.function.*;
 
 public class RefactoringTasks {
     public static void main(String... args) {
@@ -224,7 +228,6 @@ public class RefactoringTasks {
      * // Java 22
      * REFACTOR: Foreign Function & Memory API - JEP 454
      *
-     * @see ExecutionPool (maybe)
      */
     public static void task13_foreignFunctionMemoryAPI() {
     }
@@ -236,6 +239,8 @@ public class RefactoringTasks {
      * @see ExecutionPool (maybe)
      */
     public static void task14_unnamedVariablesPatterns() {
+        ComponentConfig conf;
+        SecuredUpload su;
     }
 
     /**
@@ -246,6 +251,8 @@ public class RefactoringTasks {
      * @see ModelService#allowHtmlValidation(Map, Map, Locale)
      */
     public static void task15_streamGatherers() {
+        BiFunction b;
+        ModelService ms;
     }
 
     /**
@@ -265,6 +272,9 @@ public class RefactoringTasks {
     /**
      * // Java 25
      * REFACTOR: Module Import Declarations - JEP 511
+     *
+     * @see ComponentConfig // java.base and java.xml
+     * @see SecuredUpload // java.base and java.desktop
      */
     public static void task18_moduleImportDeclarations() {
     }
