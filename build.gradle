@@ -136,7 +136,7 @@ javadoc {
     title="OFBiz " + getCurrentGitBranch() + " API"
     failOnError = true
     options {
-        source '24'
+        source '25'
         encoding 'UTF-8'
         charSet 'UTF-8'
         // Those external Javadoc links should correspond to the actual
@@ -153,8 +153,8 @@ javadoc {
 }
 
 java {
-    sourceCompatibility(JavaVersion.VERSION_24)
-    targetCompatibility(JavaVersion.VERSION_24)
+    sourceCompatibility(JavaVersion.VERSION_25)
+    targetCompatibility(JavaVersion.VERSION_25)
 }
 
 // Java compile options, syntax gradlew -PXlint:none build

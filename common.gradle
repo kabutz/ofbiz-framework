@@ -18,6 +18,7 @@
  */
 import java.util.stream.Stream
 import java.util.stream.Collectors
+import groovy.xml.XmlParser;
 
 mkdir "${rootDir}/plugins"
 
