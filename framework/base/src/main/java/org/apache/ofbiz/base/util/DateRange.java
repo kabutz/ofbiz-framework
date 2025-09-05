@@ -50,6 +50,9 @@ public class DateRange extends ComparableRange<Date> implements Serializable {
      * @param end If null, defaults to <a href="#MAX_DATE">MAX_DATE</a>
      */
     public DateRange(Date start, Date end) {
+        // REFACTOR: Flexible Constructor Bodies - Make a method sanitiseDate()
+        //  that we can use to set the start and end dates to their defaults
+        //  if null.
         super(start == null ? MIN_DATE : UtilDateTime.unmodifiableDate(timestampToDate(start)), end == null ? MAX_DATE
                 : UtilDateTime.unmodifiableDate(timestampToDate(end)));
     }
