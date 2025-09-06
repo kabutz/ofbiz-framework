@@ -161,7 +161,7 @@ java {
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
     if (!project.hasProperty('Xlint:none')) {
-        options.compilerArgs << '-Xlint:unchecked'
+        // options.compilerArgs << '-Xlint:unchecked'
         // Exclude varargs warnings which are not silenced by @SafeVarargs.
 //        options.compilerArgs << '-Xlint:-varargs'
     }
