@@ -341,9 +341,9 @@ checkstyle {
     // Specify tool version so we can keep it up-to-date
     toolVersion = '10.20.2'
 }
+
 gitHooks {
-    hooks = ['pre-push': '']
-    //hooks = ['pre-push': 'checkstyleMain codenarcMain codenarcTest']
+    hooks = ['pre-push': 'checkstyleMain codenarcMain codenarcTest']
 }
 
 // Checks OFBiz Groovy coding conventions.
