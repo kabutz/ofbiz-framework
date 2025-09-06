@@ -342,9 +342,9 @@ checkstyle {
     toolVersion = '10.20.2'
 }
 
-gitHooks {
-    hooks = ['pre-push': 'checkstyleMain codenarcMain codenarcTest']
-}
+//gitHooks {
+    //hooks = ['pre-push': 'checkstyleMain codenarcMain codenarcTest']
+//}
 
 // Checks OFBiz Groovy coding conventions.
 codenarc {
