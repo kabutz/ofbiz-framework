@@ -19,8 +19,7 @@
 package org.apache.ofbiz.base.util.collections;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -180,19 +179,9 @@ public class FlexibleServletAccessor<T> implements Serializable {
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (!(obj instanceof FlexibleServletAccessor<?>)) {
-            return false;
-        } else {
-            // REFACTOR: Pattern Matching for instanceof
-            FlexibleServletAccessor<?> flexibleServletAccessor = (FlexibleServletAccessor<?>) obj;
-            if (name == null) {
-                return flexibleServletAccessor.name == null;
-            }
-            return name.equals(flexibleServletAccessor.name);
-        }
+        // REFACTO: Pattern Matching for instanceof
+        return obj instanceof FlexibleServletAccessor<?> flexibleServletAccessor
+                && Objects.equals(name, flexibleServletAccessor.name);
     }
 
     /** To be used for a string representation of the accessor, returns the original name.

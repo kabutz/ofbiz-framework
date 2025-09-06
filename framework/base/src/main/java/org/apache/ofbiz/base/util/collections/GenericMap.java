@@ -85,21 +85,10 @@ public abstract class GenericMap<K, V> implements Appender<StringBuilder>, Map<K
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Map<?, ?>)) {
-            return false;
-        }
-        if (this == o) {
-            return true;
-        }
-        // REFACTOR: Pattern Matching for instanceof
-        Map<?, ?> map = (Map<?, ?>) o;
-        if (size() != map.size()) {
-            return false;
-        }
-        if (o instanceof GenericMap<?, ?>) {
-            return equalsGenericMap((GenericMap<?, ?>) o);
-        }
-        return equalsMap(map);
+        // REFACTO: Pattern Matching for instanceof
+        return this == o ||
+                o instanceof Map<?, ?> map && size() == map.size() &&
+                    (o instanceof GenericMap<?, ?> genericMap && equalsGenericMap(genericMap) || equalsMap(map));
     }
 
     /**

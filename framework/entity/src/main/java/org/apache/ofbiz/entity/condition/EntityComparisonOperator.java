@@ -68,14 +68,12 @@ public abstract class EntityComparisonOperator<L, R> extends EntityOperator<L, R
 
     @Override
     public void validateSql(ModelEntity entity, L lhs, R rhs) throws GenericModelException {
-        if (lhs instanceof EntityConditionValue) {
-            // REFACTOR: Pattern Matching for instanceof
-            EntityConditionValue ecv = (EntityConditionValue) lhs;
+        if (lhs instanceof EntityConditionValue ecv) {
+            // REFACTO: Pattern Matching for instanceof
             ecv.validateSql(entity);
         }
-        if (rhs instanceof EntityConditionValue) {
-            // REFACTOR: Pattern Matching for instanceof
-            EntityConditionValue ecv = (EntityConditionValue) rhs;
+        if (rhs instanceof EntityConditionValue ecv) {
+            // REFACTO: Pattern Matching for instanceof
             ecv.validateSql(entity);
         }
     }
