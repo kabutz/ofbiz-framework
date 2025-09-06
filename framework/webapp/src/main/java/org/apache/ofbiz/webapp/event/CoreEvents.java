@@ -403,6 +403,7 @@ public class CoreEvents {
                     servicePathMap.put(entry.getKey(), entry.getValue());
                 }
             } else if (servicePathObject instanceof Collection<?>) {
+                // REFACTOR: Pattern Matching for instanceof
                 Collection<?> servicePathColl = UtilGenerics.cast(servicePathObject);
                 int count = 0;
                 servicePathMap = new HashMap<>();
