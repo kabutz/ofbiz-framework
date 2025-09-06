@@ -102,6 +102,7 @@ public final class EntityFinderUtil {
                 FlexibleMapAccessor<Object> serviceContextFieldAcsr = entry.getKey();
                 Object valueSrc = entry.getValue();
                 if (valueSrc instanceof FlexibleMapAccessor<?>) {
+                    // REFACTOR: Pattern Matching for instanceof
                     FlexibleMapAccessor<Object> contextEnvAcsr = cast(valueSrc);
                     serviceContextFieldAcsr.put(outContext, contextEnvAcsr.get(context));
                 } else if (valueSrc instanceof FlexibleStringExpander) {
