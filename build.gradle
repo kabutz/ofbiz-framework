@@ -36,7 +36,7 @@ plugins {
     id "se.patrikerdes.use-latest-versions"  version "latest.release" apply false
     id "com.github.ben-manes.versions" version "latest.release" apply false
     id "com.github.ManifestClasspath" version "latest.release"
-    id "com.github.jakemarsden.git-hooks" version "latest.release"
+//    id "com.github.jakemarsden.git-hooks" version "latest.release"
     id "com.github.node-gradle.node" version "latest.release" apply false
 }
 
