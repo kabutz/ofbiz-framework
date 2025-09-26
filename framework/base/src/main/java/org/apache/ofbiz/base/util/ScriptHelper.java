@@ -27,12 +27,12 @@ import javax.script.ScriptException;
  * A script helper object. The OFBiz scripting framework will include an
  * instance of this class in the script's bindings.
  * <p>The scripting language will determine how the helper is used. Most
- * languages will access it as a variable:<br>
- * <code>partyValue = ofbiz.findOne("Party");</code><br>
- * while other languages might access it as a native method or function:<br>
- * <code>partyValue = findOne("Party");</code>
+ * languages will access it as a variable:
+ * {@snippet : partyValue = ofbiz.findOne("Party");}
+ * while other languages might access it as a native method or function:
+ * {@snippet : partyValue = findOne("Party");}
  */
-// REFACTOR: Code Snippets in Java API Documentation
+// REFACTO: Code Snippets in Java API Documentation
 public interface ScriptHelper {
 
     /**

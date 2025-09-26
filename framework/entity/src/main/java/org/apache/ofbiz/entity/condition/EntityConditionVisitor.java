@@ -31,78 +31,78 @@ package org.apache.ofbiz.entity.condition;
  * <b>Usage Examples:</b>
  * Here is a dummy example that should print <i>EntityExpr\n</i> to
  * the standard output.
- * <pre>{@code
- *     EntityExpr expr;
- *     expr.accept(new EntityConditionVisitor() {
- *         public void visit(EntityNotCondition cond) {
- *              system.out.println("EntityNotCondition");
- *         }
+ * {@snippet :
+ * EntityExpr expr;
+ * expr.accept(new EntityConditionVisitor(){
+ *      public void visit(EntityNotCondition cond) {
+ *           System.out.println("EntityNotCondition");
+ *      }
  *
- *         public <T extends EntityCondition> void visit(EntityConditionList<T> l) {
- *              system.out.println("EntityConditionList");
- *         }
+ *      public <T extends EntityCondition> void visit(EntityConditionList<T> l) {
+ *           System.out.println("EntityConditionList");
+ *      }
  *
- *         public void visit(EntityFieldMap m) {
- *             system.out.println("EntityFieldMap");
- *         }
+ *      public void visit(EntityFieldMap m) {
+ *           System.out.println("EntityFieldMap");
+ *      }
  *
- *         public void visit(EntityDateFilterCondition df) {
- *              system.out.println("EntityDateFilterCondition");
- *         }
+ *      public void visit(EntityDateFilterCondition df) {
+ *           System.out.println("EntityDateFilterCondition");
+ *      }
  *
- *         public void visit(EntityExpr expr) {
- *              system.out.println("EntityExpr");
- *         }
+ *      public void visit(EntityExpr expr) {
+ *          System.out.println("EntityExpr");
+ *      }
  *
- *         public void visit(EntityWhereString ws) {
- *              system.out.println("EntityWhereString");
- *         }
- *     });
- * }</pre>
+ *      public void visit(EntityWhereString ws) {
+ *          System.out.println("EntityWhereString");
+ *      }
+ * });
+ * }
  * <p>
  * Here is a more complex example asserting the presence of a raw string condition
  * even when it is embedded inside another one.
- * <pre>{@code
- *     class ContainsRawCondition implements EntityConditionVisitor {
- *         public boolean hasRawCondition = false;
+ * {@snippet :
+ * class ContainsRawCondition implements EntityConditionVisitor {
+ *    public boolean hasRawCondition = false;
  *
- *         public void visit(EntityNotCondition cond) {}
- *         public void visit(EntityFieldMap m) {}
- *         public void visit(EntityDateFilterCondition df) {}
+ *     public void visit(EntityNotCondition cond) {}
+ *     public void visit(EntityFieldMap m) {}
+ *     public void visit(EntityDateFilterCondition df) {}
  *
- *         public <T extends EntityCondition> void visit(EntityConditionList<T> l) {
- *             Iterator<T> it = l.getConditionIterator();
- *             while (it.hasNext()) {
- *                 it.next().accept(this);
- *             }
- *         }
- *
- *         public void visit(EntityExpr expr) {
- *             Object lhs = expr.getLhs();
- *             Object rhs = expr.getRhs();
- *             if (lhs instanceof EntityCondition) {
- *                 ((EntityCondition) lhs).accept(this);
- *             }
- *             if (rhs instanceof EntityCondition) {
- *                 ((EntityCondition) rhs).accept(this);
- *             }
- *         }
- *
- *         public void visit(EntityWhereString ws) {
- *             hasRawCondition = true;
+ *     public <T extends EntityCondition> void visit(EntityConditionList<T> l) {
+ *         Iterator<T> it = l.getConditionIterator();
+ *         while (it.hasNext()) {
+ *             it.next().accept(this);
  *         }
  *     }
  *
- *     EntityCondition ec =
- *         EntityCondition.makeCondition(EntityCondition.makeConditionWhere("foo=bar"));
- *     EntityConditionVisitor visitor = new ContainsRawCondition();
- *     ec.accept(visitor);
- *     assert visitor.hasRawCondition;
- * }</pre>
+ *     public void visit(EntityExpr expr) {
+ *         Object lhs = expr.getLhs();
+ *         Object rhs = expr.getRhs();
+ *         if (lhs instanceof EntityCondition) {
+ *             ((EntityCondition) lhs).accept(this);
+ *         }
+ *         if (rhs instanceof EntityCondition) {
+ *             ((EntityCondition) rhs).accept(this);
+ *         }
+ *     }
+ *
+ *     public void visit(EntityWhereString ws) {
+ *         hasRawCondition = true;
+ *     }
+ * }
+ *
+ * EntityCondition ec =
+ *     EntityCondition.makeCondition(EntityCondition.makeConditionWhere("foo=bar"));
+ * EntityConditionVisitor visitor = new ContainsRawCondition();
+ * ec.accept(visitor);
+ * assert visitor.hasRawCondition;
+ * }
  *
  * @see EntityCondition
  */
-// REFACTOR: Code Snippets in Java API Documentation
+// REFACTO: Code Snippets in Java API Documentation
 public interface EntityConditionVisitor {
     /**
      * Visits an entity NOT expression.
