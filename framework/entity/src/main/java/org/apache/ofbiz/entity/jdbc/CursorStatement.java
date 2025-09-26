@@ -29,7 +29,7 @@ import org.apache.ofbiz.entity.transaction.GenericTransactionException;
 import org.apache.ofbiz.entity.transaction.TransactionUtil;
 
 
-public class CursorStatement extends AbstractCursorHandler {
+public final class CursorStatement extends AbstractCursorHandler {
 
     private static final String MODULE = CursorStatement.class.getName();
     private ResultSet currentResultSet;
@@ -37,7 +37,7 @@ public class CursorStatement extends AbstractCursorHandler {
     private boolean beganTransaction;
     private boolean autoCommit;
 
-    protected CursorStatement(Statement stmt, String cursorName, int fetchSize) throws GenericTransactionException, SQLException {
+    private CursorStatement(Statement stmt, String cursorName, int fetchSize) throws GenericTransactionException, SQLException {
         super(cursorName, fetchSize);
         this.stmt = stmt;
         beganTransaction = TransactionUtil.begin();

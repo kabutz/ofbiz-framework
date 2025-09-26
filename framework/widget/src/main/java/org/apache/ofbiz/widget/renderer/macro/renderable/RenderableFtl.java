@@ -21,7 +21,8 @@ package org.apache.ofbiz.widget.renderer.macro.renderable;
 /**
  * Represents an FTL element such as an FTL string or macro call.
  */
-// REFACTOR: Tighten up hierarchies with sealed classes.
-public interface RenderableFtl {
+// REFACTO: Tighten up hierarchies with sealed classes.
+public sealed interface RenderableFtl permits RenderableFtlMacroCall,
+        RenderableFtlNoop, RenderableFtlSequence, RenderableFtlString {
     void accept(RenderableFtlVisitor visitor);
 }

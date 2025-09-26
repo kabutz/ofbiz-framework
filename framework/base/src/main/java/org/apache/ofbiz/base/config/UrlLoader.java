@@ -30,7 +30,7 @@ import java.net.URL;
  *
  */
 @SuppressWarnings("serial")
-public class UrlLoader extends ResourceLoader implements Serializable {
+public final class UrlLoader extends ResourceLoader implements Serializable {
 
     @Override
     public URL getURL(String location) throws GenericConfigException {

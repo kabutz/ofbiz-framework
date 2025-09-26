@@ -1047,8 +1047,8 @@ public class ModelViewEntity extends ModelEntity {
         }
     }
 
-    // REFACTOR: Tighten up hierarchy with sealed classes
-    public interface ComplexAliasMember extends Serializable {
+    // REFACTO: Tighten up hierarchy with sealed classes
+    public sealed interface ComplexAliasMember extends Serializable {
         void makeAliasColName(StringBuilder colNameBuffer, StringBuilder fieldTypeBuffer, ModelViewEntity modelViewEntity, ModelReader modelReader);
     }
 

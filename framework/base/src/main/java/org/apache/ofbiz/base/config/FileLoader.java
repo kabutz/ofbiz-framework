@@ -28,7 +28,7 @@ import org.apache.ofbiz.base.util.UtilURL;
  *
  */
 @SuppressWarnings("serial")
-public class FileLoader extends ResourceLoader implements java.io.Serializable {
+public final class FileLoader extends ResourceLoader implements java.io.Serializable {
 
     @Override
     public URL getURL(String location) throws GenericConfigException {

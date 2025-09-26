@@ -25,7 +25,8 @@ import java.util.TimeZone;
  * to convert one object type to another. Methods are provided to
  * localize the conversion.
  */
-public interface LocalizedConverter<S, T> extends Converter<S, T> {
+public sealed interface LocalizedConverter<S, T> extends Converter<S, T>
+        permits AbstractLocalizedConverter {
     /** Converts <code>obj</code> to <code>T</code>.
      * @param obj The source <code>Object</code> to convert
      * @param locale The locale used for conversion - must not be <code>null</code>
