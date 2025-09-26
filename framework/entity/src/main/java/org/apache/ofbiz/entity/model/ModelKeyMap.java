@@ -88,15 +88,10 @@ public record ModelKeyMap(String fieldName, String relFieldName, String fullName
 
     @Override
     public boolean equals(Object other) {
-        // REFACTOR: Record Patterns
-        if (this == other) {
-            return true;
-        }
-        if (other instanceof ModelKeyMap) {
-            ModelKeyMap otherKeyMap = (ModelKeyMap) other;
-            return this.fullName.equals(otherKeyMap.fullName);
-        }
-        return false;
+        // REFACTO: Record Patterns
+        return this == other ||
+                other instanceof ModelKeyMap(var unused1, var unused2, var otherFullName) &&
+                        fullName.equals(otherFullName);
     }
 
     // TODO: Externalize this.

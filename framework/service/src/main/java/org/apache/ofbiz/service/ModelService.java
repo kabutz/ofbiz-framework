@@ -979,12 +979,9 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
         @Override
         public boolean equals(Object o) {
-            // REFACTOR: Record Patterns
-            if (!(o instanceof ModelServiceMapEntry)) {
-                return false;
-            }
-            ModelServiceMapEntry other = (ModelServiceMapEntry) o;
-            return field.equals(other.field) && outer == other.getModelService();
+            // REFACTO: Record Patterns
+            return o instanceof ModelServiceMapEntry(var otherModelService, var otherField)
+                    && field.equals(otherField) && outer == otherModelService;
         }
 
         private ModelService getModelService() {
