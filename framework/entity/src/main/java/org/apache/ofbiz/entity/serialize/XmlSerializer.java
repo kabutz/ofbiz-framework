@@ -18,6 +18,17 @@
  */
 package org.apache.ofbiz.entity.serialize;
 
+import org.apache.ofbiz.base.util.*;
+import org.apache.ofbiz.entity.Delegator;
+import org.apache.ofbiz.entity.GenericPK;
+import org.apache.ofbiz.entity.GenericValue;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
+
+import javax.xml.bind.DatatypeConverter;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
@@ -27,39 +38,7 @@ import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Stack;
-import java.util.TreeMap;
-import java.util.TreeSet;
-import java.util.Vector;
-import java.util.WeakHashMap;
-
-import javax.xml.bind.DatatypeConverter;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.apache.ofbiz.base.util.Debug;
-import org.apache.ofbiz.base.util.StringUtil;
-import org.apache.ofbiz.base.util.UtilGenerics;
-import org.apache.ofbiz.base.util.UtilMisc;
-import org.apache.ofbiz.base.util.UtilObject;
-import org.apache.ofbiz.base.util.UtilXml;
-import org.apache.ofbiz.entity.Delegator;
-import org.apache.ofbiz.entity.GenericPK;
-import org.apache.ofbiz.entity.GenericValue;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
+import java.util.*;
 
 /**
  * XmlSerializer class. This class is deprecated - new code should use the
@@ -79,11 +58,12 @@ public class XmlSerializer {
         return UtilXml.writeXmlDocument(document);
     }
 
-    /** Deserialize a Java object from an XML string. <p>This method should be used with caution.
+    /**
+     * Deserialize a Java object from an XML string. <p>This method should be used with caution.
      * If the XML string contains a serialized <code>GenericValue</code> or <code>GenericPK</code>
      * then it is possible to unintentionally corrupt the database.
      *
-     * @param content the content
+     * @param content   the content
      * @param delegator the delegator
      * @return return a deserialized object from XML string
      * @throws SerializeException
@@ -92,11 +72,12 @@ public class XmlSerializer {
      * @throws IOException
      */
     public static Object deserialize(String content, Delegator delegator)
-        throws SerializeException, SAXException, ParserConfigurationException, IOException {
+            throws SerializeException, SAXException, ParserConfigurationException, IOException {
         // readXmlDocument with false second parameter to disable validation
         Document document = UtilXml.readXmlDocument(content, false);
         if (document != null) {
-            if (!"ofbiz-ser".equals(document.getDocumentElement().getTagName())) {
+            if (!"ofbiz-ser".equals(document.getDocumentElement()
+                    .getTagName())) {
                 return UtilXml.fromXml(content);
             }
             return deserialize(document, delegator);
@@ -105,12 +86,13 @@ public class XmlSerializer {
         return null;
     }
 
-    /** Deserialize a Java object from a DOM <code>Document</code>.
+    /**
+     * Deserialize a Java object from a DOM <code>Document</code>.
      * <p>This method should be used with caution. If the DOM <code>Document</code>
      * contains a serialized <code>GenericValue</code> or <code>GenericPK</code>
      * then it is possible to unintentionally corrupt the database.
      *
-     * @param document the document
+     * @param document  the document
      * @param delegator the delegator
      * @return returns a deserialized object from a DOM document
      * @throws SerializeException
@@ -133,130 +115,80 @@ public class XmlSerializer {
             return null;
         }
 
-        if (object == null) {
-            return makeElement("null", null, document);
-        }
+        // REFACTO: Pattern Matching for switch
+        return switch (object) {
+            case null -> makeElement("null", null, document);
+            case String _ -> makeElement("std-String", object, document);
+            case Integer _ -> makeElement("std-Integer", object, document);
+            case Long _ -> makeElement("std-Long", object, document);
+            case Float _ -> makeElement("std-Float", object, document);
+            case Double _ -> makeElement("std-Double", object, document);
+            case Boolean _ -> makeElement("std-Boolean", object, document);
+            case Locale _ -> makeElement("std-Locale", object, document);
+            case BigDecimal value -> makeElement("std-BigDecimal",
+                    value.setScale(10, RoundingMode.HALF_UP)
+                            .toString(), document);
+            case java.sql.Timestamp value -> makeElement("std-BigDecimal",
+                    value.toString().replace(' ', 'T'), document);
+            case java.sql.Date _ -> makeElement("std-Date", object, document);
+            case java.sql.Time _ -> makeElement("std-Time", object, document);
+            case java.util.Date value -> {
+                // NOTE: make sure this is AFTER the java.sql date/time objects since they inherit from java.util.Date
+                var formatter = getDateFormat();
+                String stringValue = null;
 
-        // REFACTOR: Pattern Matching for switch
-        // - Standard Objects -
-        if (object instanceof String) {
-            return makeElement("std-String", object, document);
-        } else if (object instanceof Integer) {
-            return makeElement("std-Integer", object, document);
-        } else if (object instanceof Long) {
-            return makeElement("std-Long", object, document);
-        } else if (object instanceof Float) {
-            return makeElement("std-Float", object, document);
-        } else if (object instanceof Double) {
-            return makeElement("std-Double", object, document);
-        } else if (object instanceof Boolean) {
-            return makeElement("std-Boolean", object, document);
-        } else if (object instanceof Locale) {
-            return makeElement("std-Locale", object, document);
-        } else if (object instanceof BigDecimal) {
-            String stringValue = ((BigDecimal) object).setScale(10, RoundingMode.HALF_UP).toString();
-            return makeElement("std-BigDecimal", stringValue, document);
-            // - SQL Objects -
-        } else if (object instanceof java.sql.Timestamp) {
-            String stringValue = object.toString().replace(' ', 'T');
-            return makeElement("sql-Timestamp", stringValue, document);
-        } else if (object instanceof java.sql.Date) {
-            return makeElement("sql-Date", object, document);
-        } else if (object instanceof java.sql.Time) {
-            return makeElement("sql-Time", object, document);
-        } else if (object instanceof java.util.Date) {
-            // NOTE: make sure this is AFTER the java.sql date/time objects since they inherit from java.util.Date
-            DateFormat formatter = getDateFormat();
-            String stringValue = null;
-
-            synchronized (formatter) {
-                stringValue = formatter.format((java.util.Date) object);
+                synchronized (formatter) {
+                    stringValue = formatter.format(value);
+                }
+                yield makeElement("std-Date", stringValue, document);
             }
-            return makeElement("std-Date", stringValue, document);
-            // return makeElement("std-Date", object, document);
-        } else if (object instanceof Collection<?>) {
-            // - Collections -
-            String elementName = null;
-
-            // these ARE order sensitive; for instance Stack extends Vector, so if Vector were first we would lose the stack part
-            if (object instanceof ArrayList<?>) {
-                elementName = "col-ArrayList";
-            } else if (object instanceof LinkedList<?>) {
-                elementName = "col-LinkedList";
-            } else if (object instanceof Stack<?>) {
-                elementName = "col-Stack";
-            } else if (object instanceof Vector<?>) {
-                elementName = "col-Vector";
-            } else if (object instanceof TreeSet<?>) {
-                elementName = "col-TreeSet";
-            } else if (object instanceof HashSet<?>) {
-                elementName = "col-HashSet";
-            } else {
-                // no specific type found, do general Collection, will deserialize as LinkedList
-                elementName = "col-Collection";
+            case Collection<?> value -> {
+                // these ARE order sensitive; for instance Stack extends Vector, so if Vector were first we would lose the stack part
+                var elementName = switch (value) {
+                    case ArrayList<?> _ -> "col-ArrayList";
+                    case LinkedList<?> _ -> "col-LinkedList";
+                    case Stack<?> _ -> "col-Stack";
+                    case Vector<?> _ -> "col-Vector";
+                    case TreeSet<?> _ -> "col-TreeSet";
+                    case HashSet<?> _ -> "col-HashSet";
+                    // no specific type found, do general Collection, will deserialize as LinkedList
+                    default -> "col-Collection";
+                };
+                var element = document.createElement(elementName);
+                for (var e : value)
+                    element.appendChild(serializeSingle(e, document));
+                yield element;
             }
+            case GenericPK value -> value.makeXmlElement(document, "eepk-");
+            case GenericValue value -> value.makeXmlElement(document, "eeval-");
+            case Map<?, ?> value -> {
+                // these ARE order sensitive; for instance Properties extends Hashtable, so if Hashtable were first we would lose the Properties part
+                var elementName = switch (value) {
+                    case HashMap<?, ?> _ -> "col-HashMap";
+                    case Properties _ -> "col-Properties";
+                    case Hashtable<?, ?> _ -> "col-Hashtable";
+                    case WeakHashMap<?, ?> _ -> "col-WeakHashMap";
+                    case TreeMap<?, ?> _ -> "col-TreeMap";
+                    // serialize as a simple Map implementation if nothing else applies, these will deserialize as a HashMap
+                    default -> "map-Map";
+                };
+                var element = document.createElement(elementName);
+                for (var entry : value.entrySet()) {
+                    var entryElement = document.createElement("map-Entry");
+                    element.appendChild(entryElement);
+                    var key = document.createElement("map-Key");
 
-            Collection<?> value = UtilGenerics.cast(object);
-            Element element = document.createElement(elementName);
-            Iterator<?> iter = value.iterator();
+                    entryElement.appendChild(key);
+                    key.appendChild(serializeSingle(entry.getKey(), document));
+                    var mapValue = document.createElement("map-Value");
 
-            while (iter.hasNext()) {
-                element.appendChild(serializeSingle(iter.next(), document));
+                    entryElement.appendChild(mapValue);
+                    mapValue.appendChild(serializeSingle(entry.getValue(), document));
+                }
+                yield element;
             }
-            return element;
-        } else if (object instanceof GenericPK) {
-            // Do GenericEntity objects as a special case, use std XML import/export routines
-            GenericPK value = (GenericPK) object;
-
-            return value.makeXmlElement(document, "eepk-");
-        } else if (object instanceof GenericValue) {
-            GenericValue value = (GenericValue) object;
-
-            return value.makeXmlElement(document, "eeval-");
-        } else if (object instanceof Map<?, ?>) {
-            // - Maps -
-            String elementName = null;
-
-            // these ARE order sensitive; for instance Properties extends Hashtable, so if Hashtable were first we would lose the Properties part
-            if (object instanceof HashMap<?, ?>) {
-                elementName = "map-HashMap";
-            } else if (object instanceof Properties) {
-                elementName = "map-Properties";
-            } else if (object instanceof Hashtable<?, ?>) {
-                elementName = "map-Hashtable";
-            } else if (object instanceof WeakHashMap<?, ?>) {
-                elementName = "map-WeakHashMap";
-            } else if (object instanceof TreeMap<?, ?>) {
-                elementName = "map-TreeMap";
-            } else {
-                // serialize as a simple Map implementation if nothing else applies, these will deserialize as a HashMap
-                elementName = "map-Map";
-            }
-
-            Element element = document.createElement(elementName);
-            Map<?, ?> value = UtilGenerics.cast(object);
-            Iterator<Map.Entry<?, ?>> iter = UtilGenerics.cast(value.entrySet().iterator());
-
-            while (iter.hasNext()) {
-                Map.Entry<?, ?> entry = iter.next();
-
-                Element entryElement = document.createElement("map-Entry");
-
-                element.appendChild(entryElement);
-
-                Element key = document.createElement("map-Key");
-
-                entryElement.appendChild(key);
-                key.appendChild(serializeSingle(entry.getKey(), document));
-                Element mapValue = document.createElement("map-Value");
-
-                entryElement.appendChild(mapValue);
-                mapValue.appendChild(serializeSingle(entry.getValue(), document));
-            }
-            return element;
-        }
-
-        return serializeCustom(object, document);
+            default -> serializeCustom(object, document);
+        };
     }
 
     public static Element serializeCustom(Object object, Document document) throws SerializeException {
@@ -271,7 +203,8 @@ public class XmlSerializer {
             element.appendChild(document.createTextNode(byteHex));
             return element;
         }
-        throw new SerializeException("Cannot serialize object of class " + object.getClass().getName());
+        throw new SerializeException("Cannot serialize object of class " + object.getClass()
+                .getName());
     }
 
     public static Element makeElement(String elementName, Object value, Document document) {
@@ -488,6 +421,7 @@ public class XmlSerializer {
      * This format is NOT used to format any of the java.sql subtypes of java.util.Date.
      * A <code>WeakReference</code> is used to maintain a reference to the DateFormat object
      * so that it can be created and garbage collected as needed.
+     *
      * @return the DateFormat used to serialize and deserialize <code>java.util.Date</code> objects.
      */
     private static DateFormat getDateFormat() {

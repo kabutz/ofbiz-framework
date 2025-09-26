@@ -74,25 +74,14 @@ public class OfbizNumberTransform implements TemplateTransformModel {
                 Debug.logVerbose("Number Object : " + o.getClass().getName(), MODULE);
             }
 
-            // REFACTOR: Pattern Matching for switch
-            // handle nulls better
-            if (o == null) {
-                o = 0.00;
-            }
-
-            if (o instanceof NumberModel) {
-                NumberModel s = (NumberModel) o;
-                return s.getAsNumber().doubleValue();
-            }
-            if (o instanceof SimpleNumber) {
-                SimpleNumber s = (SimpleNumber) o;
-                return s.getAsNumber().doubleValue();
-            }
-            if (o instanceof SimpleScalar) {
-                SimpleScalar s = (SimpleScalar) o;
-                return Double.valueOf(s.getAsString());
-            }
-            return Double.valueOf(o.toString());
+            // REFACTO: Pattern Matching for switch
+            return switch (o) {
+                case null -> 0.0;
+                case NumberModel s -> s.getAsNumber().doubleValue();
+                case SimpleNumber s -> s.getAsNumber().doubleValue();
+                case SimpleScalar s -> Double.valueOf(s.getAsString());
+                default -> Double.valueOf(o.toString());
+            };
         }
         return 0.00;
     }

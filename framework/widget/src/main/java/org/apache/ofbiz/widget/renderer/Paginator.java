@@ -59,29 +59,31 @@ public final class Paginator {
         int lowIndex = 0;
         int highIndex = 0;
         int listSize = modelForm.getOverrideListSize(context);
-        // REFACTOR: Pattern Matching for switch
+        // REFACTO: Pattern Matching for switch
         if (listSize > 0) {
             Debug.logVerbose("If listSize > 0, do nothing", MODULE);
-        } else if (entryList instanceof EntityListIterator) {
-            EntityListIterator iter = (EntityListIterator) entryList;
-            try {
-                listSize = iter.getResultsSizeAfterPartialList();
-            } catch (GenericEntityException e) {
-                Debug.logError(e, "Error getting list size", MODULE);
-                listSize = 0;
-            }
-        } else if (entryList instanceof List<?>) {
-            List<?> items = (List<?>) entryList;
-            listSize = items.size();
-            if (context.containsKey("result")) {
-                Map<String, Object> resultMap = UtilGenerics.cast(context.get("result"));
-                if (resultMap.containsKey("listSize")) {
-                    listSize = (int) resultMap.get("listSize");
+        } else {
+            listSize = switch(entryList) {
+                case EntityListIterator iter -> {
+                    try {
+                        yield iter.getResultsSizeAfterPartialList();
+                    } catch (GenericEntityException e) {
+                        Debug.logError(e, "Error getting list size", MODULE);
+                        yield 0;
+                    }
                 }
-            }
-        } else if (entryList instanceof PagedList) {
-            PagedList<?> pagedList = (PagedList<?>) entryList;
-            listSize = pagedList.getSize();
+                case List items -> {
+                    if (context.containsKey("result")) {
+                        Map<String, Object> resultMap = UtilGenerics.cast(context.get("result"));
+                        if (resultMap.containsKey("listSize")) {
+                            yield (int) resultMap.get("listSize");
+                        }
+                    }
+                    yield items.size();
+                }
+                case PagedList pagedList ->  pagedList.getSize();
+                default -> listSize;
+            };
         }
         if (modelForm.getPaginate(context)) {
             viewIndex = getViewIndex(modelForm, context);
