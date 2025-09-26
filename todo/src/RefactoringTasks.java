@@ -141,6 +141,7 @@ public class RefactoringTasks {
      * {@link ModelViewEntity.ModelMemberEntity}
      * {@link ModelViewEntity.ModelAliasAll} (more difficult)
      * {@link ScriptUtil.ProtectedBindings}
+     * {@link ModelService.ModelServiceMapEntry}
      */
     public static void task5_replaceDataClassesWithRecords() {
     }
@@ -200,8 +201,9 @@ public class RefactoringTasks {
 
     /**
      * // Java 21
-     * REFACTOR: Record Patterns - JEP 440
+     * Record Patterns - JEP 440
      * {@link ModelKeyMap#equals(Object)}
+     * {@link ModelService.ModelServiceMapEntry#equals(Object)}
      */
     public static void task10_recordPatterns() {
     }
@@ -300,5 +302,6 @@ public class RefactoringTasks {
         ComponentConfig componentConfig;
         SecuredUpload securedUpload;
         ModelKeyMap mkp;
+        ModelService ms;
     }
 }

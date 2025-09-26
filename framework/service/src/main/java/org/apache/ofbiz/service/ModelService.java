@@ -838,6 +838,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
         return null;
     }
 
+    // REFACTOR: Replace simple data class with record
     private final class ModelServiceMapEntry implements Map.Entry<String, Object> {
         private final Field field;
 
@@ -871,10 +872,10 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
         @Override
         public boolean equals(Object o) {
+            // REFACTOR: Record Patterns
             if (!(o instanceof ModelServiceMapEntry)) {
                 return false;
             }
-            // REFACTOR: Pattern Matching for instanceof
             ModelServiceMapEntry other = (ModelServiceMapEntry) o;
             return field.equals(other.field) && ModelService.this == other.getModelService();
         }
