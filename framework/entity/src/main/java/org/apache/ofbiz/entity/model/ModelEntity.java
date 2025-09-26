@@ -665,8 +665,8 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
     public ModelField getOnlyPk() {
         synchronized (fieldsLock) {
             if (this.pks.size() == 1) {
-                // REFACTOR: Use sequenced collection method instead
-                return this.pks.get(0);
+                // REFACTO: Use sequenced collection method instead
+                return this.pks.getFirst();
             } else {
                 throw new IllegalArgumentException("Error in getOnlyPk, the [" + this.getEntityName() + "] entity has more than one pk!");
             }
@@ -2276,8 +2276,9 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
                 if (useRelationshipNames || relationship.isAutoRelation()) {
                     relationshipMap.put("name", relationship.getCombinedName());
                 } else {
-                    // REFACTOR: Use sequenced collection method instead
-                    relationshipMap.put("name", relationship.getKeyMaps().iterator().next().getFieldName());
+                    // REFACTO: Use sequenced collection method instead
+                    relationshipMap.put("name", relationship.getKeyMaps()
+                            .getFirst().getFieldName());
                 }
                 relationshipMap.put("destination", relationship.getRelEntityName());
                 if ("many".equals(relationship.getType())) {
