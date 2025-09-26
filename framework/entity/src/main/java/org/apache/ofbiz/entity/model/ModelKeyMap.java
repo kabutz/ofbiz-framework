@@ -34,6 +34,7 @@ import org.w3c.dom.Element;
  */
 @ThreadSafe
 @SuppressWarnings("serial")
+// REFACTOR: Replace simple data class with record
 public final class ModelKeyMap implements Comparable<ModelKeyMap>, Serializable {
 
     /*
@@ -99,6 +100,7 @@ public final class ModelKeyMap implements Comparable<ModelKeyMap>, Serializable 
 
     @Override
     public boolean equals(Object other) {
+        // REFACTOR: Record Patterns
         if (this == other) {
             return true;
         }

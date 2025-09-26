@@ -132,6 +132,7 @@ public class RefactoringTasks {
     /**
      * // Java 16
      * Replace simple data classes with records - JEP 395
+     * {@link ModelKeyMap}
      * {@link ConstantFuture}
      * {@link Converters.PassThruConverter}
      * {@link DelegatorFactory.DelegatorConfigurable}
@@ -200,6 +201,7 @@ public class RefactoringTasks {
     /**
      * // Java 21
      * REFACTOR: Record Patterns - JEP 440
+     * {@link ModelKeyMap#equals(Object)}
      */
     public static void task10_recordPatterns() {
     }
@@ -255,6 +257,7 @@ public class RefactoringTasks {
     /**
      * // Java 25
      * REFACTOR: Flexible Constructor Bodies - JEP 513
+     *
      * @see EntityFieldMap constructors
      * @see DateRange constructor
      */
@@ -296,6 +299,6 @@ public class RefactoringTasks {
         ModelService modelService;
         ComponentConfig componentConfig;
         SecuredUpload securedUpload;
-
+        ModelKeyMap mkp;
     }
 }
