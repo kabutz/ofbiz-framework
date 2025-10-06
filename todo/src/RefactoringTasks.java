@@ -56,40 +56,6 @@ public class RefactoringTasks {
         System.out.println("Enjoy the refactoring!");
     }
 
-    /*
-    Java25:
-        511: Module Import Declarations
-        512: Compact Source Files and Instance Main Methods
-        513: Flexible Constructor Bodies
-    Java24:
-        485: Stream Gatherers
-    Java23:
-        467: Markdown Documentation Comments
-    Java22:
-        454: Foreign Function & Memory API
-        456: Unnamed Variables & Patterns
-    Java21:
-        431: Sequenced Collections
-        440: Record Patterns
-        441: Pattern Matching for switch
-        444: Virtual Threads
-    Java18:
-        413: Code Snippets in Java API Documentation
-    Java17:
-        409: Sealed Classes
-    Java16:
-        394: Pattern Matching for instanceof
-        395: Records
-    Java15:
-        378: Text Blocks
-    Java14:
-        361: Switch Expressions (Standard)
-    Java11:
-        // 321: HTTP Client (Standard)
-        // 323: Local-Variable Syntax for Lambda Parameters
-        String.repeat() can be used
-     */
-
     /**
      * // Java 10 & 11
      * Replace all the local variable declarations with "var" (JEP 286 and 323)
@@ -302,7 +268,11 @@ public class RefactoringTasks {
     /**
      * // Java 22
      * Unnamed Variables & Patterns - JEP 456
-     *
+     * <p>
+     * Description: In Java 9, _ became a reserved keyword, and we were no
+     * longer allowed to use it as a variable name. We can now use it for
+     * unnused lambda parameters and for record deconstruction components.
+     * <p>
      * {@link FindServices#createConditionList(Map, List, Map, Delegator, Map, String)} #size()}
      * {@link MapContext#size()}
      * {@link ServiceDispatcher#registerCallback(String, GenericServiceCallback)}
@@ -314,6 +284,10 @@ public class RefactoringTasks {
     /**
      * // Java 24
      * Stream Gatherers - JEP 485
+     * <p>
+     * Description: This construct brings more flexibility to intermediate
+     * operations, for example to handle exceptions in the middle of a stream,
+     * or to allow more sophisticated processing of state.
      *
      * @see ComponentConfig#collectElements(Element, String, BiFunction)  (maybe)
      * @see ModelService#allowHtmlValidation(Map, Map, Locale)
@@ -324,6 +298,11 @@ public class RefactoringTasks {
     /**
      * // Java 25
      * Flexible Constructor Bodies - JEP 513
+     * <p>
+     * Description: In the past, we could not have any code before the call to
+     * super() inside a constructor. This meant that we could not assign any
+     * fields before calling super(), nor could we do sanity checking of the
+     * parameters. This is now changed in Java 25.
      *
      * @see EntityFieldMap constructors
      * @see DateRange constructor
@@ -334,6 +313,17 @@ public class RefactoringTasks {
     /**
      * // Java 25
      * Compact Source Files and Instance Main Methods - JEP 512
+     * <p>
+     * Description: This feature is mainly for demos, where a class is not in a
+     * package and we want to minimize boilerplate code. They also replaced
+     * System.out with IO. The following is thus valid Java code:
+     * {@snippet :
+     * // Inside Demo.java
+     * void main() { IO.println("Hello World!"); }
+     *}
+     * We cannot use the compact classes, since all our classes are inside
+     * packages. However, we can replace System.out with IO.
+     * <p>
      * {@link AdminServerContainer#init(List, String, String)}
      * {@link AdminServerContainer#run()}
      */
@@ -343,6 +333,10 @@ public class RefactoringTasks {
     /**
      * // Java 25
      * Module Import Declarations - JEP 511
+     * <p>
+     * Description: Instead of importing a bunch of individual classes and
+     * packages, we can inport entire modules. We have to be careful of
+     * ambiguity, for example with java.util.Date and java.sql.Date.
      *
      * @see ComponentConfig // java.base and java.xml
      * @see SecuredUpload // java.base and java.desktop
