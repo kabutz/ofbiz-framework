@@ -425,17 +425,24 @@ public final class ComponentConfig {
      */
     private <T> List<T> collectElements(Element ofbizComponentElement, String elemName,
             BiFunction<ComponentConfig, Element, T> mapper) {
-        // REFACTOR: Stream Gatherers
+        // REFACTO: Stream Gatherers
         return UtilXml.childElementList(ofbizComponentElement, elemName).stream()
-                .flatMap(element -> {
+                .gather(safeMapGatherer(mapper, this))
+                .toList();
+    }
+
+    public static <T, C> Gatherer<Element, ?, T> safeMapGatherer(
+            BiFunction<C, Element, T> mapper, C c) {
+        return Gatherer.of(
+                (_, element, downstream) -> {
                     try {
-                        return Stream.of(mapper.apply(this, element));
+                        return downstream.push(mapper.apply(c, element));
                     } catch (IllegalArgumentException e) {
                         Debug.log(e.getMessage());
-                        return Stream.empty();
+                        return true;
                     }
-                })
-                .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
+                }
+        );
     }
 
     public boolean enabled() {
