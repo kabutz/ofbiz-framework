@@ -1219,6 +1219,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
      */
     private void allowHtmlValidation(Map<String, Object> values, Map<String, ModelParam> modelParams, Locale locale)
             throws ServiceValidationException {
+        // REFACTOR: Stream Gatherers
         List<String> errorMessageList = new LinkedList<>();
         final List<String> allowHtmls = List.of("none", "safe");
         final List<String> modes = List.of(IN_OUT_PARAM, IN_PARAM);
@@ -1243,51 +1244,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
         if (!errorMessageList.isEmpty()) {
             throw new ServiceValidationException(errorMessageList, this, IN_PARAM);
         }
-        /*
-        Heinz: Solution:
-        boolean sanitizerEnabled = EntityUtilProperties.getPropertyAsBoolean("owasp", "sanitizer.enable", true);
-
-        List<String> errorMessageList = modelParams.values().stream()
-                .gather(htmlValidationGatherer(values, locale, sanitizerEnabled))
-                .collect(Collectors.toList());
-
-        if (!errorMessageList.isEmpty()) {
-            throw new ServiceValidationException(errorMessageList, this, IN_PARAM);
-        }
-         */
-
     }
-
-    /*
-    private static Gatherer<ModelParam, ?, String> htmlValidationGatherer(
-            Map<String, Object> values,
-            Locale locale,
-            boolean sanitizerEnabled) {
-        var allowHtmls = List.of("none", "safe");
-        var modes = List.of(IN_OUT_PARAM, IN_PARAM);
-
-        return Gatherer.of(() -> new ArrayList<String>(), (acc, param, downstream) -> {
-            if (param.getAllowHtml() == null) return true;
-            if (!allowHtmls.contains(param.getAllowHtml())) return true;
-            if (!modes.contains(param.getMode())) return true;
-            if (!param.getType().endsWith("String")) return true;
-
-            Object rawValue = values.get(param.getName());
-            if (rawValue == null) return true;
-
-            String value = String.valueOf(rawValue);
-            if ("none".equals(param.getAllowHtml())) {
-                UtilCodec.checkStringForHtmlStrictNone(param.getName(), value, acc, locale);
-            } else {
-                UtilCodec.checkStringForHtmlSafe(param.getName(), value, acc, locale, sanitizerEnabled);
-            }
-            return true;
-        }, (acc1, acc2) -> {
-            acc1.addAll(acc2);
-            return acc1;
-        }, (a, b) -> a.stream());
-    }
-     */
 
     /**
      * Check that all required service parameters are present and not null in context
