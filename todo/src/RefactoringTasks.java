@@ -306,6 +306,7 @@ public class RefactoringTasks {
      * {@link FindServices#createConditionList(Map, List, Map, Delegator, Map, String)} #size()}
      * {@link MapContext#size()}
      * {@link ServiceDispatcher#registerCallback(String, GenericServiceCallback)}
+     * {@link ModelKeyMap#equals(Object)}
      */
     public static void task12_unnamedVariablesPatterns() {
     }
