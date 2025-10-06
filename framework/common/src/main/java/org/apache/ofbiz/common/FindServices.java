@@ -278,6 +278,7 @@ public class FindServices {
             if (UtilValidate.isEmpty(currentGroup)) {
                 result.add(cond);
             } else {
+                // REFACTOR: Unnamed Variables & Patterns - JEP 456
                 savedGroups.computeIfAbsent(currentGroup, k -> new ArrayList<>())
                         .add(cond);
             }

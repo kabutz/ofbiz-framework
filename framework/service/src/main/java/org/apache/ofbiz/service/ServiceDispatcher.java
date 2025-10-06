@@ -214,6 +214,7 @@ public final class ServiceDispatcher {
      * @param cb the callback to register
      */
     public synchronized void registerCallback(String serviceName, GenericServiceCallback cb) {
+        // REFACTOR: Unnamed Variables & Patterns - JEP 456
         callbacks.computeIfAbsent(serviceName, x -> new LinkedList<>()).add(cb);
     }
 
