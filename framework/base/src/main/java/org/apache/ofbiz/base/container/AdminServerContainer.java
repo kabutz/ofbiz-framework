@@ -66,20 +66,20 @@ public final class AdminServerContainer implements Container {
             serverThread = new Thread(this::run, "OFBiz-AdminServer");
         } else {
             serverThread = new Thread("OFBiz-AdminServer"); // Dummy thread
-            // REFACTOR: Compact Source Files and Instance Main Methods - JEP 512
-            System.out.println("Admin socket not configured; set to port 0");
+            // REFACTO: Compact Source Files and Instance Main Methods - JEP 512
+            IO.println("Admin socket not configured; set to port 0");
         }
         serverThread.setDaemon(false);
     }
 
     // Listens for administration commands.
     private void run() {
-        // REFACTOR: Compact Source Files and Instance Main Methods - JEP 512
-        System.out.println("Admin socket configured on - " + cfg.getAdminAddress() + ":" + cfg.getAdminPort());
+        // REFACTO: Compact Source Files and Instance Main Methods - JEP 512
+        IO.println("Admin socket configured on - " + cfg.getAdminAddress() + ":" + cfg.getAdminPort());
         while (!Thread.interrupted()) {
             try (Socket client = serverSocket.accept()) {
-                // REFACTOR: Compact Source Files and Instance Main Methods - JEP 512
-                System.out.println("Received connection from - " + client.getInetAddress() + " : " + client.getPort());
+                // REFACTO: Compact Source Files and Instance Main Methods - JEP 512
+                IO.println("Received connection from - " + client.getInetAddress() + " : " + client.getPort());
                 processClientRequest(client);
             } catch (IOException e) {
                 e.printStackTrace();
