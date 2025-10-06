@@ -278,8 +278,8 @@ public class FindServices {
             if (UtilValidate.isEmpty(currentGroup)) {
                 result.add(cond);
             } else {
-                // REFACTOR: Unnamed Variables & Patterns - JEP 456
-                savedGroups.computeIfAbsent(currentGroup, k -> new ArrayList<>())
+                // EFACTOR: Unnamed Variables & Patterns - JEP 456
+                savedGroups.computeIfAbsent(currentGroup, _ -> new ArrayList<>())
                         .add(cond);
             }
             keys.forEach(mapKey -> queryStringMap.put(mapKey, parameters.get(mapKey)));

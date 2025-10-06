@@ -90,7 +90,7 @@ public record ModelKeyMap(String fieldName, String relFieldName, String fullName
     public boolean equals(Object other) {
         // REFACTO: Record Patterns
         return this == other ||
-                other instanceof ModelKeyMap(var unused1, var unused2, var otherFullName) &&
+                other instanceof ModelKeyMap(_, _, var otherFullName) &&
                         fullName.equals(otherFullName);
     }
 
