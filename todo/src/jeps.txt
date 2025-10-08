@@ -1,0 +1,31 @@
+open -a Safari https://openjdk.org/jeps/286 
+pause 3
+open -a Safari https://openjdk.org/jeps/323
+pause 3
+open -a Safari https://openjdk.org/jeps/361
+pause 3
+open -a Safari https://openjdk.org/jeps/378
+pause 3
+open -a Safari https://openjdk.org/jeps/395
+pause 3
+open -a Safari https://openjdk.org/jeps/394
+pause 3
+open -a Safari https://openjdk.org/jeps/409
+pause 3
+open -a Safari https://openjdk.org/jeps/413
+pause 3
+open -a Safari https://openjdk.org/jeps/431
+pause 3
+open -a Safari https://openjdk.org/jeps/440
+pause 3
+open -a Safari https://openjdk.org/jeps/441
+pause 3
+open -a Safari https://openjdk.org/jeps/456
+pause 3
+open -a Safari https://openjdk.org/jeps/485
+pause 3
+open -a Safari https://openjdk.org/jeps/513
+pause 3
+open -a Safari https://openjdk.org/jeps/512
+pause 3
+open -a Safari https://openjdk.org/jeps/511

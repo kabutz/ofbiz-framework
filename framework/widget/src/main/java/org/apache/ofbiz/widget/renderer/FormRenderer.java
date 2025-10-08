@@ -311,13 +311,13 @@ public class FormRenderer {
     private int renderHeaderRow(Appendable writer, Map<String, Object> context)
             throws IOException {
         // REFACTOR: Replace all the local variable declarations with "var"
-        int maxNumOfColumns = 0;
+        var maxNumOfColumns = 0;
 
         // We will render one title/column for all the fields with the same name
         // in this model: we can have more fields with the same name when use-when
         // conditions are used or when a form is extended or when the fields are
         // automatically retrieved by a service or entity definition.
-        Collection<List<ModelFormField>> fieldListsByPosition = modelForm.getFieldList().stream()
+        var fieldListsByPosition = modelForm.getFieldList().stream()
                 .filter(filteringDuplicateNames())
                 .collect(groupingByPosition)
                 .values();
@@ -326,13 +326,13 @@ public class FormRenderer {
         // Preprocessing
         // ===========================
         // `fieldRowsByPosition` will contain maps containing the list of fields for a position
-        List<Map<String, List<ModelFormField>>> fieldRowsByPosition = new LinkedList<>();
-        for (List<ModelFormField> mainFieldList : fieldListsByPosition) {
-            int numOfColumns = 0;
+        var fieldRowsByPosition = new LinkedList<Map<String, List<ModelFormField>>>();
+        for (var mainFieldList : fieldListsByPosition) {
+            var numOfColumns = 0;
 
-            List<ModelFormField> innerDisplayHyperlinkFieldsBegin = new LinkedList<>();
-            List<ModelFormField> innerFormFields = new LinkedList<>();
-            List<ModelFormField> innerDisplayHyperlinkFieldsEnd = new LinkedList<>();
+            var innerDisplayHyperlinkFieldsBegin = new LinkedList<ModelFormField>();
+            var innerFormFields = new LinkedList<ModelFormField>();
+            var innerDisplayHyperlinkFieldsEnd = new LinkedList<ModelFormField>();
 
             // render title for each field, except hidden & ignored, etc
 
@@ -346,15 +346,15 @@ public class FormRenderer {
             // the fields in the first list will be rendered as columns before the
             // combined column for the input fields; the fields in the second list
             // will be rendered as columns after it
-            boolean inputFieldFound = false;
-            for (ModelFormField modelFormField : mainFieldList) {
-                FieldInfo fieldInfo = modelFormField.getFieldInfo();
+            var inputFieldFound = false;
+            for (var modelFormField : mainFieldList) {
+                var fieldInfo = modelFormField.getFieldInfo();
 
                 // if the field's title is explicitly set to "" (title= "") then
                 // the header is not created for it; this is useful for position list
                 // where one line can be rendered with more than one row, and we
                 // only want to display the title header for the main row
-                String modelFormFieldTitle = modelFormField.getTitle(context);
+                var modelFormFieldTitle = modelFormField.getTitle(context);
                 if ("".equals(modelFormFieldTitle)) {
                     continue;
                 }
@@ -383,8 +383,8 @@ public class FormRenderer {
             }
 
             // prepare the combined title for the column that will contain the form/input fields
-            for (ModelFormField modelFormField : mainFieldList) {
-                FieldInfo fieldInfo = modelFormField.getFieldInfo();
+            for (var modelFormField : mainFieldList) {
+                var fieldInfo = modelFormField.getFieldInfo();
 
                 // don't do any header for hidden or ignored fields
                 if (fieldInfo.getFieldType() == FieldInfo.HIDDEN
@@ -407,7 +407,7 @@ public class FormRenderer {
                 maxNumOfColumns = numOfColumns;
             }
 
-            Map<String, List<ModelFormField>> fieldRow = UtilMisc.toMap("displayBefore", innerDisplayHyperlinkFieldsBegin,
+            var fieldRow = UtilMisc.<String, List<ModelFormField>>toMap("displayBefore", innerDisplayHyperlinkFieldsBegin,
                     "inputFields", innerFormFields, "displayAfter", innerDisplayHyperlinkFieldsEnd, "mainFieldList",
                     mainFieldList);
             fieldRowsByPosition.add(fieldRow);
@@ -416,15 +416,15 @@ public class FormRenderer {
         // Rendering
         // ===========================
         formStringRenderer.renderFormatHeaderOpen(writer, context, modelForm);
-        for (Map<String, List<ModelFormField>> listsMap : fieldRowsByPosition) {
-            List<ModelFormField> innerDisplayHyperlinkFieldsBegin = listsMap.get("displayBefore");
-            List<ModelFormField> innerFormFields = listsMap.get("inputFields");
-            List<ModelFormField> innerDisplayHyperlinkFieldsEnd = listsMap.get("displayAfter");
-            List<ModelFormField> mainFieldList = listsMap.get("mainFieldList");
+        for (var listsMap : fieldRowsByPosition) {
+            var innerDisplayHyperlinkFieldsBegin = listsMap.get("displayBefore");
+            var innerFormFields = listsMap.get("inputFields");
+            var innerDisplayHyperlinkFieldsEnd = listsMap.get("displayAfter");
+            var mainFieldList = listsMap.get("mainFieldList");
 
-            int numOfCells = innerDisplayHyperlinkFieldsBegin.size() + innerDisplayHyperlinkFieldsEnd.size()
+            var numOfCells = innerDisplayHyperlinkFieldsBegin.size() + innerDisplayHyperlinkFieldsEnd.size()
                     + (!innerFormFields.isEmpty() ? 1 : 0);
-            int numOfColumnsToSpan = maxNumOfColumns - numOfCells + 1;
+            var numOfColumnsToSpan = maxNumOfColumns - numOfCells + 1;
             if (numOfColumnsToSpan < 1) {
                 numOfColumnsToSpan = 1;
             }
@@ -433,9 +433,9 @@ public class FormRenderer {
                 formStringRenderer.renderFormatHeaderRowOpen(writer, context, modelForm);
 
                 if (modelForm.getGroupColumns()) {
-                    Iterator<ModelFormField> innerDisplayHyperlinkFieldsBeginIt = innerDisplayHyperlinkFieldsBegin.iterator();
+                    var innerDisplayHyperlinkFieldsBeginIt = innerDisplayHyperlinkFieldsBegin.iterator();
                     while (innerDisplayHyperlinkFieldsBeginIt.hasNext()) {
-                        ModelFormField modelFormField = innerDisplayHyperlinkFieldsBeginIt.next();
+                        var modelFormField = innerDisplayHyperlinkFieldsBeginIt.next();
                         // span columns only if this is the last column in the row (not just in this first list)
                         if (innerDisplayHyperlinkFieldsBeginIt.hasNext() || numOfCells > innerDisplayHyperlinkFieldsBegin.size()) {
                             formStringRenderer.renderFormatHeaderRowCellOpen(writer, context, modelForm, modelFormField, 1);
@@ -449,9 +449,9 @@ public class FormRenderer {
                     if (!innerFormFields.isEmpty()) {
                         // TODO: manage colspan
                         formStringRenderer.renderFormatHeaderRowFormCellOpen(writer, context, modelForm);
-                        Iterator<ModelFormField> innerFormFieldsIt = innerFormFields.iterator();
+                        var innerFormFieldsIt = innerFormFields.iterator();
                         while (innerFormFieldsIt.hasNext()) {
-                            ModelFormField modelFormField = innerFormFieldsIt.next();
+                            var modelFormField = innerFormFieldsIt.next();
 
                             if (modelForm.getSeparateColumns() || modelFormField.getSeparateColumn()) {
                                 formStringRenderer.renderFormatItemRowCellOpen(writer, context, modelForm, modelFormField, 1);
@@ -474,9 +474,9 @@ public class FormRenderer {
                         }
                         formStringRenderer.renderFormatHeaderRowFormCellClose(writer, context, modelForm);
                     }
-                    Iterator<ModelFormField> innerDisplayHyperlinkFieldsEndIt = innerDisplayHyperlinkFieldsEnd.iterator();
+                    var innerDisplayHyperlinkFieldsEndIt = innerDisplayHyperlinkFieldsEnd.iterator();
                     while (innerDisplayHyperlinkFieldsEndIt.hasNext()) {
-                        ModelFormField modelFormField = innerDisplayHyperlinkFieldsEndIt.next();
+                        var modelFormField = innerDisplayHyperlinkFieldsEndIt.next();
                         // span columns only if this is the last column in the row (not just in this first list)
                         if (innerDisplayHyperlinkFieldsEndIt.hasNext() || numOfCells > innerDisplayHyperlinkFieldsEnd.size()) {
                             formStringRenderer.renderFormatHeaderRowCellOpen(writer, context, modelForm, modelFormField, 1);
@@ -488,12 +488,12 @@ public class FormRenderer {
                         formStringRenderer.renderFormatHeaderRowCellClose(writer, context, modelForm, modelFormField);
                     }
                 } else {
-                    Iterator<ModelFormField> mainFieldListIter = mainFieldList.iterator();
+                    var mainFieldListIter = mainFieldList.iterator();
                     while (mainFieldListIter.hasNext()) {
-                        ModelFormField modelFormField = mainFieldListIter.next();
+                        var modelFormField = mainFieldListIter.next();
 
                         // don't do any header for hidden or ignored fields
-                        FieldInfo fieldInfo = modelFormField.getFieldInfo();
+                        var fieldInfo = modelFormField.getFieldInfo();
                         if (fieldInfo.getFieldType() == FieldInfo.HIDDEN
                                 || fieldInfo.getFieldType() == FieldInfo.IGNORED) {
                             continue;
