@@ -40,7 +40,7 @@ public final class UtilNumber {
 
     // ICU4J rule sets for the en_US locale. To add more rules, expand this string.
     // For reference, see the RbnfSampleRuleSets.java file distributed with ICU4J
-    // REFACTOR: Replace fragmented Strings with Text Blocks
+    // REFACTO: Replace fragmented Strings with Text Blocks
     private static final String RULE_SET_EN_US =
         /*
          * These rules format a number in one of the two styles often used
@@ -49,38 +49,41 @@ public final class UtilNumber {
          * %dollars-and-cents formats in dollars and cents (23.40 comes out as
          * "twenty-three dollars and forty cents")
          */
-            "%dollars-and-cents:\n"
-            + "    x.0: << [and >%%cents>];\n"
-            + "    0.x: >%%cents>;\n"
-            + "    0: zero dollars; one dollar; =%%main= dollars;\n"
-            + "%%main:\n"
-            + "    zero; one; two; three; four; five; six; seven; eight; nine;\n"
-            + "    ten; eleven; twelve; thirteen; fourteen; fifteen; sixteen;\n"
-            + "        seventeen; eighteen; nineteen;\n"
-            + "    20: twenty[->>];\n"
-            + "    30: thirty[->>];\n"
-            + "    40: forty[->>];\n"
-            + "    50: fifty[->>];\n"
-            + "    60: sixty[->>];\n"
-            + "    70: seventy[->>];\n"
-            + "    80: eighty[->>];\n"
-            + "    90: ninety[->>];\n"
-            + "    100: << hundred[ >>];\n"
-            + "    1000: << thousand[ >>];\n"
-            + "    1,000,000: << million[ >>];\n"
-            + "    1,000,000,000: << billion[ >>];\n"
-            + "    1,000,000,000,000: << trillion[ >>];\n"
-            + "    1,000,000,000,000,000: =#,##0=;\n"
-            + "%%cents:\n"
-            + "    100: <%%main< cent[s];\n"
-            + "%dollars-and-hundredths:\n"
-            + "    x.0: <%%main< and >%%hundredths>/100;\n" // this used to end in 'dollars' but that should be added later
-            + "%%hundredths:\n"
-            + "    100: <00<;\n";
+            """
+            %dollars-and-cents:
+                x.0: << [and >%%cents>];
+                0.x: >%%cents>;
+                0: zero dollars; one dollar; =%%main= dollars;
+            %%main:
+                zero; one; two; three; four; five; six; seven; eight; nine;
+                ten; eleven; twelve; thirteen; fourteen; fifteen; sixteen;
+                    seventeen; eighteen; nineteen;
+                20: twenty[->>];
+                30: thirty[->>];
+                40: forty[->>];
+                50: fifty[->>];
+                60: sixty[->>];
+                70: seventy[->>];
+                80: eighty[->>];
+                90: ninety[->>];
+                100: << hundred[ >>];
+                1000: << thousand[ >>];
+                1,000,000: << million[ >>];
+                1,000,000,000: << billion[ >>];
+                1,000,000,000,000: << trillion[ >>];
+                1,000,000,000,000,000: =#,##0=;
+            %%cents:
+                100: <%%main< cent[s];
+            %dollars-and-hundredths:
+                x.0: <%%main< and >%%hundredths>/100;
+            // this used to end in 'dollars' but that should be added later
+            %%hundredths:
+                100: <00<;
+            """;
 
     // ICU4J rule sets for the th_TH locale. To add more rules, expand this string.
     // For reference, see the RbnfSampleRuleSets.java file distributed with ICU4J
-    // REFACTOR: Replace fragmented Strings with Text Blocks
+    // REFACTO: Replace fragmented Strings with Text Blocks
     private static final String RULE_SET_TH_TH =
         /*
          * These rules format a number in one of the two styles often used
@@ -89,86 +92,91 @@ public final class UtilNumber {
          * %bahts-and-stangs formats in bahts and stangs (23.40 comes out as
          * "twenty-three bahts and forty stangs")
          */
-            "%bahts-and-stangs:\n"
-            + "    x.0: << [and >%%stangs>];\n"
-            + "    0.x: >%%stangs>;\n"
-            + "    0: zero bahts; one baht; =%%main= bahts;\n"
-            + "%%main:\n"
-            + "    zero; one; two; three; four; five; six; seven; eight; nine;\n"
-            + "    ten; eleven; twelve; thirteen; fourteen; fifteen; sixteen;\n"
-            + "        seventeen; eighteen; nineteen;\n"
-            + "    20: twenty[->>];\n"
-            + "    30: thirty[->>];\n"
-            + "    40: forty[->>];\n"
-            + "    50: fifty[->>];\n"
-            + "    60: sixty[->>];\n"
-            + "    70: seventy[->>];\n"
-            + "    80: eighty[->>];\n"
-            + "    90: ninety[->>];\n"
-            + "    100: << hundred[ >>];\n"
-            + "    1000: << thousand[ >>];\n"
-            + "    1,000,000: << million[ >>];\n"
-            + "    1,000,000,000: << billion[ >>];\n"
-            + "    1,000,000,000,000: << trillion[ >>];\n"
-            + "    1,000,000,000,000,000: =#,##0=;\n"
-            + "%%stangs:\n"
-            + "    100: <%%main< stang[s];\n"
-            + "%bahts-and-hundredths:\n"
-            + "    x.0: <%%main< and >%%hundredths>/100;\n" // this used to end in 'bahts' but that should be added later
-            + "%%hundredths:\n"
-            + "    100: <00<;\n";
+            """
+            %bahts-and-stangs:
+                x.0: << [and >%%stangs>];
+                0.x: >%%stangs>;
+                0: zero bahts; one baht; =%%main= bahts;
+            %%main:
+                zero; one; two; three; four; five; six; seven; eight; nine;
+                ten; eleven; twelve; thirteen; fourteen; fifteen; sixteen;
+                    seventeen; eighteen; nineteen;
+                20: twenty[->>];
+                30: thirty[->>];
+                40: forty[->>];
+                50: fifty[->>];
+                60: sixty[->>];
+                70: seventy[->>];
+                80: eighty[->>];
+                90: ninety[->>];
+                100: << hundred[ >>];
+                1000: << thousand[ >>];
+                1,000,000: << million[ >>];
+                1,000,000,000: << billion[ >>];
+                1,000,000,000,000: << trillion[ >>];
+                1,000,000,000,000,000: =#,##0=;
+            %%stangs:
+                100: <%%main< stang[s];
+            %bahts-and-hundredths:
+                x.0: <%%main< and >%%hundredths>/100; 
+            // this used to end in 'bahts' but that should be added later
+            %%hundredths:
+                100: <00<;
+            """;
 
         // ICU4J rule sets for the en_IN locale. To add more rules, expand this string.
         // For reference, see the RbnfSampleRuleSets.java file distributed with ICU4J
-    // REFACTOR: Replace fragmented Strings with Text Blocks
-    public static final String RULE_SET_EN_IN =
-             /*
-             * These rules format a number in one of the two styles often used
-             * on checks. %simplified formats paise as hundredths of
-             * a rupees (23.40 comes out as "twenty three rupees and forty paise").
-             * %default formats in rupees and paise (23.40 comes out as
-             * "twenty three point four")
-             */
-                "%simplified:\n"
-                + "    x.0: << [rupees and >%%paise>];\n"
-                + "    0.x: >%%paise>;\n"
-                + "    zero; one; two; three; four; five; six; seven; eight; nine;\n"
-                + "    ten; eleven; twelve; thirteen; fourteen; fifteen; sixteen;\n"
-                + "    seventeen; eighteen; nineteen;\n"
-                + "    20: twenty[ >>];\n"
-                + "    30: thirty[ >>];\n"
-                + "    40: forty[ >>];\n"
-                + "    50: fifty[ >>];\n"
-                + "    60: sixty[ >>];\n"
-                + "    70: seventy[ >>];\n"
-                + "    80: eighty[ >>];\n"
-                + "    90: ninety[ >>];\n"
-                + "    100: << hundred[ >%%and>];\n"
-                + "    1000: << thousand[ >%%and>];\n"
-                + "    1,00,000: << lakh[>%%commas>];\n"
-                + "    1,00,00,000: << crore[>%%commas>];\n"
-                + "    1,00,00,00,000: =#,##0=;\n"
-                + "%default:\n"
-                + "    -x: minus >>;\n"
-                + "    x.x: << point >>;\n"
-                + "    =%simplified=;\n"
-                + "    100: << hundred[ >%%and>];\n"
-                + "    1000: << thousand[ >%%and>];\n"
-                + "    1,00,000: << lakh[>%%commas>];\n"
-                + "    1,00,00,000: << crore[>%%commas>];\n"
-                + "    10,00,00,000: =#,##0=;\n"
-                + "%%paise:\n"
-                + "    100: <%simplified< paise;\n"
-                + "%%and:\n"
-                + "    and =%default=;\n"
-                + "    100: =%default=;\n"
-                + "%%commas:\n"
-                + "    ' and =%default=;\n"
-                + "    100: , =%default=;\n"
-                + "    1000: , <%default< thousand, >%default>;\n"
-                + "    1,00,000: , =%default=;"
-                + "%%lenient-parse:\n"
-                + "    & ' ' , ',' ;\n";
+        // REFACTO: Replace fragmented Strings with Text Blocks
+        public static final String RULE_SET_EN_IN =
+                /*
+                 * These rules format a number in one of the two styles often used
+                 * on checks. %simplified formats paise as hundredths of
+                 * a rupees (23.40 comes out as "twenty three rupees and forty paise").
+                 * %default formats in rupees and paise (23.40 comes out as
+                 * "twenty three point four")
+                 */
+                """
+                        %simplified:
+                            x.0: << [rupees and >%%paise>];
+                            0.x: >%%paise>;
+                            zero; one; two; three; four; five; six; seven; eight; nine;
+                            ten; eleven; twelve; thirteen; fourteen; fifteen; sixteen;
+                            seventeen; eighteen; nineteen;
+                            20: twenty[ >>];
+                            30: thirty[ >>];
+                            40: forty[ >>];
+                            50: fifty[ >>];
+                            60: sixty[ >>];
+                            70: seventy[ >>];
+                            80: eighty[ >>];
+                            90: ninety[ >>];
+                            100: << hundred[ >%%and>];
+                            1000: << thousand[ >%%and>];
+                            1,00,000: << lakh[>%%commas>];
+                            1,00,00,000: << crore[>%%commas>];
+                            1,00,00,00,000: =#,##0=;
+                        %default:
+                            -x: minus >>;
+                            x.x: << point >>;
+                            =%simplified=;
+                            100: << hundred[ >%%and>];
+                            1000: << thousand[ >%%and>];
+                            1,00,000: << lakh[>%%commas>];
+                            1,00,00,000: << crore[>%%commas>];
+                            10,00,00,000: =#,##0=;
+                        %%paise:
+                            100: <%simplified< paise;
+                        %%and:
+                            and =%default=;
+                            100: =%default=;
+                        %%commas:
+                            ' and =%default=;
+                            100: , =%default=;
+                            1000: , <%default< thousand, >%default>;
+                            1,00,000: , =%default=;\
+                        %%lenient-parse:
+                            & ' ' , ',' ;
+                        """;
 
     // hash map to store ICU4J rule sets keyed to Locale
     private static HashMap<Locale, String> rbnfRuleSets;

@@ -42,14 +42,16 @@ public class AfterLoginEvents {
     private static final String SCRIPT_SHOW_LAST_VISIT_DATE;
 
     static {
-        // REFACTOR: Replace fragmented Strings with Text Blocks
-        SCRIPT_SHOW_LAST_VISIT_DATE = "<span id='showLastVisit'></span><script>"
-                + "importLibrary(%s, function () {\n"
-                + "var dateFormat = Date.CultureInfo.formatPatterns.shortDate + ' ' + Date.CultureInfo.formatPatterns.longTime;\n"
-                + "var jsLastVisit = new Date('%s').toString(dateFormat);\n"
-                + "var message = `%s`;\n"
-                + "$('#showLastVisit').replaceWith(message);\n"
-                + "});\n</script>";
+        // REFACTO: Replace fragmented Strings with Text Blocks
+        SCRIPT_SHOW_LAST_VISIT_DATE = """
+                <span id='showLastVisit'></span>
+                <script>importLibrary(%s, function () {
+                    var dateFormat = Date.CultureInfo.formatPatterns.shortDate + ' ' + Date.CultureInfo.formatPatterns.longTime;
+                    var jsLastVisit = new Date('%s').toString(dateFormat);
+                    var message = `%s`;
+                    $('#showLastVisit').replaceWith(message);
+                });
+                </script>""";
     }
 
     public static String showLastVisit(HttpServletRequest request, HttpServletResponse response) {
