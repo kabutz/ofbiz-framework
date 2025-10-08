@@ -310,7 +310,7 @@ public class FormRenderer {
 
     private int renderHeaderRow(Appendable writer, Map<String, Object> context)
             throws IOException {
-        // REFACTOR: Replace all the local variable declarations with "var"
+        // REFACTO: Replace all the local variable declarations with "var"
         var maxNumOfColumns = 0;
 
         // We will render one title/column for all the fields with the same name
