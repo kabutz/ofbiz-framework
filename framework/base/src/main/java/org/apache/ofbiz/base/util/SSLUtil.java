@@ -256,43 +256,40 @@ public final class SSLUtil {
     }
 
     public static HostnameVerifier getHostnameVerifier(int level) {
-        // REFACTOR: Replace old style switch with switch expressions
-        switch (level) {
-        case HOSTCERT_MIN_CHECK:
-            return (hostname, session) -> {
-                Certificate[] peerCerts;
-                try {
-                    peerCerts = session.getPeerCertificates();
-                } catch (SSLPeerUnverifiedException e) {
-                    // cert not verified
-                    Debug.logWarning(e.getMessage(), MODULE);
-                    return false;
-                }
-                for (Certificate peerCert : peerCerts) {
+        // REFACTO: Replace old style switch with switch expressions
+        return switch (level) {
+            case HOSTCERT_MIN_CHECK -> (hostname, session) -> {
+                    Certificate[] peerCerts;
                     try {
-                        Principal x500s = session.getPeerPrincipal();
-                        Map<String, String> subjectMap = KeyStoreUtil.getX500Map(x500s);
-                        if (Debug.infoOn()) {
-                            byte[] encodedCert = peerCert.getEncoded();
-                            Debug.logInfo(new BigInteger(encodedCert).toString(16)
-                                    + " :: " + subjectMap.get("CN"), MODULE);
-                        }
-                        peerCert.verify(peerCert.getPublicKey());
-                    } catch (RuntimeException e) {
-                        throw e;
-                    } catch (Exception e) {
-                        // certificate not valid
-                        Debug.logWarning("Certificate is not valid!", MODULE);
+                        peerCerts = session.getPeerCertificates();
+                    } catch (SSLPeerUnverifiedException e) {
+                        // cert not verified
+                        Debug.logWarning(e.getMessage(), MODULE);
                         return false;
                     }
-                }
-                return true;
-            };
-        case HOSTCERT_NO_CHECK:
-            return (hostname, session) -> true;
-        default:
-            return null;
-        }
+                    for (Certificate peerCert : peerCerts) {
+                        try {
+                            Principal x500s = session.getPeerPrincipal();
+                            Map<String, String> subjectMap = KeyStoreUtil.getX500Map(x500s);
+                            if (Debug.infoOn()) {
+                                byte[] encodedCert = peerCert.getEncoded();
+                                Debug.logInfo(new BigInteger(encodedCert).toString(16)
+                                        + " :: " + subjectMap.get("CN"), MODULE);
+                            }
+                            peerCert.verify(peerCert.getPublicKey());
+                        } catch (RuntimeException e) {
+                            throw e;
+                        } catch (Exception e) {
+                            // certificate not valid
+                            Debug.logWarning("Certificate is not valid!", MODULE);
+                            return false;
+                        }
+                    }
+                    return true;
+                };
+            case HOSTCERT_NO_CHECK -> (hostname, session) -> true;
+            default -> null;
+        };
     }
 
     public static void loadJsseProperties() {

@@ -138,19 +138,17 @@ public final class ComponentLoaderConfig {
          * @throws ComponentException when {@code element} has an invalid label.
          */
         private static ComponentDef of(Element element, URL configUrl) throws ComponentException {
-            String nodeName = element.getNodeName();
-            // REFACTOR: Replace old style switch with switch expressions
-            switch (nodeName) {
-            case "load-component":
-                return new ComponentDef(locationToPath(element.getAttribute("component-location")),
-                        ComponentType.SINGLE_COMPONENT);
-            case "load-components":
-                return new ComponentDef(locationToPath(element.getAttribute("parent-directory")),
-                        ComponentType.COMPONENT_DIRECTORY);
-            default:
-                throw new ComponentException(
-                        String.format("Invalid element '%s' found in component-load file %s", nodeName, configUrl));
-            }
+            // REFACTO: Replace old style switch with switch expressions
+            return switch (element.getNodeName()) {
+                case "load-component" ->
+                        new ComponentDef(locationToPath(element.getAttribute("component-location")),
+                                ComponentType.SINGLE_COMPONENT);
+                case "load-components" ->
+                        new ComponentDef(locationToPath(element.getAttribute("parent-directory")),
+                                ComponentType.COMPONENT_DIRECTORY);
+                default -> throw new ComponentException(
+                        String.format("Invalid element '%s' found in component-load file %s", element.getNodeName(), configUrl));
+            };
         }
     }
 

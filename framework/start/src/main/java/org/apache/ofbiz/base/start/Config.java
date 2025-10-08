@@ -188,22 +188,15 @@ public final class Config {
     private static Locale getDefaultLocale(Properties props, String defaultLocale) {
         String localeString = getProperty(props, "ofbiz.locale.default", defaultLocale);
         String locales[] = localeString.split("_");
-        Locale locale = null;
-        // REFACTOR: Replace old style switch with switch expressions
-        switch (locales.length) {
-        case 1:
-            locale = Locale.of(locales[0]);
-            break;
-        case 2:
-            locale = Locale.of(locales[0], locales[1]);
-            break;
-        case 3:
-            locale = Locale.of(locales[0], locales[1], locales[2]);
-            break;
-        default:
-            throw new IllegalArgumentException("The combination of properties, ofbiz.locale.default and defaultLocale is invalid. "
-                    + Arrays.toString(locales));
-        }
+        // REFACTO: Replace old style switch with switch expressions
+        Locale locale = switch (locales.length) {
+            case 1 -> Locale.of(locales[0]);
+            case 2 -> Locale.of(locales[0], locales[1]);
+            case 3 -> Locale.of(locales[0], locales[1], locales[2]);
+            default -> throw new IllegalArgumentException(
+                    "The combination of properties, ofbiz.locale.default and defaultLocale is invalid. "
+                            + Arrays.toString(locales));
+        };
         System.setProperty("user.language", localeString);
         return locale;
     }
