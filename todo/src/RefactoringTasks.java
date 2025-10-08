@@ -51,6 +51,30 @@ import java.net.URL;
 import java.util.*;
 import java.util.function.*;
 
+/**
+ * Hearty welcome to the course on Refactoring to Java 25. We will look at all
+ * the interesting features from Java 11 onwards. If you are already using a
+ * later Java version and you are completely familiar with the features, you can
+ * skip ahead. But perhaps try do the refactorings first.
+ *
+ * IRL when we refactor, we need a comprehensive set of unit tests to ensure
+ * that we do not accidentally introduce bugs into the code. As the old adage
+ * goes: "If something ain't broke, don't fix it." For this course, we will not
+ * worry about unit tests, and might just occasionally make sure that OfBiz
+ * still runs.
+ *
+ * We need (at least) Java 25 for this course, as well as IntelliJ Community or
+ * Ultimate. To compile and run the code, we can use ./gradlew clean ofbiz
+ *
+ * We will study each new feature in turn by looking through the published
+ * JEP (JDK Enhancement Proposal), then you can do some refactoring exercises.
+ * Once you have tried yourself, you can look at my walkthrough.
+ *
+ * You are welcome to use AI tools for the refactoring exercises, but do check
+ * that the result is what you are happy with.
+ *
+ * Please ask questions in the comments section.
+ */
 public class RefactoringTasks {
     public static void main(String... args) {
         System.out.println("Enjoy the refactoring!");

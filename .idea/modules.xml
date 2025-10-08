@@ -2,6 +2,20 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/applications/accounting/ofbiz.applications.accounting.iml" filepath="$PROJECT_DIR$/.idea/modules/applications/accounting/ofbiz.applications.accounting.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/applications/humanres/ofbiz.applications.humanres.iml" filepath="$PROJECT_DIR$/.idea/modules/applications/humanres/ofbiz.applications.humanres.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/applications/manufacturing/ofbiz.applications.manufacturing.iml" filepath="$PROJECT_DIR$/.idea/modules/applications/manufacturing/ofbiz.applications.manufacturing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/applications/marketing/ofbiz.applications.marketing.iml" filepath="$PROJECT_DIR$/.idea/modules/applications/marketing/ofbiz.applications.marketing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/applications/product/ofbiz.applications.product.iml" filepath="$PROJECT_DIR$/.idea/modules/applications/product/ofbiz.applications.product.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/applications/securityext/ofbiz.applications.securityext.iml" filepath="$PROJECT_DIR$/.idea/modules/applications/securityext/ofbiz.applications.securityext.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/buildSrc/ofbiz.buildSrc.main.iml" filepath="$PROJECT_DIR$/.idea/modules/buildSrc/ofbiz.buildSrc.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/framework/datafile/ofbiz.framework.datafile.iml" filepath="$PROJECT_DIR$/.idea/modules/framework/datafile/ofbiz.framework.datafile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/framework/entityext/ofbiz.framework.entityext.iml" filepath="$PROJECT_DIR$/.idea/modules/framework/entityext/ofbiz.framework.entityext.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/framework/testtools/ofbiz.framework.testtools.iml" filepath="$PROJECT_DIR$/.idea/modules/framework/testtools/ofbiz.framework.testtools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ofbiz.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ofbiz.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ofbiz.test.iml" filepath="$PROJECT_DIR$/.idea/modules/ofbiz.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/themes/helveticus/ofbiz.themes.helveticus.iml" filepath="$PROJECT_DIR$/.idea/modules/themes/helveticus/ofbiz.themes.helveticus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/themes/rainbowstone/ofbiz.themes.rainbowstone.iml" filepath="$PROJECT_DIR$/.idea/modules/themes/rainbowstone/ofbiz.themes.rainbowstone.iml" />
       <module fileurl="file://$PROJECT_DIR$/todo/todo.iml" filepath="$PROJECT_DIR$/todo/todo.iml" />
     </modules>
   </component>
