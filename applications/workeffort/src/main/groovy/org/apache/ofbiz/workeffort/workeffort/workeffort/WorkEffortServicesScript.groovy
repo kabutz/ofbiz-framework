@@ -322,7 +322,7 @@ Map copyWorkEffort() {
                 String relationName = it.getCombinedName()
                 ModelKeyMap keyMap = it.findKeyMap('workEffortId')
                 if (keyMap) {
-                    String relationWorkEffortId = keyMap.getRelFieldName()
+                    String relationWorkEffortId = keyMap.relFieldName()
                     List<GenericValue> relationValues = sourceWorkEffort.getRelated(relationName, null, null, false)
                     if (parameters.excludeExpiredRelations == 'Y') {
                         relationValues = EntityUtil.filterByDate(relationValues)

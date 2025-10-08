@@ -256,19 +256,19 @@ public final class ModelEntityChecker {
                         // the relatedEntity
                         for (ModelKeyMap keyMap : relation.getKeyMaps()) {
 
-                            ModelField field = entity.getField(keyMap.getFieldName());
+                            ModelField field = entity.getField(keyMap.fieldName());
                             ModelField rfield = null;
                             if (relatedEntity != null) {
-                                rfield = relatedEntity.getField(keyMap.getRelFieldName());
+                                rfield = relatedEntity.getField(keyMap.relFieldName());
                             }
                             if (rfield == null) {
-                                warningList.add("[RelationRelatedFieldNotFound] The field \"" + keyMap.getRelFieldName()
+                                warningList.add("[RelationRelatedFieldNotFound] The field \"" + keyMap.relFieldName()
                                         + "\" of related entity " + relation.getRelEntityName()
                                         + " was specified in the keymaps but is not found for relation " + relation.getTitle()
                                         + relation.getRelEntityName() + " of entity " + entity.getEntityName() + ".");
                             }
                             if (field == null) {
-                                warningList.add("[RelationFieldNotFound] The field " + keyMap.getFieldName()
+                                warningList.add("[RelationFieldNotFound] The field " + keyMap.fieldName()
                                         + " was specified in the keymaps but is not found for relation " + relation.getTitle()
                                         + relation.getRelEntityName() + " of entity " + entity.getEntityName() + ".");
                             }

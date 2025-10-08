@@ -1791,7 +1791,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
                 returnString.append("=\" + ");
                 returnString.append(ModelUtil.lowerFirstChar(relation.getModelEntity().entityName));
                 returnString.append(".get");
-                returnString.append(ModelUtil.upperFirstChar(keyMap.getFieldName()));
+                returnString.append(ModelUtil.upperFirstChar(keyMap.fieldName()));
                 returnString.append("() + \"&\" + ");
             } else {
                 Debug.logWarning("-- -- ENTITYGEN ERROR:httpRelationArgList: Related Key in Key Map not found for name: "
@@ -1809,7 +1809,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
             returnString.append("=\" + ");
             returnString.append(ModelUtil.lowerFirstChar(relation.getModelEntity().entityName));
             returnString.append(".get");
-            returnString.append(ModelUtil.upperFirstChar(keyMap.getFieldName()));
+            returnString.append(ModelUtil.upperFirstChar(keyMap.fieldName()));
             returnString.append("()");
         } else {
             Debug.logWarning("-- -- ENTITYGEN ERROR:httpRelationArgList: Related Key in Key Map not found for name: " + flds.get(i).getName()
@@ -1890,7 +1890,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
             ModelKeyMap keyMap = relation.findKeyMapByRelated(flds.get(i).getName());
 
             if (keyMap != null) {
-                returnString.append(keyMap.getFieldName());
+                returnString.append(keyMap.fieldName());
                 returnString.append(", ");
             } else {
                 returnString.append(flds.get(i).getName());
@@ -1899,7 +1899,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
         }
         ModelKeyMap keyMap = relation.findKeyMapByRelated(flds.get(i).getName());
 
-        if (keyMap != null) returnString.append(keyMap.getFieldName());
+        if (keyMap != null) returnString.append(keyMap.fieldName());
         else returnString.append(flds.get(i).getName());
         return returnString.toString();
     }
@@ -2277,7 +2277,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
                     relationshipMap.put("name", relationship.getCombinedName());
                 } else {
                     // REFACTOR: Use sequenced collection method instead
-                    relationshipMap.put("name", relationship.getKeyMaps().iterator().next().getFieldName());
+                    relationshipMap.put("name", relationship.getKeyMaps().iterator().next().fieldName());
                 }
                 relationshipMap.put("destination", relationship.getRelEntityName());
                 if ("many".equals(relationship.getType())) {
@@ -2296,19 +2296,19 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
                     Map<String, Object> joinsMap = new HashMap<>();
                     joinsMapList.add(joinsMap);
 
-                    ModelField thisField = this.getField(keyMap.getFieldName());
+                    ModelField thisField = this.getField(keyMap.fieldName());
                     if (thisField != null && thisField.getIsPk()) {
-                        joinsMap.put("sourceAttribute", keyMap.getFieldName() + "*");
+                        joinsMap.put("sourceAttribute", keyMap.fieldName() + "*");
                     } else {
-                        joinsMap.put("sourceAttribute", keyMap.getFieldName());
+                        joinsMap.put("sourceAttribute", keyMap.fieldName());
                     }
 
                     ModelField relField = null;
-                    if (relEntity != null) relField = relEntity.getField(keyMap.getRelFieldName());
+                    if (relEntity != null) relField = relEntity.getField(keyMap.relFieldName());
                     if (relField != null && relField.getIsPk()) {
-                        joinsMap.put("destinationAttribute", keyMap.getRelFieldName() + "*");
+                        joinsMap.put("destinationAttribute", keyMap.relFieldName() + "*");
                     } else {
-                        joinsMap.put("destinationAttribute", keyMap.getRelFieldName());
+                        joinsMap.put("destinationAttribute", keyMap.relFieldName());
                     }
                 }
             }
@@ -2325,7 +2325,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
      * @return the author
      */
     public String getAuthor() {
-        return modelInfo.getAuthor();
+        return modelInfo.author();
     }
 
     /**
@@ -2333,7 +2333,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
      * @return the copyright
      */
     public String getCopyright() {
-        return modelInfo.getCopyright();
+        return modelInfo.copyright();
     }
 
     /**
@@ -2341,7 +2341,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
      * @return the default resource name
      */
     public String getDefaultResourceName() {
-        return modelInfo.getDefaultResourceName();
+        return modelInfo.defaultResourceName();
     }
 
     /**
@@ -2349,7 +2349,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
      * @return the description
      */
     public String getDescription() {
-        return modelInfo.getDescription();
+        return modelInfo.description();
     }
 
     /**
@@ -2365,7 +2365,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
      * @return the title
      */
     public String getTitle() {
-        return modelInfo.getTitle();
+        return modelInfo.title();
     }
 
     /**
@@ -2373,7 +2373,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
      * @return the version
      */
     public String getVersion() {
-        return modelInfo.getVersion();
+        return modelInfo.version();
     }
 
 }

@@ -202,7 +202,7 @@ public final class ModelRelation extends ModelChild {
     /** Find a KeyMap with the specified fieldName */
     public ModelKeyMap findKeyMap(String fieldName) {
         for (ModelKeyMap keyMap: keyMaps) {
-            if (keyMap.getFieldName().equals(fieldName)) return keyMap;
+            if (keyMap.fieldName().equals(fieldName)) return keyMap;
         }
         return null;
     }
@@ -210,7 +210,7 @@ public final class ModelRelation extends ModelChild {
     /** Find a KeyMap with the specified relFieldName */
     public ModelKeyMap findKeyMapByRelated(String relFieldName) {
         for (ModelKeyMap keyMap: keyMaps) {
-            if (keyMap.getRelFieldName().equals(relFieldName)) {
+            if (keyMap.relFieldName().equals(relFieldName)) {
                 return keyMap;
             }
         }
@@ -251,10 +251,10 @@ public final class ModelRelation extends ModelChild {
         int i = 0;
 
         for (; i < keyMaps.size() - 1; i++) {
-            stringBuilder.append(keyMaps.get(i).getFieldName());
+            stringBuilder.append(keyMaps.get(i).fieldName());
             stringBuilder.append(separator);
         }
-        stringBuilder.append(keyMaps.get(i).getFieldName());
+        stringBuilder.append(keyMaps.get(i).fieldName());
         stringBuilder.append(afterLast);
         return stringBuilder.toString();
     }
@@ -269,7 +269,7 @@ public final class ModelRelation extends ModelChild {
         int i = 0;
         while (true) {
             ModelKeyMap kmap = keyMaps.get(i);
-            returnString.append(ModelUtil.upperFirstChar(kmap.getFieldName()));
+            returnString.append(ModelUtil.upperFirstChar(kmap.fieldName()));
 
             i++;
             if (i >= keyMaps.size()) {
@@ -293,7 +293,7 @@ public final class ModelRelation extends ModelChild {
         int i = 0;
         while (true) {
             ModelKeyMap kmap = keyMaps.get(i);
-            returnString.append(ModelUtil.upperFirstChar(kmap.getRelFieldName()));
+            returnString.append(ModelUtil.upperFirstChar(kmap.relFieldName()));
 
             i++;
             if (i >= keyMaps.size()) {

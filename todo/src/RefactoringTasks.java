@@ -167,7 +167,7 @@ public class RefactoringTasks {
      * {@link ModelViewEntity.ModelMemberEntity}
      * {@link ModelViewEntity.ModelAliasAll} (more difficult)
      * {@link ScriptUtil.ProtectedBindings}
-     * {@link ModelService.ModelServiceMapEntry}
+     * {@link ModelService.ModelSericeMapEntry}
      */
     public static void task5_replaceDataClassesWithRecords() {
     }

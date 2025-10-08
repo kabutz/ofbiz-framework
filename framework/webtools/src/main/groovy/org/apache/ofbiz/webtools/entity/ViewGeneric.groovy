@@ -251,8 +251,8 @@ for (int relIndex = 0; relIndex < entity.getRelationsSize(); relIndex++) {
 
 private String buildFindString(ModelEntity relatedEntity, ModelRelation relation, Map value) {
     String findString = 'entityName=' + relatedEntity.getEntityName()
-    relation.getKeyMaps().findAll { keyMap -> value.get(keyMap.getFieldName()) }.each { keyMap ->
-        findString += '&' + keyMap.getRelFieldName() + '=' + value.get(keyMap.getFieldName())
+    relation.getKeyMaps().findAll { keyMap -> value.get(keyMap.fieldName()) }.each { keyMap ->
+        findString += '&' + keyMap.relFieldName() + '=' + value.get(keyMap.fieldName())
     }
     return UtilFormatOut.encodeQuery(findString)
 }

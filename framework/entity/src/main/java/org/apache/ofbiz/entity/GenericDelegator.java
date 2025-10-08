@@ -1238,7 +1238,7 @@ public class GenericDelegator implements Delegator {
 
         Map<String, Object> fields = new HashMap<>();
         for (ModelKeyMap keyMap : relation.getKeyMaps()) {
-            fields.put(keyMap.getRelFieldName(), value.get(keyMap.getFieldName()));
+            fields.put(keyMap.relFieldName(), value.get(keyMap.fieldName()));
         }
 
         return this.removeByAnd(relation.getRelEntityName(), fields);
@@ -1875,7 +1875,7 @@ public class GenericDelegator implements Delegator {
             fields.putAll(byAndFields);
         }
         for (ModelKeyMap keyMap : relation.getKeyMaps()) {
-            fields.put(keyMap.getRelFieldName(), value.get(keyMap.getFieldName()));
+            fields.put(keyMap.relFieldName(), value.get(keyMap.fieldName()));
         }
 
         return this.findByAnd(relation.getRelEntityName(), fields, orderBy, useCache);
@@ -1902,7 +1902,7 @@ public class GenericDelegator implements Delegator {
             fields.putAll(byAndFields);
         }
         for (ModelKeyMap keyMap : relation.getKeyMaps()) {
-            fields.put(keyMap.getRelFieldName(), value.get(keyMap.getFieldName()));
+            fields.put(keyMap.relFieldName(), value.get(keyMap.fieldName()));
         }
 
         return GenericPK.create(this, relatedEntity, fields);
@@ -1925,7 +1925,7 @@ public class GenericDelegator implements Delegator {
 
         Map<String, Object> fields = new HashMap<>();
         for (ModelKeyMap keyMap : relation.getKeyMaps()) {
-            fields.put(keyMap.getRelFieldName(), value.get(keyMap.getFieldName()));
+            fields.put(keyMap.relFieldName(), value.get(keyMap.fieldName()));
         }
 
         return this.findOne(relation.getRelEntityName(), fields, useCache);

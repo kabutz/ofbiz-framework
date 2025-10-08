@@ -763,12 +763,12 @@ public class WebToolsServices {
                                 Map<String, Object> keysMap = new HashMap<>();
                                 String fieldName = null;
                                 String relFieldName = null;
-                                if (keyMap.getFieldName().equals(keyMap.getRelFieldName())) {
-                                    fieldName = keyMap.getFieldName();
+                                if (keyMap.fieldName().equals(keyMap.relFieldName())) {
+                                    fieldName = keyMap.fieldName();
                                     relFieldName = "aa";
                                 } else {
-                                    fieldName = keyMap.getFieldName();
-                                    relFieldName = keyMap.getRelFieldName();
+                                    fieldName = keyMap.fieldName();
+                                    relFieldName = keyMap.relFieldName();
                                 }
                                 keysMap.put("row", row++);
                                 keysMap.put("fieldName", fieldName);

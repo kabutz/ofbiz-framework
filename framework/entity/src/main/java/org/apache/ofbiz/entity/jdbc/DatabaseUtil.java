@@ -2236,10 +2236,10 @@ public class DatabaseUtil {
 
         for (ModelKeyMap keyMap : modelRelation.getKeyMaps()) {
 
-            ModelField mainField = entity.getField(keyMap.getFieldName());
+            ModelField mainField = entity.getField(keyMap.fieldName());
             if (mainField == null) {
                 Debug.logError("Bad key-map in entity [" + entity.getEntityName() + "] relation to [" + modelRelation.getTitle()
-                        + modelRelation.getRelEntityName() + "] for field [" + keyMap.getFieldName() + "]", MODULE);
+                        + modelRelation.getRelEntityName() + "] for field [" + keyMap.fieldName() + "]", MODULE);
                 return null;
             }
 
@@ -2248,9 +2248,9 @@ public class DatabaseUtil {
             }
             mainCols.append(mainField.getColName());
 
-            ModelField relField = relModelEntity.getField(keyMap.getRelFieldName());
+            ModelField relField = relModelEntity.getField(keyMap.relFieldName());
             if (relField == null) {
-                Debug.logError("The field '" + keyMap.getRelFieldName() + "' was not found at related entity - check relations at entity '"
+                Debug.logError("The field '" + keyMap.relFieldName() + "' was not found at related entity - check relations at entity '"
                         + entity.getEntityName() + "'!", MODULE);
             }
 
@@ -2870,11 +2870,11 @@ public class DatabaseUtil {
         StringBuilder mainCols = new StringBuilder();
 
         for (ModelKeyMap keyMap : modelRelation.getKeyMaps()) {
-            ModelField mainField = entity.getField(keyMap.getFieldName());
+            ModelField mainField = entity.getField(keyMap.fieldName());
 
             if (mainField == null) {
                 Debug.logError("Bad key-map in entity [" + entity.getEntityName() + "] relation to [" + modelRelation.getTitle()
-                               + modelRelation.getRelEntityName() + "] for field [" + keyMap.getFieldName() + "]", MODULE);
+                               + modelRelation.getRelEntityName() + "] for field [" + keyMap.fieldName() + "]", MODULE);
                 return null;
             }
 

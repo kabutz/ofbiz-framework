@@ -443,8 +443,8 @@ public class GenericDAO {
 
         // Construct insert/update for each model entity
         for (ModelViewEntity.ModelMemberEntity modelMemberEntity : modelViewEntity.getMemberModelMemberEntities().values()) {
-            String meName = modelMemberEntity.getEntityName();
-            String meAlias = modelMemberEntity.getEntityAlias();
+            String meName = modelMemberEntity.entityName();
+            String meAlias = modelMemberEntity.entityAlias();
 
             if (Debug.verboseOn()) {
                 Debug.logVerbose("[singleUpdateView]: Processing MemberEntity " + meName + " with Alias " + meAlias, MODULE);
@@ -473,9 +473,9 @@ public class GenericDAO {
                         String fieldName = "";
 
                         if (modelViewLink.getEntityAlias().equals(meAlias)) {
-                            fieldName = keyMap.getFieldName();
+                            fieldName = keyMap.fieldName();
                         } else {
-                            fieldName = keyMap.getRelFieldName();
+                            fieldName = keyMap.relFieldName();
                         }
 
                         if (Debug.verboseOn()) {
@@ -483,13 +483,13 @@ public class GenericDAO {
                         }
                         Object value = null;
 
-                        if (modelViewEntity.isField(keyMap.getFieldName())) {
-                            value = entity.get(keyMap.getFieldName());
+                        if (modelViewEntity.isField(keyMap.fieldName())) {
+                            value = entity.get(keyMap.fieldName());
                             if (Debug.verboseOn()) {
                                 Debug.logVerbose("[singleUpdateView]: --- Found map value: " + value.toString(), MODULE);
                             }
-                        } else if (modelViewEntity.isField(keyMap.getRelFieldName())) {
-                            value = entity.get(keyMap.getRelFieldName());
+                        } else if (modelViewEntity.isField(keyMap.relFieldName())) {
+                            value = entity.get(keyMap.relFieldName());
                             if (Debug.verboseOn()) {
                                 Debug.logVerbose("[singleUpdateView]: --- Found map value: " + value.toString(), MODULE);
                             }
@@ -1098,8 +1098,8 @@ public class GenericDAO {
         // construct assoc->target relation string
         StringBuilder wheresb = new StringBuilder();
         for (ModelKeyMap mkm : modelRelationTwo.getKeyMaps()) {
-            String lfname = mkm.getFieldName();
-            String rfname = mkm.getRelFieldName();
+            String lfname = mkm.fieldName();
+            String rfname = mkm.relFieldName();
 
             if (wheresb.length() > 0) {
                 wheresb.append(" AND ");
@@ -1113,8 +1113,8 @@ public class GenericDAO {
         Map<ModelField, Object> bindMap = new HashMap<>();
         for (ModelKeyMap mkm : modelRelationOne.getKeyMaps()) {
             // get the equivalent column names in the relation
-            String sfldname = mkm.getFieldName();
-            String lfldname = mkm.getRelFieldName();
+            String sfldname = mkm.fieldName();
+            String lfldname = mkm.relFieldName();
             ModelField amf = modelEntityOne.getField(lfldname);
             String lcolname = amf.getColName();
             Object rvalue = value.get(sfldname);

@@ -1811,7 +1811,7 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
                 // see if the related value exists
                 Map<String, Object> fields = new HashMap<>();
                 for (ModelKeyMap keyMap : relation.getKeyMaps()) {
-                    fields.put(keyMap.getRelFieldName(), this.get(keyMap.getFieldName()));
+                    fields.put(keyMap.relFieldName(), this.get(keyMap.fieldName()));
                 }
                 EntityFieldMap ecl = EntityCondition.makeCondition(fields);
                 long count = this.getDelegator().findCountByCondition(relation.getRelEntityName(), ecl, null, null);
@@ -1821,10 +1821,10 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
                         GenericValue newValue = this.getDelegator().makeValue(relation.getRelEntityName());
                         boolean allFieldsSet = true;
                         for (ModelKeyMap mkm : relation.getKeyMaps()) {
-                            if (this.get(mkm.getFieldName()) != null) {
-                                newValue.set(mkm.getRelFieldName(), this.get(mkm.getFieldName()));
+                            if (this.get(mkm.fieldName()) != null) {
+                                newValue.set(mkm.relFieldName(), this.get(mkm.fieldName()));
                                 if (Debug.infoOn()) {
-                                    Debug.logInfo("Set [" + mkm.getRelFieldName() + "] to - " + this.get(mkm.getFieldName()), MODULE);
+                                    Debug.logInfo("Set [" + mkm.relFieldName() + "] to - " + this.get(mkm.fieldName()), MODULE);
                                 }
                             } else {
                                 allFieldsSet = false;

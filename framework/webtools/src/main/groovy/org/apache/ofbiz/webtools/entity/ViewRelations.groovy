@@ -37,8 +37,8 @@ for (rit = modelEntity.getRelationsIterator(); rit.hasNext();) {
     modelRelation = rit.next()
     relFields = []
     modelRelation.getKeyMaps().each { keyMap ->
-        relFields << [fieldName: keyMap.getFieldName(),
-                      relFieldName: keyMap.getRelFieldName()]
+        relFields << [fieldName: keyMap.fieldName(),
+                      relFieldName: keyMap.relFieldName()]
     }
 
     mapRelation.relFields = relFields

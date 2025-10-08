@@ -838,14 +838,8 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
         return null;
     }
 
-    // REFACTOR: Replace simple data class with record
-    private final class ModelServiceMapEntry implements Map.Entry<String, Object> {
-        private final Field field;
-
-        protected ModelServiceMapEntry(Field field) {
-            this.field = field;
-        }
-
+    // REFACTO: Replace simple data class with record
+    private record ModelServiceMapEntry(ModelService outer, Field field) implements Map.Entry<String, Object> {
         @Override
         public String getKey() {
             return field.getName();
@@ -854,7 +848,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
         @Override
         public Object getValue() {
             try {
-                return field.get(ModelService.this);
+                return field.get(outer);
             } catch (IllegalAccessException e) {
                 return null;
             }
@@ -867,7 +861,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
 
         @Override
         public int hashCode() {
-            return field.hashCode() ^ System.identityHashCode(ModelService.this);
+            return field.hashCode() ^ System.identityHashCode(outer);
         }
 
         @Override
@@ -877,11 +871,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
                 return false;
             }
             ModelServiceMapEntry other = (ModelServiceMapEntry) o;
-            return field.equals(other.field) && ModelService.this == other.getModelService();
-        }
-
-        private ModelService getModelService() {
-            return ModelService.this;
+            return field.equals(other.field) && outer == other.outer();
         }
     }
 
@@ -908,7 +898,8 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
                         if (!hasNext()) {
                             throw new NoSuchElementException();
                         }
-                        return new ModelServiceMapEntry(MODEL_SERVICE_FIELDS[i++]);
+                        return new ModelServiceMapEntry(ModelService.this,
+                                MODEL_SERVICE_FIELDS[i++]);
                     }
 
                     @Override

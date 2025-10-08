@@ -23,18 +23,9 @@ import java.util.Objects;
 
 import org.apache.ofbiz.base.util.UtilObject;
 
-// REFACTOR: Replace simple data class with record
-public class GenericMapEntry<K, V> implements Map.Entry<K, V> {
-    private final GenericMap<K, V> map;
-    private final K key;
-    private final boolean noteAccess;
-
-    public GenericMapEntry(GenericMap<K, V> map, K key, boolean noteAccess) {
-        this.map = map;
-        this.key = key;
-        this.noteAccess = noteAccess;
-    }
-
+// REFACTO: Replace simple data class with record
+public record GenericMapEntry<K, V>(
+        GenericMap<K, V> map, K key, boolean noteAccess) implements Map.Entry<K, V> {
     @Override
     public K getKey() {
         return key;

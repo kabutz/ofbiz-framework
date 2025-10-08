@@ -34,47 +34,27 @@ import org.w3c.dom.Element;
  */
 @ThreadSafe
 @SuppressWarnings("serial")
-// REFACTOR: Replace simple data class with record
-public final class ModelKeyMap implements Comparable<ModelKeyMap>, Serializable {
+// REFACTO: Replace simple data class with record
+public record ModelKeyMap(String fieldName, String relFieldName, String fullName)
+        implements Comparable<ModelKeyMap>, Serializable {
 
     /*
      * Developers - this is an immutable class. Once constructed, the object should not change state.
      * Therefore, 'setter' methods are not allowed. If client code needs to modify the object's
      * state, then it can create a new copy with the changed values.
      */
-
-    /** name of the field in this entity */
-    private final String fieldName;
-
-    /** name of the field in related entity */
-    private final String relFieldName;
-
-    /** Full name of the key map (fieldName:relFieldName) */
-    private final String fullName;
-
     /** Data Constructor, if relFieldName is null defaults to fieldName */
     public ModelKeyMap(String fieldName, String relFieldName) {
-        this.fieldName = fieldName;
-        this.relFieldName = UtilXml.checkEmpty(relFieldName, this.fieldName);
-        this.fullName = this.fieldName.concat(":").concat(this.relFieldName);
+        this(fieldName, UtilXml.checkEmpty(relFieldName, fieldName),
+                fieldName.concat(":").concat(
+                        UtilXml.checkEmpty(relFieldName, fieldName)));
     }
 
     /** XML Constructor */
     public ModelKeyMap(Element keyMapElement) {
-        this.fieldName = UtilXml.checkEmpty(keyMapElement.getAttribute("field-name")).intern();
-        // if no relFieldName is specified, use the fieldName; this is convenient for when they are named the same, which is often the case
-        this.relFieldName = UtilXml.checkEmpty(keyMapElement.getAttribute("rel-field-name"), this.fieldName).intern();
-        this.fullName = this.fieldName.concat(":").concat(this.relFieldName);
-    }
-
-    /** Returns the field name. */
-    public String getFieldName() {
-        return this.fieldName;
-    }
-
-    /** Returns the related entity field name. */
-    public String getRelFieldName() {
-        return this.relFieldName;
+        this(UtilXml.checkEmpty(keyMapElement.getAttribute("field-name")).intern(),
+                UtilXml.checkEmpty(keyMapElement.getAttribute("rel-field-name"),
+                        UtilXml.checkEmpty(keyMapElement.getAttribute("field-name")).intern()).intern());
     }
 
     // ======= Some Convenience Oriented Factory Methods =======
@@ -114,9 +94,9 @@ public final class ModelKeyMap implements Comparable<ModelKeyMap>, Serializable 
     // TODO: Externalize this.
     public Element toXmlElement(Document document) {
         Element root = document.createElement("key-map");
-        root.setAttribute("field-name", this.getFieldName());
-        if (!this.getFieldName().equals(this.getRelFieldName())) {
-            root.setAttribute("rel-field-name", this.getRelFieldName());
+        root.setAttribute("field-name", this.fieldName());
+        if (!this.fieldName().equals(this.relFieldName())) {
+            root.setAttribute("rel-field-name", this.relFieldName());
         }
         return root;
     }

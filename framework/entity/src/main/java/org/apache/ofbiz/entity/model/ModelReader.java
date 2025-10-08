@@ -280,14 +280,14 @@ public final class ModelReader implements Serializable {
                         TEMP_VIEW_LOOP: while (mveIt.hasNext()) {
                             ModelViewEntity curViewEntity = mveIt.next();
                             for (ModelViewEntity.ModelMemberEntity mve : curViewEntity.getAllModelMemberEntities()) {
-                                if (!entityCache.containsKey(mve.getEntityName())) {
+                                if (!entityCache.containsKey(mve.entityName())) {
                                     continue TEMP_VIEW_LOOP;
                                 }
                             }
                             mveIt.remove();
                             curViewEntity.populateFields(this);
                             for (ModelViewEntity.ModelMemberEntity mve : curViewEntity.getAllModelMemberEntities()) {
-                                ModelEntity me = entityCache.get(mve.getEntityName());
+                                ModelEntity me = entityCache.get(mve.entityName());
                                 me.addViewEntity(curViewEntity);
                             }
                             entityCache.put(curViewEntity.getEntityName(), curViewEntity);
@@ -310,7 +310,7 @@ public final class ModelReader implements Serializable {
                             Iterator<ModelViewEntity.ModelMemberEntity> mmeIt = curViewEntity.getAllModelMemberEntities().iterator();
                             while (mmeIt.hasNext()) {
                                 ModelViewEntity.ModelMemberEntity mme = mmeIt.next();
-                                String memberEntityName = mme.getEntityName();
+                                String memberEntityName = mme.entityName();
                                 if (!entityCache.containsKey(memberEntityName)) {
                                     // this member is not a real entity
                                     // check to see if it is a view
@@ -372,8 +372,8 @@ public final class ModelReader implements Serializable {
                                     boolean isAutoRelation = true;
                                     Set<String> curEntityKeyFields = new HashSet<>();
                                     for (ModelKeyMap curkm : modelRelation.getKeyMaps()) {
-                                        keyMaps.add(new ModelKeyMap(curkm.getRelFieldName(), curkm.getFieldName()));
-                                        curEntityKeyFields.add(curkm.getFieldName());
+                                        keyMaps.add(new ModelKeyMap(curkm.relFieldName(), curkm.fieldName()));
+                                        curEntityKeyFields.add(curkm.fieldName());
                                     }
                                     keyMaps.trimToSize();
                                     // decide whether it should be one or many by seeing if the key map represents
@@ -386,7 +386,7 @@ public final class ModelReader implements Serializable {
                                         Iterator<ModelKeyMap> nrkmIter = keyMaps.iterator();
                                         while (nrkmIter.hasNext()) {
                                             ModelKeyMap nrkm = nrkmIter.next();
-                                            String checkField = nrkm.getRelFieldName();
+                                            String checkField = nrkm.relFieldName();
                                             if (!curPkFieldNames.contains(checkField)) {
                                                 nrkmIter.remove();
                                             }

@@ -113,16 +113,16 @@ public class DynamicViewEntity {
 
         for (ModelMemberEntity member: memberModelMemberEntities.values()) {
             Element memberElement = doc.createElement("member-entity");
-            memberElement.setAttribute("entity-alias", member.getEntityAlias());
-            memberElement.setAttribute("entity-name", member.getEntityName());
+            memberElement.setAttribute("entity-alias", member.entityAlias());
+            memberElement.setAttribute("entity-name", member.entityName());
             viewElement.appendChild(memberElement);
         }
         for (ModelAliasAll aliasAll: aliasAlls) {
             Element aliasAllElement = doc.createElement("alias-all");
-            aliasAllElement.setAttribute("entity-alias", aliasAll.getEntityAlias());
-            if (UtilValidate.isNotEmpty(aliasAll.getPrefix())) aliasAllElement.setAttribute("prefix", aliasAll.getPrefix());
-            if (aliasAll.getGroupBy()) aliasAllElement.setAttribute("group-by", "true");
-            if (UtilValidate.isNotEmpty(aliasAll.getFunction())) aliasAllElement.setAttribute("function", aliasAll.getFunction());
+            aliasAllElement.setAttribute("entity-alias", aliasAll.entityAlias());
+            if (UtilValidate.isNotEmpty(aliasAll.prefix())) aliasAllElement.setAttribute("prefix", aliasAll.prefix());
+            if (aliasAll.groupBy()) aliasAllElement.setAttribute("group-by", "true");
+            if (UtilValidate.isNotEmpty(aliasAll.function())) aliasAllElement.setAttribute("function", aliasAll.function());
             for (String excludeField: aliasAll) {
                 Element excludeElement = doc.createElement("exclude");
                 excludeElement.setAttribute("field", excludeField);
@@ -150,8 +150,8 @@ public class DynamicViewEntity {
             viewLinkElement.setAttribute("rel-entity-alias", viewLink.getRelEntityAlias());
             for (ModelKeyMap keyMap: viewLink) {
                 Element keyMapElement = doc.createElement("key-map");
-                keyMapElement.setAttribute("field-name", keyMap.getFieldName());
-                if (!keyMap.getFieldName().equals(keyMap.getRelFieldName())) keyMapElement.setAttribute("rel-field-name", keyMap.getRelFieldName());
+                keyMapElement.setAttribute("field-name", keyMap.fieldName());
+                if (!keyMap.fieldName().equals(keyMap.relFieldName())) keyMapElement.setAttribute("rel-field-name", keyMap.relFieldName());
                 viewLinkElement.appendChild(keyMapElement);
             }
             // TODO: conditions
@@ -174,7 +174,7 @@ public class DynamicViewEntity {
         }
 
         ModelMemberEntity modelMemberEntity = this.memberModelMemberEntities.entrySet().iterator().next().getValue();
-        return modelMemberEntity.getEntityName();
+        return modelMemberEntity.entityName();
     }
 
     /** Getter for property entityName.
