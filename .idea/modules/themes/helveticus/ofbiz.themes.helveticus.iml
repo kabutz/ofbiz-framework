@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module external.linked.project.id=":themes:helveticus" external.linked.project.path="$MODULE_DIR$/../../../../themes/helveticus" external.root.project.path="$MODULE_DIR$/../../../.." external.system.id="GRADLE" external.system.module.group="ofbiz.themes" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
-    <exclude-output />
-    <content url="file://$MODULE_DIR$/../../../../themes/helveticus">
+  <component name="AdditionalModuleElements">
+    <content url="file://$MODULE_DIR$/../../../../themes/helveticus" dumb="true">
       <excludeFolder url="file://$MODULE_DIR$/../../../../themes/helveticus/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../../../themes/helveticus/build" />
     </content>
-    <orderEntry type="inheritedJdk" />
-    <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
