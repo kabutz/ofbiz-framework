@@ -28,11 +28,16 @@ import javax.script.ScriptException;
  * instance of this class in the script's bindings.
  * <p>The scripting language will determine how the helper is used. Most
  * languages will access it as a variable:<br>
- * <code>partyValue = ofbiz.findOne("Party");</code><br>
+ * {@snippet :
+ * partyValue = ofbiz.findOne("Party");
+ * }
  * while other languages might access it as a native method or function:<br>
- * <code>partyValue = findOne("Party");</code>
+ * {@snippet :
+ * partyValue = findOne("Party");
+ * }
+ *
  */
-// REFACTOR: Code Snippets in Java API Documentation
+// REFACTO: Code Snippets in Java API Documentation
 public interface ScriptHelper {
 
     /**
