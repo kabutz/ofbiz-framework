@@ -81,8 +81,7 @@ public class RefactoringTasks {
     }
 
     /**
-     * // Java 10 & 11
-     * Replace all the local variable declarations with "var" (JEP 286 and 323)
+     * 1. Replace local variable declarations with "var" (Java 10 & 11, JEPs 286 & 323)
      * <p>
      * Description: Even though this is quite an old feature, it is not used
      * much in the JDK. An argument that we have heard is that we might want to
@@ -100,8 +99,7 @@ public class RefactoringTasks {
     }
 
     /**
-     * // Java 11
-     * String.repeat() can be used
+     * 2. String.repeat() can be used (Java 11, no JEP)
      * <p>
      * Description: This is an easy one, when we have a String made of the same
      * repeating characters, we should use String.repeat() instead.
@@ -114,8 +112,7 @@ public class RefactoringTasks {
     }
 
     /**
-     * // Java 14
-     * Replace old style switch with switch expressions (Standard) - JEP 361
+     * 3. Replace old style switch with switch expressions (Java 14, JEP 361)
      * <p>
      * Description: We want to first of all change switch statements to switch
      * expressions, where possible. We then want to change the old style switch
@@ -135,8 +132,7 @@ public class RefactoringTasks {
     }
 
     /**
-     * // Java 15
-     * Replace fragmented Strings with Text Blocks - JEP 378
+     * 4. Replace fragmented Strings with Text Blocks (Java 15, JEP 378)
      * <p>
      * Description: Instead of having Strings with \n, we can use text blocks
      * to make them more readable. With text blocks, we also do not have to
@@ -152,8 +148,7 @@ public class RefactoringTasks {
     }
 
     /**
-     * // Java 16
-     * Replace simple data classes with records - JEP 395
+     * 5. Replace simple data classes with records (Java 16, JEP 395)
      * <p>
      * Description: Records simplify simple data classes. All fields are final
      * and there is additional protection against modification with deep
@@ -178,8 +173,7 @@ public class RefactoringTasks {
     }
 
     /**
-     * // Java 16
-     * Pattern Matching for instanceof - JEP 394
+     * 6. Pattern Matching for instanceof (Java 16, JEP 394)
      * <p>
      * Description: This is the first of many patterns and allows us to declare
      * a local variable when we check a type with instanceof. Instead of an
@@ -200,8 +194,7 @@ public class RefactoringTasks {
     }
 
     /**
-     * // Java 17
-     * Tighten up hierarchies with sealed classes - JEP 409
+     * 7. Tighten up hierarchies with sealed classes (Java 17, JEP 409)
      * <p>
      * Description: One of my favourite features is sealed classes in that it
      * allows us to specify exactly what subclasses are allowed. A type can now
@@ -221,8 +214,7 @@ public class RefactoringTasks {
 
 
     /**
-     * // Java 18
-     * Code Snippets in Java API Documentation - JEP 413
+     * 8. Code Snippets in Java API Documentation (Java 18, JEP 413)
      * <p>
      * Description: Instead of a "pre" tag, we can add Java code snippets with:
      * {@snippet :
@@ -236,8 +228,7 @@ public class RefactoringTasks {
     }
 
     /**
-     * // Java 21
-     * Use sequenced collection method instead - JEP 431
+     * 9. Use sequenced collection method instead (Java 21, JEP 431)
      * <p>
      * Description: List, Deque and some of the Sets now are also
      * SequencedCollection, which means that we can access the first and last
@@ -259,8 +250,7 @@ public class RefactoringTasks {
     }
 
     /**
-     * // Java 21
-     * Record Patterns - JEP 440
+     * 10. Record Patterns (Java 21, JEP 440)
      * <p>
      * Description: We can deconstruct the patterns into their own components
      * with record patterns. We did not find that many use cases in our code,
@@ -273,8 +263,7 @@ public class RefactoringTasks {
     }
 
     /**
-     * // Java 21
-     * Pattern Matching for switch - JEP 441
+     * 11. Pattern Matching for switch (Java 21, JEP 441)
      * <p>
      * Description: Instead of individual instanceof checks, we can also use
      * this type of pattern matching inside switch. It pairs nicely with sealed
@@ -290,8 +279,7 @@ public class RefactoringTasks {
     }
 
     /**
-     * // Java 22
-     * Unnamed Variables & Patterns - JEP 456
+     * 12. Unnamed Variables & Patterns (Java 22, JEP 456)
      * <p>
      * Description: In Java 9, _ became a reserved keyword, and we were no
      * longer allowed to use it as a variable name. We can now use it for
@@ -306,8 +294,7 @@ public class RefactoringTasks {
     }
 
     /**
-     * // Java 24
-     * Stream Gatherers - JEP 485
+     * 13. Stream Gatherers (Java 24, JEP 485)
      * <p>
      * Description: This construct brings more flexibility to intermediate
      * operations, for example to handle exceptions in the middle of a stream,
@@ -320,8 +307,7 @@ public class RefactoringTasks {
     }
 
     /**
-     * // Java 25
-     * Flexible Constructor Bodies - JEP 513
+     * 14. Flexible Constructor Bodies (Java 25, JEP 513)
      * <p>
      * Description: In the past, we could not have any code before the call to
      * super() inside a constructor. This meant that we could not assign any
@@ -335,8 +321,7 @@ public class RefactoringTasks {
     }
 
     /**
-     * // Java 25
-     * Compact Source Files and Instance Main Methods - JEP 512
+     * 15. Compact Source Files and Instance Main Methods (Java 25, JEP 512)
      * <p>
      * Description: This feature is mainly for demos, where a class is not in a
      * package and we want to minimize boilerplate code. They also replaced
@@ -355,8 +340,7 @@ public class RefactoringTasks {
     }
 
     /**
-     * // Java 25
-     * Module Import Declarations - JEP 511
+     * 16. Module Import Declarations (Java 25, JEP 511)
      * <p>
      * Description: Instead of importing a bunch of individual classes and
      * packages, we can inport entire modules. We have to be careful of
