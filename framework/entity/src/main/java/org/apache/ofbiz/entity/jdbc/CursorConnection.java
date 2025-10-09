@@ -26,7 +26,7 @@ import java.sql.Statement;
 import org.apache.ofbiz.base.util.Debug;
 
 
-public class CursorConnection extends AbstractCursorHandler {
+public final class CursorConnection extends AbstractCursorHandler {
 
     private static final String MODULE = CursorConnection.class.getName();
     public static Connection newCursorConnection(Connection con, String cursorName, int pageSize) throws Exception {

@@ -38,7 +38,7 @@ import org.owasp.html.PolicyFactory;
  * functionality. All text-formatting tags that operate directly on the font,
  * color or emphasis have been allowed.
  */
-public class CustomSafePolicy implements SanitizerCustomPolicy {
+public final class CustomSafePolicy implements SanitizerCustomPolicy {
 
     /**
      * A policy that can be used to produce policies that sanitize to HTML sinks via

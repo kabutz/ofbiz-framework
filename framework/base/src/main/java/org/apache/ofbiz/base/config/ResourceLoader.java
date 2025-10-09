@@ -31,8 +31,8 @@ import org.w3c.dom.Element;
 /**
  * Loads resources using dynamically specified resource loader classes.
  */
-// REFACTOR: Tighten up hierarchy with sealed classes
-public abstract class ResourceLoader {
+// REFACTO: Tighten up hierarchy with sealed classes
+public abstract sealed class ResourceLoader permits FileLoader, UrlLoader {
 
     private static final String MODULE = ResourceLoader.class.getName();
     private static final UtilCache<String, ResourceLoader> LOADER_CACHE = UtilCache.createUtilCache("resource.ResourceLoaders", 0, 0);

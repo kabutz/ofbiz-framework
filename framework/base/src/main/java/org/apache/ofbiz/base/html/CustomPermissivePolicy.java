@@ -38,7 +38,7 @@ import com.google.common.base.Predicate;
  * considerably larger. The following tags appear to be accepted by eBay (they
  * don't publish rules): {@code <a>},...
  */
-public class CustomPermissivePolicy implements SanitizerCustomPolicy {
+public final class CustomPermissivePolicy implements SanitizerCustomPolicy {
 
     // Some common regular expression definitions.
 

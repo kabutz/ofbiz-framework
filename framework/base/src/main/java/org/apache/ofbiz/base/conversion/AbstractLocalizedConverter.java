@@ -25,7 +25,8 @@ import java.util.TimeZone;
  * and it implements the <code>canConvert</code>, <code>getSourceClass</code>,
  * and <code>getTargetClass</code> methods.
  */
-public abstract class AbstractLocalizedConverter<S, T> extends AbstractConverter<S, T> implements LocalizedConverter<S, T> {
+public abstract sealed class AbstractLocalizedConverter<S, T> extends AbstractConverter<S, T> implements LocalizedConverter<S, T>
+        permits DateTimeConverters.GenericLocalizedConverter, DateTimeConverters.LongToCalendar, DateTimeConverters.StringToCalendar, DateTimeConverters.StringToDuration, NumberConverters.AbstractNumberConverter {
     AbstractLocalizedConverter(Class<? super S> sourceClass, Class<? super T> targetClass) {
         super(sourceClass, targetClass);
     }

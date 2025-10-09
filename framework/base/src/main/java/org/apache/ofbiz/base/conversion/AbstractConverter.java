@@ -22,7 +22,7 @@ package org.apache.ofbiz.base.conversion;
  * and it implements the <code>canConvert</code>, <code>getSourceClass</code>,
  * and <code>getTargetClass</code> methods.
  */
-public abstract class AbstractConverter<S, T> implements Converter<S, T>, ConverterLoader {
+public abstract non-sealed class AbstractConverter<S, T> implements Converter<S, T>, ConverterLoader {
     private final Class<? super S> sourceClass;
     private final Class<? super T> targetClass;
 

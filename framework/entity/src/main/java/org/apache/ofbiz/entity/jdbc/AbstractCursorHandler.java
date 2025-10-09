@@ -23,8 +23,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-// REFACTOR: Tighten up hierarchy with sealed classes
-public abstract class AbstractCursorHandler implements InvocationHandler {
+// REFACTO: Tighten up hierarchy with sealed classes
+public abstract sealed class AbstractCursorHandler implements InvocationHandler
+        permits CursorConnection, CursorResultSet, CursorStatement {
 
     private String cursorName;
     private int fetchSize;

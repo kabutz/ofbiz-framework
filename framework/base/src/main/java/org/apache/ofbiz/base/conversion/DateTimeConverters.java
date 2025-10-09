@@ -91,7 +91,7 @@ public class DateTimeConverters implements ConverterLoader {
         }
     }
 
-    public static class DateToCalendar extends GenericLocalizedConverter<Date, Calendar> {
+    public static final class DateToCalendar extends GenericLocalizedConverter<Date, Calendar> {
         public DateToCalendar() {
             super(Date.class, Calendar.class);
         }
@@ -149,7 +149,7 @@ public class DateTimeConverters implements ConverterLoader {
         }
     }
 
-    public static class DateToString extends GenericLocalizedConverter<java.util.Date, String> {
+    public static final class DateToString extends GenericLocalizedConverter<java.util.Date, String> {
         public DateToString() {
             super(java.util.Date.class, String.class);
         }
@@ -254,7 +254,7 @@ public class DateTimeConverters implements ConverterLoader {
         }
     }
 
-    public abstract static class GenericLocalizedConverter<S, T> extends AbstractLocalizedConverter<S, T> {
+    public abstract static sealed class GenericLocalizedConverter<S, T> extends AbstractLocalizedConverter<S, T> {
         protected GenericLocalizedConverter(Class<S> sourceClass, Class<T> targetClass) {
             super(sourceClass, targetClass);
         }
@@ -270,7 +270,7 @@ public class DateTimeConverters implements ConverterLoader {
         }
     }
 
-    public static class LongToCalendar extends AbstractLocalizedConverter<Long, Calendar> {
+    public static final class LongToCalendar extends AbstractLocalizedConverter<Long, Calendar> {
         public LongToCalendar() {
             super(Long.class, Calendar.class);
         }
@@ -398,7 +398,7 @@ public class DateTimeConverters implements ConverterLoader {
         }
     }
 
-    public static class SqlDateToString extends GenericLocalizedConverter<java.sql.Date, String> {
+    public static final class SqlDateToString extends GenericLocalizedConverter<java.sql.Date, String> {
         public SqlDateToString() {
             super(java.sql.Date.class, String.class);
         }
@@ -480,7 +480,7 @@ public class DateTimeConverters implements ConverterLoader {
         }
     }
 
-    public static class SqlTimeToString extends GenericLocalizedConverter<java.sql.Time, String> {
+    public static final class SqlTimeToString extends GenericLocalizedConverter<java.sql.Time, String> {
         public SqlTimeToString() {
             super(java.sql.Time.class, String.class);
         }
@@ -497,7 +497,7 @@ public class DateTimeConverters implements ConverterLoader {
         }
     }
 
-    public static class StringToCalendar extends AbstractLocalizedConverter<String, Calendar> {
+    public static final class StringToCalendar extends AbstractLocalizedConverter<String, Calendar> {
         public StringToCalendar() {
             super(String.class, Calendar.class);
         }
@@ -533,7 +533,7 @@ public class DateTimeConverters implements ConverterLoader {
         }
     }
 
-    public static class StringToDate extends GenericLocalizedConverter<String, java.util.Date> {
+    public static final class StringToDate extends GenericLocalizedConverter<String, java.util.Date> {
         public StringToDate() {
             super(String.class, java.util.Date.class);
         }
@@ -558,7 +558,7 @@ public class DateTimeConverters implements ConverterLoader {
         }
     }
 
-    public static class StringToDuration extends AbstractLocalizedConverter<String, TimeDuration> {
+    public static final class StringToDuration extends AbstractLocalizedConverter<String, TimeDuration> {
         public StringToDuration() {
             super(String.class, TimeDuration.class);
         }
@@ -590,7 +590,7 @@ public class DateTimeConverters implements ConverterLoader {
         }
     }
 
-    public static class StringToSqlDate extends GenericLocalizedConverter<String, java.sql.Date> {
+    public static final class StringToSqlDate extends GenericLocalizedConverter<String, java.sql.Date> {
         public StringToSqlDate() {
             super(String.class, java.sql.Date.class);
         }
@@ -624,7 +624,7 @@ public class DateTimeConverters implements ConverterLoader {
         }
     }
 
-    public static class StringToSqlTime extends GenericLocalizedConverter<String, java.sql.Time> {
+    public static final class StringToSqlTime extends GenericLocalizedConverter<String, java.sql.Time> {
         public StringToSqlTime() {
             super(String.class, java.sql.Time.class);
         }
@@ -654,7 +654,7 @@ public class DateTimeConverters implements ConverterLoader {
         }
     }
 
-    public static class StringToTimestamp extends GenericLocalizedConverter<String, java.sql.Timestamp> {
+    public static final class StringToTimestamp extends GenericLocalizedConverter<String, java.sql.Timestamp> {
         public StringToTimestamp() {
             super(String.class, java.sql.Timestamp.class);
         }
@@ -789,7 +789,7 @@ public class DateTimeConverters implements ConverterLoader {
         }
     }
 
-    public static class TimestampToString extends GenericLocalizedConverter<java.sql.Timestamp, String> {
+    public static final class TimestampToString extends GenericLocalizedConverter<java.sql.Timestamp, String> {
         public TimestampToString() {
             super(java.sql.Timestamp.class, String.class);
         }

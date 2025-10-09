@@ -26,14 +26,14 @@ import java.sql.Statement;
 import org.apache.ofbiz.base.util.Debug;
 
 
-public class CursorResultSet extends AbstractCursorHandler {
+public final class CursorResultSet extends AbstractCursorHandler {
 
     private static final String MODULE = CursorResultSet.class.getName();
     private ResultSet rs;
     private Statement stmt;
     private String query;
 
-    protected CursorResultSet(Statement stmt, String cursorName, int fetchSize) throws SQLException {
+    private CursorResultSet(Statement stmt, String cursorName, int fetchSize) throws SQLException {
         super(cursorName, fetchSize);
         this.stmt = stmt;
         query = "FETCH FORWARD " + fetchSize + " IN " + cursorName;
@@ -57,7 +57,7 @@ public class CursorResultSet extends AbstractCursorHandler {
      * @return the boolean
      * @throws SQLException the sql exception
      */
-    protected boolean next() throws SQLException {
+    private boolean next() throws SQLException {
         if (rs.next()) return true;
         Debug.logInfo("executing page fetch(2)", MODULE);
         rs = stmt.executeQuery(query);
@@ -68,7 +68,7 @@ public class CursorResultSet extends AbstractCursorHandler {
      * Close.
      * @throws SQLException the sql exception
      */
-    protected void close() throws SQLException {
+    private void close() throws SQLException {
         stmt.executeUpdate("CLOSE " + getCursorName());
         rs.close();
     }

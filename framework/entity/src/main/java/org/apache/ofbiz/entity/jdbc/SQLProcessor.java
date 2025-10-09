@@ -830,7 +830,7 @@ public class SQLProcessor implements AutoCloseable {
      */
     protected void setFetchSize(Statement stmt, int fetchSize) throws SQLException {
         // do not set fetch size when using the cursor connection
-        if (connection instanceof CursorConnection) return;
+        // if (connection instanceof CursorConnection) return;
 
         // check if the statement was called with a specific fetch size, if not grab the default from the datasource
         if (fetchSize < 0) {
