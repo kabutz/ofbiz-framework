@@ -202,11 +202,11 @@ public final class RequestHandler {
             Debug.logWarning("Got nothing when splitting URI: " + path, MODULE);
             return null;
         }
-        // REFACTOR: Use sequenced collection methods instead
-        if (pathInfo.get(0).indexOf('?') > -1) {
-            return pathInfo.get(0).substring(0, pathInfo.get(0).indexOf('?'));
+        // REFACTO: Use sequenced collection methods instead
+        if (pathInfo.getFirst().indexOf('?') > -1) {
+            return pathInfo.getFirst().substring(0, pathInfo.getFirst().indexOf('?'));
         } else {
-            return pathInfo.get(0);
+            return pathInfo.getFirst();
         }
     }
 
