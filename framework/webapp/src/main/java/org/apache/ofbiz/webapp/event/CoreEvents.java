@@ -395,16 +395,14 @@ public class CoreEvents {
 
             if (servicePathObject instanceof Map<?, ?>) {
                 servicePathMap = UtilGenerics.cast(servicePathObject);
-            } else if (servicePathObject instanceof GenericEntity) {
-                // REFACTOR: Pattern Matching for instanceof
-                GenericEntity servicePathEntity = (GenericEntity) servicePathObject;
+            } else if (servicePathObject instanceof GenericEntity servicePathEntity) {
+                // REFACTO: Pattern Matching for instanceof
                 servicePathMap = new HashMap<>();
                 for (Map.Entry<String, Object> entry: servicePathEntity.entrySet()) {
                     servicePathMap.put(entry.getKey(), entry.getValue());
                 }
-            } else if (servicePathObject instanceof Collection<?>) {
-                // REFACTOR: Pattern Matching for instanceof
-                Collection<?> servicePathColl = UtilGenerics.cast(servicePathObject);
+            } else if (servicePathObject instanceof Collection<?> servicePathColl) {
+                // REFACTO: Pattern Matching for instanceof
                 int count = 0;
                 servicePathMap = new HashMap<>();
                 for (Object value: servicePathColl) {

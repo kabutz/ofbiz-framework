@@ -41,9 +41,8 @@ public class DebugManagedDataSource<C extends Connection> extends ManagedDataSou
     @Override
     public Connection getConnection() throws SQLException {
         if (Debug.verboseOn()) {
-            if (super.getPool() instanceof GenericObjectPool) {
-                // REFACTOR: Pattern Matching for instanceof
-                GenericObjectPool<?> objectPool = (GenericObjectPool<?>) super.getPool();
+            if (super.getPool() instanceof GenericObjectPool<?> objectPool) {
+                // REFACTO: Pattern Matching for instanceof
                 Debug.logVerbose("Borrowing a connection from the pool; used/idle/total: " + objectPool.getNumActive()
                         + "/" + objectPool.getNumIdle() + "/" + (objectPool.getNumActive() + objectPool.getNumIdle())
                         + "; min idle/max idle/max total: " + objectPool.getMinIdle() + "/" + objectPool.getMaxIdle() + "/"

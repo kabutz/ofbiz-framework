@@ -67,11 +67,10 @@ public class DBCPConnectionFactory implements ConnectionFactory {
         if (mds != null) {
             return TransactionUtil.getCursorConnection(helperInfo, mds.getConnection());
         }
-        if (!(abstractJdbc instanceof InlineJdbc)) {
+        if (!(abstractJdbc instanceof InlineJdbc jdbcElement)) {
             throw new GenericEntityConfException("DBCP requires an <inline-jdbc> child element in the <datasource> element");
         }
-        // REFACTOR: Pattern Matching for instanceof
-        InlineJdbc jdbcElement = (InlineJdbc) abstractJdbc;
+        // REFACTO: Pattern Matching for instanceof
         // connection properties
         TransactionManager txMgr = TransactionFactoryLoader.getInstance().getTransactionManager();
         String driverName = jdbcElement.getJdbcDriver();
