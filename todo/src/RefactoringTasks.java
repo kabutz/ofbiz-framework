@@ -190,7 +190,6 @@ public class RefactoringTasks {
      * {@link DebugManagedDataSource#getConnection()}
      */
     public static void task6_patternMatchingForInstanceof() {
-
     }
 
     /**
@@ -275,7 +274,6 @@ public class RefactoringTasks {
      * {@link XmlSerializer#serializeSingle(Object, Document)}
      */
     public static void task11_patternMatchingForSwitch() {
-
     }
 
     /**
@@ -285,7 +283,7 @@ public class RefactoringTasks {
      * longer allowed to use it as a variable name. We can now use it for
      * unnused lambda parameters and for record deconstruction components.
      * <p>
-     * {@link FindServices#createConditionList(Map, List, Map, Delegator, Map, String)} #size()}
+     * {@link FindServices#createConditionList(Map, List, Map, Delegator, Map, String)}
      * {@link MapContext#size()}
      * {@link ServiceDispatcher#registerCallback(String, GenericServiceCallback)}
      *
