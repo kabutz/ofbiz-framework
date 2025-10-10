@@ -133,130 +133,93 @@ public class XmlSerializer {
             return null;
         }
 
-        if (object == null) {
-            return makeElement("null", null, document);
-        }
+        // REFACTO: Pattern Matching for switch
+        return switch (object) {
+            case null -> makeElement("null", null, document);
+            case String value -> makeElement("std-String", value, document);
+            case Integer value -> makeElement("std-Integer", value, document);
+            case Long value -> makeElement("std-Long", value, document);
+            case Float value -> makeElement("std-Float", value, document);
+            case Double value -> makeElement("std-Double", value, document);
+            case Boolean value -> makeElement("std-Boolean", value, document);
+            case Locale value -> makeElement("std-Locale", value, document);
+            case BigDecimal value -> makeElement("std-BigDecimal",
+                    value.setScale(10, RoundingMode.HALF_UP)
+                            .toString(), document);
+            case java.sql.Timestamp value -> makeElement("sql-Timestamp",
+                    value.toString().replace(' ', 'T'), document);
+            case java.sql.Date value ->
+                    makeElement("sql-Date", value, document);
+            case java.sql.Time value ->
+                    makeElement("sql-Time", value, document);
+            case java.util.Date value -> {
+                DateFormat formatter = getDateFormat();
+                String stringValue;
 
-        // REFACTOR: Pattern Matching for switch
-        // - Standard Objects -
-        if (object instanceof String) {
-            return makeElement("std-String", object, document);
-        } else if (object instanceof Integer) {
-            return makeElement("std-Integer", object, document);
-        } else if (object instanceof Long) {
-            return makeElement("std-Long", object, document);
-        } else if (object instanceof Float) {
-            return makeElement("std-Float", object, document);
-        } else if (object instanceof Double) {
-            return makeElement("std-Double", object, document);
-        } else if (object instanceof Boolean) {
-            return makeElement("std-Boolean", object, document);
-        } else if (object instanceof Locale) {
-            return makeElement("std-Locale", object, document);
-        } else if (object instanceof BigDecimal) {
-            String stringValue = ((BigDecimal) object).setScale(10, RoundingMode.HALF_UP).toString();
-            return makeElement("std-BigDecimal", stringValue, document);
-            // - SQL Objects -
-        } else if (object instanceof java.sql.Timestamp) {
-            String stringValue = object.toString().replace(' ', 'T');
-            return makeElement("sql-Timestamp", stringValue, document);
-        } else if (object instanceof java.sql.Date) {
-            return makeElement("sql-Date", object, document);
-        } else if (object instanceof java.sql.Time) {
-            return makeElement("sql-Time", object, document);
-        } else if (object instanceof java.util.Date) {
-            // NOTE: make sure this is AFTER the java.sql date/time objects since they inherit from java.util.Date
-            DateFormat formatter = getDateFormat();
-            String stringValue = null;
-
-            synchronized (formatter) {
-                stringValue = formatter.format((java.util.Date) object);
+                synchronized (formatter) {
+                    stringValue = formatter.format(value);
+                }
+                yield makeElement("std-Date", stringValue, document);
             }
-            return makeElement("std-Date", stringValue, document);
-            // return makeElement("std-Date", object, document);
-        } else if (object instanceof Collection<?>) {
-            // - Collections -
-            String elementName = null;
+            case Collection col -> {
+                String elementName = switch (col) {
+                    case ArrayList<?> exactCol-> "col-ArrayList";
+                    case LinkedList<?> exactCol-> "col-LinkedList";
+                    case Stack<?> exactCol -> "col-Stack";
+                    case Vector<?> exactCol -> "col-Vector";
+                    case TreeSet<?> exactCol -> "col-TreeSet";
+                    case HashSet<?> exactCol -> "col-HashSet";
+                    // no specific type found, do general Collection, will deserialize as LinkedList
+                    default -> "col-Collection";
+                };
 
-            // these ARE order sensitive; for instance Stack extends Vector, so if Vector were first we would lose the stack part
-            if (object instanceof ArrayList<?>) {
-                elementName = "col-ArrayList";
-            } else if (object instanceof LinkedList<?>) {
-                elementName = "col-LinkedList";
-            } else if (object instanceof Stack<?>) {
-                elementName = "col-Stack";
-            } else if (object instanceof Vector<?>) {
-                elementName = "col-Vector";
-            } else if (object instanceof TreeSet<?>) {
-                elementName = "col-TreeSet";
-            } else if (object instanceof HashSet<?>) {
-                elementName = "col-HashSet";
-            } else {
-                // no specific type found, do general Collection, will deserialize as LinkedList
-                elementName = "col-Collection";
+                Collection<?> value = UtilGenerics.cast(object);
+                Element element = document.createElement(elementName);
+                Iterator<?> iter = value.iterator();
+
+                while (iter.hasNext()) {
+                    element.appendChild(serializeSingle(iter.next(), document));
+                }
+                yield element;
             }
-
-            Collection<?> value = UtilGenerics.cast(object);
-            Element element = document.createElement(elementName);
-            Iterator<?> iter = value.iterator();
-
-            while (iter.hasNext()) {
-                element.appendChild(serializeSingle(iter.next(), document));
-            }
-            return element;
-        } else if (object instanceof GenericPK) {
             // Do GenericEntity objects as a special case, use std XML import/export routines
-            GenericPK value = (GenericPK) object;
+            case GenericPK value -> value.makeXmlElement(document, "eepk-");
+            case GenericValue value -> value.makeXmlElement(document, "eeval-");
+            case Map<?, ?> value -> {
+                // - Maps -
+                String elementName = switch (value) {
+                    case HashMap<?, ?> exactMap -> "map-HashMap";
+                    case Properties exactMap -> "map-Properties";
+                    case Hashtable<?, ?> exactMap -> "map-Hashtable";
+                    case WeakHashMap<?, ?> exactMap -> "map-WeakHashMap";
+                    case TreeMap<?, ?> exactMap -> "map-TreeMap";
+                    // serialize as a simple Map implementation if nothing else applies, these will deserialize as a HashMap
+                    default -> "map-Map";
+                };
 
-            return value.makeXmlElement(document, "eepk-");
-        } else if (object instanceof GenericValue) {
-            GenericValue value = (GenericValue) object;
+                Element element = document.createElement(elementName);
+                Iterator<Map.Entry<?, ?>> iter = UtilGenerics.cast(value.entrySet().iterator());
 
-            return value.makeXmlElement(document, "eeval-");
-        } else if (object instanceof Map<?, ?>) {
-            // - Maps -
-            String elementName = null;
+                while (iter.hasNext()) {
+                    Map.Entry<?, ?> entry = iter.next();
 
-            // these ARE order sensitive; for instance Properties extends Hashtable, so if Hashtable were first we would lose the Properties part
-            if (object instanceof HashMap<?, ?>) {
-                elementName = "map-HashMap";
-            } else if (object instanceof Properties) {
-                elementName = "map-Properties";
-            } else if (object instanceof Hashtable<?, ?>) {
-                elementName = "map-Hashtable";
-            } else if (object instanceof WeakHashMap<?, ?>) {
-                elementName = "map-WeakHashMap";
-            } else if (object instanceof TreeMap<?, ?>) {
-                elementName = "map-TreeMap";
-            } else {
-                // serialize as a simple Map implementation if nothing else applies, these will deserialize as a HashMap
-                elementName = "map-Map";
+                    Element entryElement = document.createElement("map-Entry");
+
+                    element.appendChild(entryElement);
+
+                    Element key = document.createElement("map-Key");
+
+                    entryElement.appendChild(key);
+                    key.appendChild(serializeSingle(entry.getKey(), document));
+                    Element mapValue = document.createElement("map-Value");
+
+                    entryElement.appendChild(mapValue);
+                    mapValue.appendChild(serializeSingle(entry.getValue(), document));
+                }
+                yield element;
             }
-
-            Element element = document.createElement(elementName);
-            Map<?, ?> value = UtilGenerics.cast(object);
-            Iterator<Map.Entry<?, ?>> iter = UtilGenerics.cast(value.entrySet().iterator());
-
-            while (iter.hasNext()) {
-                Map.Entry<?, ?> entry = iter.next();
-
-                Element entryElement = document.createElement("map-Entry");
-
-                element.appendChild(entryElement);
-
-                Element key = document.createElement("map-Key");
-
-                entryElement.appendChild(key);
-                key.appendChild(serializeSingle(entry.getKey(), document));
-                Element mapValue = document.createElement("map-Value");
-
-                entryElement.appendChild(mapValue);
-                mapValue.appendChild(serializeSingle(entry.getValue(), document));
-            }
-            return element;
-        }
-
-        return serializeCustom(object, document);
+            default -> serializeCustom(object, document);
+        };
     }
 
     public static Element serializeCustom(Object object, Document document) throws SerializeException {

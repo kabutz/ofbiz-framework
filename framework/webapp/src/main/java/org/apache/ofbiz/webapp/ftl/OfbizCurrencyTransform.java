@@ -101,28 +101,15 @@ public class OfbizCurrencyTransform implements TemplateTransformModel {
                 Debug.logVerbose("Amount Object : " + o.getClass().getName(), MODULE);
             }
 
-            // REFACTOR: Pattern Matching for switch
+            // REFACTO: Pattern Matching for switch
             // handle nulls better
-            if (o == null) {
-                return null;
-            }
-
-            if (o instanceof NumberModel) {
-                // REFACTOR: Pattern Matching for instanceof
-                NumberModel s = (NumberModel) o;
-                return s.getAsNumber().intValue();
-            }
-            if (o instanceof SimpleNumber) {
-                // REFACTOR: Pattern Matching for instanceof
-                SimpleNumber s = (SimpleNumber) o;
-                return s.getAsNumber().intValue();
-            }
-            if (o instanceof SimpleScalar) {
-                // REFACTOR: Pattern Matching for instanceof
-                SimpleScalar s = (SimpleScalar) o;
-                return Integer.valueOf(s.getAsString());
-            }
-            return Integer.valueOf(o.toString());
+            return switch (o) {
+                case null -> null;
+                case NumberModel s -> s.getAsNumber().intValue();
+                case SimpleNumber s -> s.getAsNumber().intValue();
+                case SimpleScalar s -> Integer.valueOf(s.getAsString());
+                default -> Integer.valueOf(o.toString());
+            };
         }
         return null;
     }
