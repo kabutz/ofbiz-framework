@@ -163,12 +163,12 @@ public class XmlSerializer {
             }
             case Collection col -> {
                 String elementName = switch (col) {
-                    case ArrayList<?> exactCol-> "col-ArrayList";
-                    case LinkedList<?> exactCol-> "col-LinkedList";
-                    case Stack<?> exactCol -> "col-Stack";
-                    case Vector<?> exactCol -> "col-Vector";
-                    case TreeSet<?> exactCol -> "col-TreeSet";
-                    case HashSet<?> exactCol -> "col-HashSet";
+                    case ArrayList<?> _ -> "col-ArrayList";
+                    case LinkedList<?> _ -> "col-LinkedList";
+                    case Stack<?> _ -> "col-Stack";
+                    case Vector<?> _ -> "col-Vector";
+                    case TreeSet<?> _ -> "col-TreeSet";
+                    case HashSet<?> _ -> "col-HashSet";
                     // no specific type found, do general Collection, will deserialize as LinkedList
                     default -> "col-Collection";
                 };
@@ -186,13 +186,12 @@ public class XmlSerializer {
             case GenericPK value -> value.makeXmlElement(document, "eepk-");
             case GenericValue value -> value.makeXmlElement(document, "eeval-");
             case Map<?, ?> value -> {
-                // - Maps -
                 String elementName = switch (value) {
-                    case HashMap<?, ?> exactMap -> "map-HashMap";
-                    case Properties exactMap -> "map-Properties";
-                    case Hashtable<?, ?> exactMap -> "map-Hashtable";
-                    case WeakHashMap<?, ?> exactMap -> "map-WeakHashMap";
-                    case TreeMap<?, ?> exactMap -> "map-TreeMap";
+                    case HashMap<?, ?> _ -> "map-HashMap";
+                    case Properties _ -> "map-Properties";
+                    case Hashtable<?, ?> _ -> "map-Hashtable";
+                    case WeakHashMap<?, ?> _ -> "map-WeakHashMap";
+                    case TreeMap<?, ?> _ -> "map-TreeMap";
                     // serialize as a simple Map implementation if nothing else applies, these will deserialize as a HashMap
                     default -> "map-Map";
                 };

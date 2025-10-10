@@ -90,11 +90,11 @@ public class MapContext<K, V> implements Map<K, V>, LocalizedMap<V> {
      */
     @Override
     public int size() {
-        // REFACTOR: Unnamed Variables & Patterns - JEP 456
+        // REFACTO: Unnamed Variables & Patterns - JEP 456
         return contexts.stream()
                 .flatMap(ctx -> ctx.keySet().stream())
                 .distinct()
-                .mapToInt(k -> 1)
+                .mapToInt(_ -> 1)
                 .sum();
     }
 

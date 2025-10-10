@@ -81,8 +81,7 @@ public record ModelKeyMap(String fieldName, String relFieldName, String fullName
     @Override
     public boolean equals(Object other) {
         // REFACTO: Record Patterns
-        return this == other || other instanceof ModelKeyMap(
-                var fieldName, var relFieldName, var fullName)
+        return this == other || other instanceof ModelKeyMap(_, _, var fullName)
                 && this.fullName.equals(fullName);
     }
 
