@@ -121,7 +121,7 @@ public final class UtilProperties implements Serializable {
 
         try {
             return Double.parseDouble(str);
-        } catch (NumberFormatException nfe) {
+        } catch (NumberFormatException _) {
             return defaultValue;
         }
     }
@@ -149,7 +149,7 @@ public final class UtilProperties implements Serializable {
         }
         try {
             return (Number) (ObjectType.simpleTypeOrObjectConvert(str, type, null, null));
-        } catch (GeneralException e) {
+        } catch (GeneralException _) {
             Debug.logWarning("Error converting String \"" + str + "\" to " + type + "; using defaultNumber " + defaultNumber + ".", MODULE);
         }
         return defaultNumber;
@@ -235,7 +235,7 @@ public final class UtilProperties implements Serializable {
         BigInteger result = defaultNumber;
         try {
             result = new BigInteger(strValue);
-        } catch (NumberFormatException nfe) {
+        } catch (NumberFormatException _) {
             Debug.logWarning("Couldnt convert String \"" + strValue + "\" to BigInteger; using defaultNumber "
                     + defaultNumber.toString() + ".", MODULE);
         }
@@ -255,7 +255,7 @@ public final class UtilProperties implements Serializable {
         BigDecimal result = defaultNumber;
         try {
             result = new BigDecimal(strValue);
-        } catch (NumberFormatException nfe) {
+        } catch (NumberFormatException _) {
             Debug.logWarning("Couldnt convert String \"" + strValue + "\" to BigDecimal; using defaultNumber "
                     + defaultNumber.toString() + ".", MODULE);
         }
@@ -412,7 +412,7 @@ public final class UtilProperties implements Serializable {
 
         try {
             return Double.parseDouble(str);
-        } catch (NumberFormatException nfe) {
+        } catch (NumberFormatException _) {
             return defaultValue;
         }
     }
@@ -652,7 +652,7 @@ public final class UtilProperties implements Serializable {
         ResourceBundle bundle = null;
         try {
             bundle = UtilResourceBundle.getBundle(resource, locale, (ClassLoader) null);
-        } catch (MissingResourceException e) {
+        } catch (MissingResourceException _) {
             String resourceCacheKey = createResourceName(resource, locale, false);
             if (!resourceNotFoundMessagesShown.contains(resourceCacheKey)) {
                 resourceNotFoundMessagesShown.add(resourceCacheKey);
@@ -1047,7 +1047,7 @@ public final class UtilProperties implements Serializable {
                 int numProperties = 0;
                 while (!candidateLocales.isEmpty()) {
                     // REFACTOR: Use sequenced collection method instead
-                    Locale candidateLocale = candidateLocales.remove(candidateLocales.size() - 1);
+                    Locale candidateLocale = candidateLocales.removeLast();
                     // ResourceBundles are connected together as a singly-linked list
                     String lookupName = createResourceName(resource, candidateLocale, true);
                     UtilResourceBundle lookupBundle = BUNDLE_CACHE.get(lookupName);

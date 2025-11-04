@@ -215,7 +215,7 @@ public final class ServiceDispatcher {
      */
     public synchronized void registerCallback(String serviceName, GenericServiceCallback cb) {
         // REFACTOR: Unnamed Variables & Patterns - JEP 456
-        callbacks.computeIfAbsent(serviceName, x -> new LinkedList<>()).add(cb);
+        callbacks.computeIfAbsent(serviceName, _ -> new LinkedList<>()).add(cb);
     }
 
     /**
@@ -559,12 +559,12 @@ public final class ServiceDispatcher {
                     Debug.logError(te, "Cannot rollback transaction", MODULE);
                 }
                 rs.setEndStamp();
-                if (t instanceof ServiceAuthException) {
-                    throw (ServiceAuthException) t;
-                } else if (t instanceof ServiceValidationException) {
-                    throw (ServiceValidationException) t;
-                } else if (t instanceof GenericServiceException) {
-                    throw (GenericServiceException) t;
+                if (t instanceof ServiceAuthException exception2) {
+                    throw exception2;
+                } else if (t instanceof ServiceValidationException exception1) {
+                    throw exception1;
+                } else if (t instanceof GenericServiceException exception) {
+                    throw exception;
                 } else {
                     throw new GenericServiceException("Service [" + modelService.getName() + "] Failed" + modelService.debugInfo(), t);
                 }
@@ -789,12 +789,12 @@ public final class ServiceDispatcher {
                 } catch (GenericTransactionException te) {
                     Debug.logError(te, "Cannot rollback transaction", MODULE);
                 }
-                if (t instanceof ServiceAuthException) {
-                    throw (ServiceAuthException) t;
-                } else if (t instanceof ServiceValidationException) {
-                    throw (ServiceValidationException) t;
-                } else if (t instanceof GenericServiceException) {
-                    throw (GenericServiceException) t;
+                if (t instanceof ServiceAuthException exception2) {
+                    throw exception2;
+                } else if (t instanceof ServiceValidationException exception1) {
+                    throw exception1;
+                } else if (t instanceof GenericServiceException exception) {
+                    throw exception;
                 } else {
                     throw new GenericServiceException("Service [" + service.getName() + "] Failed" + service.debugInfo(), t);
                 }
@@ -1026,11 +1026,11 @@ public final class ServiceDispatcher {
         Locale newLocale = null;
 
         if (locale != null) {
-            if (locale instanceof Locale) {
-                return (Locale) locale;
-            } else if (locale instanceof String) {
+            if (locale instanceof Locale locale1) {
+                return locale1;
+            } else if (locale instanceof String string) {
                 // en_US = lang_COUNTRY
-                newLocale = UtilMisc.parseLocale((String) locale);
+                newLocale = UtilMisc.parseLocale(string);
             }
         }
 

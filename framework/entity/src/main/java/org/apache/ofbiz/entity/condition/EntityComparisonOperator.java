@@ -68,14 +68,10 @@ public abstract class EntityComparisonOperator<L, R> extends EntityOperator<L, R
 
     @Override
     public void validateSql(ModelEntity entity, L lhs, R rhs) throws GenericModelException {
-        if (lhs instanceof EntityConditionValue) {
-            // REFACTOR: Pattern Matching for instanceof
-            EntityConditionValue ecv = (EntityConditionValue) lhs;
+        if (lhs instanceof EntityConditionValue ecv) {
             ecv.validateSql(entity);
         }
-        if (rhs instanceof EntityConditionValue) {
-            // REFACTOR: Pattern Matching for instanceof
-            EntityConditionValue ecv = (EntityConditionValue) rhs;
+        if (rhs instanceof EntityConditionValue ecv) {
             ecv.validateSql(entity);
         }
     }
@@ -92,13 +88,11 @@ public abstract class EntityComparisonOperator<L, R> extends EntityOperator<L, R
         }
 
         ModelField field;
-        if (lhs instanceof EntityConditionValue) {
-            // REFACTOR: Pattern Matching for instanceof
-            EntityConditionValue ecv = (EntityConditionValue) lhs;
+        if (lhs instanceof EntityConditionValue ecv) {
             ecv.addSqlValue(sql, entity, entityConditionParams, false, datasourceInfo);
             field = ecv.getModelField(entity);
-        } else if (compat && lhs instanceof String) {
-            field = EntityConditionUtils.getField(entity, (String) lhs);
+        } else if (compat && lhs instanceof String string) {
+            field = EntityConditionUtils.getField(entity, string);
             if (field == null) {
                 sql.append(lhs);
             } else {
@@ -143,9 +137,7 @@ public abstract class EntityComparisonOperator<L, R> extends EntityOperator<L, R
      */
     protected void makeRHSWhereStringValue(ModelEntity entity, List<EntityConditionParam> entityConditionParams, StringBuilder sql,
                                            ModelField field, R rhs, Datasource datasourceInfo) {
-        if (rhs instanceof EntityConditionValue) {
-            // REFACTOR: Pattern Matching for instanceof
-            EntityConditionValue ecv = (EntityConditionValue) rhs;
+        if (rhs instanceof EntityConditionValue ecv) {
             if (ecv.getModelField(entity) == null) {
                 ecv.setModelField(field);
             }
@@ -172,9 +164,7 @@ public abstract class EntityComparisonOperator<L, R> extends EntityOperator<L, R
     @Override
      public boolean mapMatches(Delegator delegator, Map<String, ? extends Object> map, L lhs, R rhs) {
         Object leftValue;
-        if (lhs instanceof EntityConditionValue) {
-            // REFACTOR: Pattern Matching for instanceof
-            EntityConditionValue ecv = (EntityConditionValue) lhs;
+        if (lhs instanceof EntityConditionValue ecv) {
             leftValue = ecv.getValue(delegator, map);
         } else if (lhs instanceof String) {
             leftValue = map.get(lhs);
@@ -182,9 +172,7 @@ public abstract class EntityComparisonOperator<L, R> extends EntityOperator<L, R
             leftValue = lhs;
         }
         Object rightValue;
-        if (rhs instanceof EntityConditionValue) {
-            // REFACTOR: Pattern Matching for instanceof
-            EntityConditionValue ecv = (EntityConditionValue) rhs;
+        if (rhs instanceof EntityConditionValue ecv) {
             rightValue = ecv.getValue(delegator, map);
         } else {
             rightValue = rhs;
@@ -205,9 +193,7 @@ public abstract class EntityComparisonOperator<L, R> extends EntityOperator<L, R
      * @return the object
      */
     protected Object freeze(Object item) {
-        if (item instanceof EntityConditionValue) {
-            // REFACTOR: Pattern Matching for instanceof
-            EntityConditionValue ecv = (EntityConditionValue) item;
+        if (item instanceof EntityConditionValue ecv) {
             return ecv.freeze();
         }
         return item;
@@ -284,8 +270,8 @@ public abstract class EntityComparisonOperator<L, R> extends EntityOperator<L, R
     }
 
     public static final <L, R extends L> boolean compareIn(L lhs, R rhs) {
-        if (rhs instanceof Collection && lhs != null) {
-            return (((Collection<?>) rhs).contains(lhs));
+        if (rhs instanceof Collection<?> collection && lhs != null) {
+            return (collection.contains(lhs));
         } else {
             return Objects.equals(lhs, rhs);
         }
@@ -297,9 +283,9 @@ public abstract class EntityComparisonOperator<L, R> extends EntityOperator<L, R
             if (rhs != null) {
                 return false;
             }
-        } else if (lhs instanceof String && rhs instanceof String) {
+        } else if (lhs instanceof String string && rhs instanceof String string1) {
             //see if the lhs value is like the rhs value, rhs will have the pattern characters in it...
-            return matcher.matches((String) lhs, makeOroPattern((String) rhs));
+            return matcher.matches(string, makeOroPattern(string1));
         }
         return true;
     }

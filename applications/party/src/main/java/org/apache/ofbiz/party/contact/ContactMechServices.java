@@ -90,7 +90,7 @@ public class ContactMechServices {
         String newCmId = null;
         try {
             newCmId = delegator.getNextSeqId("ContactMech");
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                     "contactmechservices.could_not_create_contact_info_id_generation_failure", locale));
         }
@@ -155,7 +155,7 @@ public class ContactMechServices {
         String newCmId = null;
         try {
             newCmId = delegator.getNextSeqId("ContactMech");
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                     "contactmechservices.could_not_change_contact_info_id_generation_failure", locale));
         }
@@ -354,7 +354,7 @@ public class ContactMechServices {
         String newCmId = null;
         try {
             newCmId = delegator.getNextSeqId("ContactMech");
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                     "contactmechservices.could_not_create_contact_info_id_generation_failure", locale));
         }
@@ -427,7 +427,7 @@ public class ContactMechServices {
         String newCmId = null;
         try {
             newCmId = delegator.getNextSeqId("ContactMech");
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                     "contactmechservices.could_not_change_contact_info_id_generation_failure", locale));
         }
@@ -601,7 +601,7 @@ public class ContactMechServices {
         String newCmId = null;
         try {
             newCmId = delegator.getNextSeqId("ContactMech");
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                     "contactmechservices.could_not_create_contact_info_id_generation_failure", locale));
         }
@@ -657,7 +657,7 @@ public class ContactMechServices {
         String newCmId = null;
         try {
             newCmId = delegator.getNextSeqId("ContactMech");
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                     "contactmechservices.could_not_change_contact_info_id_generation_failure", locale));
         }

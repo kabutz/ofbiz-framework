@@ -70,7 +70,7 @@ if (tabButtonItem == 'productcategory' || tabButtonItem == 'product') {
         showErrorMsg = 'Y'
     }
 
-    prodCatalogCategory  = from('ProdCatalogCategory').where('prodCatalogId', prodCatalogId, 'sequenceNum', new Long(1)).queryFirst()
+    prodCatalogCategory  = from('ProdCatalogCategory').where('prodCatalogId', prodCatalogId, 'sequenceNum', Long.valueOf(1)).queryFirst()
     if (prodCatalogCategory) {
         productCategory = from('ProductCategory').where('primaryParentCategoryId', prodCatalogCategory.productCategoryId).queryFirst()
         if (productCategory) {

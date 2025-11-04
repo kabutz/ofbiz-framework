@@ -57,16 +57,16 @@ public class UtilHttpTest {
 
     @Test
     public void basicGetPathInfoOnlyParameterMap() {
-        assertThat(getPathInfoOnlyParameterMap("/~foo=1/~bar=2", x -> true),
+        assertThat(getPathInfoOnlyParameterMap("/~foo=1/~bar=2", _ -> true),
                 allOf(hasEntry("foo", "1"), hasEntry("bar", "2")));
 
-        assertThat(getPathInfoOnlyParameterMap("/~foo=1/~foo=2", x -> true),
+        assertThat(getPathInfoOnlyParameterMap("/~foo=1/~foo=2", _ -> true),
                 hasEntry("foo", Arrays.asList("1", "2")));
 
-        assertThat(getPathInfoOnlyParameterMap("/~foo=1/~foo=2/~foo=3/", x -> true),
+        assertThat(getPathInfoOnlyParameterMap("/~foo=1/~foo=2/~foo=3/", _ -> true),
                 hasEntry("foo", Arrays.asList("1", "2", "3")));
 
-        assertThat(getPathInfoOnlyParameterMap("/~foo=1/~bar=2/~foo=3/", x -> true),
+        assertThat(getPathInfoOnlyParameterMap("/~foo=1/~bar=2/~foo=3/", _ -> true),
                 Matchers.<Map<String, Object>>allOf(
                         hasEntry("foo", Arrays.asList("1", "3")),
                         hasEntry("bar", "2")));
@@ -74,7 +74,7 @@ public class UtilHttpTest {
 
     @Test
     public void emptyGetPathInfoOnlyParameterMap() {
-        assertThat(getPathInfoOnlyParameterMap(null, x -> true), is(anEmptyMap()));
+        assertThat(getPathInfoOnlyParameterMap(null, _ -> true), is(anEmptyMap()));
     }
 
     @Test

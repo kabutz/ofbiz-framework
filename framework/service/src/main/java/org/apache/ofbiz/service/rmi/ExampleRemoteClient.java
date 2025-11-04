@@ -72,7 +72,7 @@ public class ExampleRemoteClient {
         return rd.runSync("testScv", context);
     }
 
-    public static void main(String[] args) throws Exception {
+    void main() throws Exception {
         ExampleRemoteClient rm = new ExampleRemoteClient();
         Map<String, Object> result = rm.runTestService();
         Debug.logInfo("Service Result Map: " + result, MODULE);

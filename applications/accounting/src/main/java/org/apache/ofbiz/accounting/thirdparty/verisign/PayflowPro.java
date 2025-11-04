@@ -697,7 +697,7 @@ public class PayflowPro {
         for (String str : params) {
             if (!str.isEmpty()) {
                 List<String> kv = StringUtil.split(str, "=");
-                String k = kv.get(0);
+                String k = kv.getFirst();
                 String v = kv.get(1);
 
                 if (k != null && v != null)
@@ -880,7 +880,7 @@ public class PayflowPro {
             String name = (String) i.next();
             Object valueObj = context.get(name);
 
-            if (valueObj == null || (valueObj instanceof String) && ((String) valueObj).isEmpty()) {
+            if (valueObj == null || (valueObj instanceof String string) && string.isEmpty()) {
                 Debug.logVerbose("not valid; do nothing", MODULE);
             } else {
                 String value = valueObj.toString();

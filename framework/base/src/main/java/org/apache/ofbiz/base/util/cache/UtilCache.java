@@ -158,7 +158,7 @@ public final class UtilCache<K, V> implements Serializable, EvictionListener<Obj
                     if (res.containsKey(key)) {
                         try {
                             return res.getString(key);
-                        } catch (MissingResourceException e) {
+                        } catch (MissingResourceException _) {
                         }
                     }
                 }
@@ -546,9 +546,9 @@ public final class UtilCache<K, V> implements Serializable, EvictionListener<Obj
         Map<Object, CacheLine<V>> oldmap = this.memoryTable;
 
         if (newInMemory > 0) {
-            if (this.memoryTable instanceof ConcurrentLinkedHashMap<?, ?>) {
+            if (this.memoryTable instanceof ConcurrentLinkedHashMap<?, ?> map) {
                 // CHECKSTYLE_OFF: ALMOST_ALL
-                ((ConcurrentLinkedHashMap<?, ?>) this.memoryTable).setCapacity(newInMemory);
+                map.setCapacity(newInMemory);
                 // CHECKSTYLE_ON: ALMOST_ALL
                 return;
             }

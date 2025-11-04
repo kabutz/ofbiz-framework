@@ -93,22 +93,19 @@ public class HtmlWidgetRenderer {
         if (!themeBasePathsToExempt.stream().anyMatch(location::contains)) {
             String fileName = location.substring(location.lastIndexOf("/") + 1);
             // REFACTOR: Replace old style switch with switch expressions
-            switch (NAMED_BORDER_TYPE) {
-            case SOURCE:
-                return "<div class='info-container'><span class='info-overlay-item info-cursor-none info-"
+            return switch (NAMED_BORDER_TYPE) {
+            case SOURCE -> "<div class='info-container'><span class='info-overlay-item info-cursor-none info-"
                         + widgetType.toLowerCase().replace(" ", "-") + "' data-source='"
                         + location + "' data-target='" + contextPath
                         + (SeoConfigUtil.isCategoryUrlEnabled(contextPath) ? "" : "/control")
                         + "/openSourceFile'>"
                         + fileName
                         + "</span>";
-            case LABEL:
-                return "<div class='info-container'><span class='info-overlay-item'>"
+            case LABEL -> "<div class='info-container'><span class='info-overlay-item'>"
                         + fileName
                         + "</span>";
-            default:
-                return "";
-            }
+            default -> "";
+            };
         }
         return "";
     }

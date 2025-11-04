@@ -171,8 +171,8 @@ public final class JobPoller implements ServiceConfigListener {
             taskInfo.put("id", job.getJobId());
             taskInfo.put("name", job.getJobName());
             String serviceName = "";
-            if (job instanceof GenericServiceJob) {
-                serviceName = ((GenericServiceJob) job).getServiceName();
+            if (job instanceof GenericServiceJob serviceJob) {
+                serviceName = serviceJob.getServiceName();
             }
             taskInfo.put("serviceName", serviceName);
             taskInfo.put("time", job.getStartTime());
@@ -297,7 +297,7 @@ public final class JobPoller implements ServiceConfigListener {
                     }
                     Thread.sleep(pollWaitTime());
                 }
-            } catch (InterruptedException e) {
+            } catch (InterruptedException _) {
                 // Happens when JobPoller shuts down - nothing to do.
                 Thread.currentThread().interrupt();
             }

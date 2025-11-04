@@ -95,7 +95,7 @@ public class ScreenWidgetArtifactInfo extends ArtifactInfoBase {
             }
             try {
                 getAif().getModelService(serviceName);
-            } catch (GeneralException e) {
+            } catch (GeneralException _) {
                 Debug.logWarning("Service [" + serviceName + "] reference in screen [" + this.screenName + "] in resource [" + this.screenLocation
                         + "] does not exist!", MODULE);
                 continue;
@@ -146,7 +146,7 @@ public class ScreenWidgetArtifactInfo extends ArtifactInfoBase {
 
             try {
                 getAif().getModelForm(formName);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 Debug.logWarning("Form [" + formName + "] reference in screen [" + this.screenName + "] in resource [" + this.screenLocation
                         + "] does not exist!", MODULE);
                 continue;
@@ -210,9 +210,9 @@ public class ScreenWidgetArtifactInfo extends ArtifactInfoBase {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof ScreenWidgetArtifactInfo) {
-            return (this.modelScreen.getName().equals(((ScreenWidgetArtifactInfo) obj).modelScreen.getName())
-                    && this.modelScreen.getSourceLocation().equals(((ScreenWidgetArtifactInfo) obj).modelScreen.getSourceLocation()));
+        if (obj instanceof ScreenWidgetArtifactInfo info) {
+            return (this.modelScreen.getName().equals(info.modelScreen.getName())
+                    && this.modelScreen.getSourceLocation().equals(info.modelScreen.getSourceLocation()));
         } else {
             return false;
         }

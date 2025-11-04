@@ -230,11 +230,11 @@ public final class CsrfUtil {
             try {
                 if (StringUtils.countMatches(requestUri, "/") == 1) {
                     // REFACTOR: Use sequenced collection method instead
-                    requestMap = ConfigXMLReader.getControllerConfig(webappInfos.get(0)).getRequestMapMap()
+                    requestMap = ConfigXMLReader.getControllerConfig(webappInfos.getFirst()).getRequestMapMap()
                             .get(requestUri.substring(0, requestUri.indexOf("/")));
                 } else {
                     // REFACTOR: Use sequenced collection method instead
-                    requestMap = ConfigXMLReader.getControllerConfig(webappInfos.get(0)).getRequestMapMap()
+                    requestMap = ConfigXMLReader.getControllerConfig(webappInfos.getFirst()).getRequestMapMap()
                             .get(requestUri);
                 }
             } catch (WebAppConfigurationException | MalformedURLException e) {

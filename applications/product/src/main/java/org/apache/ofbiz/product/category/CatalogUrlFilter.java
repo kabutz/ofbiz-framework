@@ -85,7 +85,7 @@ public class CatalogUrlFilter implements Filter {
         String pathInfo = httpRequest.getServletPath();
         if (UtilValidate.isNotEmpty(pathInfo)) {
             List<String> pathElements = StringUtil.split(pathInfo, "/");
-            String alternativeUrl = pathElements.get(0);
+            String alternativeUrl = pathElements.getFirst();
 
             String productId = null;
             String productCategoryId = null;
@@ -211,7 +211,7 @@ public class CatalogUrlFilter implements Filter {
                     }
                 }
 
-            } catch (GenericEntityException e) {
+            } catch (GenericEntityException _) {
                 Debug.logWarning("Cannot look for product and product category", MODULE);
             }
 
@@ -303,18 +303,18 @@ public class CatalogUrlFilter implements Filter {
                 // adjust trail
                 String previousCategoryId = null;
                 if (!trail.isEmpty()) {
-                    previousCategoryId = trail.get(trail.size() - 1);
+                    previousCategoryId = trail.getLast();
                 }
                 trail = CategoryWorker.adjustTrail(trail, productCategoryId, previousCategoryId);
 
                 if (trailElements.size() == 1) {
-                    CategoryWorker.setTrail(request, trailElements.get(0), null);
+                    CategoryWorker.setTrail(request, trailElements.getFirst(), null);
                 } else if (trailElements.size() == 2) {
-                    CategoryWorker.setTrail(request, trailElements.get(1), trailElements.get(0));
+                    CategoryWorker.setTrail(request, trailElements.get(1), trailElements.getFirst());
                 } else if (trailElements.size() > 2) {
-                    if (trail.contains(trailElements.get(0))) {
+                    if (trail.contains(trailElements.getFirst())) {
                         // first category is in the trail, so remove it everything after that and fill it in with the list from the pathInfo
-                        int firstElementIndex = trail.indexOf(trailElements.get(0));
+                        int firstElementIndex = trail.indexOf(trailElements.getFirst());
                         while (trail.size() > firstElementIndex) {
                             trail.remove(firstElementIndex);
                         }

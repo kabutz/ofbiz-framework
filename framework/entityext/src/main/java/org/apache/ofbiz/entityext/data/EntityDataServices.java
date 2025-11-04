@@ -100,7 +100,7 @@ public class EntityDataServices {
         File root = null;
         try {
             root = new File(new URI(rootDirectoryUrl.toExternalForm()));
-        } catch (URISyntaxException e) {
+        } catch (URISyntaxException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "EntityExtUnableToLocateRootDirectoryURI", locale));
         }
 
@@ -152,7 +152,7 @@ public class EntityDataServices {
             records = readEntityFile(file, delimiter, delegator);
         } catch (GeneralException e) {
             return ServiceUtil.returnError(e.getMessage());
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "EntityExtFileNotFound", UtilMisc.toMap("fileName",
                     file.getName()), locale));
         } catch (IOException e) {
@@ -231,7 +231,7 @@ public class EntityDataServices {
         if (headerFile.exists()) {
             try (
                     BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(headerFile),
-                            StandardCharsets.UTF_8));) {
+                            StandardCharsets.UTF_8))) {
 
                 String firstLine = reader.readLine();
                 if (firstLine != null) {
@@ -474,7 +474,7 @@ public class EntityDataServices {
                     Debug.logInfo("Decrypting with old key: " + oldKey, MODULE);
                     try {
                         keyBytes = cipherService.decrypt(keyBytes, Base64.decodeBase64(oldKey)).getClonedBytes();
-                    } catch (Exception e) {
+                    } catch (Exception _) {
                         Debug.logInfo("Failed to decrypt with Shiro cipher; trying with old cipher", MODULE);
                         try {
                             keyBytes = DesCrypt.decrypt(DesCrypt.getDesKey(Base64.decodeBase64(oldKey)), keyBytes);

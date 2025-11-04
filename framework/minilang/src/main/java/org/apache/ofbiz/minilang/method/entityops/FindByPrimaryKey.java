@@ -77,8 +77,7 @@ public final class FindByPrimaryKey extends EntityOperation {
         if (inMap == null) {
             throw new MiniLangRuntimeException("Primary key map \"" + mapFma + "\" not found", this);
         }
-        if (entityName.isEmpty() && inMap instanceof GenericEntity) {
-            GenericEntity inEntity = (GenericEntity) inMap;
+        if (entityName.isEmpty() && inMap instanceof GenericEntity inEntity) {
             entityName = inEntity.getEntityName();
         }
         if (entityName.isEmpty()) {

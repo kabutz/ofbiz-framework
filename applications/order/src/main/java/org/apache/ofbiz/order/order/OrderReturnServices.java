@@ -1120,7 +1120,7 @@ public class OrderReturnServices {
         try {
             orderHeader = EntityQuery.use(delegator).from("OrderHeader").where("orderId", orderId).queryOne();
             orderPayPrefs = orderHeader.getRelated("OrderPaymentPreference", null, UtilMisc.toList("-maxAmount"), false);
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             Debug.logError("Problem looking up order information for orderId #" + orderId, MODULE);
             return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                     "OrderCannotGetOrderHeader", locale));
@@ -1270,7 +1270,7 @@ public class OrderReturnServices {
                     if (orgAcctgPref != null) {
                         try {
                             orgAcctgPref.getRelatedOne("PaymentMethod", false);
-                        } catch (GenericEntityException e) {
+                        } catch (GenericEntityException _) {
                             Debug.logError("Error retrieving related refundPaymentMethod from PartyAcctgPreference for partyId "
                                     + productStore.get("payToPartyId"), MODULE);
                         }
@@ -1410,7 +1410,7 @@ public class OrderReturnServices {
                                     try {
                                         refundOrderPaymentPreference = EntityQuery.use(delegator).from("OrderPaymentPreference")
                                                 .where("orderPaymentPreferenceId", orderPaymentPreferenceNewId).queryOne();
-                                    } catch (GenericEntityException e) {
+                                    } catch (GenericEntityException _) {
                                         return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR, "OrderProblemsWithTheRefundSeeLogs",
                                                 locale));
                                     }
@@ -1424,7 +1424,7 @@ public class OrderReturnServices {
                                     // for electronic types such as CREDIT_CARD and EFT_ACCOUNT, use refundPayment service
                                     paymentId = (String) serviceResult.get("paymentId");
                                     amountRefunded = (BigDecimal) serviceResult.get("refundAmount");
-                                } catch (GenericServiceException e) {
+                                } catch (GenericServiceException _) {
                                     return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR, "OrderProblemsWithTheRefundSeeLogs", locale));
                                 }
                             } else if ("EXT_BILLACT".equals(paymentMethodTypeId)) {
@@ -1507,7 +1507,7 @@ public class OrderReturnServices {
                                         return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                                                 "OrderProblemUpdatingReturnItemReturnItemResponseId", locale), null, null, serviceResults);
                                     }
-                                } catch (GenericServiceException e) {
+                                } catch (GenericServiceException _) {
                                     Debug.logError("Problem updating the ReturnItem entity", MODULE);
                                     return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                                             "OrderProblemUpdatingReturnItemReturnItemResponseId", locale));

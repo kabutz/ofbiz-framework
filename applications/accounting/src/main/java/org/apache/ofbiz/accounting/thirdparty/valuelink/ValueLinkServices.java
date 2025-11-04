@@ -839,7 +839,7 @@ public class ValueLinkServices {
         GenericValue giftCard = null;
         try {
             giftCard = paymentPref.getRelatedOne("GiftCard", false);
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             Debug.logError("Unable to get GiftCard from OrderPaymentPreference", MODULE);
             return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                     "AccountingGiftCertificateNumberCannotLocateItFromOrderPaymentPreference", locale));
@@ -904,7 +904,7 @@ public class ValueLinkServices {
         GenericValue giftCard = null;
         try {
             giftCard = paymentPref.getRelatedOne("GiftCard", false);
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             Debug.logError("Unable to get GiftCard from OrderPaymentPreference", MODULE);
             return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                     "AccountingGiftCertificateNumberCannotLocateItFromOrderPaymentPreference", locale));
@@ -1023,7 +1023,7 @@ public class ValueLinkServices {
         GenericValue product = null;
         try {
             product = orderItem.getRelatedOne("Product", false);
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             Debug.logError("Unable to get Product from OrderItem", MODULE);
         }
         if (product == null) {

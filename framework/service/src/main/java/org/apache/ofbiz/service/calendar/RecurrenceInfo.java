@@ -80,7 +80,7 @@ public class RecurrenceInfo {
             for (GenericValue value: info.getRelated("RecurrenceRule", null, null, false)) {
                 rRulesList.add(new RecurrenceRule(value));
             }
-        } catch (GenericEntityException gee) {
+        } catch (GenericEntityException _) {
             rRulesList = null;
         } catch (RecurrenceRuleException rre) {
             throw new RecurrenceInfoException("Illegal rule format.", rre);
@@ -92,7 +92,7 @@ public class RecurrenceInfo {
             for (GenericValue value: info.getRelated("ExceptionRecurrenceRule", null, null, false)) {
                 eRulesList.add(new RecurrenceRule(value));
             }
-        } catch (GenericEntityException gee) {
+        } catch (GenericEntityException _) {
             eRulesList = null;
         } catch (RecurrenceRuleException rre) {
             throw new RecurrenceInfoException("Illegal rule format", rre);

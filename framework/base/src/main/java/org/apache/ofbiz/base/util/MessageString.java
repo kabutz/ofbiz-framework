@@ -75,9 +75,7 @@ public class MessageString implements Serializable {
         }
         List<Object> outList = new ArrayList<>(messageStringList.size());
         for (Object messageStringCur: messageStringList) {
-            if (messageStringCur instanceof MessageString) {
-                // REFACTOR: Pattern Matching for instanceof
-                MessageString messageString = (MessageString) messageStringCur;
+            if (messageStringCur instanceof MessageString messageString) {
                 if (messageString.isForField(fieldNameSet)) {
                     if (convertToStrings) {
                         outList.add(messageString.toString());

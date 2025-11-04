@@ -105,7 +105,7 @@ public class ImportProductServices {
             try {
                 fs = new POIFSFileSystem(new FileInputStream(item));
                 wb = new HSSFWorkbook(fs);
-            } catch (IOException e) {
+            } catch (IOException _) {
                 Debug.logError("Unable to read or create workbook from file", MODULE);
                 return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE,
                         "ProductProductImportCannotCreateWorkbookFromFile", locale));
@@ -159,7 +159,7 @@ public class ImportProductServices {
                     try {
                         delegator.create(productGV);
                         delegator.create(inventoryItemGV);
-                    } catch (GenericEntityException e) {
+                    } catch (GenericEntityException _) {
                         Debug.logError("Cannot store product", MODULE);
                         return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE,
                                 "ProductProductImportCannotStoreProduct", locale));

@@ -20,7 +20,6 @@ package org.apache.ofbiz.widget.renderer.macro;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.net.URI;
@@ -104,7 +103,7 @@ public class MacroScreenRenderer implements ScreenStringRenderer {
     private void executeMacro(Appendable writer, String macro) throws IOException {
         try {
             Environment environment = getEnvironment(writer);
-            Reader templateReader = new StringReader(macro);
+            Reader templateReader = Reader.of(macro);
             // FIXME: I am using a Date as an hack to provide a unique name for the template...
             Template template = new Template((new java.util.Date()).toString(), templateReader, FreeMarkerWorker.getDefaultOfbizConfig());
             templateReader.close();
@@ -123,9 +122,9 @@ public class MacroScreenRenderer implements ScreenStringRenderer {
                 sb.append(parameter.getKey());
                 sb.append("=");
                 Object value = parameter.getValue();
-                if (value instanceof String) {
+                if (value instanceof String string) {
                     sb.append('"');
-                    sb.append(((String) value).replaceAll("\"", "\\\\\""));
+                    sb.append(string.replaceAll("\"", "\\\\\""));
                     sb.append('"');
                 } else {
                     sb.append(value);

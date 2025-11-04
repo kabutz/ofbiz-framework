@@ -33,14 +33,14 @@ if (visitId) {
 viewIndex = 0
 try {
     viewIndex = Integer.valueOf((String) parameters.VIEW_INDEX).intValue()
-} catch (Exception e) {
+} catch (Exception _) {
     viewIndex = 0
 }
 
 viewSize = 20
 try {
     viewSize = Integer.valueOf((String) parameters.VIEW_SIZE).intValue()
-} catch (Exception e) {
+} catch (Exception _) {
     viewSize = 20
 }
 

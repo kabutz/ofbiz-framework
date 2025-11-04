@@ -237,17 +237,11 @@ Map saveLocalFileDataResource(String mode) {
         }
         errorList.add(UtilProperties.getMessage('ContentUiLabels', 'ContentNoUploadedContentFound', parameters.locale))
     }
-    String uploadPath = null
-    switch (mode) {
-        case ['LOCAL_FILE', 'LOCAL_FILE_BIN']:
-            uploadPath = DataResourceWorker.getDataResourceContentUploadPath(delegator, true)
-            break
-        case ['OFBIZ_FILE', 'OFBIZ_FILE_BIN']:
-            uploadPath = DataResourceWorker.getDataResourceContentUploadPath(delegator, false)
-            break
-        case ['CONTEXT_FILE', 'CONTEXT_FILE_BIN']:
-            uploadPath = parameters.rootDir
-            break
+    String uploadPath = switch (mode) {
+        case ['LOCAL_FILE', 'LOCAL_FILE_BIN'] -> DataResourceWorker.getDataResourceContentUploadPath(delegator, true)
+        case ['OFBIZ_FILE', 'OFBIZ_FILE_BIN'] -> DataResourceWorker.getDataResourceContentUploadPath(delegator, false)
+        case ['CONTEXT_FILE', 'CONTEXT_FILE_BIN'] -> parameters.rootDir
+        default -> null;
     }
     if (!uploadPath) {
         errorList.add(UtilProperties.getMessage('ContentErrorUiLabels', 'uploadContentAndImage.noRootDirProvided', parameters.locale))

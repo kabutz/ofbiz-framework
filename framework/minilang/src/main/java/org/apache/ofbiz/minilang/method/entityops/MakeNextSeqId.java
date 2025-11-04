@@ -69,7 +69,7 @@ public final class MakeNextSeqId extends MethodOperation {
         if (!numericPaddingStr.isEmpty()) {
             try {
                 numericPadding = Integer.parseInt(numericPaddingStr);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 throw new MiniLangRuntimeException("Invalid number in \"numeric-padding\" attribute", this);
             }
         }
@@ -77,7 +77,7 @@ public final class MakeNextSeqId extends MethodOperation {
         if (!incrementByStr.isEmpty()) {
             try {
                 incrementBy = Integer.parseInt(incrementByStr);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 throw new MiniLangRuntimeException("Invalid number in \"increment-by\" attribute", this);
             }
         }

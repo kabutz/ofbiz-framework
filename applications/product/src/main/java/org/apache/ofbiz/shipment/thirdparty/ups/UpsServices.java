@@ -536,7 +536,7 @@ public class UpsServices {
                         null, false);
                 GenericValue carrierShipmentBoxType = null;
                 if (!carrierShipmentBoxTypes.isEmpty()) {
-                    carrierShipmentBoxType = carrierShipmentBoxTypes.get(0);
+                    carrierShipmentBoxType = carrierShipmentBoxTypes.getFirst();
                 }
 
                 Element packageElement = UtilXml.addChildElement(shipmentElement, "Package", shipmentConfirmRequestDoc);
@@ -867,7 +867,7 @@ public class UpsServices {
             }
             return ServiceUtil.returnSuccess(successString.toString());
         } else {
-            errorList.add(0, UtilProperties.getMessage(RES_ERROR, "FacilityShipmentUpsShipmentConfirmFailed", locale));
+            errorList.addFirst(UtilProperties.getMessage(RES_ERROR, "FacilityShipmentUpsShipmentConfirmFailed", locale));
             return ServiceUtil.returnError(errorList);
         }
     }
@@ -1278,7 +1278,7 @@ public class UpsServices {
             }
             return ServiceUtil.returnSuccess(successString.toString());
         } else {
-            errorList.add(0, UtilProperties.getMessage(RES_ERROR, "FacilityShipmentUpsShipmentAcceptFailed", locale));
+            errorList.addFirst(UtilProperties.getMessage(RES_ERROR, "FacilityShipmentUpsShipmentAcceptFailed", locale));
             return ServiceUtil.returnError(errorList);
         }
     }
@@ -1471,7 +1471,7 @@ public class UpsServices {
             }
             return ServiceUtil.returnSuccess(successString.toString());
         } else {
-            errorList.add(0, UtilProperties.getMessage(RES_ERROR, "FacilityShipmentUpsShipmentVoidFailed",
+            errorList.addFirst(UtilProperties.getMessage(RES_ERROR, "FacilityShipmentUpsShipmentVoidFailed",
                     UtilMisc.toMap("statusTypeCode", statusTypeCode, "statusTypeDescription", statusTypeDescription,
                             "statusCodeCode", statusCodeCode, "statusCodeDescription", statusCodeDescription), locale));
             return ServiceUtil.returnError(errorList);
@@ -1690,7 +1690,7 @@ public class UpsServices {
             }
             return ServiceUtil.returnSuccess(successString.toString());
         } else {
-            errorList.add(0, UtilProperties.getMessage(RES_ERROR, "FacilityShipmentUpsShipmentTrackFailed", locale));
+            errorList.addFirst(UtilProperties.getMessage(RES_ERROR, "FacilityShipmentUpsShipmentTrackFailed", locale));
             return ServiceUtil.returnError(errorList);
         }
     }
@@ -2137,7 +2137,7 @@ public class UpsServices {
         BigDecimal maxWeight;
         try {
             maxWeight = new BigDecimal(maxWeightStr);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException _) {
             maxWeight = new BigDecimal("99");
         }
         String minWeightStr = getShipmentGatewayConfigValue(delegator, shipmentGatewayConfigId, "minEstimateWeight", serviceConfigProps, "shipment"
@@ -2145,7 +2145,7 @@ public class UpsServices {
         BigDecimal minWeight;
         try {
             minWeight = new BigDecimal(minWeightStr);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException _) {
             minWeight = new BigDecimal("0.1");
         }
 
@@ -2685,7 +2685,7 @@ public class UpsServices {
             List<Object> errorList = new LinkedList<>();
             UpsServices.handleErrors(responseElement, errorList, locale);
             if (!"1".equals(responseStatusCode)) {
-                errorList.add(0, UtilProperties.getMessage(RES_ERROR, "FacilityShipmentUpsShipmentConfirmFailedForReturnShippingLabel", locale));
+                errorList.addFirst(UtilProperties.getMessage(RES_ERROR, "FacilityShipmentUpsShipmentConfirmFailedForReturnShippingLabel", locale));
                 return ServiceUtil.returnError(errorList);
             }
 
@@ -2993,7 +2993,7 @@ public class UpsServices {
                         null, false);
                 GenericValue carrierShipmentBoxType = null;
                 if (!carrierShipmentBoxTypes.isEmpty()) {
-                    carrierShipmentBoxType = carrierShipmentBoxTypes.get(0);
+                    carrierShipmentBoxType = carrierShipmentBoxTypes.getFirst();
                 }
 
                 Element packageElement = UtilXml.addChildElement(shipmentElement, "Package", rateRequestDoc);

@@ -190,7 +190,7 @@ public class OrderManagerEvents {
                 BigDecimal paymentMethodAmount = BigDecimal.ZERO;
                 try {
                     paymentMethodAmount = (BigDecimal) ObjectType.simpleTypeOrObjectConvert(paymentMethodAmountStr, "BigDecimal", null, locale);
-                } catch (GeneralException e) {
+                } catch (GeneralException _) {
                     request.setAttribute("_ERROR_MESSAGE_", UtilProperties.getMessage(RES_ERROR, "OrderProblemsPaymentParsingAmount", locale));
                     return "error";
                 }
@@ -230,7 +230,7 @@ public class OrderManagerEvents {
                 BigDecimal paymentTypeAmount = BigDecimal.ZERO;
                 try {
                     paymentTypeAmount = (BigDecimal) ObjectType.simpleTypeOrObjectConvert(amountStr, "BigDecimal", null, locale);
-                } catch (GeneralException e) {
+                } catch (GeneralException _) {
                     request.setAttribute("_ERROR_MESSAGE_", UtilProperties.getMessage(RES_ERROR, "OrderProblemsPaymentParsingAmount", locale));
                     return "error";
                 }

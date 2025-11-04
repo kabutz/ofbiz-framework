@@ -170,7 +170,7 @@ public class CatalinaContainer implements Container {
         if (engineProps.size() > 1) {
             throw new ContainerException("Cannot load CatalinaContainer; more than one engine configuration found; only one is supported.");
         }
-        return engineProps.get(0);
+        return engineProps.getFirst();
     }
 
     private static Tomcat prepareTomcatServer(ContainerConfig.Configuration cc, Configuration.Property engineConfig)
@@ -241,13 +241,13 @@ public class CatalinaContainer implements Container {
 
     private static Host prepareVirtualHost(Tomcat tomcat, List<String> virtualHosts) {
         // assume that the first virtual-host will be the default; additional virtual-hosts will be aliases
-        String hostName = virtualHosts.get(0);
+        String hostName = virtualHosts.getFirst();
         Host host;
         Engine engine = tomcat.getEngine();
 
         org.apache.catalina.Container childContainer = engine.findChild(hostName);
-        if (childContainer instanceof Host) {
-            host = (Host) childContainer;
+        if (childContainer instanceof Host host1) {
+            host = host1;
         } else {
             host = new StandardHost();
             host.setName(hostName);
@@ -270,7 +270,7 @@ public class CatalinaContainer implements Container {
         }
 
         if (UtilValidate.isNotEmpty(clusterProps)) {
-            clusterProp = clusterProps.get(0);
+            clusterProp = clusterProps.getFirst();
 
             GroupChannel channel = new GroupChannel();
             channel.setChannelReceiver(prepareChannelReceiver(clusterProp));
@@ -615,8 +615,7 @@ public class CatalinaContainer implements Container {
         context.setResources(resources);
 
         JarScanner jarScanner = context.getJarScanner();
-        if (jarScanner instanceof StandardJarScanner) {
-            StandardJarScanner standardJarScanner = (StandardJarScanner) jarScanner;
+        if (jarScanner instanceof StandardJarScanner standardJarScanner) {
             standardJarScanner.setJarScanFilter(new FilterJars());
             standardJarScanner.setScanClassPath(true);
         }

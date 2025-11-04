@@ -325,7 +325,7 @@ public class ZipSalesServices {
         // get the first one
         GenericValue taxEntry = null;
         if (UtilValidate.isNotEmpty(taxLookup)) {
-            taxEntry = taxLookup.iterator().next();
+            taxEntry = taxLookup.getFirst();
         }
 
         if (taxEntry == null) {

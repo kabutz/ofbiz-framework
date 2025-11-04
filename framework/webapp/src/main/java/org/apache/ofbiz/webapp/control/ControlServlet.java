@@ -253,7 +253,7 @@ public class ControlServlet extends HttpServlet {
                 request.setAttribute("_ERROR_MESSAGE_", UtilCodec.getEncoder("html").encode(throwable.toString()));
                 errorPage = handler.getDefaultErrorPage(request);
             }
-        } catch (RequestHandlerExceptionAllowExternalRequests e) {
+        } catch (RequestHandlerExceptionAllowExternalRequests _) {
             errorPage = handler.getDefaultErrorPage(request);
             Debug.logInfo("Going to external page: " + request.getPathInfo(), MODULE);
         } catch (Exception e) {
@@ -288,7 +288,7 @@ public class ControlServlet extends HttpServlet {
 
                     try {
                         rd.include(request, response);
-                    } catch (Throwable t) {
+                    } catch (Throwable _) {
                         errorPageFailed = true;
                     }
                 } else {
@@ -301,7 +301,7 @@ public class ControlServlet extends HttpServlet {
                 try {
                     Template template = FreeMarkerWorker.getTemplate(errorPage);
                     FreeMarkerWorker.renderTemplate(template, context, response.getWriter());
-                } catch (Exception e) {
+                } catch (Exception _) {
                     errorPageFailed = true;
                 }
             }
@@ -316,14 +316,14 @@ public class ControlServlet extends HttpServlet {
                         .append("</p></body></html>");
                 try {
                     response.getWriter().print(errorMessage.toString());
-                } catch (Throwable t) {
+                } catch (Throwable _) {
                     try {
                         int errorToSend = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
                         Debug.logWarning("Error while trying to write error message using response.getOutputStream "
                                 + "or response.getWriter, sending error code [" + errorToSend + "], "
                                 + "and message [" + errorMessage + "]", MODULE);
                         response.sendError(errorToSend, errorMessage.toString());
-                    } catch (Throwable t2) {
+                    } catch (Throwable _) {
                         // wow, still bad... just throw an IllegalStateException with the message
                         // and let the servlet container handle it.
                         throw new IllegalStateException(errorMessage.toString());

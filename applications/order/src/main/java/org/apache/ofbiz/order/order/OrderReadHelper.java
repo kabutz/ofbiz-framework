@@ -472,7 +472,7 @@ public class OrderReadHelper {
             Debug.logWarning("Found " + orderTerms.size() + " FIN_PAYMENT_TERM order terms for orderId [" + getOrderId()
                     + "], using the first one ", MODULE);
         }
-        return orderTerms.get(0).getLong("termDays");
+        return orderTerms.getFirst().getLong("termDays");
     }
 
     /**
@@ -760,7 +760,7 @@ public class OrderReadHelper {
         try {
             List<GenericValue> groups = orderHeader.getRelated("OrderItemShipGroup", null, UtilMisc.toList("shipByDate"), false);
             if (!groups.isEmpty()) {
-                GenericValue group = groups.get(0);
+                GenericValue group = groups.getFirst();
                 return group.getTimestamp("shipByDate");
             }
         } catch (GenericEntityException e) {
@@ -777,7 +777,7 @@ public class OrderReadHelper {
         try {
             List<GenericValue> groups = orderHeader.getRelated("OrderItemShipGroup", null, UtilMisc.toList("shipAfterDate DESC"), false);
             if (!groups.isEmpty()) {
-                GenericValue group = groups.get(0);
+                GenericValue group = groups.getFirst();
                 return group.getTimestamp("shipAfterDate");
             }
         } catch (GenericEntityException e) {
@@ -1788,7 +1788,7 @@ public class OrderReadHelper {
         try {
             orderDeliverySchedule = EntityQuery.use(delegator).from("OrderDeliverySchedule").where("orderId", orderId, "orderItemSeqId", "_NA_")
                     .queryOne();
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             if (Debug.infoOn()) {
                 Debug.logInfo(" OrderDeliverySchedule not found for order " + orderId, MODULE);
             }
@@ -1922,7 +1922,7 @@ public class OrderReadHelper {
                                 List<GenericValue> productContents = null;
                                 try {
                                     productContents = product.getRelated("ProductContent", null, null, false);
-                                } catch (GenericEntityException e) {
+                                } catch (GenericEntityException _) {
                                     Debug.logError("Unable to get ProductContent from Product", MODULE);
                                 }
                                 List<EntityExpr> cExprs = UtilMisc.toList(
@@ -1982,7 +1982,7 @@ public class OrderReadHelper {
             if (workOrderItemFulFillment != null) {
                 workEffort = workOrderItemFulFillment.getRelatedOne("WorkEffort", false);
             }
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             return null;
         }
         if (workEffort != null) {

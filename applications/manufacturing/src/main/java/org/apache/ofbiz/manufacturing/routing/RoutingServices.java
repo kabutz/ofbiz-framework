@@ -69,7 +69,7 @@ public class RoutingServices {
         GenericValue task = null;
         try {
             task = EntityQuery.use(delegator).from("WorkEffort").where("workEffortId", taskId).queryOne();
-        } catch (GenericEntityException gee) {
+        } catch (GenericEntityException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingRoutingErrorFindingTask",
                     UtilMisc.toMap("taskId", taskId), locale));
         }

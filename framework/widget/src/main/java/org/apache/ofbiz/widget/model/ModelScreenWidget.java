@@ -576,8 +576,8 @@ public abstract class ModelScreenWidget extends ModelWidget {
             String navMenuName = screenletElement.getAttribute("navigation-menu-name");
             if (!navMenuName.isEmpty()) {
                 for (ModelWidget subWidget : subWidgets) {
-                    if (navMenuName.equals(subWidget.getName()) && subWidget instanceof Menu) {
-                        navigationMenu = (Menu) subWidget;
+                    if (navMenuName.equals(subWidget.getName()) && subWidget instanceof Menu menu) {
+                        navigationMenu = menu;
                         subWidgets.remove(subWidget);
                         break;
                     }
@@ -588,8 +588,8 @@ public abstract class ModelScreenWidget extends ModelWidget {
             String tabMenuName = screenletElement.getAttribute("tab-menu-name");
             if (!tabMenuName.isEmpty()) {
                 for (ModelWidget subWidget : subWidgets) {
-                    if (tabMenuName.equals(subWidget.getName()) && subWidget instanceof Menu) {
-                        tabMenu = (Menu) subWidget;
+                    if (tabMenuName.equals(subWidget.getName()) && subWidget instanceof Menu menu) {
+                        tabMenu = menu;
                         subWidgets.remove(subWidget);
                         break;
                     }
@@ -600,8 +600,8 @@ public abstract class ModelScreenWidget extends ModelWidget {
             String formName = screenletElement.getAttribute("navigation-form-name");
             if (!formName.isEmpty() && this.navigationMenu == null) {
                 for (ModelWidget subWidget : subWidgets) {
-                    if (formName.equals(subWidget.getName()) && subWidget instanceof Form) {
-                        navigationForm = (Form) subWidget;
+                    if (formName.equals(subWidget.getName()) && subWidget instanceof Form form) {
+                        navigationForm = form;
                         padded = false;
                         break;
                     }

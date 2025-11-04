@@ -34,9 +34,9 @@ if (start == null) {
     start = UtilDateTime.getWeekStart(start, timeZone, locale)
 }
 Timestamp prev = UtilDateTime.getDayStart(start, -7, timeZone, locale)
-context.prevMillis = new Long(prev.getTime()).toString()
+context.prevMillis = Long.valueOf(prev.getTime()).toString()
 Timestamp next = UtilDateTime.getDayStart(start, 7, timeZone, locale)
-context.nextMillis = new Long(next.getTime()).toString()
+context.nextMillis = Long.valueOf(next.getTime()).toString()
 Timestamp end = UtilDateTime.getDayStart(start, 6, timeZone, locale)
 Map serviceCtx = dispatcher.getDispatchContext().makeValidContext('getWorkEffortEventsByPeriod', ModelService.IN_PARAM, parameters)
 serviceCtx.putAll([userLogin: userLogin, start: start, numPeriods: 7, periodType: Calendar.DATE, locale: locale, timeZone: timeZone])

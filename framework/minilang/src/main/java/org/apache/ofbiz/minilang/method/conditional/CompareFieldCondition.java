@@ -90,7 +90,7 @@ public final class CompareFieldCondition extends MethodOperation implements Cond
         if (!this.type.isEmpty()) {
             try {
                 targetClass = ObjectType.loadClass(this.type);
-            } catch (ClassNotFoundException e) {
+            } catch (ClassNotFoundException _) {
                 MiniLangValidate.handleError("Invalid type " + this.type, simpleMethod, element);
             }
         }

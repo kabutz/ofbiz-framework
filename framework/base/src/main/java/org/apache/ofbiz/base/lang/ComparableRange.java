@@ -91,7 +91,7 @@ public class ComparableRange<T extends Comparable<T>> implements Range<T>, Compa
         try {
             ComparableRange<?> that = (ComparableRange<?>) obj;
             return this.start.equals(that.start()) && this.end.equals(that.end());
-        } catch (RuntimeException e) {
+        } catch (RuntimeException _) {
             return false;
         }
     }

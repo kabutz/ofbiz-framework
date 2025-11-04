@@ -550,8 +550,7 @@ public class PriceServices {
                 if (UtilValidate.isNotEmpty(result)) {
                     Map<String, Object> convertPriceMap = new HashMap<>();
                     for (Map.Entry<String, Object> entry : result.entrySet()) {
-                        BigDecimal tempPrice;
-                        switch (entry.getKey()) {
+                        BigDecimal tempPrice = switch (entry.getKey()) {
                         case "basePrice":
                         case "price":
                         case "defaultPrice":
@@ -559,12 +558,9 @@ public class PriceServices {
                         case "averageCost":
                         case "promoPrice":
                         case "specialPromoPrice":
-                        case "listPrice":
-                            tempPrice = (BigDecimal) entry.getValue();
-                            break;
-                        default:
-                            tempPrice = BigDecimal.ZERO;
-                        }
+                        case "listPrice": yield (BigDecimal) entry.getValue();
+                        default: yield BigDecimal.ZERO;
+                        };
 
                         if (tempPrice != null && tempPrice != BigDecimal.ZERO) {
                             Map<String, Object> priceResults = new HashMap<>();

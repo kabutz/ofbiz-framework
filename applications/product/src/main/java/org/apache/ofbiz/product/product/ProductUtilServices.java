@@ -211,7 +211,7 @@ public final class ProductUtilServices {
                         pcm.get("productId"), "productCategoryId", pcm.get("productCategoryId")).queryList();
                 if (productCategoryMemberList.size() > 1) {
                     // remove all except the first...
-                    productCategoryMemberList.remove(0);
+                    productCategoryMemberList.removeFirst();
                     for (GenericValue productCategoryMember : productCategoryMemberList) {
                         productCategoryMember.remove();
                     }

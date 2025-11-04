@@ -64,7 +64,7 @@ final class StartupControlPanel {
         if (config.isUseShutdownHook()) {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> shutdownServer(loader, serverState)));
         } else {
-            System.out.println("Shutdown hook disabled");
+            IO.println("Shutdown hook disabled");
         }
 
         loadContainers(config, loader, ofbizCommands, serverState);
@@ -75,11 +75,11 @@ final class StartupControlPanel {
         } else {
             // Print startup message.
             String ls = System.lineSeparator();
-            System.out.println(ls + "   ____  __________  _" + ls
-                                  + "  / __ \\/ ____/ __ )(_)___" + ls
-                                  + " / / / / /_  / __  / /_  /" + ls
-                                  + "/ /_/ / __/ / /_/ / / / /_" + ls
-                                  + "\\____/_/   /_____/_/ /___/  is started and ready." + ls);
+            IO.println(ls + "   ____  __________  _" + ls
+                    + "  / __ \\/ ____/ __ )(_)___" + ls
+                    + " / / / / /_  / __  / /_  /" + ls
+                    + "/ /_/ / __/ / /_/ / / / /_" + ls
+                    + "\\____/_/   /_____/_/ /___/  is started and ready." + ls);
         }
     }
 
@@ -130,7 +130,7 @@ final class StartupControlPanel {
         File logDir = new File(logDirName);
         if (!logDir.exists()) {
             if (logDir.mkdir()) {
-                System.out.println("Created OFBiz log dir [" + logDir.getAbsolutePath() + "]");
+                IO.println("Created OFBiz log dir [" + logDir.getAbsolutePath() + "]");
             }
         }
     }

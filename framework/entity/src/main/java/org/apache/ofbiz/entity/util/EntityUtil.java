@@ -101,7 +101,7 @@ public final class EntityUtil {
     public static GenericValue getFirst(List<GenericValue> values) {
         if (UtilValidate.isNotEmpty(values)) {
             // REFACTOR: Use sequenced collection method instead
-            return values.get(0);
+            return values.getFirst();
         } else {
             return null;
         }
@@ -124,7 +124,7 @@ public final class EntityUtil {
         if (UtilValidate.isNotEmpty(values)) {
             if (values.size() == 1) {
                 // REFACTOR: Use sequenced collection method instead
-                return values.get(0);
+                return values.getFirst();
             } else {
                 throw new IllegalArgumentException("Passed List had more than one value.");
             }

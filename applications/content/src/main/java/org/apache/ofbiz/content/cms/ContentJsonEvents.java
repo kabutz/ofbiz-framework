@@ -113,7 +113,7 @@ public class ContentJsonEvents {
             delegator.clearCacheLine(delegator.create(newAssoc));
 
             return newAssoc;
-        }, String.format("move content [%s] from [%s] to [%s]", contentIdTo, contentIdFrom, contentIdFromNew), 0, true).call();
+        }, "move content [%s] from [%s] to [%s]".formatted(contentIdTo, contentIdFrom, contentIdFromNew), 0, true).call();
 
         IOUtils.write(JSON.from(getTreeNode(assoc)).toString(), response.getOutputStream(), Charset.defaultCharset());
 

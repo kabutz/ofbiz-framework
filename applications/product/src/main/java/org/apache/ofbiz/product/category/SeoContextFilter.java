@@ -176,7 +176,7 @@ public final class SeoContextFilter implements Filter {
             List<String> pathItemList = StringUtil.split(httpRequest.getPathInfo(), "/");
             String viewName = "";
             if (pathItemList != null) {
-                viewName = pathItemList.get(0);
+                viewName = pathItemList.getFirst();
             }
 
             String requestUri = UtilHttp.getRequestUriFromTarget(httpRequest.getRequestURI());

@@ -106,8 +106,8 @@ public final class ServiceEcaRule implements java.io.Serializable {
     public List<ServiceEcaAction> getEcaActionList() {
         List<ServiceEcaAction> actionList = new LinkedList<>();
         for (Object actionOrSet: this.actionsAndSets) {
-            if (actionOrSet instanceof ServiceEcaAction) {
-                actionList.add((ServiceEcaAction) actionOrSet);
+            if (actionOrSet instanceof ServiceEcaAction action) {
+                actionList.add(action);
             }
         }
         return actionList;
@@ -150,9 +150,7 @@ public final class ServiceEcaRule implements java.io.Serializable {
         // if all conditions are true
         if (allCondTrue) {
             for (Object setOrAction: actionsAndSets) {
-                if (setOrAction instanceof ServiceEcaAction) {
-                    // REFACTOR: Pattern Matching for instanceof
-                    ServiceEcaAction ea = (ServiceEcaAction) setOrAction;
+                if (setOrAction instanceof ServiceEcaAction ea) {
                     // in order to enable OR logic without multiple calls to the given service,
                     // only execute a given service name once per service call phase
                     if (!actionsRun.contains(ea.getServiceName())) {
@@ -197,9 +195,7 @@ public final class ServiceEcaRule implements java.io.Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof ServiceEcaRule) {
-            // REFACTOR: Pattern Matching for instanceof
-            ServiceEcaRule other = (ServiceEcaRule) obj;
+        if (obj instanceof ServiceEcaRule other) {
             if (!Objects.equals(this.serviceName, other.serviceName)) {
                 return false;
             }

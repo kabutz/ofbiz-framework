@@ -229,13 +229,13 @@ public class ObjectType {
         } catch (SecurityException se1) {
             throw new IllegalArgumentException("Problems with classloader: security exception ("
                     + se1.getMessage() + ")");
-        } catch (ClassNotFoundException e1) {
+        } catch (ClassNotFoundException _) {
             try {
                 return loadClass(LANG_PACKAGE + typeName, loader);
             } catch (SecurityException se2) {
                 throw new IllegalArgumentException("Problems with classloader: security exception ("
                         + se2.getMessage() + ")");
-            } catch (ClassNotFoundException e2) {
+            } catch (ClassNotFoundException _) {
                 try {
                     return loadClass(SQL_PACKAGE + typeName, loader);
                 } catch (SecurityException se3) {
@@ -285,9 +285,7 @@ public class ObjectType {
                 || ("org.codehaus.groovy.runtime.GStringImpl".equals(obj.getClass().getName()) && "String".equals(type))) {
             return obj.toString();
         }
-        if (obj instanceof Node) {
-            // REFACTOR: Pattern Matching for instanceof
-            Node node = (Node) obj;
+        if (obj instanceof Node node) {
             String nodeValue = node.getTextContent();
 
             if (nodeValue == null) {
@@ -320,7 +318,7 @@ public class ObjectType {
         if (sourceClass.equals(targetClass)) {
             return obj;
         }
-        if (obj instanceof String && ((String) obj).isEmpty()) {
+        if (obj instanceof String string && string.isEmpty()) {
             return null;
         }
         Converter<Object, Object> converter = null;
@@ -332,8 +330,8 @@ public class ObjectType {
 
         if (converter != null) {
             // numeric types : replace everything that's not in [:IsAlnum:] or [:IsPunct:] classes by an empty string
-            if (obj instanceof String && Number.class.isAssignableFrom((targetClass))) {
-                obj = ((String) obj).replaceAll("[^\\p{IsAlnum}\\p{IsPunct}]", "");
+            if (obj instanceof String string && Number.class.isAssignableFrom((targetClass))) {
+                obj = string.replaceAll("[^\\p{IsAlnum}\\p{IsPunct}]", "");
             }
 
             if (converter instanceof LocalizedConverter) {
@@ -426,9 +424,7 @@ public class ObjectType {
         }
 
         // have converted value 2, now before converting value 1 see if it is a Collection and we are doing a contains comparison
-        if ("contains".equals(operator) && value1 instanceof Collection<?>) {
-            // REFACTOR: Pattern Matching for instanceof
-            Collection<?> col1 = (Collection<?>) value1;
+        if ("contains".equals(operator) && value1 instanceof Collection<?> col1) {
             return col1.contains(convertedValue2) ? Boolean.TRUE : Boolean.FALSE;
         }
 
@@ -475,13 +471,13 @@ public class ObjectType {
             if (convertedValue1 == null) {
                 return Boolean.TRUE;
             }
-            if (convertedValue1 instanceof String && ((String) convertedValue1).isEmpty()) {
+            if (convertedValue1 instanceof String string && string.isEmpty()) {
                 return Boolean.TRUE;
             }
-            if (convertedValue1 instanceof List<?> && ((List<?>) convertedValue1).isEmpty()) {
+            if (convertedValue1 instanceof List<?> list && list.isEmpty()) {
                 return Boolean.TRUE;
             }
-            if (convertedValue1 instanceof Map<?, ?> && ((Map<?, ?>) convertedValue1).isEmpty()) {
+            if (convertedValue1 instanceof Map<?, ?> map && map.isEmpty()) {
                 return Boolean.TRUE;
             }
             return Boolean.FALSE;
@@ -489,13 +485,13 @@ public class ObjectType {
             if (convertedValue1 == null) {
                 return Boolean.FALSE;
             }
-            if (convertedValue1 instanceof String && ((String) convertedValue1).isEmpty()) {
+            if (convertedValue1 instanceof String string && string.isEmpty()) {
                 return Boolean.FALSE;
             }
-            if (convertedValue1 instanceof List<?> && ((List<?>) convertedValue1).isEmpty()) {
+            if (convertedValue1 instanceof List<?> list && list.isEmpty()) {
                 return Boolean.FALSE;
             }
-            if (convertedValue1 instanceof Map<?, ?> && ((Map<?, ?>) convertedValue1).isEmpty()) {
+            if (convertedValue1 instanceof Map<?, ?> map && map.isEmpty()) {
                 return Boolean.FALSE;
             }
             return Boolean.TRUE;
@@ -617,20 +613,20 @@ public class ObjectType {
             return true;
         }
 
-        if (value instanceof String) {
-            return ((String) value).isEmpty();
+        if (value instanceof String string) {
+            return string.isEmpty();
         }
-        if (value instanceof Collection) {
-            return ((Collection<? extends Object>) value).isEmpty();
+        if (value instanceof Collection<? extends Object> collection) {
+            return collection.isEmpty();
         }
-        if (value instanceof Map) {
-            return ((Map<? extends Object, ? extends Object>) value).isEmpty();
+        if (value instanceof Map<? extends Object, ? extends Object> map) {
+            return map.isEmpty();
         }
-        if (value instanceof CharSequence) {
-            return ((CharSequence) value).length() == 0;
+        if (value instanceof CharSequence sequence) {
+            return sequence.length() == 0;
         }
-        if (value instanceof IsEmpty) {
-            return ((IsEmpty) value).isEmpty();
+        if (value instanceof IsEmpty empty) {
+            return empty.isEmpty();
         }
 
         // These types would flood the log

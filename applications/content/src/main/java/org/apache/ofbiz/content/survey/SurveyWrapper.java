@@ -255,7 +255,7 @@ public class SurveyWrapper {
 
         Template template = null;
         try (InputStream templateStream = templateUrl.openStream();
-                InputStreamReader templateReader = new InputStreamReader(templateStream, StandardCharsets.UTF_8);) {
+                InputStreamReader templateReader = new InputStreamReader(templateStream, StandardCharsets.UTF_8)) {
             template = new Template(templateUrl.toExternalForm(), templateReader, config);
         } catch (IOException e) {
             Debug.logError(e, "Unable to get template from URL :" + templateUrl.toExternalForm(), MODULE);

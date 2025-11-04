@@ -498,7 +498,7 @@ public class ModelMenu extends ModelWidget {
     public String getExtraIndex(Map<String, Object> context) {
         try {
             return extraIndex.expandString(context);
-        } catch (Exception ex) {
+        } catch (Exception _) {
             return "";
         }
     }

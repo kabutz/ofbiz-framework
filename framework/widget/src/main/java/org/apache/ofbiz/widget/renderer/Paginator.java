@@ -62,16 +62,14 @@ public final class Paginator {
         // REFACTOR: Pattern Matching for switch
         if (listSize > 0) {
             Debug.logVerbose("If listSize > 0, do nothing", MODULE);
-        } else if (entryList instanceof EntityListIterator) {
-            EntityListIterator iter = (EntityListIterator) entryList;
+        } else if (entryList instanceof EntityListIterator iter) {
             try {
                 listSize = iter.getResultsSizeAfterPartialList();
             } catch (GenericEntityException e) {
                 Debug.logError(e, "Error getting list size", MODULE);
                 listSize = 0;
             }
-        } else if (entryList instanceof List<?>) {
-            List<?> items = (List<?>) entryList;
+        } else if (entryList instanceof List<?> items) {
             listSize = items.size();
             if (context.containsKey("result")) {
                 Map<String, Object> resultMap = UtilGenerics.cast(context.get("result"));
@@ -79,8 +77,7 @@ public final class Paginator {
                     listSize = (int) resultMap.get("listSize");
                 }
             }
-        } else if (entryList instanceof PagedList) {
-            PagedList<?> pagedList = (PagedList<?>) entryList;
+        } else if (entryList instanceof PagedList<?> pagedList) {
             listSize = pagedList.getSize();
         }
         if (modelForm.getPaginate(context)) {
@@ -132,10 +129,10 @@ public final class Paginator {
                 field = modelForm.getPaginateIndexField(context);
                 value = context.get(field);
             }
-            if (value instanceof Integer) {
-                viewIndex = (Integer) value;
-            } else if (value instanceof String) {
-                viewIndex = Integer.parseInt((String) value);
+            if (value instanceof Integer integer) {
+                viewIndex = integer;
+            } else if (value instanceof String string) {
+                viewIndex = Integer.parseInt(string);
             }
         } catch (Exception e) {
             Debug.logWarning(e, "Error getting paginate view index: " + e.toString(), MODULE);
@@ -164,10 +161,10 @@ public final class Paginator {
                 field = modelForm.getPaginateSizeField(context);
                 value = context.get(field);
             }
-            if (value instanceof Integer) {
-                viewSize = (Integer) value;
-            } else if (value instanceof String && UtilValidate.isNotEmpty(value)) {
-                viewSize = Integer.parseInt((String) value);
+            if (value instanceof Integer integer) {
+                viewSize = integer;
+            } else if (value instanceof String string && UtilValidate.isNotEmpty(value)) {
+                viewSize = Integer.parseInt(string);
             }
         } catch (Exception e) {
             Debug.logWarning(e, "Error getting paginate view size: " + e.toString(), MODULE);
@@ -191,12 +188,12 @@ public final class Paginator {
         }
         // if list is empty, do not render rows
         Iterator<?> iter = null;
-        if (obj instanceof Iterator<?>) {
-            iter = (Iterator<?>) obj;
-        } else if (obj instanceof List<?>) {
-            iter = ((List<?>) obj).listIterator();
-        } else if (obj instanceof PagedList<?>) {
-            iter = ((PagedList<?>) obj).iterator();
+        if (obj instanceof Iterator<?> iterator) {
+            iter = iterator;
+        } else if (obj instanceof List<?> list1) {
+            iter = list1.listIterator();
+        } else if (obj instanceof PagedList<?> list) {
+            iter = list.iterator();
         }
 
         // set low and high index
@@ -232,12 +229,12 @@ public final class Paginator {
         }
         context.put("actualPageSize", highIndex - lowIndex);
 
-        if (iter instanceof EntityListIterator) {
+        if (iter instanceof EntityListIterator iterator) {
             // The EntityListIterator will be closed at the end of FormRenderer.renderItemRows()
             // Note: it's also used in MacroScreenRenderer.renderScreenletPaginateMenu() but I could not find where it's then closed, nor issues...
             try {
                 // CHECKSTYLE_OFF: ALMOST_ALL
-                ((EntityListIterator) iter).beforeFirst();
+                iterator.beforeFirst();
                 // CHECKSTYLE_ON: ALMOST_ALL
             } catch (GenericEntityException e) {
                 Debug.logError(e, "Error rewinding list form render EntityListIterator: " + e.toString(), MODULE);
@@ -248,7 +245,7 @@ public final class Paginator {
     private static <X> X safeNext(Iterator<X> iterator) {
         try {
             return iterator.next();
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException _) {
             return null;
         }
     }

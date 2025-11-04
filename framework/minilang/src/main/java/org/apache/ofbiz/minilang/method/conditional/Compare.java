@@ -97,8 +97,8 @@ public abstract class Compare {
                 Collection<Object> collection = UtilGenerics.cast(lValue);
                 return collection.contains(rValue);
             }
-            if (lValue instanceof String && rValue instanceof String) {
-                return ((String) lValue).contains((String) rValue);
+            if (lValue instanceof String string && rValue instanceof String string1) {
+                return string.contains(string1);
             }
             throw new IllegalArgumentException("Cannot compare: l-value is not a collection");
         }

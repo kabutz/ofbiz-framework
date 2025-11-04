@@ -262,12 +262,12 @@ public final class UtilMisc {
         BigDecimal currentNumber = null;
         if (currentNumberObj == null) {
             currentNumber = ZERO_BD;
-        } else if (currentNumberObj instanceof BigDecimal) {
-            currentNumber = (BigDecimal) currentNumberObj;
-        } else if (currentNumberObj instanceof Double) {
-            currentNumber = new BigDecimal((Double) currentNumberObj);
-        } else if (currentNumberObj instanceof Long) {
-            currentNumber = new BigDecimal((Long) currentNumberObj);
+        } else if (currentNumberObj instanceof BigDecimal decimal) {
+            currentNumber = decimal;
+        } else if (currentNumberObj instanceof Double double1) {
+            currentNumber = new BigDecimal(double1);
+        } else if (currentNumberObj instanceof Long long1) {
+            currentNumber = new BigDecimal(long1);
         } else {
             throw new IllegalArgumentException("In addToBigDecimalInMap found a Map value of a type not supported: "
                     + currentNumberObj.getClass().getName());
@@ -283,7 +283,7 @@ public final class UtilMisc {
 
     public static <T> T removeFirst(List<T> lst) {
         // REFACTOR: Use sequenced collection method instead
-        return lst.remove(0);
+        return lst.removeFirst();
     }
 
     public static <T> Set<T> collectionToSet(Collection<T> c) {
@@ -441,11 +441,11 @@ public final class UtilMisc {
         if (obj == null) {
             return null;
         }
-        if (obj instanceof Double) {
-            return (Double) obj;
+        if (obj instanceof Double double1) {
+            return double1;
         }
-        if (obj instanceof Number) {
-            return ((Number) obj).doubleValue();
+        if (obj instanceof Number number) {
+            return number.doubleValue();
         }
         Double result = null;
         try {
@@ -478,11 +478,11 @@ public final class UtilMisc {
         if (obj == null) {
             return null;
         }
-        if (obj instanceof Integer) {
-            return (Integer) obj;
+        if (obj instanceof Integer integer) {
+            return integer;
         }
-        if (obj instanceof Number) {
-            return ((Number) obj).intValue();
+        if (obj instanceof Number number) {
+            return number.intValue();
         }
         Integer result = null;
         try {
@@ -515,11 +515,11 @@ public final class UtilMisc {
         if (obj == null) {
             return null;
         }
-        if (obj instanceof Long) {
-            return (Long) obj;
+        if (obj instanceof Long long1) {
+            return long1;
         }
-        if (obj instanceof Number) {
-            return ((Number) obj).longValue();
+        if (obj instanceof Number number) {
+            return number.longValue();
         }
         Long result = null;
         try {
@@ -584,13 +584,13 @@ public final class UtilMisc {
      * @param localeObject An Object representing the locale
      */
     public static Locale ensureLocale(Object localeObject) {
-        if (localeObject instanceof String) {
-            Locale locale = parseLocale((String) localeObject);
+        if (localeObject instanceof String string) {
+            Locale locale = parseLocale(string);
             if (locale != null) {
                 return locale;
             }
-        } else if (localeObject instanceof Locale) {
-            return (Locale) localeObject;
+        } else if (localeObject instanceof Locale locale) {
+            return locale;
         }
         return Locale.getDefault();
     }
@@ -630,7 +630,7 @@ public final class UtilMisc {
             throw new IOException("File is a directory, not a file, cannot copy");
         }
         try (InputStream in = new FileInputStream(sourceLocation);
-                OutputStream out = new FileOutputStream(targetLocation);) {
+                OutputStream out = new FileOutputStream(targetLocation)) {
             // Copy the bits from instream to outstream
             byte[] buf = new byte[1024];
             int len;

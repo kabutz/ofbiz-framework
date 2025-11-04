@@ -134,7 +134,7 @@ public class ProposedOrder {
                                     BOMTree.EXPLOSION_SINGLE_LEVEL, delegator, dispatcher, userLogin);
                             tree.setRootQuantity(quantity);
                             tree.print(components, true);
-                            if (!components.isEmpty()) components.remove(0);
+                            if (!components.isEmpty()) components.removeFirst();
                         } catch (Exception exc) {
                             Debug.logWarning(exc.getMessage(), MODULE);
                             tree = null;

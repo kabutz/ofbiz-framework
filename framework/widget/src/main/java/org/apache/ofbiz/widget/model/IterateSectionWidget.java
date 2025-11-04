@@ -140,8 +140,8 @@ public class IterateSectionWidget extends ModelScreenWidget {
             Object[] a = entrySet.toArray();
             theList = Arrays.asList(a);
             isEntrySet = true;
-        } else if (obj instanceof List<?>) {
-            theList = (List<?>) obj;
+        } else if (obj instanceof List<?> list) {
+            theList = list;
         } else {
             Debug.logError("Object not list or map type", MODULE);
             return;
@@ -157,10 +157,10 @@ public class IterateSectionWidget extends ModelScreenWidget {
                 String viewSizeString = params.get("VIEW_SIZE" + "_" + WidgetWorker.getPaginatorNumber(context));
                 viewIndex = Integer.parseInt(viewIndexString);
                 locViewSize = Integer.parseInt(viewSizeString);
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
                 try {
                     viewIndex = (Integer) context.get("viewIndex");
-                } catch (Exception e2) {
+                } catch (Exception _) {
                     viewIndex = 0;
                 }
             }
@@ -292,14 +292,14 @@ public class IterateSectionWidget extends ModelScreenWidget {
         int viewIndex = -1;
         try {
             viewIndex = (Integer) context.get("viewIndex");
-        } catch (Exception e) {
+        } catch (Exception _) {
             viewIndex = 0;
         }
 
         int viewSize = -1;
         try {
             viewSize = (Integer) context.get("viewSize");
-        } catch (Exception e) {
+        } catch (Exception _) {
             viewSize = this.getViewSize();
         }
 

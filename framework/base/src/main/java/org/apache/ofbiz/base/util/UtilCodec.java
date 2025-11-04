@@ -635,11 +635,11 @@ public class UtilCodec {
         @Override
         public Object get(Object key) {
             Object theObject = this.internalMap.get(key);
-            if (theObject instanceof String) {
+            if (theObject instanceof String string) {
                 if (this.encoder != null) {
-                    return encoder.encode((String) theObject);
+                    return encoder.encode(string);
                 }
-                return UtilCodec.getEncoder("html").encode((String) theObject);
+                return UtilCodec.getEncoder("html").encode(string);
             } else if (theObject instanceof Map<?, ?>) {
                 return HtmlEncodingMapWrapper.getHtmlEncodingMapWrapper(UtilGenerics.cast(theObject), this.encoder);
             }

@@ -502,30 +502,19 @@ public final class TransactionUtil implements Status {
          * STATUS_ROLLING_BACK     9
          */
         // REFACTOR: Replace old style switch with switch expressions
-        switch (state) {
-        case Status.STATUS_ACTIVE:
-            return "Transaction Active (" + state + ")";
-        case Status.STATUS_COMMITTED:
-            return "Transaction Committed (" + state + ")";
-        case Status.STATUS_COMMITTING:
-            return "Transaction Committing (" + state + ")";
-        case Status.STATUS_MARKED_ROLLBACK:
-            return "Transaction Marked Rollback (" + state + ")";
-        case Status.STATUS_NO_TRANSACTION:
-            return "No Transaction (" + state + ")";
-        case Status.STATUS_PREPARED:
-            return "Transaction Prepared (" + state + ")";
-        case Status.STATUS_PREPARING:
-            return "Transaction Preparing (" + state + ")";
-        case Status.STATUS_ROLLEDBACK:
-            return "Transaction Rolledback (" + state + ")";
-        case Status.STATUS_ROLLING_BACK:
-            return "Transaction Rolling Back (" + state + ")";
-        case Status.STATUS_UNKNOWN:
-            return "Transaction Status Unknown (" + state + ")";
-        default:
-            return "Not a valid state code (" + state + ")";
-        }
+        return switch (state) {
+        case Status.STATUS_ACTIVE -> "Transaction Active (" + state + ")";
+        case Status.STATUS_COMMITTED -> "Transaction Committed (" + state + ")";
+        case Status.STATUS_COMMITTING -> "Transaction Committing (" + state + ")";
+        case Status.STATUS_MARKED_ROLLBACK -> "Transaction Marked Rollback (" + state + ")";
+        case Status.STATUS_NO_TRANSACTION -> "No Transaction (" + state + ")";
+        case Status.STATUS_PREPARED -> "Transaction Prepared (" + state + ")";
+        case Status.STATUS_PREPARING -> "Transaction Preparing (" + state + ")";
+        case Status.STATUS_ROLLEDBACK -> "Transaction Rolledback (" + state + ")";
+        case Status.STATUS_ROLLING_BACK -> "Transaction Rolling Back (" + state + ")";
+        case Status.STATUS_UNKNOWN -> "Transaction Status Unknown (" + state + ")";
+        default -> "Not a valid state code (" + state + ")";
+        };
     }
 
     private static boolean readDebugResources() {
@@ -616,10 +605,10 @@ public final class TransactionUtil implements Status {
     protected static void pushSuspendedTransaction(Transaction t) {
         List<Transaction> tl = getSuspendedTxStack();
         // REFACTOR: Use sequenced collection method instead
-        tl.add(0, t);
+        tl.addFirst(t);
         List<Exception> stls = getSuspendedTxLocationsStack();
         // REFACTOR: Use sequenced collection method instead
-        stls.add(0, new Exception("TX Suspend Location"));
+        stls.addFirst(new Exception("TX Suspend Location"));
         // save the current transaction start stamp
         pushTransactionStartStamp(t);
     }
@@ -632,10 +621,10 @@ public final class TransactionUtil implements Status {
             List<Exception> stls = suspendedTxLocationStack.get();
             if (UtilValidate.isNotEmpty(stls)) {
                 // REFACTOR: Use sequenced collection method instead
-                stls.remove(0);
+                stls.removeFirst();
             }
             // REFACTOR: Use sequenced collection method instead
-            return tl.remove(0);
+            return tl.removeFirst();
         }
         return null;
     }
@@ -647,7 +636,7 @@ public final class TransactionUtil implements Status {
             List<Exception> stls = suspendedTxLocationStack.get();
             if (UtilValidate.isNotEmpty(stls)) {
                 // REFACTOR: Use sequenced collection method instead
-                stls.remove(0);
+                stls.removeFirst();
             }
             popTransactionStartStamp(t);
         }
@@ -664,7 +653,7 @@ public final class TransactionUtil implements Status {
             transactionBeginStackSave.set(el);
         }
         // REFACTOR: Use sequenced collection method instead
-        el.add(0, e);
+        el.addFirst(e);
 
         if (Debug.infoOn()) {
             Long curThreadId = Thread.currentThread().threadId();
@@ -674,7 +663,7 @@ public final class TransactionUtil implements Status {
                 allThreadsTransactionBeginStackSave.put(curThreadId, ctEl);
             }
             // REFACTOR: Use sequenced collection method instead
-            ctEl.add(0, e);
+            ctEl.addFirst(e);
         }
     }
 
@@ -685,14 +674,14 @@ public final class TransactionUtil implements Status {
             List<Exception> ctEl = allThreadsTransactionBeginStackSave.get(curThreadId);
             if (UtilValidate.isNotEmpty(ctEl)) {
                 // REFACTOR: Use sequenced collection method instead
-                ctEl.remove(0);
+                ctEl.removeFirst();
             }
         }
         // then do the more reliable ThreadLocal one
         List<Exception> el = transactionBeginStackSave.get();
         if (UtilValidate.isNotEmpty(el)) {
             // REFACTOR: Use sequenced collection method instead
-            return el.remove(0);
+            return el.removeFirst();
         }
         return null;
     }
@@ -821,14 +810,14 @@ public final class TransactionUtil implements Status {
             setRollbackOnlyCauseSave.set(el);
         }
         // REFACTOR: Use sequenced collection method instead
-        el.add(0, e);
+        el.addFirst(e);
     }
 
     private static RollbackOnlyCause popSetRollbackOnlyCauseSave() {
         List<RollbackOnlyCause> el = setRollbackOnlyCauseSave.get();
         if (UtilValidate.isNotEmpty(el)) {
             // REFACTOR: Use sequenced collection method instead
-            return el.remove(0);
+            return el.removeFirst();
         }
         return null;
     }

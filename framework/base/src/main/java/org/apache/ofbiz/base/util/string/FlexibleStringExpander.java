@@ -68,9 +68,7 @@ public abstract class FlexibleStringExpander implements Serializable, IsEmpty {
         if (fse instanceof ConstSimpleElem || fse instanceof ConstOffsetElem) {
             return true;
         }
-        if (fse instanceof Elements) {
-            // REFACTOR: Pattern Matching for instanceof
-            Elements fseElements = (Elements) fse;
+        if (fse instanceof Elements fseElements) {
             for (FlexibleStringExpander childElement : fseElements.childElems) {
                 if (containsConstant(childElement)) {
                     return true;
@@ -98,9 +96,7 @@ public abstract class FlexibleStringExpander implements Serializable, IsEmpty {
         if (fse instanceof ScriptElem) {
             return true;
         }
-        if (fse instanceof Elements) {
-            // REFACTOR: Pattern Matching for instanceof
-            Elements fseElements = (Elements) fse;
+        if (fse instanceof Elements fseElements) {
             for (FlexibleStringExpander childElement : fseElements.childElems) {
                 if (containsScript(childElement)) {
                     return true;

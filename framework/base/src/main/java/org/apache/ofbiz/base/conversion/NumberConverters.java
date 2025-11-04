@@ -33,9 +33,9 @@ public class NumberConverters implements ConverterLoader {
 
     private static Number fromString(String str, Locale locale) throws ConversionException {
         NumberFormat nf = NumberFormat.getNumberInstance(locale);
-        if (nf instanceof DecimalFormat) {
+        if (nf instanceof DecimalFormat format) {
             // CHECKSTYLE_OFF: ALMOST_ALL
-            ((DecimalFormat) nf).setParseBigDecimal(true);
+            format.setParseBigDecimal(true);
             // CHECKSTYLE_ON: ALMOST_ALL
         }
         try {
@@ -339,8 +339,8 @@ public class NumberConverters implements ConverterLoader {
 
         @Override
         protected BigDecimal convert(Number number) throws ConversionException {
-            if (number instanceof BigDecimal) {
-                return (BigDecimal) number;
+            if (number instanceof BigDecimal decimal) {
+                return decimal;
             }
             return BigDecimal.valueOf(number.doubleValue());
         }

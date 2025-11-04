@@ -31,6 +31,7 @@ import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilFormatOut;
 import org.apache.ofbiz.base.util.UtilURL;
 import org.apache.ofbiz.base.util.UtilValidate;
+import org.apache.ofbiz.datafile.Record;
 
 public class DataFile2EntityXml {
 
@@ -48,7 +49,7 @@ public class DataFile2EntityXml {
     public static void writeToEntityXml(String fileName, DataFile dataFile) throws DataFileException {
         File file = new File(fileName);
 
-        try (BufferedWriter outFile = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));) {
+        try (BufferedWriter outFile = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8))) {
 
             outFile.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             outFile.newLine();
@@ -65,15 +66,15 @@ public class DataFile2EntityXml {
                     if (value == null) {
                         value = modelField.getDefaultValue();
                     }
-                    if (value instanceof String) {
-                        value = ((String) value).trim();
-                        if (((String) value).isEmpty()) {
+                    if (value instanceof String string) {
+                        value = string.trim();
+                        if (string.isEmpty()) {
                             value = modelField.getDefaultValue();
                         }
                     }
                     if (value != null) {
-                        if (value instanceof String) {
-                            outFile.write(modelField.getName() + "=\"" + UtilFormatOut.encodeXmlValue((String) value) + "\" ");
+                        if (value instanceof String string) {
+                            outFile.write(modelField.getName() + "=\"" + UtilFormatOut.encodeXmlValue(string) + "\" ");
                         } else {
                             outFile.write(modelField.getName() + "=\"" + value + "\" ");
                         }
@@ -89,14 +90,14 @@ public class DataFile2EntityXml {
 
     }
 
-    public static void main(String[] args) throws Exception {
+    void main(String[] args) throws Exception {
         // TODO code application logic here
         String dataFileLoc = args[0];
         String definitionLoc = args[1];
         String definitionName = args[2];
 
         try (BufferedWriter outFile = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dataFileLoc + ".xml"),
-                StandardCharsets.UTF_8));) {
+                StandardCharsets.UTF_8))) {
             URL dataFileUrl = UtilURL.fromFilename(dataFileLoc);
             URL definitionUrl = UtilURL.fromFilename(definitionLoc);
 
@@ -115,9 +116,9 @@ public class DataFile2EntityXml {
                     outFile.write("<" + modelRecord.getName() + " ");
                     for (ModelField modelField : modelRecord.getFields()) {
                         Object value = record.get(modelField.getName());
-                        if (value instanceof String) {
-                            value = ((String) value).trim();
-                            outFile.write(modelField.getName() + "=\"" + UtilFormatOut.encodeXmlValue((String) value) + "\" ");
+                        if (value instanceof String string) {
+                            value = string.trim();
+                            outFile.write(modelField.getName() + "=\"" + UtilFormatOut.encodeXmlValue(string) + "\" ");
                         } else {
                             outFile.write(modelField.getName() + "=\"" + value + "\" ");
                         }

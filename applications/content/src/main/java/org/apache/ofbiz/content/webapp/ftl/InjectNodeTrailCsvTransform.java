@@ -160,7 +160,7 @@ public class InjectNodeTrailCsvTransform implements TemplateTransformModel {
 
                         if (UtilValidate.isNotEmpty(lastPassedContentId)) {
                             if (UtilValidate.isNotEmpty(trail)) {
-                                Map<String, ? extends Object> nd = trail.get(0);
+                                Map<String, ? extends Object> nd = trail.getFirst();
                                 String firstTrailContentId = (String) nd.get("contentId");
                                 if (UtilValidate.isNotEmpty(firstTrailContentId)
                                         && UtilValidate.isNotEmpty(lastPassedContentId)

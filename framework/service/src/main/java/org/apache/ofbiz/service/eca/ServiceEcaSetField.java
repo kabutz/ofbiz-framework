@@ -165,8 +165,7 @@ public class ServiceEcaSetField {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof ServiceEcaSetField) {
-            ServiceEcaSetField other = (ServiceEcaSetField) obj;
+        if (obj instanceof ServiceEcaSetField other) {
 
             if (!Objects.equals(this.fieldName, other.fieldName)) return false;
             if (!Objects.equals(this.envName, other.envName)) return false;

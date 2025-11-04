@@ -220,9 +220,9 @@ public class ShoppingCartEvents {
             Object object = paramMap.remove("add_product_id");
             try {
                 productId = (String) object;
-            } catch (ClassCastException e) {
+            } catch (ClassCastException _) {
                 List<String> productList = UtilGenerics.cast(object);
-                productId = productList.get(0);
+                productId = productList.getFirst();
             }
         }
         if (paramMap.containsKey("PRODUCT_ID")) {
@@ -1005,7 +1005,7 @@ public class ShoppingCartEvents {
         if (UtilValidate.isNotEmpty(cartIndexStr) && UtilValidate.isInteger(cartIndexStr)) {
             try {
                 cartIndex = Integer.parseInt(cartIndexStr);
-            } catch (NumberFormatException nfe) {
+            } catch (NumberFormatException _) {
                 Debug.logWarning("Invalid value for cart index =" + cartIndexStr, MODULE);
             }
         }
@@ -1041,7 +1041,7 @@ public class ShoppingCartEvents {
         if (UtilValidate.isNotEmpty(cartIndexStr) && UtilValidate.isInteger(cartIndexStr)) {
             try {
                 cartIndex = Integer.parseInt(cartIndexStr);
-            } catch (NumberFormatException nfe) {
+            } catch (NumberFormatException _) {
                 Debug.logWarning("Invalid value for cart index =" + cartIndexStr, MODULE);
             }
         }
@@ -1118,7 +1118,7 @@ public class ShoppingCartEvents {
         int alternateGwpLine = 0;
         try {
             alternateGwpLine = Integer.parseInt(alternateGwpLineStr);
-        } catch (Exception e) {
+        } catch (Exception _) {
             request.setAttribute("_ERROR_MESSAGE_", UtilProperties.getMessage(RES_ERROR,
                     "OrderCouldNotSelectAlternateGiftAlternateGwpLineIsNotAValidNumber", locale));
             return "error";
@@ -1350,7 +1350,7 @@ public class ShoppingCartEvents {
         if (UtilValidate.isNotEmpty(termValueStr)) {
             try {
                 termValue = new BigDecimal(termValueStr);
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
                 request.setAttribute("_ERROR_MESSAGE_", UtilProperties.getMessage(RES_ERROR, "OrderOrderTermValueError",
                         UtilMisc.toMap("orderTermValue", termValueStr), locale));
                 return "error";
@@ -1360,7 +1360,7 @@ public class ShoppingCartEvents {
         if (UtilValidate.isNotEmpty(termDaysStr)) {
             try {
                 termDays = Long.valueOf(termDaysStr);
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
                 request.setAttribute("_ERROR_MESSAGE_", UtilProperties.getMessage(RES_ERROR, "OrderOrderTermDaysError",
                         UtilMisc.toMap("orderTermDays", termDaysStr), locale));
                 return "error";

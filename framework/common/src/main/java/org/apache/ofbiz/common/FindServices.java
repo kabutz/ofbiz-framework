@@ -279,7 +279,7 @@ public class FindServices {
                 result.add(cond);
             } else {
                 // REFACTOR: Unnamed Variables & Patterns - JEP 456
-                savedGroups.computeIfAbsent(currentGroup, k -> new ArrayList<>())
+                savedGroups.computeIfAbsent(currentGroup, _ -> new ArrayList<>())
                         .add(cond);
             }
             keys.forEach(mapKey -> queryStringMap.put(mapKey, parameters.get(mapKey)));
@@ -734,11 +734,11 @@ public class FindServices {
         Timestamp startTs = null;
         try {
             ts = Timestamp.valueOf(timeStampString);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException _) {
             timeStampString += " 00:00:00.000";
             try {
                 ts = Timestamp.valueOf(timeStampString);
-            } catch (IllegalArgumentException e2) {
+            } catch (IllegalArgumentException _) {
                 return retValue;
             }
         }
@@ -824,7 +824,7 @@ public class FindServices {
             list = it.getPartialList(1, 1); // list starts at '1'
             if (UtilValidate.isNotEmpty(list)) {
                 // REFACTOR: Use sequenced collection method instead
-                item = list.get(0);
+                item = list.getFirst();
             }
         } catch (ClassCastException | NullPointerException | GenericEntityException e) {
             Debug.logInfo("Problem getting list Item" + e, MODULE);

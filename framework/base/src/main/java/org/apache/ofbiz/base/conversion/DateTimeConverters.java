@@ -707,7 +707,7 @@ public class DateTimeConverters implements ConverterLoader {
                 }
                 try {
                     return new java.sql.Timestamp(df.parse(str).getTime());
-                } catch (ParseException e2) {
+                } catch (ParseException _) {
                     throw new ConversionException(e);
                 }
             }

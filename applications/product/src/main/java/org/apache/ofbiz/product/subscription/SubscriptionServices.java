@@ -84,7 +84,7 @@ public class SubscriptionServices {
             // = EntityUtil.filterByDate(subscriptionList, true);
             List<GenericValue> listOrdered = EntityUtil.orderBy(subscriptionList, UtilMisc.toList("-fromDate"));
             if (!listOrdered.isEmpty()) {
-                lastSubscription = listOrdered.get(0);
+                lastSubscription = listOrdered.getFirst();
             }
         } catch (GenericEntityException e) {
             return ServiceUtil.returnError(e.toString());
@@ -263,7 +263,7 @@ public class SubscriptionServices {
             List<GenericValue> orderRoleList = EntityQuery.use(delegator).from("OrderRole").where("orderId", orderId,
                     "roleTypeId", "END_USER_CUSTOMER").queryList();
             if (!orderRoleList.isEmpty()) {
-                GenericValue orderRole = orderRoleList.get(0);
+                GenericValue orderRole = orderRoleList.getFirst();
                 String partyId = (String) orderRole.get("partyId");
                 subContext.put("partyId", partyId);
             } else {

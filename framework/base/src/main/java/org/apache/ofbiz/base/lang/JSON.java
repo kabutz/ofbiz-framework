@@ -97,8 +97,8 @@ public final class JSON {
         if (obj == this) {
             return true;
         }
-        if (obj instanceof JSON) {
-            return jsonString.equals(((JSON) obj).jsonString);
+        if (obj instanceof JSON oN) {
+            return jsonString.equals(oN.jsonString);
         }
         return false;
     }

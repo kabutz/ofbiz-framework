@@ -150,8 +150,7 @@ public final class EntityEcaAction implements java.io.Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof EntityEcaAction) {
-            EntityEcaAction other = (EntityEcaAction) obj;
+        if (obj instanceof EntityEcaAction other) {
             if (!Objects.equals(this.serviceName, other.serviceName)) return false;
             if (!Objects.equals(this.serviceMode, other.serviceMode)) return false;
             if (!Objects.equals(this.runAsUser, other.runAsUser)) return false;

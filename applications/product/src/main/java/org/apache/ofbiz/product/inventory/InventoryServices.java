@@ -74,7 +74,7 @@ public class InventoryServices {
 
         try {
             inventoryItem = EntityQuery.use(delegator).from("InventoryItem").where("inventoryItemId", inventoryItemId).queryOne();
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE,
                     "ProductNotFindInventoryItemWithId", locale) + inventoryItemId);
         }
@@ -778,7 +778,7 @@ public class InventoryServices {
             } else {
                 facilities = EntityQuery.use(delegator).from("Facility").queryList();
             }
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE,
                     "ProductErrorFacilityIdNotFound",
                     UtilMisc.toMap("facilityId", facilityId), locale));

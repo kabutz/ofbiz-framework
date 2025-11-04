@@ -517,7 +517,7 @@ public class ShoppingCart implements Iterable<ShoppingCartItem>, Serializable {
             }
             List<GenericValue> productSuppliers = UtilGenerics.cast(result.get("supplierProducts"));
             if ((productSuppliers != null) && (!productSuppliers.isEmpty())) {
-                supplierProduct = productSuppliers.get(0);
+                supplierProduct = productSuppliers.getFirst();
             }
         } catch (GenericServiceException e) {
             Debug.logWarning(UtilProperties.getMessage(RES_ERROR, "OrderRunServiceGetSuppliersForProductError", locale) + e.getMessage(), MODULE);
@@ -893,7 +893,7 @@ public class ShoppingCart implements Iterable<ShoppingCartItem>, Serializable {
         localList.addAll(multipleItems);
         // the ones to keep...
         for (int i = 0; i < maxItems; i++) {
-            localList.remove(0);
+            localList.removeFirst();
         }
         for (ShoppingCartItem item : localList) {
             this.removeCartItem(item, dispatcher);
@@ -3475,7 +3475,7 @@ public class ShoppingCart implements Iterable<ShoppingCartItem>, Serializable {
     /** Get the contactMechId for this cart given the contactMechPurposeTypeId */
     public String getContactMechId(String contactMechPurposeTypeId) {
         return UtilValidate.isNotEmpty(getContactMechIds(contactMechPurposeTypeId))
-                ? getContactMechIds(contactMechPurposeTypeId).get(0)
+                ? getContactMechIds(contactMechPurposeTypeId).getFirst()
                 : null;
     }
 
@@ -4146,7 +4146,7 @@ public class ShoppingCart implements Iterable<ShoppingCartItem>, Serializable {
             parties = new LinkedList<>();
             additionalPartyRole.put(roleTypeId, parties);
         }
-        parties.add(0, partyId);
+        parties.addFirst(partyId);
     }
 
     /**
@@ -5114,8 +5114,8 @@ public class ShoppingCart implements Iterable<ShoppingCartItem>, Serializable {
 
         @Override
         public boolean equals(java.lang.Object obj) {
-            if (obj instanceof BasePriceOrderComparator) {
-                return this.ascending == ((BasePriceOrderComparator) obj).ascending;
+            if (obj instanceof BasePriceOrderComparator comparator) {
+                return this.ascending == comparator.ascending;
             }
             return false;
         }
@@ -5196,8 +5196,7 @@ public class ShoppingCart implements Iterable<ShoppingCartItem>, Serializable {
         /** equals */
         @Override
         public boolean equals(Object obj) {
-            if (obj instanceof ShoppingCartItemGroup) {
-                ShoppingCartItemGroup that = (ShoppingCartItemGroup) obj;
+            if (obj instanceof ShoppingCartItemGroup that) {
                 if (that.groupNumber.equals(this.groupNumber)) {
                     return true;
                 }
@@ -5689,7 +5688,7 @@ public class ShoppingCart implements Iterable<ShoppingCartItem>, Serializable {
                             .where("shipmentMethodTypeId", shipmentMethodTypeId)
                             .filterByDate()
                             .queryCount();
-                } catch (GenericEntityException e) {
+                } catch (GenericEntityException _) {
                     Debug.logError("Error to resolve ShipmentTimeEstimate quantity", MODULE);
                 }
                 if (shipTimeEstimateSize != 0) {
@@ -5709,7 +5708,7 @@ public class ShoppingCart implements Iterable<ShoppingCartItem>, Serializable {
                                     .filter(Objects::nonNull).findFirst().get();
                             estimatedDeliveryDate = UtilDateTime.addDaysToTimestamp(referenceDate, estimatedDays);
                         }
-                    } catch (GenericEntityException e) {
+                    } catch (GenericEntityException _) {
                         Debug.logError("Error to resolve ShipmentTimeEstimate days", MODULE);
                     }
                 }

@@ -73,7 +73,7 @@ public class BOMServices {
         if (UtilValidate.isNotEmpty(fromDateStr)) {
             try {
                 fromDate = Timestamp.valueOf(fromDateStr);
-            } catch (Exception e) {
+            } catch (Exception _) {
             }
         }
         if (fromDate == null) {
@@ -317,7 +317,7 @@ public class BOMServices {
         if (UtilValidate.isNotEmpty(fromDateStr)) {
             try {
                 fromDate = Timestamp.valueOf(fromDateStr);
-            } catch (Exception e) {
+            } catch (Exception _) {
             }
         }
         if (fromDate == null) {
@@ -372,7 +372,7 @@ public class BOMServices {
         if (UtilValidate.isNotEmpty(fromDateStr)) {
             try {
                 fromDate = Timestamp.valueOf(fromDateStr);
-            } catch (Exception e) {
+            } catch (Exception _) {
             }
         }
         if (fromDate == null) {
@@ -392,7 +392,7 @@ public class BOMServices {
             tree.setRootQuantity(quantity);
             tree.setRootAmount(amount);
             tree.print(components, excludeWIPs);
-            if (!components.isEmpty()) components.remove(0);
+            if (!components.isEmpty()) components.removeFirst();
         } catch (GenericEntityException gee) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingBomErrorCreatingBillOfMaterialsTree",
                     UtilMisc.toMap("errorString", gee.getMessage()), locale));
@@ -462,7 +462,7 @@ public class BOMServices {
         if (UtilValidate.isNotEmpty(fromDateStr)) {
             try {
                 fromDate = Timestamp.valueOf(fromDateStr);
-            } catch (Exception e) {
+            } catch (Exception _) {
             }
         }
         if (fromDate == null) {
@@ -506,14 +506,14 @@ public class BOMServices {
             if (UtilValidate.isNotEmpty(packages)) {
                 return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingBomPackageAlreadyFound", locale));
             }
-        } catch (GenericEntityException gee) {
+        } catch (GenericEntityException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingBomErrorLoadingShipmentPackages", locale));
         }
         // ShipmentItems are loaded
         List<GenericValue> shipmentItems = null;
         try {
             shipmentItems = EntityQuery.use(delegator).from("ShipmentItem").where("shipmentId", shipmentId).queryList();
-        } catch (GenericEntityException gee) {
+        } catch (GenericEntityException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingBomErrorLoadingShipmentItems", locale));
         }
         Map<String, Object> orderReadHelpers = new HashMap<>();
@@ -526,7 +526,7 @@ public class BOMServices {
                         .where("shipmentId", shipmentId,
                                 "shipmentItemSeqId", shipmentItem.get("shipmentItemSeqId"))
                         .queryFirst();
-            } catch (GenericEntityException e) {
+            } catch (GenericEntityException _) {
                 return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingPackageConfiguratorError", locale));
             }
             if (orderShipment != null && !orderReadHelpers.containsKey(orderShipment.getString("orderId"))) {
@@ -569,12 +569,12 @@ public class BOMServices {
                     if (ServiceUtil.isError(serviceResult)) {
                         return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingPackageConfiguratorError", locale));
                     }
-                } catch (GenericServiceException e) {
+                } catch (GenericServiceException _) {
                     return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingPackageConfiguratorError", locale));
                 }
                 List<BOMNode> productsInPackages = UtilGenerics.cast(serviceResult.get("productsInPackages"));
                 if (productsInPackages.size() == 1) {
-                    BOMNode root = productsInPackages.get(0);
+                    BOMNode root = productsInPackages.getFirst();
                     String rootProductId = (root.getSubstitutedNode() != null ? root.getSubstitutedNode().getProduct().getString("productId")
                             : root.getProduct().getString("productId"));
                     if (orderItem.getString("productId").equals(rootProductId)) {
@@ -615,7 +615,7 @@ public class BOMServices {
                                 GenericValue boxType = null;
                                 try {
                                     boxType = EntityQuery.use(delegator).from("ShipmentBoxType").where("shipmentBoxTypeId", boxTypeId).queryOne();
-                                } catch (GenericEntityException e) {
+                                } catch (GenericEntityException _) {
                                     return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingPackageConfiguratorError",
                                             locale));
                                 }
@@ -636,7 +636,7 @@ public class BOMServices {
                     GenericValue product = null;
                     try {
                         product = orderItem.getRelatedOne("Product", false);
-                    } catch (GenericEntityException e) {
+                    } catch (GenericEntityException _) {
                         return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingPackageConfiguratorError", locale));
                     }
                     String boxTypeId = product.getString("shipmentBoxTypeId");
@@ -645,7 +645,7 @@ public class BOMServices {
                             GenericValue boxType = null;
                             try {
                                 boxType = EntityQuery.use(delegator).from("ShipmentBoxType").where("shipmentBoxTypeId", boxTypeId).queryOne();
-                            } catch (GenericEntityException e) {
+                            } catch (GenericEntityException _) {
                                 return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingPackageConfiguratorError", locale));
                             }
 
@@ -690,7 +690,7 @@ public class BOMServices {
                         GenericValue orderItem = orderReadHelper.getOrderItem(orderShipment.getString("orderItemSeqId"));
                         try {
                             product = orderItem.getRelatedOne("Product", false);
-                        } catch (GenericEntityException e) {
+                        } catch (GenericEntityException _) {
                             return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingPackageConfiguratorError", locale));
                         }
                         quantity = orderShipment.getBigDecimal("quantity");
@@ -731,7 +731,7 @@ public class BOMServices {
                                     return ServiceUtil.returnError(ServiceUtil.getErrorMessage(serviceResult));
                                 }
                                 shipmentPackageSeqId = (String) serviceResult.get("shipmentPackageSeqId");
-                            } catch (GenericServiceException e) {
+                            } catch (GenericServiceException _) {
                                 return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingPackageConfiguratorError", locale));
                             }
                             totalWidth = BigDecimal.ZERO;
@@ -756,7 +756,7 @@ public class BOMServices {
                             if (ServiceUtil.isError(serviceResult)) {
                                 return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingPackageConfiguratorError", locale));
                             }
-                        } catch (GenericServiceException e) {
+                        } catch (GenericServiceException _) {
                             return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingPackageConfiguratorError", locale));
                         }
                         totalWidth = totalWidth.add(qty.multiply(productDepth));
@@ -793,7 +793,7 @@ public class BOMServices {
         if (UtilValidate.isNotEmpty(fromDateStr)) {
             try {
                 fromDate = Timestamp.valueOf(fromDateStr);
-            } catch (Exception e) {
+            } catch (Exception _) {
             }
         }
         if (fromDate == null) {

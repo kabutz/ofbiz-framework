@@ -723,7 +723,7 @@ public class ProductionRunServices {
                                 "ManufacturingProductionRunStatusNotChangedMandatoryProductionRunNotCompleted", locale));
                     }
                 }
-            } catch (GenericEntityException gee) {
+            } catch (GenericEntityException _) {
                 return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingProductionRunStatusNotChanged", locale));
             }
 
@@ -941,7 +941,7 @@ public class ProductionRunServices {
                             return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingProductionRunStatusNotChanged", locale));
                         }
                     }
-                } catch (GenericEntityException | GenericServiceException e) {
+                } catch (GenericEntityException | GenericServiceException _) {
                     return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingProductionRunStatusNotChanged", locale));
                 }
             }
@@ -1367,7 +1367,7 @@ public class ProductionRunServices {
                         if (ServiceUtil.isError(serviceResult)) {
                             return ServiceUtil.returnError(ServiceUtil.getErrorMessage(serviceResult));
                         }
-                    } catch (GenericServiceException e) {
+                    } catch (GenericServiceException _) {
                         return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingRoutingTaskStartDateBeforePRun", locale));
                     }
                 }
@@ -2493,7 +2493,7 @@ public class ProductionRunServices {
             if (ServiceUtil.isError(serviceResult)) {
                 return ServiceUtil.returnError(ServiceUtil.getErrorMessage(serviceResult));
             }
-        } catch (GenericServiceException e) {
+        } catch (GenericServiceException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingRequirementNotUpdated", locale));
         }
         return ServiceUtil.returnSuccess();
@@ -2618,7 +2618,7 @@ public class ProductionRunServices {
             if (ServiceUtil.isError(serviceResult)) {
                 return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingProductionRunNotCreated", locale));
             }
-        } catch (GenericServiceException e) {
+        } catch (GenericServiceException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingProductionRunNotCreated", locale));
         }
         String productionRunId = (String) serviceResult.get("productionRunId");
@@ -2654,7 +2654,7 @@ public class ProductionRunServices {
                             .where("productId", componentProductId,
                                     "productAssocTypeId", "MANUF_COMPONENT")
                             .filterByDate().queryList();
-                } catch (GenericEntityException e) {
+                } catch (GenericEntityException _) {
                     return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingProductionRunTryToGetBomListError", locale));
                 }
                 // if so create a mandatory predecessor to this production run
@@ -2675,9 +2675,9 @@ public class ProductionRunServices {
                                 "workEffortIdTo", productionRunId, "workEffortIdFrom", serviceResult.get("productionRunId"),
                                 "workEffortAssocTypeId", "WORK_EFF_PRECEDENCY", "fromDate", UtilDateTime.nowTimestamp()));
                         workEffortPreDecessor.create();
-                    } catch (GenericServiceException e) {
+                    } catch (GenericServiceException _) {
                         return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingProductionRunNotCreated", locale));
-                    } catch (GenericEntityException e) {
+                    } catch (GenericEntityException _) {
                         return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingProductionRunTryToCreateWorkEffortAssoc",
                                 locale));
                     }
@@ -2727,7 +2727,7 @@ public class ProductionRunServices {
                 if (ServiceUtil.isError(serviceResult)) {
                     return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingProductionRunNotCreated", locale));
                 }
-            } catch (GenericServiceException e) {
+            } catch (GenericServiceException _) {
                 return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingProductionRunNotCreated", locale));
             }
         }
@@ -2736,7 +2736,7 @@ public class ProductionRunServices {
                 delegator.create("WorkOrderItemFulfillment", UtilMisc.toMap("workEffortId", productionRunId, "orderId", orderId, "orderItemSeqId",
                         orderItemSeqId));
             }
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingRequirementNotDeleted", locale));
         }
 
@@ -2890,7 +2890,7 @@ public class ProductionRunServices {
                         if (ServiceUtil.isError(serviceResult)) {
                             return ServiceUtil.returnError(ServiceUtil.getErrorMessage(serviceResult));
                         }
-                    } catch (GenericServiceException e) {
+                    } catch (GenericServiceException _) {
                         return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingProductionRunNotCreated", locale));
                     }
 
@@ -2910,7 +2910,7 @@ public class ProductionRunServices {
                 }
                 return ServiceUtil.returnSuccess();
             }
-        } catch (GenericServiceException e) {
+        } catch (GenericServiceException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ManufacturingProductionRunNotCreated", locale));
         }
     }
@@ -2932,7 +2932,7 @@ public class ProductionRunServices {
         if (UtilValidate.isNotEmpty(fromDateStr)) {
             try {
                 fromDate = Timestamp.valueOf(fromDateStr);
-            } catch (Exception e) {
+            } catch (Exception _) {
             }
         }
         if (fromDate == null) {
@@ -2983,7 +2983,7 @@ public class ProductionRunServices {
             if ("OrderItemShipGroupAssoc".equals(orderItemOrShipGroupAssoc.getEntityName())) {
                 try {
                     orderItem = orderItemOrShipGroupAssoc.getRelatedOne("OrderItem", false);
-                } catch (GenericEntityException gee) {
+                } catch (GenericEntityException _) {
                     Debug.logInfo("Unable to find order item for " + orderItemOrShipGroupAssoc, MODULE);
                 }
             } else {

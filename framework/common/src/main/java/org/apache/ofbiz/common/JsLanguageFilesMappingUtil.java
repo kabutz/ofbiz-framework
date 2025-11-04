@@ -27,19 +27,13 @@ public final class JsLanguageFilesMappingUtil {
 
     public static String getFile(String libraryName, String localeString) {
         // REFACTOR: Replace old style switch with switch expressions
-        switch (libraryName) {
-        case "datejs":
-            return JsLanguageFilesMapping.DateJs.getFilePath(localeString);
-        case "dateTime":
-            return JsLanguageFilesMapping.DateTime.getFilePath(localeString);
-        case "jquery":
-            return JsLanguageFilesMapping.JQuery.getFilePath(localeString);
-        case "select2":
-            return JsLanguageFilesMapping.Select2.getFilePath(localeString);
-        case "validation":
-            return JsLanguageFilesMapping.Validation.getFilePath(localeString);
-        default:
-            return "";
-        }
+        return switch (libraryName) {
+        case "datejs" -> JsLanguageFilesMapping.DateJs.getFilePath(localeString);
+        case "dateTime" -> JsLanguageFilesMapping.DateTime.getFilePath(localeString);
+        case "jquery" -> JsLanguageFilesMapping.JQuery.getFilePath(localeString);
+        case "select2" -> JsLanguageFilesMapping.Select2.getFilePath(localeString);
+        case "validation" -> JsLanguageFilesMapping.Validation.getFilePath(localeString);
+        default -> "";
+        };
     }
 }

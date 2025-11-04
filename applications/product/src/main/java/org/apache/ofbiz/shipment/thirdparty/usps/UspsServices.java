@@ -172,7 +172,7 @@ public class UspsServices {
                 resource, "shipment.usps.max.estimate.weight", "70");
         try {
             maxWeight = new BigDecimal(maxWeightStr);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException _) {
             Debug.logWarning("Error parsing max estimate weight string [" + maxWeightStr + "], using default instead", MODULE);
             maxWeight = new BigDecimal("70");
         }
@@ -341,7 +341,7 @@ public class UspsServices {
                 resource, "shipment.usps.max.estimate.weight", "70");
         try {
             maxWeight = new BigDecimal(maxWeightStr);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException _) {
             Debug.logWarning("Error parsing max estimate weight string [" + maxWeightStr + "], using default instead", MODULE);
             maxWeight = new BigDecimal("70");
         }
@@ -421,7 +421,7 @@ public class UspsServices {
                 try {
                     BigDecimal packageAmount = new BigDecimal(UtilXml.childElementValue(serviceElement, "Postage"));
                     estimateAmount = estimateAmount.add(packageAmount);
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException _) {
                     Debug.logInfo("USPS International Rate Calculation returned an unparsable postage amount: "
                             + UtilXml.childElementValue(serviceElement, "Postage"), MODULE);
                     return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
@@ -1106,7 +1106,7 @@ public class UspsServices {
                 carrierShipmentBoxTypes = shipmentPackage.getRelated("CarrierShipmentBoxType", UtilMisc.toMap("partyId", "USPS"), null, false);
 
                 if (!carrierShipmentBoxTypes.isEmpty()) {
-                    carrierShipmentBoxType = carrierShipmentBoxTypes.get(0);
+                    carrierShipmentBoxType = carrierShipmentBoxTypes.getFirst();
                 }
 
                 if (carrierShipmentBoxType != null

@@ -44,7 +44,7 @@ public final class ReferenceCleaner {
                     // CHECKSTYLE_OFF: ALMOST_ALL
                     ((Removable) QUEUE.remove()).remove();
                     // CHECKSTYLE_ON: ALMOST_ALL
-                } catch (Throwable t) {
+                } catch (Throwable _) {
                     // ignore
                 }
                 if (interrupted()) {

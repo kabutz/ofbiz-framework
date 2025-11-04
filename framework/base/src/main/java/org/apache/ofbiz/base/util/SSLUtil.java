@@ -115,10 +115,10 @@ public final class SSLUtil {
         }
 
         for (TrustManager mgr : mgrs) {
-            if (mgr instanceof X509TrustManager) {
+            if (mgr instanceof X509TrustManager manager) {
                 try {
                     // CHECKSTYLE_OFF: ALMOST_ALL
-                    ((X509TrustManager) mgr).checkClientTrusted(chain, authType);
+                    manager.checkClientTrusted(chain, authType);
                     // CHECKSTYLE_ON: ALMOST_ALL
                     return true;
                 } catch (CertificateException e) {
@@ -186,8 +186,8 @@ public final class SSLUtil {
         KeyManager[] keyManagers = factory.getKeyManagers();
         if (alias != null) {
             for (int i = 0; i < keyManagers.length; i++) {
-                if (keyManagers[i] instanceof X509KeyManager) {
-                    keyManagers[i] = new AliasKeyManager((X509KeyManager) keyManagers[i], alias);
+                if (keyManagers[i] instanceof X509KeyManager manager) {
+                    keyManagers[i] = new AliasKeyManager(manager, alias);
                 }
             }
         }
@@ -257,9 +257,8 @@ public final class SSLUtil {
 
     public static HostnameVerifier getHostnameVerifier(int level) {
         // REFACTOR: Replace old style switch with switch expressions
-        switch (level) {
-        case HOSTCERT_MIN_CHECK:
-            return (hostname, session) -> {
+        return switch (level) {
+        case HOSTCERT_MIN_CHECK -> (_, session) -> {
                 Certificate[] peerCerts;
                 try {
                     peerCerts = session.getPeerCertificates();
@@ -280,7 +279,7 @@ public final class SSLUtil {
                         peerCert.verify(peerCert.getPublicKey());
                     } catch (RuntimeException e) {
                         throw e;
-                    } catch (Exception e) {
+                    } catch (Exception _) {
                         // certificate not valid
                         Debug.logWarning("Certificate is not valid!", MODULE);
                         return false;
@@ -288,11 +287,9 @@ public final class SSLUtil {
                 }
                 return true;
             };
-        case HOSTCERT_NO_CHECK:
-            return (hostname, session) -> true;
-        default:
-            return null;
-        }
+        case HOSTCERT_NO_CHECK -> (_, _) -> true;
+        default -> null;
+        };
     }
 
     public static void loadJsseProperties() {

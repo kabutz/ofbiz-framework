@@ -61,8 +61,7 @@ public class SeoTransform implements TemplateTransformModel {
             return defaultValue;
         }
         Object o = args.get(key);
-        if (o instanceof SimpleScalar) {
-            SimpleScalar s = (SimpleScalar) o;
+        if (o instanceof SimpleScalar s) {
             return "true".equalsIgnoreCase(s.getAsString());
         }
         return defaultValue;
@@ -111,8 +110,7 @@ public class SeoTransform implements TemplateTransformModel {
                         RequestHandler rh = RequestHandler.from(request);
                         out.write(seoUrl(rh.makeLink(request, response, buf.toString(), fullPath, secure, encode), userLogin == null));
                     } else if (prefix != null) {
-                        if (prefix instanceof TemplateScalarModel) {
-                            TemplateScalarModel s = (TemplateScalarModel) prefix;
+                        if (prefix instanceof TemplateScalarModel s) {
                             String prefixString = s.getAsString();
                             String bufString = buf.toString();
                             boolean prefixSlash = prefixString.endsWith("/");

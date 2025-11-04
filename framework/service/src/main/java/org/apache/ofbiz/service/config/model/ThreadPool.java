@@ -71,7 +71,7 @@ public final class ThreadPool {
                 if (this.purgeJobDays < 0) {
                     throw new ServiceConfigException("<thread-pool> element purge-job-days attribute value is invalid");
                 }
-            } catch (NumberFormatException | ServiceConfigException e) {
+            } catch (NumberFormatException | ServiceConfigException _) {
                 throw new ServiceConfigException("<thread-pool> element purge-job-days attribute value is invalid");
             }
         }

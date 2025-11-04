@@ -93,7 +93,7 @@ public class DataEvents {
                 Debug.logError("================== Not saved for security reason ==================", MODULE);
                 return "success";
             }
-        } catch (IOException e) {
+        } catch (IOException _) {
             Debug.logError("================== Not saved for security reason ==================", MODULE);
             return "success";
         }

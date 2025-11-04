@@ -67,7 +67,7 @@ public class BlowFishCrypt {
      */
     public BlowFishCrypt(File keyFile) {
         try (FileInputStream is = new FileInputStream(keyFile);
-                ObjectInputStream os = new ObjectInputStream(is);) {
+                ObjectInputStream os = new ObjectInputStream(is)) {
             String keyString = (String) os.readObject();
             byte[] keyBytes = keyString.getBytes(StandardCharsets.UTF_8);
             secretKeySpec = new SecretKeySpec(keyBytes, "Blowfish");

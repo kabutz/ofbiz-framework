@@ -336,14 +336,11 @@ public class PdfSurveyServices {
             for (String fieldName : map.keySet()) {
                 String fieldValue = fs.getField(fieldName);
                 Object obj = acroFieldMap.get(fieldName);
-                if (obj instanceof Date) {
-                    Date d = (Date) obj;
+                if (obj instanceof Date d) {
                     fieldValue = UtilDateTime.toDateString(d);
-                } else if (obj instanceof Long) {
-                    Long lg = (Long) obj;
+                } else if (obj instanceof Long lg) {
                     fieldValue = lg.toString();
-                } else if (obj instanceof Integer) {
-                    Integer ii = (Integer) obj;
+                } else if (obj instanceof Integer ii) {
                     fieldValue = ii.toString();
                 } else {
                     fieldValue = (String) obj;

@@ -203,15 +203,11 @@ public abstract class ListFinder extends Finder {
                 EntityFindOptions options = new EntityFindOptions();
                 options.setDistinct(distinct);
                 options.setResultSetType(resultSetType);
-                if (outputHandler instanceof LimitRange) {
-                    // REFACTOR: Pattern Matching for instanceof
-                    LimitRange limitRange = (LimitRange) outputHandler;
+                if (outputHandler instanceof LimitRange limitRange) {
                     int start = limitRange.getStart(context);
                     int size = limitRange.getSize(context);
                     options.setMaxRows(start + size);
-                } else if (outputHandler instanceof LimitView) {
-                    // REFACTOR: Pattern Matching for instanceof
-                    LimitView limitView = (LimitView) outputHandler;
+                } else if (outputHandler instanceof LimitView limitView) {
                     int index = limitView.getIndex(context);
                     int size = limitView.getSize(context);
                     options.setMaxRows(size * (index + 1));

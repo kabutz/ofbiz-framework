@@ -38,7 +38,7 @@ import org.apache.ofbiz.base.util.string.FlexibleStringExpander;
 import org.junit.Test;
 
 public class FlexibleMapAccessorTests {
-    private static final Locale LOCALE_TO_TEST = new Locale("en", "US");
+    private static final Locale LOCALE_TO_TEST = Locale.of("en", "US");
     private static FlexibleMapAccessor<?> fmaEmpty = FlexibleMapAccessor.getInstance("");
     private static FlexibleMapAccessor<?> fmaNull = FlexibleMapAccessor.getInstance(null);
 

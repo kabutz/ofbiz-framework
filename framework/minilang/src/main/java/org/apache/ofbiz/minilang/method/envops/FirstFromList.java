@@ -57,7 +57,7 @@ public final class FirstFromList extends MethodOperation {
         if (UtilValidate.isEmpty(theList)) {
             entryFma.put(methodContext.getEnvMap(), null);
         } else {
-            entryFma.put(methodContext.getEnvMap(), theList.get(0));
+            entryFma.put(methodContext.getEnvMap(), theList.getFirst());
         }
         return true;
     }

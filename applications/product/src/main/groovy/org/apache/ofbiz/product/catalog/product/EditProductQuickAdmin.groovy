@@ -170,7 +170,7 @@ if (product) {
     if (prodFeaturesFiltered) {
         try {
             floz = ((GenericValue)prodFeaturesFiltered.get(0)).getBigDecimal('numberSpecified')
-        } catch (Exception e) {
+        } catch (Exception _) {
             floz = null
         }
         context.floz = floz
@@ -179,7 +179,7 @@ if (product) {
     if (prodFeaturesFiltered) {
         try {
             ml = ((GenericValue)prodFeaturesFiltered.get(0)).getBigDecimal('numberSpecified')
-        } catch (Exception e) {
+        } catch (Exception _) {
             ml = null
         }
         context.ml = ml
@@ -188,7 +188,7 @@ if (product) {
     if (prodFeaturesFiltered) {
         try {
             grams = ((GenericValue)prodFeaturesFiltered.get(0)).getBigDecimal('numberSpecified')
-        } catch (Exception e) {
+        } catch (Exception _) {
             grams = null
         }
         context.grams = grams
@@ -197,7 +197,7 @@ if (product) {
     if (prodFeaturesFiltered) {
         try {
             ntwt = ((GenericValue)prodFeaturesFiltered.get(0)).getBigDecimal('numberSpecified')
-        } catch (Exception e) {
+        } catch (Exception _) {
             ntwt = null
         }
         context.ntwt = ntwt
@@ -206,7 +206,7 @@ if (product) {
     if (prodFeaturesFiltered) {
         try {
             hazmat = ((GenericValue)prodFeaturesFiltered.get(0)).getString('description')
-        } catch (Exception e) {
+        } catch (Exception _) {
             hazmat = 'nbsp;'
         }
         if (hazmat == null) {

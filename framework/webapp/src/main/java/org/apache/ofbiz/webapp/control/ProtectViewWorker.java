@@ -84,7 +84,7 @@ public final class ProtectViewWorker {
                     String viewNameUserLoginId = viewNameId + userLoginId;
                     if (UtilValidate.isNotEmpty(tarpittedLoginViews)) {
                         // REFACTOR: Use sequenced collection method instead
-                        GenericValue tarpittedLoginView = tarpittedLoginViews.get(0);
+                        GenericValue tarpittedLoginView = tarpittedLoginViews.getFirst();
                         Long tarpitReleaseDateTime = (Long) tarpittedLoginView.get("tarpitReleaseDateTime");
                         if (now < tarpitReleaseDateTime) {
                             String tarpittedMessage = UtilProperties.getMessage(RESOURCE_WEBAPP, "protectedviewevents.tarpitted_message",
@@ -95,7 +95,7 @@ public final class ProtectViewWorker {
                         }
                     }
                     // REFACTOR: Use sequenced collection method instead
-                    GenericValue protectedView = protectedViews.get(0);
+                    GenericValue protectedView = protectedViews.getFirst();
                     // 1st hit ?
                     Long curMaxHits = HITS_BY_VIEW_ACCESSED.get(viewNameUserLoginId);
                     if (UtilValidate.isEmpty(curMaxHits)) {

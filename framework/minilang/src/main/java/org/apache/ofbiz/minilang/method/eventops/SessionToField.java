@@ -60,7 +60,7 @@ public class SessionToField extends MethodOperation {
         if (methodContext.getMethodType() == MethodContext.EVENT) {
             String attributeName = attributeNameFse.expandString(methodContext.getEnvMap());
             Object value = methodContext.getRequest().getSession().getAttribute(attributeName);
-            if (value == null || (value instanceof String && ((String) value).isEmpty())) {
+            if (value == null || (value instanceof String string && string.isEmpty())) {
                 value = defaultFse.expandString(methodContext.getEnvMap());
             }
             fieldFma.put(methodContext.getEnvMap(), value);

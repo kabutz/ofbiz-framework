@@ -93,7 +93,7 @@ public final class FileUtil {
 
     private static void writeString(String path, String name, String s) {
 
-        try (Writer out = getBufferedWriter(path, name);) {
+        try (Writer out = getBufferedWriter(path, name)) {
             out.write(s + System.getProperty("line.separator"));
         } catch (IOException e) {
             Debug.logError(e, MODULE);
@@ -179,7 +179,7 @@ public final class FileUtil {
         }
 
         StringBuffer buf = new StringBuffer();
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));) {
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 
             String str;
             while ((str = in.readLine()) != null) {
@@ -315,7 +315,7 @@ public final class FileUtil {
     public static boolean containsString(final String fileName, final String searchString) throws IOException {
         File inFile = new File(fileName);
         if (inFile.exists()) {
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(inFile), StandardCharsets.UTF_8));) {
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(inFile), StandardCharsets.UTF_8))) {
                 return containsString(in, searchString);
             }
         }

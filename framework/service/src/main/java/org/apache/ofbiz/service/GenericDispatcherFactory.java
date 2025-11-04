@@ -54,7 +54,7 @@ public class GenericDispatcherFactory implements LocalDispatcherFactory {
             ClassLoader loader;
             try {
                 loader = Thread.currentThread().getContextClassLoader();
-            } catch (SecurityException e) {
+            } catch (SecurityException _) {
                 loader = this.getClass().getClassLoader();
             }
             this.setName(name);

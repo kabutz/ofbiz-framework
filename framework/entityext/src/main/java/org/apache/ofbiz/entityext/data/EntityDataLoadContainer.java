@@ -448,7 +448,7 @@ public class EntityDataLoadContainer implements Container {
     private static int getTransactionTimeout(String timeout) {
         try {
             return Integer.parseInt(timeout);
-        } catch (Exception e) {
+        } catch (Exception _) {
             return -1;
         }
     }

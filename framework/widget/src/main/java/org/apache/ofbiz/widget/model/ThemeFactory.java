@@ -187,7 +187,7 @@ public final class ThemeFactory {
                         modelTheme = readThemeDocument(themeFileDoc);
                         THEME_LOCATION_CACHE.put(resourceName, modelTheme);
                     }
-                } catch (IOException | ParserConfigurationException | SAXException e) {
+                } catch (IOException | ParserConfigurationException | SAXException _) {
                     Debug.logError("Impossible to resolve the theme from the resourceName " + resourceName, MODULE);
                 }
             }
@@ -253,7 +253,7 @@ public final class ThemeFactory {
                         Map<String, Object> userPreferencesResult = dispatcher.runSync("getUserPreference",
                                 UtilMisc.toMap("userLogin", userLogin, "userPrefTypeId", "VISUAL_THEME"));
                         visualThemeId = (String) userPreferencesResult.get("userPrefValue");
-                    } catch (GenericServiceException e) {
+                    } catch (GenericServiceException _) {
                         Debug.logError("Impossible to resolve the theme from user prefrence for " + userLogin.get("userLoginId"), MODULE);
                     }
                 }

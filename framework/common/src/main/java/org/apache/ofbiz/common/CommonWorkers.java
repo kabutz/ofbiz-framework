@@ -82,7 +82,7 @@ public final class CommonWorkers {
             }
             if (removeDefaultGeo) {
                 // REFACTOR: Use sequenced collection method instead
-                geoList.remove(0); // Remove default country to avoid double rows in drop-down, from 1st place to keep alphabetical order
+                geoList.removeFirst(); // Remove default country to avoid double rows in drop-down, from 1st place to keep alphabetical order
             }
             geoList.addAll(countriesList);
         } else {

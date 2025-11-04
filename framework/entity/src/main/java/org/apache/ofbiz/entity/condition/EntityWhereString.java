@@ -101,8 +101,8 @@ public final class EntityWhereString implements EntityCondition {
 
     @Override
     public boolean equals(Object obj) {
-        return (obj instanceof EntityWhereString)
-                && Objects.equals(sqlString, ((EntityWhereString) obj).sqlString);
+        return (obj instanceof EntityWhereString ews)
+                && Objects.equals(sqlString, ews.sqlString);
     }
 
     @Override

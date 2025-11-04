@@ -64,7 +64,7 @@ public class URLConnector {
 
         try {
             this.wait(timeout);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException _) {
             if (connection == null) {
                 timedOut = true;
             } else {
@@ -153,9 +153,9 @@ public class URLConnector {
 
     // closes the HttpURLConnection does nothing to others
     private static void close(URLConnection con) {
-        if (con instanceof HttpURLConnection) {
+        if (con instanceof HttpURLConnection lConnection) {
             // CHECKSTYLE_OFF: ALMOST_ALL
-            ((HttpURLConnection) con).disconnect();
+            lConnection.disconnect();
             // CHECKSTYLE_ON: ALMOST_ALL
         }
     }

@@ -230,7 +230,7 @@ public class ServiceEcaAction implements java.io.Serializable {
                         result.put(ModelService.ERROR_MESSAGE_LIST, origErrorMessageList);
                     }
                     // REFACTOR: Use sequenced collection method instead
-                    origErrorMessageList.add(0, errorMessage);
+                    origErrorMessageList.addFirst(errorMessage);
                 }
             }
             // do something with the errorMessageList
@@ -302,9 +302,7 @@ public class ServiceEcaAction implements java.io.Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof ServiceEcaAction) {
-            // REFACTOR: Pattern Matching for instanceof
-            ServiceEcaAction other = (ServiceEcaAction) obj;
+        if (obj instanceof ServiceEcaAction other) {
 
             if (!Objects.equals(this.eventName, other.eventName)) return false;
             if (!Objects.equals(this.serviceName, other.serviceName)) return false;

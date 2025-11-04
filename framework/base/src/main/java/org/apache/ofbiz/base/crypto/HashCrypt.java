@@ -176,24 +176,14 @@ public class HashCrypt {
             PBEKeySpec spec = new PBEKeySpec(chars, salt.getBytes(StandardCharsets.UTF_8), PBKDF2_ITERATIONS, 64 * 4);
             SecretKeyFactory skf = SecretKeyFactory.getInstance(hashType);
             byte[] hash = Base64.encodeBase64(skf.generateSecret(spec).getEncoded());
-            String pbkdf2Type = null;
             // REFACTOR: Replace old style switch with switch expressions
-            switch (hashType) {
-            case "PBKDF2WithHmacSHA1":
-                pbkdf2Type = PBKDF2_SHA1;
-                break;
-            case "PBKDF2WithHmacSHA256":
-                pbkdf2Type = PBKDF2_SHA256;
-                break;
-            case "PBKDF2WithHmacSHA384":
-                pbkdf2Type = PBKDF2_SHA384;
-                break;
-            case "PBKDF2WithHmacSHA512":
-                pbkdf2Type = PBKDF2_SHA512;
-                break;
-            default:
-                pbkdf2Type = PBKDF2_SHA1;
-            }
+            String pbkdf2Type = switch (hashType) {
+            case "PBKDF2WithHmacSHA1" -> PBKDF2_SHA1;
+            case "PBKDF2WithHmacSHA256" -> PBKDF2_SHA256;
+            case "PBKDF2WithHmacSHA384" -> PBKDF2_SHA384;
+            case "PBKDF2WithHmacSHA512" -> PBKDF2_SHA512;
+            default -> PBKDF2_SHA1;
+            };
             StringBuilder sb = new StringBuilder();
             sb.append("{").append(pbkdf2Type).append("}");
             sb.append(PBKDF2_ITERATIONS).append("$");

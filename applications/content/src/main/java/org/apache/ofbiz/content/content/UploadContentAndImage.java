@@ -446,10 +446,10 @@ public class UploadContentAndImage {
         ftlContext.put("userLogin", userLogin);
         Object objSequenceNum = passedParams.get("caSequenceNum");
         if (objSequenceNum != null) {
-            if (objSequenceNum instanceof String) {
+            if (objSequenceNum instanceof String string) {
                 Long sequenceNum = null;
                 try {
-                    sequenceNum = Long.valueOf((String) objSequenceNum);
+                    sequenceNum = Long.valueOf(string);
                 } catch (NumberFormatException e) {
                     String msg = "Caught an exception : " + e.toString();
                     Debug.logError(e, msg);

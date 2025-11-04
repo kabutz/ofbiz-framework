@@ -138,7 +138,7 @@ public final class ScriptUtil {
                 if (Debug.verboseOn()) {
                     Debug.logVerbose("Compiled script " + filePath + " using engine " + engine.getClass().getName(), MODULE);
                 }
-            } catch (ClassCastException e) {
+            } catch (ClassCastException _) {
                 if (Debug.verboseOn()) {
                     Debug.logVerbose("Script engine " + engine.getClass().getName() + " does not implement Compilable", MODULE);
                 }
@@ -174,7 +174,7 @@ public final class ScriptUtil {
                 if (Debug.verboseOn()) {
                     Debug.logVerbose("Compiled script [" + script + "] using engine " + engine.getClass().getName(), MODULE);
                 }
-            } catch (ClassCastException e) {
+            } catch (ClassCastException _) {
                 if (Debug.verboseOn()) {
                     Debug.logVerbose("Script engine " + engine.getClass().getName() + " does not implement Compilable", MODULE);
                 }
@@ -289,7 +289,7 @@ public final class ScriptUtil {
             try {
                 Invocable invocableEngine = (Invocable) engine;
                 result = invocableEngine.invokeFunction(functionName, args == null ? EMPTY_ARGS : args);
-            } catch (ClassCastException e) {
+            } catch (ClassCastException _) {
                 throw new ScriptException("Script engine " + engine.getClass().getName() + " does not support function/method invocations");
             }
         }
@@ -371,13 +371,13 @@ public final class ScriptUtil {
             throw new ScriptException("Script not found at location [" + filePath + "]");
         }
         try (
-                InputStreamReader reader = new InputStreamReader(new FileInputStream(scriptUrl.getFile()), StandardCharsets.UTF_8);) {
+                InputStreamReader reader = new InputStreamReader(new FileInputStream(scriptUrl.getFile()), StandardCharsets.UTF_8)) {
             Object result = engine.eval(reader);
             if (UtilValidate.isNotEmpty(functionName)) {
                 try {
                     Invocable invocableEngine = (Invocable) engine;
                     result = invocableEngine.invokeFunction(functionName, args == null ? EMPTY_ARGS : args);
-                } catch (ClassCastException e) {
+                } catch (ClassCastException _) {
                     throw new ScriptException("Script engine " + engine.getClass().getName()
                             + " does not support function/method invocations");
                 }
@@ -423,8 +423,12 @@ public final class ScriptUtil {
         if (!currentScriptAlreadyAllowed) {
             if (!checkIfScriptIsSafe(script)) {
                 // REFACTOR: Replace fragmented Strings with Text Blocks
-                Debug.logWarning(String.format("Tried to execute unauthorized script \n **** \n%s\n **** "
-                                + "\nif it's safe script you can add the following hash to security.allowedScriptletHashes: %s",
+                Debug.logWarning("""
+                                Tried to execute unauthorized script\s
+                                 ****\s
+                                %s
+                                 ****\s
+                                if it's safe script you can add the following hash to security.allowedScriptletHashes: %s""".formatted(
                         script, scriptHash), MODULE);
                 return false;
             }

@@ -101,7 +101,7 @@ public final class ContainerConfig {
         }
         try {
             return Integer.parseInt(prop.value);
-        } catch (Exception e) {
+        } catch (Exception _) {
             return defaultValue;
         }
     }

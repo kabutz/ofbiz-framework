@@ -61,7 +61,7 @@ public final class WebSiteWorker {
         GenericValue result = null;
         try {
             result = EntityQuery.use(delegator).from("WebSite").where("webSiteId", webSiteId).cache(useCache).queryOne();
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             Debug.logError("Error looking up website with id " + webSiteId, MODULE);
         }
         return result;

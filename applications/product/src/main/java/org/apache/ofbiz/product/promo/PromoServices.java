@@ -95,7 +95,7 @@ public class PromoServices {
                 try {
                     existingPromoCode = EntityQuery.use(delegator).from("ProductPromoCode").where("productPromoCodeId",
                             newPromoCodeId).cache().queryOne();
-                } catch (GenericEntityException e) {
+                } catch (GenericEntityException _) {
                     Debug.logWarning("Could not find ProductPromoCode for just generated ID: " + newPromoCodeId, MODULE);
                 }
                 if (existingPromoCode == null) {
@@ -111,7 +111,7 @@ public class PromoServices {
                 Map<String, Object> newContext = dctx.makeValidContext("createProductPromoCode", ModelService.IN_PARAM, context);
                 newContext.put("productPromoCodeId", newPromoCodeId);
                 createProductPromoCodeMap = dispatcher.runSync("createProductPromoCode", newContext);
-            } catch (GenericServiceException err) {
+            } catch (GenericServiceException _) {
                 return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ProductPromoCodeCannotBeCreated", locale), null, null, null);
             }
             if (ServiceUtil.isError(createProductPromoCodeMap)) {

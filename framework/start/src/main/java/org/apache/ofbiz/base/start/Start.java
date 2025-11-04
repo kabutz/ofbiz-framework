@@ -79,10 +79,10 @@ public final class Start {
             StartupCommandUtil.printOfbizStartupHelp(System.out);
             break;
         case STATUS:
-            System.out.println("Current Status : " + AdminClient.requestStatus(INSTANCE.config));
+            IO.println("Current Status : " + AdminClient.requestStatus(INSTANCE.config));
             break;
         case SHUTDOWN:
-            System.out.println("Shutting down server : " + AdminClient.requestShutdown(INSTANCE.config));
+            IO.println("Shutting down server : " + AdminClient.requestShutdown(INSTANCE.config));
             break;
         case START:
             try {

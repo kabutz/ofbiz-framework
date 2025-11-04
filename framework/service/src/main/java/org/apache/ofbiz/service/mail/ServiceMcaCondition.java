@@ -258,13 +258,13 @@ public class ServiceMcaCondition implements java.io.Serializable {
 
     private List<String> getBodyText(Part part) throws MessagingException, IOException {
         Object c = part.getContent();
-        if (c instanceof String) {
-            return UtilMisc.toList((String) c);
-        } else if (c instanceof Multipart) {
+        if (c instanceof String string) {
+            return UtilMisc.toList(string);
+        } else if (c instanceof Multipart multipart) {
             List<String> textContent = new LinkedList<>();
-            int count = ((Multipart) c).getCount();
+            int count = multipart.getCount();
             for (int i = 0; i < count; i++) {
-                BodyPart bp = ((Multipart) c).getBodyPart(i);
+                BodyPart bp = multipart.getBodyPart(i);
                 textContent.addAll(this.getBodyText(bp));
             }
             return textContent;

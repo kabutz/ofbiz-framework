@@ -240,7 +240,7 @@ public class JavaMailContainer implements Container {
         if (UtilValidate.isNotEmpty(portStr)) {
             try {
                 portProps = Integer.parseInt(portStr);
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
                 Debug.logError("The port given in property mail." + protocol + ".port is wrong, please check", MODULE);
             }
         }
@@ -249,7 +249,7 @@ public class JavaMailContainer implements Container {
             if (UtilValidate.isNotEmpty(portStr)) {
                 try {
                     portProps = Integer.parseInt(props.getProperty("mail.port"));
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException _) {
                     Debug.logError("The port given in property mail.port is wrong, please check", MODULE);
                 }
             }
@@ -391,8 +391,8 @@ public class JavaMailContainer implements Container {
         }
 
         protected void processMessage(Message message, Session session) {
-            if (message instanceof MimeMessage) {
-                MimeMessageWrapper wrapper = new MimeMessageWrapper(session, (MimeMessage) message);
+            if (message instanceof MimeMessage mimeMessage) {
+                MimeMessageWrapper wrapper = new MimeMessageWrapper(session, mimeMessage);
                 try {
                     ServiceMcaUtil.evalRules(dispatcher, wrapper, userLogin);
                 } catch (GenericServiceException e) {

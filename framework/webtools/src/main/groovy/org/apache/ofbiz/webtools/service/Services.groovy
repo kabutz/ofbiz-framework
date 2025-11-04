@@ -28,7 +28,7 @@ uiLabelMap.addBottomResourceBundle('CommonUiLabels')
 
 log = ServiceDispatcher.getServiceLogMap()
 serviceList = []
-log.each { rs, value ->
+log.each { rs, _ ->
     service = [:]
     service.serviceName = rs.getModelService().getName()
     service.localName = rs.getLocalName()

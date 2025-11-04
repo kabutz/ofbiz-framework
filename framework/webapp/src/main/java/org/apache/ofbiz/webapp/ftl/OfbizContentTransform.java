@@ -50,9 +50,7 @@ public class OfbizContentTransform implements TemplateTransformModel {
             if (Debug.verboseOn()) {
                 Debug.logVerbose("Arg Object : " + obj.getClass().getName(), MODULE);
             }
-            if (obj instanceof TemplateScalarModel) {
-                // REFACTOR: Pattern Matching for instanceof
-                TemplateScalarModel s = (TemplateScalarModel) obj;
+            if (obj instanceof TemplateScalarModel s) {
                 try {
                     result = s.getAsString();
                 } catch (TemplateModelException e) {

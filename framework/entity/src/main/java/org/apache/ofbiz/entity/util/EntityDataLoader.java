@@ -97,12 +97,12 @@ public class EntityDataLoader {
         if (readerNames != null) {
             for (Object readerInfo: readerNames) {
                 String readerName = null;
-                if (readerInfo instanceof String) {
-                    readerName = (String) readerInfo;
-                } else if (readerInfo instanceof ReadData) {
-                    readerName = ((ReadData) readerInfo).getReaderName();
-                } else if (readerInfo instanceof Element) {
-                    readerName = ((Element) readerInfo).getAttribute("reader-name");
+                if (readerInfo instanceof String string) {
+                    readerName = string;
+                } else if (readerInfo instanceof ReadData data) {
+                    readerName = data.getReaderName();
+                } else if (readerInfo instanceof Element element) {
+                    readerName = element.getAttribute("reader-name");
                 } else {
                     throw new IllegalArgumentException("Reader name list does not contain String(s) or Element(s)");
                 }
@@ -297,7 +297,7 @@ public class EntityDataLoader {
                     toBeStored.add(delegator.makeValue("SecurityGroupPermission", "groupId", "FULLADMIN", "permissionId", baseName
                             + "_ADMIN", "fromDate", UtilDateTime.nowTimestamp()));
                     rowsChanged += delegator.storeAll(toBeStored);
-                } catch (GenericEntityException e) {
+                } catch (GenericEntityException _) {
                     errorMessages.add("[generateData] ERROR: Failed Security Generation for entity \"" + baseName + "\"");
                 }
             }

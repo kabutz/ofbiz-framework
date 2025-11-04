@@ -61,7 +61,7 @@ public final class ReportHelper {
             // if there are matching orders, then calculate orders, order amount, and conversion rate
             if ((ordersForThisKey != null) && (!ordersForThisKey.isEmpty())) {
                 // note: there should be only one line of order stats per key, so .get(0) should work
-                GenericValue orderValue = ordersForThisKey.get(0);
+                GenericValue orderValue = ordersForThisKey.getFirst();
 
                 reportValue.put("orders", orderValue.getLong("orderId")); // # of orders
                 if (orderValue.getDouble("grandTotal") == null) {

@@ -476,9 +476,9 @@ public class HttpClient {
                 Debug.logVerbose("Connection opened to : " + requestUrl.toExternalForm(), MODULE);
             }
 
-            if ((con instanceof HttpURLConnection)) {
+            if ((con instanceof HttpURLConnection connection)) {
                 // CHECKSTYLE_OFF: ALMOST_ALL
-                ((HttpURLConnection) con).setInstanceFollowRedirects(followRedirects);
+                connection.setInstanceFollowRedirects(followRedirects);
                 // CHECKSTYLE_ON: ALMOST_ALL
                 if (Debug.verboseOn() || debug) {
                     Debug.logVerbose("Connection is of type HttpURLConnection, more specifically: " + con.getClass().getName(), MODULE);
@@ -557,9 +557,9 @@ public class HttpClient {
                 Debug.logWarning(ioe.getCause(), MODULE);
                 return sendHttpRequestStream(method, true);
             }
-            if ((con instanceof HttpURLConnection)) {
+            if ((con instanceof HttpURLConnection connection)) {
                 try {
-                    in = ((HttpURLConnection) con).getErrorStream();
+                    in = connection.getErrorStream();
                 } catch (Exception ioerror) {
                     throw new HttpClientException("IO Error processing request", ioerror);
                 }

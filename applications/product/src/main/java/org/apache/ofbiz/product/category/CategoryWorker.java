@@ -341,7 +341,7 @@ public final class CategoryWorker {
         List<String> crumb = getTrail(request);
 
         if (UtilValidate.isNotEmpty(crumb)) {
-            return crumb.get(crumb.size() - 1);
+            return crumb.getLast();
         }
         return null;
     }

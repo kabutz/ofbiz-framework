@@ -594,8 +594,8 @@ public final class ArtifactInfoGatherer implements ModelWidgetVisitor, ModelActi
             if (modelFormField.getFieldInfo() instanceof FieldInfoWithOptions) {
                 for (ModelFormField.OptionSource optionSource : ((FieldInfoWithOptions) modelFormField
                         .getFieldInfo()).getOptionSources()) {
-                    if (optionSource instanceof ModelFormField.EntityOptions) {
-                        infoContext.addEntityName(((ModelFormField.EntityOptions) optionSource).getEntityName());
+                    if (optionSource instanceof ModelFormField.EntityOptions options) {
+                        infoContext.addEntityName(options.getEntityName());
                     }
                 }
             }

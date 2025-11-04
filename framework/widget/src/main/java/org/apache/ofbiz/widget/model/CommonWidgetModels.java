@@ -756,9 +756,9 @@ public final class CommonWidgetModels {
                 } else if (retVal instanceof java.sql.Timestamp) {
                     DateFormat df = UtilDateTime.toDateTimeFormat(UtilDateTime.getDateTimeFormat(), timeZone, null);
                     returnValue = df.format((java.util.Date) retVal);
-                } else if (retVal instanceof java.util.Date) {
+                } else if (retVal instanceof java.util.Date date) {
                     DateFormat df = UtilDateTime.toDateTimeFormat("EEE MMM dd hh:mm:ss z yyyy", timeZone, null);
-                    returnValue = df.format((java.util.Date) retVal);
+                    returnValue = df.format(date);
                 } else {
                     returnValue = retVal.toString();
                 }

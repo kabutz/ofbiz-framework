@@ -21,7 +21,6 @@ package org.apache.ofbiz.widget.renderer.fo;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Reader;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 
@@ -144,10 +143,10 @@ public class ScreenFopViewHandler extends AbstractViewHandler {
             int encryptionLength = 128;
             try {
                 encryptionLength = Integer.parseInt((String) context.get("encryption-length"));
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
                 try {
                     encryptionLength = Integer.parseInt(ApacheFopWorker.getEncryptionLengthDefault());
-                } catch (NumberFormatException e1) {
+                } catch (NumberFormatException _) {
                     // ignore
                 }
             }
@@ -174,7 +173,7 @@ public class ScreenFopViewHandler extends AbstractViewHandler {
             foUserAgent.getRendererOptions().put(PDFEncryptionOption.ENCRYPTION_PARAMS, pdfEncryptionParams);
         }
 
-        Reader reader = new StringReader(screenOutString);
+        Reader reader = Reader.of(screenOutString);
         StreamSource src = new StreamSource(reader);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         /* Debug area, uncomment this to view the xml file generate before analyse by fop

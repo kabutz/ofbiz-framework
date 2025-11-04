@@ -320,10 +320,7 @@ public final class ModelUtil {
      */
     public static boolean isPotentialLocalizedFields(ModelEntity modelEntity, List<String> fieldNames) {
         if (modelEntity == null) return false;
-        if (modelEntity instanceof ModelViewEntity) {
-            //  now try to retrieve with the field heading from the real entity linked to the view
-            // REFACTOR: Pattern Matching for instanceof
-            ModelViewEntity modelViewEntity = (ModelViewEntity) modelEntity;
+        if (modelEntity instanceof ModelViewEntity modelViewEntity) {
             Iterator<ModelAlias> it = modelViewEntity.getAliasesIterator();
             while (it.hasNext()) {
                 ModelAlias modelAlias = it.next();

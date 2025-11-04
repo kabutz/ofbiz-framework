@@ -336,7 +336,7 @@ public final class InvoiceWorker {
                             .where("shipmentId", shipmentView.get("shipmentId")).queryOne();
                     postalAddress = shipment.getRelatedOne("DestinationPostalAddress", false);
                 }
-            } catch (GenericEntityException e) {
+            } catch (GenericEntityException _) {
                 Debug.logError("Touble getting ContactMech entity from OISG", MODULE);
             }
         }
@@ -371,7 +371,7 @@ public final class InvoiceWorker {
         // first try InvoiceContactMech to see if we can find the address needed
         try {
             locations = invoice.getRelated("InvoiceContactMech", UtilMisc.toMap("contactMechPurposeTypeId", contactMechPurposeTypeId), null, false);
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             Debug.logError("Touble getting InvoiceContactMech entity list", MODULE);
         }
 
@@ -382,7 +382,7 @@ public final class InvoiceWorker {
             GenericValue invoiceType = null;
             try {
                 invoiceType = EntityQuery.use(delegator).from("InvoiceType").where("invoiceTypeId", invoice.getString("invoiceTypeId")).queryFirst();
-            } catch (GenericEntityException e) {
+            } catch (GenericEntityException _) {
                 Debug.logError("Trouble getting invoice type", MODULE);
             }
             if ("SALES_INVOICE".equals(invoice.getString("invoiceTypeId")) || "SALES_INVOICE".equals(invoiceType.getString("parentTypeId"))) {
@@ -396,7 +396,7 @@ public final class InvoiceWorker {
                         .where("partyId", destinationPartyId, "contactMechPurposeTypeId", contactMechPurposeTypeId).queryList();
                 locations = EntityUtil.filterByDate(locations, now, "contactFromDate", "contactThruDate", true);
                 locations = EntityUtil.filterByDate(locations, now, "purposeFromDate", "purposeThruDate", true);
-            } catch (GenericEntityException e) {
+            } catch (GenericEntityException _) {
                 Debug.logError("Trouble getting contact party purpose list", MODULE);
             }
             //if still not found get it from the general location
@@ -406,7 +406,7 @@ public final class InvoiceWorker {
                             .where("partyId", destinationPartyId, "contactMechPurposeTypeId", "GENERAL_LOCATION").queryList();
                     locations = EntityUtil.filterByDate(locations, now, "contactFromDate", "contactThruDate", true);
                     locations = EntityUtil.filterByDate(locations, now, "purposeFromDate", "purposeThruDate", true);
-                } catch (GenericEntityException e) {
+                } catch (GenericEntityException _) {
                     Debug.logError("Trouble getting contact party purpose list", MODULE);
                 }
             }
@@ -417,9 +417,9 @@ public final class InvoiceWorker {
         GenericValue contactMech = null;
         if (UtilValidate.isNotEmpty(locations)) {
             try {
-                contactMech = locations.get(0).getRelatedOne("ContactMech", false);
+                contactMech = locations.getFirst().getRelatedOne("ContactMech", false);
             } catch (GenericEntityException e) {
-                Debug.logError(e, "Trouble getting Contact for contactMechId: " + locations.get(0).getString("contactMechId"), MODULE);
+                Debug.logError(e, "Trouble getting Contact for contactMechId: " + locations.getFirst().getString("contactMechId"), MODULE);
             }
 
             if (contactMech != null && "POSTAL_ADDRESS".equals(contactMech.getString("contactMechTypeId"))) {
@@ -608,7 +608,7 @@ public final class InvoiceWorker {
             // check if the invoice is posted and get the conversion from there
             List<GenericValue> acctgTransEntries = invoice.getRelated("AcctgTrans", null, null, false);
             if (UtilValidate.isNotEmpty(acctgTransEntries)) {
-                GenericValue acctgTransEntry = (acctgTransEntries.get(0)).getRelated("AcctgTransEntry", null, null, false).get(0);
+                GenericValue acctgTransEntry = (acctgTransEntries.getFirst()).getRelated("AcctgTransEntry", null, null, false).getFirst();
                 BigDecimal origAmount = acctgTransEntry.getBigDecimal("origAmount");
                 if (origAmount.compareTo(BigDecimal.ZERO) == 1) {
                     conversionRate = acctgTransEntry.getBigDecimal("amount").divide(acctgTransEntry.getBigDecimal("origAmount"),

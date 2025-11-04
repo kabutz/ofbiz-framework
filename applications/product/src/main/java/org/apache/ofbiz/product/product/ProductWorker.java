@@ -502,7 +502,7 @@ public final class ProductWorker {
                         .filterByDate()
                         .queryList();
                 if (UtilValidate.isNotEmpty(productFeaturePrices)) {
-                    GenericValue productFeaturePrice = productFeaturePrices.get(0);
+                    GenericValue productFeaturePrice = productFeaturePrices.getFirst();
                     if (UtilValidate.isNotEmpty(productFeaturePrice.get("price"))) {
                         featureData.put("price", productFeaturePrice.getBigDecimal("price").toString());
                         featureData.put("currencyUomId", productFeaturePrice.getString("currencyUomId"));
@@ -1171,7 +1171,7 @@ public final class ProductWorker {
                                 .where("productFeatureId", selectedFeaturedId, "productPriceTypeId", productPrice.getString("productPriceTypeId"))
                                 .filterByDate().queryList();
                         if (UtilValidate.isNotEmpty(productFeaturePrices)) {
-                            GenericValue productFeaturePrice = productFeaturePrices.get(0);
+                            GenericValue productFeaturePrice = productFeaturePrices.getFirst();
                             if (productFeaturePrice != null) {
                                 productPrice.put("price", productPrice.getBigDecimal("price").add(productFeaturePrice.getBigDecimal("price")));
                             }

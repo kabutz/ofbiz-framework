@@ -93,10 +93,10 @@ public class CatalogUrlSeoTransform implements TemplateTransformModel {
      */
     public String getStringArg(Map<?, ?> args, String key) {
         Object o = args.get(key);
-        if (o instanceof SimpleScalar) {
-            return ((SimpleScalar) o).getAsString();
-        } else if (o instanceof GenericObjectModel) {
-            return ((GenericObjectModel) o).getAsString();
+        if (o instanceof SimpleScalar scalar) {
+            return scalar.getAsString();
+        } else if (o instanceof GenericObjectModel model) {
+            return model.getAsString();
         }
         return null;
     }
@@ -287,7 +287,7 @@ public class CatalogUrlSeoTransform implements TemplateTransformModel {
                 }
             } else {
                 if (trail.size() > 1) {
-                    String lastCategoryId = trail.get(trail.size() - 1);
+                    String lastCategoryId = trail.getLast();
                     if (!"TOP".equals(lastCategoryId)) {
                         if (SeoConfigUtil.isCategoryNameEnabled()) {
                             String categoryName = CatalogUrlSeoTransform.getCategoryIdNameMap().get(lastCategoryId);
@@ -322,7 +322,7 @@ public class CatalogUrlSeoTransform implements TemplateTransformModel {
             }
             try {
                 urlBuilder.append(productId);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 urlBuilder.append(productId);
             }
         }
@@ -356,7 +356,7 @@ public class CatalogUrlSeoTransform implements TemplateTransformModel {
             List<String> trail = CategoryWorker.getTrail(request);
             trail = CategoryWorker.adjustTrail(trail, currentCategoryId, previousCategoryId);
             if (trail.size() > 1) {
-                String lastCategoryId = trail.get(trail.size() - 1);
+                String lastCategoryId = trail.getLast();
                 if (!"TOP".equals(lastCategoryId)) {
                     String categoryName = CatalogUrlSeoTransform.getCategoryIdNameMap().get(lastCategoryId);
                     if (UtilValidate.isNotEmpty(categoryName)) {
@@ -438,7 +438,7 @@ public class CatalogUrlSeoTransform implements TemplateTransformModel {
                 }
             } else {
                 if (trail.size() > 1) {
-                    String lastCategoryId = trail.get(trail.size() - 1);
+                    String lastCategoryId = trail.getLast();
                     if (!"TOP".equals(lastCategoryId)) {
                         if (SeoConfigUtil.isCategoryNameEnabled()) {
                             String categoryName = CatalogUrlSeoTransform.getCategoryIdNameMap().get(lastCategoryId);
@@ -531,7 +531,7 @@ public class CatalogUrlSeoTransform implements TemplateTransformModel {
             return forwardCategoryUri(request, response, delegator, controlServlet);
         }
 
-        String lastPathElement = pathElements.get(pathElements.size() - 1);
+        String lastPathElement = pathElements.getLast();
         String categoryId = null;
         String productId = null;
         if (UtilValidate.isNotEmpty(lastPathElement)) {
@@ -587,7 +587,7 @@ public class CatalogUrlSeoTransform implements TemplateTransformModel {
 
                             if (products != null && !products.isEmpty()) {
                                 if (products.size() == 1) {
-                                    productId = products.get(0).getString("productId");
+                                    productId = products.getFirst().getString("productId");
                                     break;
                                 }
                                 productId = tempProductId;
@@ -654,7 +654,7 @@ public class CatalogUrlSeoTransform implements TemplateTransformModel {
         if (UtilValidate.isEmpty(pathElements)) {
             return false;
         }
-        String lastPathElement = pathElements.get(pathElements.size() - 1);
+        String lastPathElement = pathElements.getLast();
         String categoryId = null;
         if (UtilValidate.isNotEmpty(lastPathElement)) {
             if (UtilValidate.isNotEmpty(SeoConfigUtil.getCategoryUrlSuffix())) {
@@ -736,7 +736,7 @@ public class CatalogUrlSeoTransform implements TemplateTransformModel {
                 }
             } else {
                 if (trail != null && trail.size() > 1) {
-                    String lastCategoryId = trail.get(trail.size() - 1);
+                    String lastCategoryId = trail.getLast();
                     if (!"TOP".equals(lastCategoryId)) {
                         if (SeoConfigUtil.isCategoryNameEnabled()) {
                             String categoryName = CatalogUrlSeoTransform.getCategoryIdNameMap().get(lastCategoryId);
@@ -770,7 +770,7 @@ public class CatalogUrlSeoTransform implements TemplateTransformModel {
             }
             try {
                 urlBuilder.append(productId);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 urlBuilder.append(productId);
             }
         }
@@ -810,7 +810,7 @@ public class CatalogUrlSeoTransform implements TemplateTransformModel {
             List<String> trail = null;
             trail = CategoryWorker.adjustTrail(null, currentCategoryId, previousCategoryId);
             if (trail != null && trail.size() > 1) {
-                String lastCategoryId = trail.get(trail.size() - 1);
+                String lastCategoryId = trail.getLast();
                 if (!"TOP".equals(lastCategoryId)) {
                     String categoryName = CatalogUrlSeoTransform.getCategoryIdNameMap().get(lastCategoryId);
                     if (UtilValidate.isNotEmpty(categoryName)) {

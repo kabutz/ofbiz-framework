@@ -70,7 +70,7 @@ public class ImageUrlServlet extends HttpServlet {
             tagElements.addAll(StringUtil.split(pathElement, "-"));
         }
 
-        String lastTagElement = tagElements.get(tagElements.size() - 1);
+        String lastTagElement = tagElements.getLast();
         String contentId = lastTagElement.substring(0, lastTagElement.lastIndexOf('.'));
         String sizeTagElement = null;
         if (tagElements.size() > 2) {

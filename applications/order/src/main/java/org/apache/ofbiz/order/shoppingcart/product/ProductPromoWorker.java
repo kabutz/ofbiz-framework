@@ -87,7 +87,7 @@ public final class ProductPromoWorker {
         try {
             req = (HttpServletRequest) request;
             cart = ShoppingCartEvents.getCartObject(req);
-        } catch (ClassCastException cce) {
+        } catch (ClassCastException _) {
             Debug.logError("Not a HttpServletRequest, no shopping cart found.", MODULE);
             return null;
         } catch (IllegalArgumentException e) {
@@ -393,7 +393,7 @@ public final class ProductPromoWorker {
                         if (indexOfFirstOrderTotalPromo != -1) {
                             sortedExplodedProductPromoList.add(indexOfFirstOrderTotalPromo, productPromo);
                         } else {
-                            sortedExplodedProductPromoList.add(0, productPromo);
+                            sortedExplodedProductPromoList.addFirst(productPromo);
                         }
                     }
                 }
@@ -1120,7 +1120,7 @@ public final class ProductPromoWorker {
                 .where("productId", cartItem.getProductId(), "productPriceTypeId", "LIST_PRICE", "productPricePurposeId", "PURCHASE")
                 .orderBy("-fromDate")
                 .filterByDate().queryList();
-        GenericValue listProductPrice = (listProductPriceList != null && !listProductPriceList.isEmpty()) ? listProductPriceList.get(0) : null;
+        GenericValue listProductPrice = (listProductPriceList != null && !listProductPriceList.isEmpty()) ? listProductPriceList.getFirst() : null;
         BigDecimal listPrice = (listProductPrice != null) ? listProductPrice.getBigDecimal("price") : null;
 
         if (listPrice == null) {
@@ -1381,7 +1381,7 @@ public final class ProductPromoWorker {
             }
             return "No promotion name nor text";
 
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             Debug.logWarning("Error getting ProductPromo for Id " + prodPromoId, MODULE);
         }
 
@@ -1556,7 +1556,7 @@ public final class ProductPromoWorker {
             if (catIdSetList.isEmpty()) {
                 pcgslmeIter.remove();
             } else if (catIdSetList.size() == 1) {
-                Set<String> catIdSet = catIdSetList.iterator().next();
+                Set<String> catIdSet = catIdSetList.getFirst();
                 if (catIdSet.isEmpty()) {
                     pcgslmeIter.remove();
                 } else {
@@ -1588,7 +1588,7 @@ public final class ProductPromoWorker {
             // now go through all productId sets and only include IDs that are in all sets
             // by definition if each id must be in all categories, then it must be in the first, so go through the first and drop each one that is
             // not in all others
-            Set<String> firstProductIdSet = productIdSetList.remove(0);
+            Set<String> firstProductIdSet = productIdSetList.removeFirst();
             for (Set<String> productIdSet : productIdSetList) {
                 firstProductIdSet.retainAll(productIdSet);
             }

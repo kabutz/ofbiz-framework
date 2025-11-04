@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,11 +35,11 @@ import org.junit.Test;
 
 
 public class ComponentContainerTest {
-    private static final Path ORDER_CONFIG = Paths.get("applications", "order", "config");
-    private static final Path ACCOUNTING_CONFIG = Paths.get("applications", "accounting", "config");
+    private static final Path ORDER_CONFIG = Path.of("applications", "order", "config");
+    private static final Path ACCOUNTING_CONFIG = Path.of("applications", "accounting", "config");
     private static final Path[] CONFIGS = {ORDER_CONFIG, ACCOUNTING_CONFIG};
 
-    private Path ofbizHome = Paths.get(ComponentContainerTest.class.getResource("testsdata").toURI())
+    private Path ofbizHome = Path.of(ComponentContainerTest.class.getResource("testsdata").toURI())
             .toAbsolutePath().normalize();
 
     public ComponentContainerTest() throws URISyntaxException { }

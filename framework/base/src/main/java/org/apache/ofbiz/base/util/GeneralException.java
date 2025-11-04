@@ -34,14 +34,14 @@ public class GeneralException extends Exception {
     }
 
     private static <T> T checkException(String message, Throwable t) throws GeneralException {
-        if (t instanceof Error) {
-            throw (Error) t;
+        if (t instanceof Error error) {
+            throw error;
         }
-        if (t instanceof RuntimeException) {
-            throw (RuntimeException) t;
+        if (t instanceof RuntimeException exception) {
+            throw exception;
         }
-        if (t instanceof GeneralException) {
-            throw (GeneralException) t;
+        if (t instanceof GeneralException exception) {
+            throw exception;
         }
         throw (GeneralException) new GeneralException(message).initCause(t);
     }

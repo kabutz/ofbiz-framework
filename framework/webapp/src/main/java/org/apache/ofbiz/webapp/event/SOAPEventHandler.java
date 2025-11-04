@@ -90,7 +90,7 @@ public class SOAPEventHandler implements EventHandler {
                 Document wsdl = null;
                 try {
                     wsdl = dctx.getWSDL(serviceName, locationUri);
-                } catch (GenericServiceException e) {
+                } catch (GenericServiceException _) {
                     serviceName = null;
                 } catch (WSDLException e) {
                     sendError(response, "Unable to obtain WSDL", serviceName);
@@ -128,7 +128,7 @@ public class SOAPEventHandler implements EventHandler {
                     writer.write(sb.toString());
                     writer.flush();
                     return null;
-                } catch (Exception e) {
+                } catch (Exception _) {
                     sendError(response, "Unable to obtain WSDL", null);
                     throw new EventHandlerException("Unable to obtain WSDL");
                 }
@@ -151,7 +151,7 @@ public class SOAPEventHandler implements EventHandler {
             if (Debug.verboseOn()) {
                 try {
                     Debug.logInfo("Request Message:\n" + reqEnv + "\n", MODULE);
-                } catch (Throwable t) {
+                } catch (Throwable _) {
                 }
             }
         } catch (Exception e) {
@@ -262,7 +262,7 @@ public class SOAPEventHandler implements EventHandler {
             if (Debug.verboseOn()) {
                 try {
                     Debug.logInfo("Response Message:\n" + resEnv + "\n", MODULE);
-                } catch (Throwable t) {
+                } catch (Throwable _) {
                 }
             }
 
@@ -314,7 +314,7 @@ public class SOAPEventHandler implements EventHandler {
             if (Debug.verboseOn()) {
                 try {
                     Debug.logInfo("Response Message:\n" + resEnv + "\n", MODULE);
-                } catch (Throwable t) {
+                } catch (Throwable _) {
                 }
             }
 

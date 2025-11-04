@@ -162,7 +162,7 @@ public class ExpressCheckoutEvents {
             Map<String, Object> result = null;
             try {
                 result = dispatcher.runSync(serviceName, inMap);
-            } catch (GenericServiceException e) {
+            } catch (GenericServiceException _) {
                 request.setAttribute("_EVENT_MESSAGE_", UtilProperties.getMessage(RES_ERROR, "AccountingPayPalCommunicationError", locale));
                 return "error";
             }

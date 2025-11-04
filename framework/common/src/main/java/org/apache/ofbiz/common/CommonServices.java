@@ -128,7 +128,7 @@ public class CommonServices {
         Debug.logInfo("-----SERVICE BLOCKING----- : " + duration / 1000d + " seconds", MODULE);
         try {
             Thread.sleep(duration);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException _) {
         }
         return CommonServices.testService(dctx, context);
     }

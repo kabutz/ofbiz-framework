@@ -93,8 +93,8 @@ public final class WidgetContextCacheKey {
     @Override
     public boolean equals(Object obj) {
         WidgetContextCacheKey key = null;
-        if (obj instanceof WidgetContextCacheKey) {
-            key = (WidgetContextCacheKey) obj;
+        if (obj instanceof WidgetContextCacheKey cacheKey) {
+            key = cacheKey;
         }
         if (key == null || key.context == null) {
             return this.context == null;

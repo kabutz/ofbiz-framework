@@ -80,7 +80,7 @@ public class CatalogUrlServlet extends HttpServlet {
             rd.forward(request, response);
         } else {
             try {
-                String lastPathElement = pathElements.get(pathElements.size() - 1);
+                String lastPathElement = pathElements.getLast();
                 if (lastPathElement.startsWith("p_")) {
                     productId = lastPathElement.substring(2);
                 } else {
@@ -92,17 +92,17 @@ public class CatalogUrlServlet extends HttpServlet {
                         productId = lastPathElement;
                     }
                 }
-                pathElements.remove(pathElements.size() - 1);
+                pathElements.removeLast();
             } catch (GenericEntityException e) {
                 Debug.logError(e, "Error in looking up ProductUrl or CategoryUrl with path info [" + pathInfo + "]: " + e.toString(), MODULE);
             }
 
             // get category info going with the IDs that remain
             if (pathElements.size() == 1) {
-                CategoryWorker.setTrail(request, pathElements.get(0), null);
-                categoryId = pathElements.get(0);
+                CategoryWorker.setTrail(request, pathElements.getFirst(), null);
+                categoryId = pathElements.getFirst();
             } else if (pathElements.size() == 2) {
-                CategoryWorker.setTrail(request, pathElements.get(1), pathElements.get(0));
+                CategoryWorker.setTrail(request, pathElements.get(1), pathElements.getFirst());
                 categoryId = pathElements.get(1);
             } else if (pathElements.size() > 2) {
                 List<String> trail = CategoryWorker.getTrail(request);
@@ -110,9 +110,9 @@ public class CatalogUrlServlet extends HttpServlet {
                     trail = new LinkedList<>();
                 }
 
-                if (trail.contains(pathElements.get(0))) {
+                if (trail.contains(pathElements.getFirst())) {
                     // first category is in the trail, so remove it everything after that and fill it in with the list from the pathInfo
-                    int firstElementIndex = trail.indexOf(pathElements.get(0));
+                    int firstElementIndex = trail.indexOf(pathElements.getFirst());
                     while (trail.size() > firstElementIndex) {
                         trail.remove(firstElementIndex);
                     }
@@ -123,7 +123,7 @@ public class CatalogUrlServlet extends HttpServlet {
                     trail.addAll(pathElements);
                 }
                 CategoryWorker.setTrail(request, trail);
-                categoryId = pathElements.get(pathElements.size() - 1);
+                categoryId = pathElements.getLast();
             }
             if (categoryId != null) {
                 request.setAttribute("productCategoryId", categoryId);
@@ -131,7 +131,7 @@ public class CatalogUrlServlet extends HttpServlet {
 
             String rootCategoryId = null;
             if (pathElements.size() >= 1) {
-                rootCategoryId = pathElements.get(0);
+                rootCategoryId = pathElements.getFirst();
             }
             if (rootCategoryId != null) {
                 request.setAttribute("rootCategoryId", rootCategoryId);

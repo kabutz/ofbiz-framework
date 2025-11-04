@@ -277,7 +277,7 @@ public final class UtilValidate {
         try {
             Integer.parseInt(s);
             return true;
-        } catch (Exception e) {
+        } catch (Exception _) {
             return false;
         }
     }
@@ -293,7 +293,7 @@ public final class UtilValidate {
         try {
             Long.parseLong(s);
             return true;
-        } catch (Exception e) {
+        } catch (Exception _) {
             return false;
         }
     }
@@ -310,7 +310,7 @@ public final class UtilValidate {
         try {
             long temp = Long.parseLong(s);
             return temp > 0;
-        } catch (Exception e) {
+        } catch (Exception _) {
             return false;
         }
     }
@@ -326,7 +326,7 @@ public final class UtilValidate {
         try {
             int temp = Integer.parseInt(s);
             return temp >= 0;
-        } catch (Exception e) {
+        } catch (Exception _) {
             return false;
         }
     }
@@ -342,7 +342,7 @@ public final class UtilValidate {
         try {
             int temp = Integer.parseInt(s);
             return temp < 0;
-        } catch (Exception e) {
+        } catch (Exception _) {
             return false;
         }
     }
@@ -358,7 +358,7 @@ public final class UtilValidate {
         try {
             int temp = Integer.parseInt(s);
             return temp <= 0;
-        } catch (Exception e) {
+        } catch (Exception _) {
             return false;
         }
     }
@@ -422,7 +422,7 @@ public final class UtilValidate {
             // 1.2345; length=6; point=1; num=4
             int numDecimals = s.length() - decimalPoint - 1;
             return !(minDecimal >= 0 && numDecimals < minDecimal) && !(maxDecimal >= 0 && numDecimals > maxDecimal);
-        } catch (Exception e) {
+        } catch (Exception _) {
             return false;
         }
     }
@@ -446,7 +446,7 @@ public final class UtilValidate {
             // 1.2345; length=6; point=1; num=4
             int numDecimals = s.length() - decimalPoint - 1;
             return !(minDecimal >= 0 && numDecimals < minDecimal) && !(maxDecimal >= 0 && numDecimals > maxDecimal);
-        } catch (Exception e) {
+        } catch (Exception _) {
             return false;
         }
     }
@@ -464,7 +464,7 @@ public final class UtilValidate {
         try {
             Float.parseFloat(s);
             return true;
-        } catch (Exception e) {
+        } catch (Exception _) {
             return false;
         }
     }
@@ -482,7 +482,7 @@ public final class UtilValidate {
         try {
             Double.parseDouble(s);
             return true;
-        } catch (Exception e) {
+        } catch (Exception _) {
             return false;
         }
     }
@@ -803,7 +803,7 @@ public final class UtilValidate {
                 calendar.set(yearInt, monthInt - 1, 0, 0, 0, 0);
                 calendar.add(Calendar.MONTH, 1);
                 passed = new java.util.Date(calendar.getTime().getTime());
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
                 passed = null;
             }
         } else {
@@ -852,7 +852,7 @@ public final class UtilValidate {
                 calendar.set(yearInt, monthInt - 1, 0, 0, 0, 0);
                 calendar.add(Calendar.MONTH, 1);
                 passed = new java.util.Date(calendar.getTime().getTime());
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
                 passed = null;
             }
         } else {

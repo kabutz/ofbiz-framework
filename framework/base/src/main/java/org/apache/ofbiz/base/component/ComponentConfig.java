@@ -22,7 +22,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -281,7 +280,7 @@ public final class ComponentConfig {
     private ComponentConfig(Builder b) {
         this.globalName = b.globalName;
         String rootLocation = (b.rootLocation == null) ? "" : b.rootLocation;
-        this.rootLocation = Paths.get(rootLocation.replace('\\', '/')).normalize().toAbsolutePath();
+        this.rootLocation = Path.of(rootLocation.replace('\\', '/')).normalize().toAbsolutePath();
         this.componentName = b.componentName;
         this.enabled = b.enabled;
         this.resourceLoaderInfos = b.resourceLoaderInfos;
@@ -392,7 +391,7 @@ public final class ComponentConfig {
      * @throws NullPointerException when {@code rootLocation} is {@code null}
      */
     private ComponentConfig(String globalName, String rootLocation) throws ComponentException {
-        this.rootLocation = Paths.get(rootLocation.replace('\\', '/')).normalize().toAbsolutePath();
+        this.rootLocation = Path.of(rootLocation.replace('\\', '/')).normalize().toAbsolutePath();
         if (Files.notExists(this.rootLocation)) {
             throw new ComponentException("The component root location does not exist: " + rootLocation);
         } else if (!Files.isDirectory(this.rootLocation)) {
@@ -415,7 +414,7 @@ public final class ComponentConfig {
         componentName = componentElement.getAttribute("name");
         enabled = "true".equalsIgnoreCase(componentElement.getAttribute("enabled"));
         this.globalName = UtilValidate.isEmpty(globalName) ? componentName : globalName;
-        dependsOnInfos = collectElements(componentElement, "depends-on", (c, e) -> e.getAttribute("component-name"));
+        dependsOnInfos = collectElements(componentElement, "depends-on", (_, e) -> e.getAttribute("component-name"));
         classpathInfos = collectElements(componentElement, "classpath", ClasspathInfo::new);
         entityResourceInfos = collectElements(componentElement, "entity-resource", EntityResourceInfo::new);
         serviceResourceInfos = collectElements(componentElement, "service-resource", ServiceResourceInfo::new);
@@ -616,19 +615,19 @@ public final class ComponentConfig {
 
         private ClasspathInfo(ComponentConfig componentConfig, Element element) {
             String loc = element.getAttribute("location").replace('\\', '/');
-            Path location = Paths.get(loc.startsWith("/") ? loc.substring(1) : loc).normalize();
+            Path location = Path.of(loc.startsWith("/") ? loc.substring(1) : loc).normalize();
             Path fullLocation = componentConfig.rootLocation().resolve(location);
             Type type = Type.of(element.getAttribute("type"));
             switch (type) {
             case DIR:
                 if (!Files.isDirectory(fullLocation)) {
-                    String msg = String.format("Classpath location '%s' is not a valid directory", location);
+                    String msg = "Classpath location '%s' is not a valid directory".formatted(location);
                     throw new IllegalArgumentException(msg);
                 }
                 break;
             case JAR:
                 if (Files.notExists(fullLocation)) {
-                    String msg = String.format("Classpath location '%s' does not exist", location);
+                    String msg = "Classpath location '%s' does not exist".formatted(location);
                     throw new IllegalArgumentException(msg);
                 }
                 break;

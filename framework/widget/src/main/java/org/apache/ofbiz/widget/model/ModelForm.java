@@ -214,7 +214,7 @@ public abstract class ModelForm extends ModelWidget {
         } else {
             try {
                 defaultViewSizeInt = Integer.parseInt(viewSize);
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
             }
         }
         this.defaultViewSize = defaultViewSizeInt;
@@ -1657,9 +1657,7 @@ public abstract class ModelForm extends ModelWidget {
             for (AltRowStyle altRowStyle : this.altRowStyles) {
                 Object retVal = GroovyUtil.eval(StringUtil.convertOperatorSubstitutions(altRowStyle.useWhen), context);
                 // retVal should be a Boolean, if not something weird is up...
-                if (retVal instanceof Boolean) {
-                    // REFACTOR: Pattern Matching for instanceof
-                    Boolean boolVal = (Boolean) retVal;
+                if (retVal instanceof Boolean boolVal) {
                     if (boolVal) {
                         styles += altRowStyle.style;
                     }
@@ -1699,9 +1697,7 @@ public abstract class ModelForm extends ModelWidget {
                 Object retVal = GroovyUtil.eval(StringUtil.convertOperatorSubstitutions(useWhen), context);
                 boolean condTrue = false;
                 // retVal should be a Boolean, if not something weird is up...
-                if (retVal instanceof Boolean) {
-                    // REFACTOR: Pattern Matching for instanceof
-                    Boolean boolVal = (Boolean) retVal;
+                if (retVal instanceof Boolean boolVal) {
                     condTrue = boolVal;
                 } else {
                     throw new IllegalArgumentException("Return value from target condition eval was not a Boolean: "
@@ -2226,9 +2222,7 @@ public abstract class ModelForm extends ModelWidget {
         public boolean shouldUse(Map<String, Object> context) {
             for (String fieldName : modelForm.fieldGroupMap.keySet()) {
                 FieldGroupBase group = modelForm.fieldGroupMap.get(fieldName);
-                if (group instanceof FieldGroup) {
-                    // REFACTOR: Pattern Matching for instanceof
-                    FieldGroup fieldgroup = (FieldGroup) group;
+                if (group instanceof FieldGroup fieldgroup) {
                     if (this.id.equals(fieldgroup.getId())) {
                         for (ModelFormField modelField : modelForm.fieldList) {
                             if (fieldName.equals(modelField.getName()) && modelField.shouldUse(context)) {
@@ -2259,7 +2253,7 @@ public abstract class ModelForm extends ModelWidget {
                 Integer posParam = null;
                 try {
                     posParam = Integer.valueOf(position);
-                } catch (Exception e) {
+                } catch (Exception _) {
                     Debug.logInfo("The class SortField caused an exception", MODULE);
                 }
                 this.position = posParam;
@@ -2506,7 +2500,7 @@ public abstract class ModelForm extends ModelWidget {
             JSONConverters.MapToJSON converter = new JSONConverters.MapToJSON();
             try {
                 claims.put("parameters", converter.convert(parameters).toString());
-            } catch (ConversionException e) {
+            } catch (ConversionException _) {
                 Debug.logWarning("Failed to convert parameters to JSON with " + parameters, MODULE);
             }
             return JWTManager.createJwt(delegator, claims, -1);
@@ -2537,7 +2531,7 @@ public abstract class ModelForm extends ModelWidget {
                 JSONConverters.JSONToMap converter = new JSONConverters.JSONToMap();
                 try {
                     parameters = converter.convert(JSON.from((String) claims.get("parameters")));
-                } catch (ConversionException e) {
+                } catch (ConversionException _) {
                     Debug.logWarning("Failed to convert JSON to with " + claims.get("parameters"), MODULE);
                 }
             }

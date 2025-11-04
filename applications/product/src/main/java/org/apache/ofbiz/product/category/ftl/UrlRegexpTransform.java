@@ -65,8 +65,7 @@ public class UrlRegexpTransform implements TemplateTransformModel {
             if (Debug.verboseOn()) {
                 Debug.logVerbose("Arg Object : " + o.getClass().getName(), MODULE);
             }
-            if (o instanceof TemplateScalarModel) {
-                TemplateScalarModel s = (TemplateScalarModel) o;
+            if (o instanceof TemplateScalarModel s) {
                 try {
                     result = s.getAsString();
                 } catch (TemplateModelException e) {
@@ -91,8 +90,7 @@ public class UrlRegexpTransform implements TemplateTransformModel {
             return defaultValue;
         }
         Object o = args.get(key);
-        if (o instanceof SimpleScalar) {
-            SimpleScalar s = (SimpleScalar) o;
+        if (o instanceof SimpleScalar s) {
             return "true".equalsIgnoreCase(s.getAsString());
         }
         return defaultValue;
@@ -167,8 +165,7 @@ public class UrlRegexpTransform implements TemplateTransformModel {
                         }
                         out.write(newUrl);
                     } else if (prefix != null) {
-                        if (prefix instanceof TemplateScalarModel) {
-                            TemplateScalarModel s = (TemplateScalarModel) prefix;
+                        if (prefix instanceof TemplateScalarModel s) {
                             String prefixString = s.getAsString();
                             String bufString = buf.toString();
                             boolean prefixSlash = prefixString.endsWith("/");

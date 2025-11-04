@@ -313,8 +313,8 @@ public final class ModelFormField {
             String parameterName = this.getParameterName(context);
             if (parameters != null && parameters.get(parameterName) != null) {
                 Object parameterValue = parameters.get(parameterName);
-                if (parameterValue instanceof String) {
-                    returnValue = (String) parameterValue;
+                if (parameterValue instanceof String string) {
+                    returnValue = string;
                 } else {
                     // we might want to do something else here in the future, but for now this is probably best
                     Debug.logWarning("Found a non-String parameter value for field [" + this.getModelForm().getName() + "."
@@ -333,9 +333,7 @@ public final class ModelFormField {
             }
             Object retVal = null;
             if (UtilValidate.isNotEmpty(this.entryAcsr)) {
-                if (dataMap instanceof GenericEntity) {
-                    // REFACTOR: Pattern Matching for instanceof
-                    GenericEntity genEnt = (GenericEntity) dataMap;
+                if (dataMap instanceof GenericEntity genEnt) {
                     if (genEnt.getModelEntity().isField(this.entryAcsr.getOriginalName())) {
                         retVal = genEnt.get(this.entryAcsr.getOriginalName(), locale);
                     // } else {
@@ -379,9 +377,9 @@ public final class ModelFormField {
                 } else if (retVal instanceof java.sql.Timestamp) {
                     DateFormat df = UtilDateTime.toDateTimeFormat(UtilDateTime.getDateTimeFormat(), timeZone, null);
                     return df.format((java.util.Date) retVal);
-                } else if (retVal instanceof java.util.Date) {
+                } else if (retVal instanceof java.util.Date date) {
                     DateFormat df = UtilDateTime.toDateTimeFormat("EEE MMM dd hh:mm:ss z yyyy", timeZone, null);
-                    return df.format((java.util.Date) retVal);
+                    return df.format(date);
                 } else if (retVal instanceof Collection) {
                     Collection<Object> col = UtilGenerics.cast(retVal);
                     Iterator<Object> iter = col.iterator();
@@ -860,14 +858,14 @@ public final class ModelFormField {
         String value = this.getEntry(context, null);
         try {
             timestampVal = java.sql.Timestamp.valueOf(value);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException _) {
             // okay, not a timestamp...
         }
 
         if (timestampVal == null) {
             try {
                 dateVal = java.sql.Date.valueOf(value);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 // okay, not a date...
             }
         }
@@ -875,7 +873,7 @@ public final class ModelFormField {
         if (timestampVal == null && dateVal == null) {
             try {
                 timeVal = java.sql.Time.valueOf(value);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 // okay, not a time...
             }
         }
@@ -939,9 +937,7 @@ public final class ModelFormField {
             Object retVal = GroovyUtil.eval(StringUtil.convertOperatorSubstitutions(useWhenStr), context);
             boolean condTrue = false;
             // retVal should be a Boolean, if not something weird is up...
-            if (retVal instanceof Boolean) {
-                // REFACTOR: Pattern Matching for instanceof
-                Boolean boolVal = (Boolean) retVal;
+            if (retVal instanceof Boolean boolVal) {
                 condTrue = boolVal;
             } else {
                 throw new IllegalArgumentException("Return value from use-when condition eval was not a Boolean: "
@@ -1794,7 +1790,7 @@ public final class ModelFormField {
             if (!maxSpanStr.isEmpty()) {
                 try {
                     maxSpan = Integer.valueOf(maxSpanStr);
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException _) {
                     Debug.logError("Could not parse the max-span value of the text element: [" + maxSpanStr
                             + "], setting to null; default of no maxYear will be used", MODULE);
                 }
@@ -1806,7 +1802,7 @@ public final class ModelFormField {
             if (!maxYearStr.isEmpty()) {
                 try {
                     maxYear = Integer.valueOf(maxYearStr);
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException _) {
                     Debug.logError("Could not parse the max-year value of the text element: [" + maxYearStr
                             + "], setting to null; default of no maxYear will be used", MODULE);
                 }
@@ -1818,7 +1814,7 @@ public final class ModelFormField {
             if (!minYearStr.isEmpty()) {
                 try {
                     minYear = Integer.valueOf(minYearStr);
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException _) {
                     Debug.logError("Could not parse the min-year value of the text element: [" + minYearStr
                             + "], setting to null; default of no minYear will be used", MODULE);
                 }
@@ -1839,7 +1835,7 @@ public final class ModelFormField {
             if (!timePickerIncrementStr.isEmpty()) {
                 try {
                     timePickerIncrement = Integer.valueOf(timePickerIncrementStr);
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException _) {
                     Debug.logError("Could not parse the time-picker-increment value of the text element: [" + timePickerIncrementStr
                             + "], setting to null; default of no timePickerIncrement will be used", MODULE);
                 }
@@ -2467,7 +2463,7 @@ public final class ModelFormField {
             if (!sizeStr.isEmpty()) {
                 try {
                     otherFieldSize = Integer.parseInt(sizeStr);
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException _) {
                     Debug.logError("Could not parse the size value of the text element: [" + sizeStr
                             + "], setting to the default of 0", MODULE);
                 }
@@ -4465,8 +4461,8 @@ public final class ModelFormField {
                     }
                     Object keyObj = keyAcsr.get(localContext);
                     String key = null;
-                    if (keyObj instanceof String) {
-                        key = (String) keyObj;
+                    if (keyObj instanceof String string) {
+                        key = string;
                     } else {
                         try {
                             key = (String) ObjectType.simpleTypeOrObjectConvert(keyObj, "String", null, null);
@@ -5509,9 +5505,7 @@ public final class ModelFormField {
                     Object retVal = GroovyUtil.eval(StringUtil.convertOperatorSubstitutions(useWhen), context);
 
                     // retVal should be a Boolean, if not something weird is up...
-                    if (retVal instanceof Boolean) {
-                        // REFACTOR: Pattern Matching for instanceof
-                        Boolean boolVal = (Boolean) retVal;
+                    if (retVal instanceof Boolean boolVal) {
                         shouldUse = boolVal;
                     } else {
                         throw new IllegalArgumentException("Return value from target condition eval was not a Boolean: "
@@ -5537,8 +5531,8 @@ public final class ModelFormField {
         try {
             Object retVal = GroovyUtil.eval(StringUtil.convertOperatorSubstitutions(ignoreWhen), context);
 
-            if (retVal instanceof Boolean) {
-                shouldIgnore = (Boolean) retVal;
+            if (retVal instanceof Boolean boolean1) {
+                shouldIgnore = boolean1;
             } else {
                 throw new IllegalArgumentException("Return value from ignore-when condition eval was not a Boolean: " + (retVal != null
                         ? retVal.getClass().getName() : "null") + " [" + retVal + "] on the field " + this.name + " of form "
@@ -5734,7 +5728,7 @@ public final class ModelFormField {
             if (!colsStr.isEmpty()) {
                 try {
                     cols = Integer.parseInt(colsStr);
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException _) {
                     Debug.logError("Could not parse the size value of the text element: [" + colsStr
                             + "], setting to default of " + cols, MODULE);
                 }
@@ -5747,7 +5741,7 @@ public final class ModelFormField {
             if (!rowsStr.isEmpty()) {
                 try {
                     rows = Integer.parseInt(rowsStr);
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException _) {
                     Debug.logError("Could not parse the size value of the text element: [" + rowsStr
                             + "], setting to default of " + rows, MODULE);
                 }
@@ -5758,7 +5752,7 @@ public final class ModelFormField {
             if (!maxlengthStr.isEmpty()) {
                 try {
                     maxlength = Integer.valueOf(maxlengthStr);
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException _) {
                     Debug.logError("Could not parse the max-length value of the text element: [" + maxlengthStr
                             + "], setting to null; default of no maxlength will be used", MODULE);
                 }
@@ -5935,7 +5929,7 @@ public final class ModelFormField {
             if (!maxlengthStr.isEmpty()) {
                 try {
                     maxlength = Integer.valueOf(maxlengthStr);
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException _) {
                     Debug.logError("Could not parse the maxlength value of the text element: [" + maxlengthStr
                             + "], setting to null; default of no maxlength will be used", MODULE);
                 }
@@ -5948,7 +5942,7 @@ public final class ModelFormField {
             if (!sizeStr.isEmpty()) {
                 try {
                     size = Integer.parseInt(sizeStr);
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException _) {
                     Debug.logError("Could not parse the size value of the text element: [" + sizeStr
                             + "], setting to the default of " + size, MODULE);
                 }
@@ -6284,7 +6278,7 @@ public final class ModelFormField {
         if (UtilValidate.isNotEmpty(attributeValue)) {
             try {
                 return Optional.of(Integer.parseInt(attributeValue));
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
                 Debug.logError("Could not parse the " + attributeName + " value of the text element: ["
                         + attributeValue + "],", MODULE);
             }

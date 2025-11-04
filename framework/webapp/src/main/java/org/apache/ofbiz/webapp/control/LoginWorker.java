@@ -757,7 +757,7 @@ public final class LoginWorker {
             }
             originUserLogin.getDelegator().storeByCondition("UserLoginHistory",
                     UtilMisc.toMap("thruDate", UtilDateTime.nowTimestamp()), conditions);
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             return "error";
         }
 
@@ -968,7 +968,7 @@ public final class LoginWorker {
         Optional<WebappInfo> webappInfo = WEBAPPS.getWebappInfo(serverId, applicationName);
         if (userLogin != null
                 // When using an empty mountpoint, ie using root as mountpoint. Beware: works only for 1 webapp!
-                && webappInfo.map(WebappInfo::isAutologinCookieUsed).orElse(!webappInfo.isPresent())) {
+                && webappInfo.map(WebappInfo::isAutologinCookieUsed).orElse(webappInfo.isEmpty())) {
             Cookie autoLoginCookie = new Cookie(getAutoLoginCookieName(request), userLogin.getString("userLoginId"));
             autoLoginCookie.setMaxAge(60 * 60 * 24 * 365);
             autoLoginCookie.setDomain(EntityUtilProperties.getPropertyValue("url", "cookie.domain", delegator));

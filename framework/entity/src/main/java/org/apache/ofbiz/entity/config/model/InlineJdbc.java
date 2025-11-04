@@ -77,7 +77,7 @@ public final class InlineJdbc extends JdbcElement {
         } else {
             try {
                 this.poolMaxsize = Integer.parseInt(poolMaxsize);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 throw new GenericEntityConfException("<inline-jdbc> element pool-maxsize attribute is invalid" + lineNumberText);
             }
         }
@@ -87,7 +87,7 @@ public final class InlineJdbc extends JdbcElement {
         } else {
             try {
                 this.poolMinsize = Integer.parseInt(poolMinsize);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 throw new GenericEntityConfException("<inline-jdbc> element pool-minsize attribute is invalid" + lineNumberText);
             }
         }
@@ -97,7 +97,7 @@ public final class InlineJdbc extends JdbcElement {
         } else {
             try {
                 this.idleMaxsize = Integer.parseInt(idleMaxsize);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 throw new GenericEntityConfException("<inline-jdbc> element idle-maxsize attribute is invalid" + lineNumberText);
             }
         }
@@ -107,7 +107,7 @@ public final class InlineJdbc extends JdbcElement {
         } else {
             try {
                 this.timeBetweenEvictionRunsMillis = Integer.parseInt(timeBetweenEvictionRunsMillis);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 throw new GenericEntityConfException("<inline-jdbc> element time-between-eviction-runs-millis attribute is invalid" + lineNumberText);
             }
         }
@@ -117,7 +117,7 @@ public final class InlineJdbc extends JdbcElement {
         } else {
             try {
                 this.softMinEvictableIdleTimeMillis = Integer.parseInt(softMinEvictableIdleTimeMillis);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 throw new GenericEntityConfException("<inline-jdbc> element soft-min-evictable-idle-time-millis attribute is invalid"
                         + lineNumberText);
             }
@@ -128,7 +128,7 @@ public final class InlineJdbc extends JdbcElement {
         } else {
             try {
                 this.poolSleeptime = Integer.parseInt(poolSleeptime);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 throw new GenericEntityConfException("<inline-jdbc> element pool-sleeptime attribute is invalid" + lineNumberText);
             }
         }
@@ -138,7 +138,7 @@ public final class InlineJdbc extends JdbcElement {
         } else {
             try {
                 this.poolLifetime = Integer.parseInt(poolLifetime);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 throw new GenericEntityConfException("<inline-jdbc> element pool-lifetime attribute is invalid" + lineNumberText);
             }
         }
@@ -148,7 +148,7 @@ public final class InlineJdbc extends JdbcElement {
         } else {
             try {
                 this.poolDeadlockMaxwait = Integer.parseInt(poolDeadlockMaxwait);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 throw new GenericEntityConfException("<inline-jdbc> element pool-deadlock-maxwait attribute is invalid" + lineNumberText);
             }
         }
@@ -158,7 +158,7 @@ public final class InlineJdbc extends JdbcElement {
         } else {
             try {
                 this.poolDeadlockRetrywait = Integer.parseInt(poolDeadlockRetrywait);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 throw new GenericEntityConfException("<inline-jdbc> element pool-deadlock-retrywait attribute is invalid" + lineNumberText);
             }
         }

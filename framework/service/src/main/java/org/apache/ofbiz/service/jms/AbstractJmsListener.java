@@ -122,8 +122,8 @@ public abstract class AbstractJmsListener implements GenericMessageListener, Exc
             Debug.logVerbose("JMS Message Received --> " + message, MODULE);
         }
 
-        if (message instanceof MapMessage) {
-            mapMessage = (MapMessage) message;
+        if (message instanceof MapMessage mapMessage1) {
+            mapMessage = mapMessage1;
         } else {
             Debug.logError("Received message is not a MapMessage!", MODULE);
             return;
@@ -142,7 +142,7 @@ public abstract class AbstractJmsListener implements GenericMessageListener, Exc
         while (!isConnected()) {
             try {
                 this.refresh();
-            } catch (GenericServiceException e) {
+            } catch (GenericServiceException _) {
                 try {
                     Thread.sleep(10000);
                 } catch (InterruptedException ie) {

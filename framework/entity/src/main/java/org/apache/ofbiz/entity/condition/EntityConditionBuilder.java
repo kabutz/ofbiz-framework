@@ -115,7 +115,7 @@ public class EntityConditionBuilder extends BuilderSupport {
         }
         if (conditionList.size() == 1) {
             // REFACTOR: Use sequenced collection method instead
-            return new ConditionHolder(conditionList.get(0));
+            return new ConditionHolder(conditionList.getFirst());
         }
         return new ConditionHolder(EntityCondition.makeCondition(conditionList));
     }
@@ -134,10 +134,10 @@ public class EntityConditionBuilder extends BuilderSupport {
         while (iterator.hasNext()) {
             tempList.add(iterator.next());
         }
-        if (child instanceof EntityCondition) {
-            tempList.add((EntityCondition) child);
-        } else if (child instanceof ConditionHolder) {
-            tempList.add(((ConditionHolder) child).condition);
+        if (child instanceof EntityCondition condition) {
+            tempList.add(condition);
+        } else if (child instanceof ConditionHolder conditionHolder) {
+            tempList.add(conditionHolder.condition);
         } else {
             tempList.addAll(UtilGenerics.cast(child));
         }

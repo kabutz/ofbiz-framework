@@ -23,7 +23,6 @@ import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -37,7 +36,7 @@ import java.util.TimeZone;
  */
 public final class Config {
     /** The default directory where log files are stored. */
-    private static final Path DEFAULT_LOG_DIRECTORY = Paths.get("runtime", "logs");
+    private static final Path DEFAULT_LOG_DIRECTORY = Path.of("runtime", "logs");
 
     private final Path ofbizHome;
     private final InetAddress adminAddress;
@@ -101,7 +100,7 @@ public final class Config {
         shutdownAfterLoad = "true".equalsIgnoreCase(getProperty(props, "ofbiz.auto.shutdown", "false"));
         useShutdownHook = "true".equalsIgnoreCase(getProperty(props, "ofbiz.enable.hook", "true"));
 
-        System.out.println("Set OFBIZ_HOME to - " + ofbizHome);
+        IO.println("Set OFBIZ_HOME to - " + ofbizHome);
 
         // set system properties
         System.setProperty("ofbiz.home", ofbizHome.toString());
@@ -119,11 +118,11 @@ public final class Config {
     }
 
     private static Path getOfbizHome(String homeProp) {
-        return Paths.get(homeProp).toAbsolutePath().normalize();
+        return Path.of(homeProp).toAbsolutePath().normalize();
     }
 
     private static Path getAbsolutePath(Properties props, String key, Path defaultValue, Path ofbizHome) {
-        return Paths.get(getProperty(props, key,
+        return Path.of(getProperty(props, key,
                 ofbizHome.resolve(props.getProperty(key, defaultValue.toString())).toString()));
     }
 
@@ -138,7 +137,7 @@ public final class Config {
             throw new StartupException(e);
         }
 
-        System.out.println("Config.java using configuration file " + fileName);
+        IO.println("Config.java using configuration file " + fileName);
         return props;
     }
 
@@ -172,7 +171,7 @@ public final class Config {
         try {
             return Integer.parseInt(adminPortStr) + portOffsetValue;
         } catch (NumberFormatException e) {
-            System.out.println("Error parsing admin port: " + adminPortStr + " -- " + e.getMessage());
+            IO.println("Error parsing admin port: " + adminPortStr + " -- " + e.getMessage());
             return defaultAdminPort + portOffsetValue;
         }
     }

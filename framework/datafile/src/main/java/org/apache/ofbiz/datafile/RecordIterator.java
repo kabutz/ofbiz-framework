@@ -26,6 +26,8 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Stack;
 
+import org.apache.ofbiz.datafile.Record;
+
 /**
  * Record Iterator for reading large files
  * Note: this is a memory intensive and will not handle files that exceed memory.
@@ -77,7 +79,7 @@ public class RecordIterator {
         String charsetStr = modelDataFile.getEncodingType();
         try {
             this.br = new BufferedReader(new InputStreamReader(dataFileStream, Charset.forName(charsetStr)));
-        } catch (Exception e) {
+        } catch (Exception _) {
             throw new DataFileException(charsetStr + " is not supported");
         }
         //move the cursor to the good start line
@@ -85,7 +87,7 @@ public class RecordIterator {
             for (int i = 0; i < modelDataFile.getStartLine(); i++) {
                 br.readLine();
             }
-        } catch (IOException e) {
+        } catch (IOException _) {
             throw new DataFileException("Impossible to read the buffer");
         }
         // get the line seeded

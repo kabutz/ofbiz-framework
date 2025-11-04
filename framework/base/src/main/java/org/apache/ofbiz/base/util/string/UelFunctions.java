@@ -245,14 +245,14 @@ public class UelFunctions {
 
     public static int getSize(Object obj) {
         if (null == obj) return 0;
-        if (obj instanceof Map) {
-            return ((Map<?, ?>) obj).size();
+        if (obj instanceof Map<?, ?> map) {
+            return map.size();
         }
-        if (obj instanceof Collection) {
-            return ((Collection<?>) obj).size();
+        if (obj instanceof Collection<?> collection) {
+            return collection.size();
         }
-        if (obj instanceof String) {
-            return ((String) obj).length();
+        if (obj instanceof String string) {
+            return string.length();
         }
         return -1;
     }
@@ -383,7 +383,7 @@ public class UelFunctions {
         try {
             URL url = FlexibleLocation.resolveLocation(str);
             if (url != null) {
-                try (InputStream is = url.openStream();) {
+                try (InputStream is = url.openStream()) {
                     document = UtilXml.readXmlDocument(is, str);
                 } catch (SAXException | ParserConfigurationException e) {
                     Debug.logError(e, "Error while reading XML document " + str, MODULE);
@@ -401,7 +401,7 @@ public class UelFunctions {
         try {
             File file = FileUtil.getFile(str);
             if (file != null) {
-                try (FileOutputStream os = new FileOutputStream(file);) {
+                try (FileOutputStream os = new FileOutputStream(file)) {
                     UtilXml.writeXmlDocument(node, os, encoding, omitXmlDeclaration, indent, indentAmount);
                     return true;
                 }
@@ -436,7 +436,7 @@ public class UelFunctions {
             sb.append("</xsl:template>\n</xsl:stylesheet>\n");
             ByteArrayInputStream bis = new ByteArrayInputStream(sb.toString().getBytes(StandardCharsets.UTF_8));
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            try (ByteArrayOutputStream os = new ByteArrayOutputStream();) {
+            try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
                 UtilXml.transformDomDocument(transformerFactory.newTransformer(new StreamSource(bis)), node, os);
                 return os.toString();
             }
@@ -447,7 +447,7 @@ public class UelFunctions {
     }
 
     public static String toXmlString(Node node, String encoding, boolean omitXmlDeclaration, boolean indent, int indentAmount) {
-        try (ByteArrayOutputStream os = new ByteArrayOutputStream();) {
+        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
             UtilXml.writeXmlDocument(node, os, encoding, omitXmlDeclaration, indent, indentAmount);
             return os.toString();
         } catch (IOException | TransformerException e) {

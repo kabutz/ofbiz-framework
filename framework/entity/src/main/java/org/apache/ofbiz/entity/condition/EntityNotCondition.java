@@ -50,8 +50,8 @@ public class EntityNotCondition implements EntityCondition {
 
     @Override
     public boolean equals(Object obj) {
-        return (obj instanceof EntityNotCondition)
-                && Objects.equals(condition, ((EntityNotCondition) obj).condition);
+        return (obj instanceof EntityNotCondition enc)
+                && Objects.equals(condition, enc.condition);
     }
 
     @Override

@@ -35,6 +35,7 @@ import java.io.Writer;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.imageio.ImageIO;
 import jakarta.servlet.http.HttpServletRequest;
@@ -223,7 +224,7 @@ public class CommonEvents {
         try {
             JSON json = JSON.from(attrMap);
             writeJSONtoResponse(json, request, response);
-        } catch (IOException e) {
+        } catch (IOException _) {
             return "error";
         }
         return "success";
@@ -302,9 +303,9 @@ public class CommonEvents {
             // Generating some circles for background noise
             g.setColor(circleColor);
             for (int i = 0; i < circlesToDraw; i++) {
-                int circleRadius = (int) (Math.random() * height / 2.0);
-                int circleX = (int) (Math.random() * width - circleRadius);
-                int circleY = (int) (Math.random() * height - circleRadius);
+                int circleRadius = (int) (ThreadLocalRandom.current().nextDouble() * height / 2.0);
+                int circleX = (int) (ThreadLocalRandom.current().nextDouble() * width - circleRadius);
+                int circleY = (int) (ThreadLocalRandom.current().nextDouble() * height - circleRadius);
                 g.drawOval(circleX, circleY, circleRadius * 2, circleRadius * 2);
             }
             g.setColor(textColor);
@@ -330,7 +331,7 @@ public class CommonEvents {
                 BufferedImage charImage = new BufferedImage(charDim, charDim, BufferedImage.TYPE_INT_ARGB);
                 Graphics2D charGraphics = charImage.createGraphics();
                 charGraphics.translate(halfCharDim, halfCharDim);
-                double angle = (Math.random() - 0.5) * rotationRange;
+                double angle = (ThreadLocalRandom.current().nextDouble() - 0.5) * rotationRange;
                 charGraphics.transform(AffineTransform.getRotateInstance(angle));
                 charGraphics.translate(-halfCharDim, -halfCharDim);
                 charGraphics.setColor(textColor);
@@ -436,7 +437,7 @@ public class CommonEvents {
                     String cmd = (String) FlexibleStringExpander.getInstance(cmdTemplate).expand(sourceMap);
                     // run command
                     Debug.logInfo("Run command: " + cmd, MODULE);
-                    Process process = Runtime.getRuntime().exec(cmd);
+                    Process process = Runtime.getRuntime().exec(cmd.split(" "));
                     // print result
                     BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                     String line = "";

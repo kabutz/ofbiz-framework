@@ -104,7 +104,7 @@ public class CheckOutHelper {
             errorMessages.add(errMsg);
         }
         if (errorMessages.size() == 1) {
-            result = ServiceUtil.returnError(errorMessages.get(0));
+            result = ServiceUtil.returnError(errorMessages.getFirst());
         } else if (!errorMessages.isEmpty()) {
             result = ServiceUtil.returnError(errorMessages);
         } else {
@@ -159,7 +159,7 @@ public class CheckOutHelper {
         }
 
         if (errorMessages.size() == 1) {
-            result = ServiceUtil.returnError(errorMessages.get(0));
+            result = ServiceUtil.returnError(errorMessages.getFirst());
         } else if (!errorMessages.isEmpty()) {
             result = ServiceUtil.returnError(errorMessages);
         } else {
@@ -261,7 +261,7 @@ public class CheckOutHelper {
         }
 
         if (errorMessages.size() == 1) {
-            result = ServiceUtil.returnError(errorMessages.get(0));
+            result = ServiceUtil.returnError(errorMessages.getFirst());
         } else if (!errorMessages.isEmpty()) {
             result = ServiceUtil.returnError(errorMessages);
         } else {
@@ -424,7 +424,7 @@ public class CheckOutHelper {
         }
 
         if (errorMessages.size() == 1) {
-            result = ServiceUtil.returnError(errorMessages.get(0));
+            result = ServiceUtil.returnError(errorMessages.getFirst());
         } else if (!errorMessages.isEmpty()) {
             result = ServiceUtil.returnError(errorMessages);
         } else {
@@ -492,7 +492,7 @@ public class CheckOutHelper {
         }
 
         if (errorMessages.size() == 1) {
-            result = ServiceUtil.returnError(errorMessages.get(0));
+            result = ServiceUtil.returnError(errorMessages.getFirst());
         } else if (!errorMessages.isEmpty()) {
             result = ServiceUtil.returnError(errorMessages);
         } else {
@@ -917,7 +917,7 @@ public class CheckOutHelper {
             if (Debug.verboseOn()) {
                 Debug.logVerbose("ReturnList: " + taxReturn, MODULE);
             }
-            List<GenericValue> orderAdj = UtilGenerics.cast(taxReturn.get(0));
+            List<GenericValue> orderAdj = UtilGenerics.cast(taxReturn.getFirst());
             List<List<GenericValue>> itemAdj = UtilGenerics.cast(taxReturn.get(1));
 
             // set the item adjustments
@@ -1690,7 +1690,7 @@ public class CheckOutHelper {
             try {
                 this.cart.setShipBeforeDate(shipGroupIndex, (Timestamp) ObjectType.simpleTypeOrObjectConvert(shipBeforeDate, "Timestamp", null,
                         null));
-            } catch (Exception e) {
+            } catch (Exception _) {
                 errMsg = "Ship Before Date must be a valid date formed ";
                 result = ServiceUtil.returnError(errMsg);
             }
@@ -1705,7 +1705,7 @@ public class CheckOutHelper {
 
             try {
                 this.cart.setShipAfterDate(shipGroupIndex, (Timestamp) ObjectType.simpleTypeOrObjectConvert(shipAfterDate, "Timestamp", null, null));
-            } catch (Exception e) {
+            } catch (Exception _) {
                 errMsg = "Ship After Date must be a valid date formed ";
                 result = ServiceUtil.returnError(errMsg);
             }

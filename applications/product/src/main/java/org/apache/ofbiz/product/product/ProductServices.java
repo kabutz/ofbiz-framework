@@ -324,7 +324,7 @@ public class ProductServices {
 
         Map<String, GenericValue> sample = null;
         try {
-            sample = makeVariantSample(dctx.getDelegator(), features, items, featureOrder.get(0));
+            sample = makeVariantSample(dctx.getDelegator(), features, items, featureOrder.getFirst());
         } catch (Exception e) {
             return ServiceUtil.returnError(e.getMessage());
         }
@@ -403,7 +403,7 @@ public class ProductServices {
                         null, true);
                 c = EntityUtil.filterByDate(c);
                 if (!c.isEmpty()) {
-                    GenericValue asV = c.iterator().next();
+                    GenericValue asV = c.getFirst();
                     mainProduct = asV.getRelatedOne("MainProduct", true);
                 }
             }
@@ -1316,7 +1316,7 @@ public class ProductServices {
             // gets the first productId of the List
             product = EntityUtil.getFirst(productsFound);
             // remove this productId
-            productsFound.remove(0);
+            productsFound.removeFirst();
         }
 
         Map<String, Object> result = ServiceUtil.returnSuccess();

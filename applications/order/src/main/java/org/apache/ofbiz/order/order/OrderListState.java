@@ -158,7 +158,7 @@ public class OrderListState implements Serializable {
         try {
             viewSize = Integer.parseInt(viewSizeParam);
             viewIndex = Integer.parseInt(viewIndexParam);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException _) {
             Debug.logWarning("Values of " + VIEW_SIZE_PARAM + " [" + viewSizeParam + "] and " + VIEW_INDEX_PARAM + " [" + viewIndexParam
                     + "] must both be Integers. Not paginating order list.", MODULE);
         }

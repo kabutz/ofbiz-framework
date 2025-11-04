@@ -30,7 +30,7 @@ public final class MacroCallParameterStringValueEndsWithMatcher extends TypeSafe
 
     @Override
     protected boolean matchesSafely(final Object item) {
-        return item != null && item instanceof String && ((String) item).endsWith(endsWith);
+        return item != null && item instanceof String s && s.endsWith(endsWith);
     }
 
     @Override

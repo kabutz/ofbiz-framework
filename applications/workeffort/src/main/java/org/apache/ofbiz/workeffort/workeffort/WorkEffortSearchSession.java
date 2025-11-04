@@ -333,7 +333,7 @@ public class WorkEffortSearchSession {
         // if the options have changed since the last search, add it to the beginning of the search options history
         if (workEffortSearchOptions.changed) {
             List<WorkEffortSearchOptions> optionsHistoryList = WorkEffortSearchSession.getSearchOptionsHistoryList(session);
-            optionsHistoryList.add(0, new WorkEffortSearchOptions(workEffortSearchOptions));
+            optionsHistoryList.addFirst(new WorkEffortSearchOptions(workEffortSearchOptions));
             workEffortSearchOptions.changed = false;
         }
     }

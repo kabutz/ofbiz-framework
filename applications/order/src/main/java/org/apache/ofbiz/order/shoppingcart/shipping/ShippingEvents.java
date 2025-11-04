@@ -204,7 +204,7 @@ public class ShippingEvents {
                             + supplierPartyId + "].  Will not be able to calculate drop shipment estimate.");
                 }
                 shippingOriginContactMechId = originAddress.getString("contactMechId");
-            } catch (GeneralException e) {
+            } catch (GeneralException _) {
                 return ServiceUtil.returnError(standardMessage);
             }
         }
@@ -253,7 +253,7 @@ public class ShippingEvents {
             if (externalAmt != null) {
                 shippingTotal = shippingTotal.add(externalAmt);
             }
-        } catch (GeneralException e) {
+        } catch (GeneralException _) {
             return ServiceUtil.returnError(standardMessage);
         }
 
@@ -266,7 +266,7 @@ public class ShippingEvents {
             if (genericAmt != null) {
                 shippingTotal = shippingTotal.add(genericAmt);
             }
-        } catch (GeneralException e) {
+        } catch (GeneralException _) {
             return ServiceUtil.returnError(standardMessage);
         }
 

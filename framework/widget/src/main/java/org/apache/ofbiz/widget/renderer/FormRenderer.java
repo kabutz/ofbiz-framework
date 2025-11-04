@@ -712,10 +712,10 @@ public class FormRenderer {
         }
         // if list is empty, do not render rows
         Iterator<?> iter = null;
-        if (obj instanceof Iterator<?>) {
-            iter = (Iterator<?>) obj;
-        } else if (obj instanceof List<?>) {
-            iter = ((List<?>) obj).listIterator();
+        if (obj instanceof Iterator<?> iterator) {
+            iter = iterator;
+        } else if (obj instanceof List<?> list) {
+            iter = list.listIterator();
         }
 
         // set low and high index
@@ -761,10 +761,10 @@ public class FormRenderer {
                 if (UtilValidate.isNotEmpty(modelForm.getListEntryName())) {
                     localContext.put(modelForm.getListEntryName(), item);
                 } else {
-                    if (itemMap instanceof GenericEntity) {
+                    if (itemMap instanceof GenericEntity entity) {
                         // Rendering code might try to modify the GenericEntity instance,
                         // so we make a copy of it.
-                        Map<String, Object> genericEntityClone = UtilGenerics.cast(((GenericEntity) itemMap).clone());
+                        Map<String, Object> genericEntityClone = UtilGenerics.cast(entity.clone());
                         localContext.push(genericEntityClone);
                     } else {
                         localContext.push(itemMap);
@@ -914,10 +914,10 @@ public class FormRenderer {
             }
             context.put("actualPageSize", highIndex - lowIndex);
 
-            if (iter instanceof EntityListIterator) {
+            if (iter instanceof EntityListIterator iterator) {
                 try {
                     // CHECKSTYLE_OFF: ALMOST_ALL
-                    ((EntityListIterator) iter).close();
+                    iterator.close();
                     // CHECKSTYLE_ON: ALMOST_ALL
                 } catch (GenericEntityException e) {
                     Debug.logError(e, "Error closing list form render EntityListIterator: " + e.toString(), MODULE);
@@ -1046,9 +1046,9 @@ public class FormRenderer {
                 isFirstPass = false;
                 List<FieldGroupBase> inbetweenList = getInbetweenList(lastFieldGroup, currentFieldGroup);
                 for (FieldGroupBase obj : inbetweenList) {
-                    if (obj instanceof ModelForm.Banner) {
+                    if (obj instanceof ModelForm.Banner banner) {
                         // CHECKSTYLE_OFF: ALMOST_ALL
-                        ((ModelForm.Banner) obj).renderString(writer, context, formStringRenderer);
+                        banner.renderString(writer, context, formStringRenderer);
                         // CHECKSTYLE_ON: ALMOST_ALL
                     }
                 }
@@ -1093,9 +1093,9 @@ public class FormRenderer {
 
                         List<FieldGroupBase> inbetweenList = getInbetweenList(lastFieldGroup, currentFieldGroup);
                         for (FieldGroupBase obj : inbetweenList) {
-                            if (obj instanceof ModelForm.Banner) {
+                            if (obj instanceof ModelForm.Banner banner) {
                                 // CHECKSTYLE_OFF: ALMOST_ALL
-                                ((ModelForm.Banner) obj).renderString(writer, context, formStringRenderer);
+                                banner.renderString(writer, context, formStringRenderer);
                                 // CHECKSTYLE_ON: ALMOST_ALL
                             }
                         }
@@ -1246,15 +1246,13 @@ public class FormRenderer {
         }
         // if list is empty, do not render rows
         Iterator<?> iter = null;
-        if (obj instanceof Iterator<?>) {
-            iter = (Iterator<?>) obj;
-        } else if (obj instanceof List<?>) {
-            iter = ((List<?>) obj).listIterator();
+        if (obj instanceof Iterator<?> iterator) {
+            iter = iterator;
+        } else if (obj instanceof List<?> list) {
+            iter = list.listIterator();
         }
         int itemIndex = -1;
-        if (iter instanceof EntityListIterator) {
-            // REFACTOR: Pattern Matching for instanceof
-            EntityListIterator eli = (EntityListIterator) iter; // INFO Spotbugs reports here "'eli' is never closed" but that's on purpose
+        if (iter instanceof EntityListIterator eli) { // INFO Spotbugs reports here "'eli' is never closed" but that's on purpose
             try {
                 if (eli.getResultsSizeAfterPartialList() > 0) {
                     itemIndex++;
@@ -1277,7 +1275,7 @@ public class FormRenderer {
     private static <X> X safeNext(Iterator<X> iterator) {
         try {
             return iterator.next();
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException _) {
             return null;
         }
     }

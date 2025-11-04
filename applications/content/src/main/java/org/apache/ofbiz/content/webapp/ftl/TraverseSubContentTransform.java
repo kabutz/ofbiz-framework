@@ -250,7 +250,7 @@ public class TraverseSubContentTransform implements TemplateTransformModel {
                 String contentTypeId = (String) thisContent.get("contentTypeId");
                 try {
                     ContentWorker.getContentTypeAncestry(delegator, contentTypeId, contentTypeAncestry);
-                } catch (GenericEntityException e) {
+                } catch (GenericEntityException _) {
                     return false;
                 }
                 assocContext.put("typeAncestry", contentTypeAncestry);

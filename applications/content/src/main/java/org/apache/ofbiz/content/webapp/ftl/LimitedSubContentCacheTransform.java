@@ -26,6 +26,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -264,7 +265,7 @@ public class LimitedSubContentCacheTransform implements TemplateTransformModel {
                 }
 
                 while (pickEntity == null && !lst.isEmpty()) {
-                    double randomValue = Math.random();
+                    double randomValue = ThreadLocalRandom.current().nextDouble();
                     int idx = (int) (lst.size() * randomValue);
                     pickEntity = lst.get(idx);
                     String pickEntityId = pickEntity.getString("contentId");

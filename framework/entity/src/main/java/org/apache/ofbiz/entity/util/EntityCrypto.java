@@ -138,7 +138,7 @@ public final class EntityCrypto {
                     // try using the old/bad hex encoding approach; this is another path the code may take, ie if there
                     // is an exception thrown in decrypt
                     return doDecrypt(keyName, encryptMethod, encryptedString, handlers[i]);
-                } catch (GeneralException e1) {
+                } catch (GeneralException _) {
                     // NOTE: this throws the original exception back, not the new one if it fails using the other approach
                     //throw new EntityCryptoException(e);
                 }
@@ -280,23 +280,19 @@ public final class EntityCrypto {
         @Override
         protected byte[] decryptValue(byte[] key, EncryptMethod encryptMethod, String encryptedString) throws GeneralException {
             // REFACTOR: Replace old style switch with switch expressions
-            switch (encryptMethod) {
-            case SALT:
-                return saltedCipherService.decrypt(Base64.decodeBase64(encryptedString), key).getClonedBytes();
-            default:
-                return cipherService.decrypt(Base64.decodeBase64(encryptedString), key).getClonedBytes();
-            }
+            return switch (encryptMethod) {
+            case SALT -> saltedCipherService.decrypt(Base64.decodeBase64(encryptedString), key).getClonedBytes();
+            default -> cipherService.decrypt(Base64.decodeBase64(encryptedString), key).getClonedBytes();
+            };
         }
 
         @Override
         protected String encryptValue(EncryptMethod encryptMethod, byte[] key, byte[] objBytes) throws GeneralException {
             // REFACTOR: Replace old style switch with switch expressions
-            switch (encryptMethod) {
-            case SALT:
-                return saltedCipherService.encrypt(objBytes, key).toBase64();
-            default:
-                return cipherService.encrypt(objBytes, key).toBase64();
-            }
+            return switch (encryptMethod) {
+            case SALT -> saltedCipherService.encrypt(objBytes, key).toBase64();
+            default -> cipherService.encrypt(objBytes, key).toBase64();
+            };
         }
     }
 
@@ -363,7 +359,7 @@ public final class EntityCrypto {
             if (kek != null) {
                 try {
                     key = DesCrypt.getDesKey(kek);
-                } catch (GeneralException e) {
+                } catch (GeneralException _) {
                     Debug.logInfo("Invalid key-encryption-key specified for SaltedBase64StorageHandler; the key is probably "
                             + "valid for the newer ShiroStorageHandler", MODULE);
                 }

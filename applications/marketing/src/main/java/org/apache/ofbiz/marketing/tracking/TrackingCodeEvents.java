@@ -287,7 +287,7 @@ public class TrackingCodeEvents {
                 String siteIdEnc;
                 try {
                     siteIdEnc = URLEncoder.encode(siteId, "UTF-8");
-                } catch (UnsupportedEncodingException e) {
+                } catch (UnsupportedEncodingException _) {
                     Debug.logWarning("There went something wrong while encoding for the cookie creation in TrackingCodeEvents.processTrackingCode",
                             MODULE);
                     return "error";

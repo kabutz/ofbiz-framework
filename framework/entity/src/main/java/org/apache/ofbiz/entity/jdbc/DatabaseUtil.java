@@ -310,7 +310,7 @@ public class DatabaseUtil {
         String schemaName;
         try {
             schemaName = getSchemaName(messages);
-        } catch (SQLException e) {
+        } catch (SQLException _) {
             String message = "Could not get schema name the database, aborting.";
             if (messages != null) messages.add(message);
             Debug.logError(message, MODULE);
@@ -943,7 +943,7 @@ public class DatabaseUtil {
             try {
                 Debug.logInfo("Database Product Name is " + dbData.getDatabaseProductName(), MODULE);
                 Debug.logInfo("Database Product Version is " + dbData.getDatabaseProductVersion(), MODULE);
-            } catch (SQLException e) {
+            } catch (SQLException _) {
                 Debug.logWarning("Unable to get Database name & version information", MODULE);
             }
             // JDBC Driver Info
@@ -951,9 +951,9 @@ public class DatabaseUtil {
                 Debug.logInfo("Database Driver Name is " + dbData.getDriverName(), MODULE);
                 Debug.logInfo("Database Driver Version is " + dbData.getDriverVersion(), MODULE);
                 Debug.logInfo("Database Driver JDBC Version is " + dbData.getJDBCMajorVersion() + "." + dbData.getJDBCMinorVersion(), MODULE);
-            } catch (SQLException e) {
+            } catch (SQLException _) {
                 Debug.logWarning("Unable to get Driver name & version information", MODULE);
-            } catch (AbstractMethodError ame) {
+            } catch (AbstractMethodError _) {
                 Debug.logWarning("Unable to get Driver JDBC Version", MODULE);
             }
             // Db/Driver support settings
@@ -962,10 +962,10 @@ public class DatabaseUtil {
                 String requiredFlag = detection.required ? "*" : "";
                 try {
                     Object result = detection.method.invoke(dbData, detection.params);
-                    Debug.logInfo(String.format(GOOD_FORMAT_STR, detection.name, result, requiredFlag), MODULE);
+                    Debug.logInfo(GOOD_FORMAT_STR.formatted(detection.name, result, requiredFlag), MODULE);
                 } catch (Exception e) {
                     Debug.logVerbose(e, MODULE);
-                    Debug.logWarning(String.format(BAD_FORMAT_STR, detection.name, requiredFlag), MODULE);
+                    Debug.logWarning(BAD_FORMAT_STR.formatted(detection.name, requiredFlag), MODULE);
                 }
             }
             try {
@@ -1851,7 +1851,7 @@ public class DatabaseUtil {
         }
         try (Connection connection = getConnection(); Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(sql);
-        } catch (SQLException e) {
+        } catch (SQLException _) {
             // if that failed try the alternate syntax real quick
             StringBuilder sql2Buf = new StringBuilder("ALTER TABLE ");
             sql2Buf.append(entity.getTableName(datasourceInfo));

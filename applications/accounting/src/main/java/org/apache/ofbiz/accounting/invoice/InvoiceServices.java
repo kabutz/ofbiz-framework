@@ -1070,11 +1070,11 @@ public class InvoiceServices {
                 continue;
             }
             // From and To are reversed between commission and invoice
-            String partyIdBillTo = (String) (commList.get(0)).get("partyIdFrom");
-            String partyIdBillFrom = (String) (commList.get(0)).get("partyIdTo");
-            GenericValue invoice = (GenericValue) (commList.get(0)).get("invoice");
-            BigDecimal appliedFraction = (BigDecimal) (commList.get(0)).get("appliedFraction");
-            Long days = (Long) (commList.get(0)).get("days");
+            String partyIdBillTo = (String) (commList.getFirst()).get("partyIdFrom");
+            String partyIdBillFrom = (String) (commList.getFirst()).get("partyIdTo");
+            GenericValue invoice = (GenericValue) (commList.getFirst()).get("invoice");
+            BigDecimal appliedFraction = (BigDecimal) (commList.getFirst()).get("appliedFraction");
+            Long days = (Long) (commList.getFirst()).get("days");
             // create the invoice record
             // To and From are in commission's sense, opposite for invoice
             Map<String, Object> createInvoiceMap = new HashMap<>();
@@ -1098,7 +1098,7 @@ public class InvoiceServices {
                     return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE,
                             "AccountingInvoiceCommissionError", locale), null, null, null);
                 }
-            } catch (GenericServiceException e) {
+            } catch (GenericServiceException _) {
                 return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE,
                         "AccountingInvoiceCommissionError", locale), null, null, null);
             }
@@ -1905,10 +1905,10 @@ public class InvoiceServices {
 
             String invoiceId = null;
             GenericValue shipmentItemBilling = null;
-            String shipmentId = shipmentIds.get(0);
+            String shipmentId = shipmentIds.getFirst();
             try {
                 shipmentItemBilling = EntityQuery.use(delegator).from("ShipmentItemBilling").where("shipmentId", shipmentId).queryFirst();
-            } catch (GenericEntityException e) {
+            } catch (GenericEntityException _) {
                 return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE,
                         "AccountingProblemGettingShipmentItemBilling", locale));
             }
@@ -2544,7 +2544,7 @@ public class InvoiceServices {
                     if (ServiceUtil.isError(result)) {
                         return adjAmount;
                     }
-                } catch (GenericServiceException e) {
+                } catch (GenericServiceException _) {
                     return adjAmount;
                 }
 
@@ -2600,7 +2600,7 @@ public class InvoiceServices {
                     if (ServiceUtil.isError(result)) {
                         return adjAmount;
                     }
-                } catch (GenericServiceException e) {
+                } catch (GenericServiceException _) {
                     return adjAmount;
                 }
 
@@ -3540,7 +3540,7 @@ public class InvoiceServices {
                 Debug.logInfo(checkAppls.size() + " records already exist", MODULE);
             }
             // 1 record exists just update and if different ID delete other record and add together.
-            GenericValue checkAppl = checkAppls.get(0);
+            GenericValue checkAppl = checkAppls.getFirst();
             // if new record  add to the already existing one.
             if (paymentApplication.get("paymentApplicationId") == null) {
                 // add 2 amounts together

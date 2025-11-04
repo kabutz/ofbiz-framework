@@ -269,7 +269,7 @@ public class ContentPermissionServices {
         try {
             contentTo = EntityQuery.use(delegator).from("Content").where("contentId", contentIdTo).cache().queryOne();
             contentFrom = EntityQuery.use(delegator).from("Content").where("contentId", contentIdFrom).cache().queryOne();
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE,
                     "ContentContentToOrFromErrorRetriving", locale));
         }

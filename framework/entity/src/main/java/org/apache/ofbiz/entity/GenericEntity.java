@@ -531,24 +531,24 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
                         + this.getDelegator().getEntityGroupName(this.getEntityName()) + "]");
             }
 
-            if (value instanceof Boolean) {
+            if (value instanceof Boolean boolean1) {
                 // if this is a Boolean check to see if we should convert from an indicator or just leave as is
                 try {
                     int fieldType = SqlJdbcUtil.getType(type.getJavaType());
                     if (fieldType != 10) {
-                        value = (Boolean) value ? "Y" : "N";
+                        value = boolean1 ? "Y" : "N";
                     }
                 } catch (GenericNotImplementedException e) {
                     throw new IllegalArgumentException(e.getMessage());
                 }
             } else if (value != null && !(value instanceof NULL)) {
                 // make sure the type matches the field Java type
-                if (value instanceof String && "byte[]".equals(type.getJavaType())) {
-                    value = ((String) value).getBytes(StandardCharsets.UTF_8);
+                if (value instanceof String string && "byte[]".equals(type.getJavaType())) {
+                    value = string.getBytes(StandardCharsets.UTF_8);
                 } else if (!ObjectType.instanceOf(value, type.getJavaType())) {
                     try {
                         value = ObjectType.simpleTypeOrObjectConvert(value, type.getJavaType(), null, null);
-                    } catch (GeneralException e) {
+                    } catch (GeneralException _) {
                         String errMsg = "In entity field [" + this.getEntityName() + "." + name + "] set the value passed in ["
                                 + value.getClass().getName() + "] is not compatible with the Java type of the field [" + type.getJavaType() + "]";
                         // eventually we should do this, but for now we'll do a "soft" failure: throw new IllegalArgumentException(errMsg);
@@ -718,7 +718,7 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
         }
 
         // REFACTOR: Use sequenced collection method instead
-        String pkFieldName = pkFieldNameList.get(0);
+        String pkFieldName = pkFieldNameList.getFirst();
         //if (this.get(pkFieldName) != null) {
             // don't throw exception, too much of a pain and usually intended: throw new IllegalArgumentException("Cannot setNextSeqId, pk field ["
         // + pkFieldName + "] of entity [" + this.getEntityName() + "] already has a value [" + this.get(pkFieldName) + "]");
@@ -739,11 +739,9 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
         if (obj == null) {
             return false;
         }
-        if (obj instanceof Boolean) {
-            return (Boolean) obj;
-        } else if (obj instanceof String) {
-            // REFACTOR: Pattern Matching for instanceof
-            String value = (String) obj;
+        if (obj instanceof Boolean boolean1) {
+            return boolean1;
+        } else if (obj instanceof String value) {
 
             if ("Y".equalsIgnoreCase(value) || "T".equalsIgnoreCase(value)) {
                 return Boolean.TRUE;
@@ -860,8 +858,8 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
     public Double getDouble(String name) {
         // this "hack" is needed for now until the Double/BigDecimal issues are all resolved
         Object value = get(name);
-        if (value instanceof BigDecimal) {
-            return ((BigDecimal) value).doubleValue();
+        if (value instanceof BigDecimal decimal) {
+            return decimal.doubleValue();
         }
         return (Double) value;
     }
@@ -875,8 +873,8 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
         // this "hack" is needed for now until the Double/BigDecimal issues are all resolved
         // NOTE: for things to generally work properly BigDecimal should really be used as the java-type in the field type def XML files
         Object value = get(name);
-        if (value instanceof Double) {
-            return new BigDecimal((Double) value);
+        if (value instanceof Double double1) {
+            return new BigDecimal(double1);
         }
         return (BigDecimal) value;
     }
@@ -891,10 +889,8 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
         if (value == null) {
             return null;
         }
-        if (value instanceof Blob) {
+        if (value instanceof Blob valueBlob) {
             try {
-                // REFACTOR: Pattern Matching for instanceof
-                Blob valueBlob = (Blob) value;
                 return valueBlob.getBytes(1, (int) valueBlob.length());
             } catch (SQLException e) {
                 String errMsg = "Error getting byte[] from Blob: " + e.toString();
@@ -902,8 +898,8 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
                 return null;
             }
         }
-        if (value instanceof byte[]) {
-            return (byte[]) value;
+        if (value instanceof byte[] bytes) {
+            return bytes;
         }
         // uh-oh, this shouldn't happen...
         throw new IllegalArgumentException("In call to getBytes the value is not a supported type, should be byte[] or ByteWrapper, is: "
@@ -946,10 +942,7 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
         ModelEntity modelEntityToUse = this.getModelEntity();
         Object resourceValue = get(this.getModelEntity(), modelEntityToUse, name, resource, locale);
         if (resourceValue == null) {
-            if (modelEntityToUse instanceof ModelViewEntity) {
-                //  now try to retrieve with the field heading from the real entity linked to the view
-                // REFACTOR: Pattern Matching for instanceof
-                ModelViewEntity modelViewEntity = (ModelViewEntity) modelEntityToUse;
+            if (modelEntityToUse instanceof ModelViewEntity modelViewEntity) {
                 Iterator<ModelAlias> it = modelViewEntity.getAliasesIterator();
                 while (it.hasNext()) {
                     ModelAlias modelAlias = it.next();
@@ -991,7 +984,7 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
         ResourceBundle bundle = null;
         try {
             bundle = UtilProperties.getResourceBundle(resource, locale);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException _) {
             bundle = null;
         }
         if (bundle == null) {
@@ -1005,10 +998,7 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
         keyBuffer.append('.');
         keyBuffer.append(name);
         // finish off by adding the values of all PK fields
-        if (modelEntity instanceof ModelViewEntity) {
-            // retrieve pkNames of realEntity
-            // REFACTOR: Pattern Matching for instanceof
-            ModelViewEntity modelViewEntity = (ModelViewEntity) modelEntity;
+        if (modelEntity instanceof ModelViewEntity modelViewEntity) {
             List<String> pkNamesToUse = new LinkedList<>();
             // iterate on realEntity for pkField
             Iterator<ModelField> iter = modelEntityToUse.getPksIterator();
@@ -1053,7 +1043,7 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
         Object resourceValue = null;
         try {
             resourceValue = bundle.getObject(bundleKey);
-        } catch (MissingResourceException e) {
+        } catch (MissingResourceException _) {
             return null;
         }
         return resourceValue;
@@ -1133,7 +1123,7 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
 
                 if (setIfEmpty) {
                     // if empty string, set to null
-                    if (field != null && field instanceof String && ((String) field).isEmpty()) {
+                    if (field != null && field instanceof String string && string.isEmpty()) {
                         this.set(curField.getName(), null);
                     } else {
                         this.set(curField.getName(), field);
@@ -1142,9 +1132,7 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
                     // okay, only set if not empty...
                     if (field != null) {
                         // if it's a String then we need to check length, otherwise set it because it's not null
-                        if (field instanceof String) {
-                            // REFACTOR: Pattern Matching for instanceof
-                            String fieldStr = (String) field;
+                        if (field instanceof String fieldStr) {
 
                             if (!fieldStr.isEmpty()) {
                                 this.set(curField.getName(), fieldStr);
@@ -1481,9 +1469,7 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
         if (obj == this) {
             return true;
         }
-        if (obj instanceof GenericEntity) {
-            // REFACTOR: Pattern Matching for instanceof
-            GenericEntity that = (GenericEntity) obj;
+        if (obj instanceof GenericEntity that) {
             return this.entityName.equals(that.entityName) && this.fields.equals(that.fields);
         }
         return false;
@@ -1521,9 +1507,7 @@ public class GenericEntity implements Map<String, Object>, LocalizedMap<Object>,
         for (String curKey: new TreeSet<>(fields.keySet())) {
             Object curValue = fields.get(curKey);
             ModelField field = this.getModelEntity().getField(curKey);
-            if (field.getEncryptMethod().isEncrypted() && curValue instanceof String) {
-                // REFACTOR: Pattern Matching for instanceof
-                String encryptField = (String) curValue;
+            if (field.getEncryptMethod().isEncrypted() && curValue instanceof String encryptField) {
                 // the encryptField may not actually be UTF8, it could be any
                 // random encoding; just treat it as a series of raw bytes.
                 // This won't give the same output as the value stored in the

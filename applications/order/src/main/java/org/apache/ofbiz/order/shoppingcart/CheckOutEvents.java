@@ -594,14 +594,11 @@ public class CheckOutEvents {
         }
 
         // event return based on failureCode
-        switch (failureCode) {
-        case 0:
-            return "success";
-        case 1:
-            return "fail";
-        default:
-            return "error";
-        }
+        return switch (failureCode) {
+        case 0 -> "success";
+        case 1 -> "fail";
+        default -> "error";
+        };
     }
 
     private static boolean processPayment(HttpServletRequest request) throws GeneralException {
@@ -1163,7 +1160,7 @@ public class CheckOutEvents {
             if (UtilValidate.isNotEmpty(billingAccountAmount)) {
                 try {
                     billingAccountAmt = new BigDecimal(billingAccountAmount);
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException _) {
                     return null;
                 }
             }

@@ -205,7 +205,7 @@ public class ServiceEventHandler implements EventHandler {
                     continue;
                 }
 
-                if (value instanceof String && ((String) value).isEmpty()) {
+                if (value instanceof String string && string.isEmpty()) {
                     // interpreting empty fields as null values for each in back end handling...
                     value = null;
                 }

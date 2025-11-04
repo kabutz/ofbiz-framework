@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -64,7 +63,7 @@ import org.w3c.dom.Element;
 public final class ConfigXMLReader {
 
     private static final String MODULE = ConfigXMLReader.class.getName();
-    private static final Path CONTROLLERXMLFILENAME = Paths.get("WEB-INF", "controller.xml");
+    private static final Path CONTROLLERXMLFILENAME = Path.of("WEB-INF", "controller.xml");
     private static final UtilCache<URL, ControllerConfig> CONTROLLERCACHE = UtilCache
             .createUtilCache("webapp.ControllerConfig");
     private static final UtilCache<String, List<ControllerConfig>> CONTROLLERSEARCHRESULTSCACHE = UtilCache

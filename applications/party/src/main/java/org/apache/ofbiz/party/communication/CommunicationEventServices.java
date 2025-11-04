@@ -972,7 +972,7 @@ public class CommunicationEventServices {
 
             //Get the first address from the list - this is the partyIdTo field of the CommunicationEvent
             if (!toParties.isEmpty()) {
-                Map<String, Object> firstAddressTo = toParties.get(0);
+                Map<String, Object> firstAddressTo = toParties.getFirst();
                 partyIdTo = (String) firstAddressTo.get("partyId");
                 contactMechIdTo = (String) firstAddressTo.get("contactMechId");
             }
@@ -1233,7 +1233,7 @@ public class CommunicationEventServices {
             for (String attachmentIdx : attachmentIndexes) {
                 String attFileName = wrapper.getPartFilename(attachmentIdx);
                 if (currentAttachmentNames.contains(attFileName)) {
-                    Debug.logWarning(String.format("CommunicationEvent [%s] already has attachment named '%s'", communicationEventId,
+                    Debug.logWarning("CommunicationEvent [%s] already has attachment named '%s'".formatted(communicationEventId,
                             attFileName), MODULE);
                     continue;
                 }
@@ -1346,8 +1346,8 @@ public class CommunicationEventServices {
 
         if (addresses.length > 0) {
             Address addr = addresses[0];
-            if (addr instanceof InternetAddress) {
-                emailAddress = (InternetAddress) addr;
+            if (addr instanceof InternetAddress address) {
+                emailAddress = address;
             }
         }
 
@@ -1377,8 +1377,8 @@ public class CommunicationEventServices {
 
         if (addresses != null) {
             for (Address addr: addresses) {
-                if (addr instanceof InternetAddress) {
-                    emailAddress = (InternetAddress) addr;
+                if (addr instanceof InternetAddress address) {
+                    emailAddress = address;
 
                     result = dispatcher.runSync("findPartyFromEmailAddress",
                             UtilMisc.toMap("address", emailAddress.getAddress(), "userLogin", userLogin));
@@ -1409,8 +1409,8 @@ public class CommunicationEventServices {
 
         if (addresses != null) {
             for (Address addr: addresses) {
-                if (addr instanceof InternetAddress) {
-                    emailAddress = (InternetAddress) addr;
+                if (addr instanceof InternetAddress address) {
+                    emailAddress = address;
                     Map<String, String> inputFields = new HashMap<>();
                     inputFields.put("infoString", emailAddress.getAddress());
                     inputFields.put("infoString_ic", caseInsensitiveEmail);
@@ -1500,7 +1500,7 @@ public class CommunicationEventServices {
                         }
                         if (UtilValidate.isNotEmpty(values)) {
                             // there should be only one; unique key
-                            GenericValue value = values.get(0);
+                            GenericValue value = values.getFirst();
 
                             // update the communication event status
                             Map<String, Object> updateCtx = new HashMap<>();
@@ -1535,7 +1535,7 @@ public class CommunicationEventServices {
                             }
                             if (UtilValidate.isNotEmpty(values)) {
                                 // there should be only one; unique key
-                                GenericValue value = values.get(0);
+                                GenericValue value = values.getFirst();
 
                                 Map<String, Object> updateCtx = new HashMap<>();
                                 updateCtx.put("communicationEventId", value.getString("communicationEventId"));

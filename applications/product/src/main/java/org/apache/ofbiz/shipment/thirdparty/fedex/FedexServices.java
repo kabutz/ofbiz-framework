@@ -915,7 +915,7 @@ public class FedexServices {
                         try {
                             packageWeight = EntityUtilProperties.getPropertyAsBigDecimal(SHIPMENT_PROPERTIES_FILE, "shipment.default.weight.value",
                                     BigDecimal.ZERO);
-                        } catch (NumberFormatException ne) {
+                        } catch (NumberFormatException _) {
                             Debug.logWarning("Default shippable weight not configured (shipment.default.weight.value), assuming 1.0"
                                     + weightUomId, MODULE);
                             packageWeight = BigDecimal.ONE;
@@ -1015,7 +1015,7 @@ public class FedexServices {
     public static Map<String, Object> handleFedexShipReply(String fDXShipReplyString, GenericValue shipmentRouteSegment,
             List<GenericValue> shipmentPackageRouteSegs, Locale locale) throws GenericEntityException {
         List<Object> errorList = new LinkedList<>();
-        GenericValue shipmentPackageRouteSeg = shipmentPackageRouteSegs.get(0);
+        GenericValue shipmentPackageRouteSeg = shipmentPackageRouteSegs.getFirst();
 
         Document fdxShipReplyDocument = null;
         try {

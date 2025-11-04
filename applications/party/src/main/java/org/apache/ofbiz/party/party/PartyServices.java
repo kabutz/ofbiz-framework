@@ -102,7 +102,7 @@ public class PartyServices {
         if (UtilValidate.isEmpty(partyId)) {
             try {
                 partyId = delegator.getNextSeqId("Party");
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                         "party.id_generation_failure", locale));
             }
@@ -350,7 +350,7 @@ public class PartyServices {
         if (UtilValidate.isEmpty(partyId)) {
             try {
                 partyId = delegator.getNextSeqId("Party");
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                         "partyservices.could_not_create_party_group_generation_failure", locale));
             }
@@ -537,7 +537,7 @@ public class PartyServices {
         if (UtilValidate.isEmpty(partyId)) {
             try {
                 partyId = delegator.getNextSeqId("Party");
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                         "partyservices.cannot_create_affiliate_generation_failure", locale));
             }
@@ -1085,7 +1085,7 @@ public class PartyServices {
         int viewIndex = 0;
         try {
             viewIndex = Integer.parseInt((String) context.get("VIEW_INDEX"));
-        } catch (Exception e) {
+        } catch (Exception _) {
             viewIndex = 0;
         }
         result.put("viewIndex", viewIndex);
@@ -1093,7 +1093,7 @@ public class PartyServices {
         int viewSize = 20;
         try {
             viewSize = Integer.parseInt((String) context.get("VIEW_SIZE"));
-        } catch (Exception e) {
+        } catch (Exception _) {
             viewSize = 20;
         }
         result.put("viewSize", viewSize);
@@ -2278,7 +2278,7 @@ public class PartyServices {
             // gets the first partyId of the List
             party = EntityUtil.getFirst(partiesFound);
             // remove this partyId
-            partiesFound.remove(0);
+            partiesFound.removeFirst();
         }
 
         Map<String, Object> result = ServiceUtil.returnSuccess();

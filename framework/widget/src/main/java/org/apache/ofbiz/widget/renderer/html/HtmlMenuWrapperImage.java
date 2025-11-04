@@ -71,7 +71,7 @@ public class HtmlMenuWrapperImage extends HtmlMenuWrapper {
                 String menuItemName = menuItem.getName();
                 putInContext(menuItemName, "WebSitePublishPoint", webSitePublishPoint);
             }
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             return;
         }
     }

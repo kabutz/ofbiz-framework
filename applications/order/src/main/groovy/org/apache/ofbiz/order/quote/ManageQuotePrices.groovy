@@ -60,7 +60,7 @@ quoteItems.each { quoteItem ->
         defaultQuoteUnitPrice = averageCost * costToPriceMult * selectedAmount
         totalCost += (averageCost * quantity)
         totalPrice += (unitPrice * quantity * selectedAmount)
-    } catch (Exception exc) {
+    } catch (Exception _) {
         logError('Problems getting the averageCost for quoteItem: ' + quoteItem)
     }
 

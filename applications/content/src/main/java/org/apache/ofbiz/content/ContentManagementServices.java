@@ -156,7 +156,7 @@ public class ContentManagementServices {
                     Debug.logError("================== Not saved for security reason ==================", MODULE);
                     return ServiceUtil.returnError("================== Not saved for security reason ==================");
                 }
-            } catch (IOException e) {
+            } catch (IOException _) {
                 Debug.logError("================== Not saved for security reason ==================", MODULE);
                 return ServiceUtil.returnError("================== Not saved for security reason ==================");
             }
@@ -1227,7 +1227,7 @@ public class ContentManagementServices {
                 dataResource.set("mimeTypeId", mimeTypeId);
             }
             dataResource.store();
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             retVal = "Unable to update the DataResource record";
         }
         return retVal;
@@ -1441,9 +1441,9 @@ public class ContentManagementServices {
             List<GenericValue> listThrusOnly = EntityUtil.filterOutByCondition(lst, EntityCondition.makeCondition("purchaseThruDate",
                     EntityOperator.EQUALS, null));
             if (!listThrusOnly.isEmpty()) {
-                productContent = listThrusOnly.get(0);
+                productContent = listThrusOnly.getFirst();
             } else if (!lst.isEmpty()) {
-                productContent = lst.get(0);
+                productContent = lst.getFirst();
             }
         } catch (GenericEntityException e) {
             Debug.logError(e.toString(), MODULE);
@@ -1609,7 +1609,7 @@ public class ContentManagementServices {
                     if (!org.apache.ofbiz.security.SecuredUpload.isValidFile(objectInfo, "All", delegator)) {
                         errorMessage = UtilProperties.getMessage("SecurityUiLabels", "SupportedFileFormatsIncludingSvg", locale);
                     }
-                } catch (ImageReadException | IOException e) {
+                } catch (ImageReadException | IOException _) {
                     errorMessage = UtilProperties.getMessage(RESOURCE, "ContentUnableToOpenFileForWriting", UtilMisc.toMap("fileName",
                             objectInfo), locale);
                 }

@@ -80,7 +80,7 @@ public final class CompareCondition extends MethodOperation implements Condition
             } else {
                 try {
                     targetClass = ObjectType.loadClass(this.type);
-                } catch (ClassNotFoundException e) {
+                } catch (ClassNotFoundException _) {
                     MiniLangValidate.handleError("Invalid type " + this.type, simpleMethod, element);
                 }
             }

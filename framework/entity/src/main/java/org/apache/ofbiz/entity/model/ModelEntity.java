@@ -293,7 +293,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
         if (UtilValidate.isNotEmpty(sequenceBankSizeStr)) {
             try {
                 this.sequenceBankSize = Integer.valueOf(sequenceBankSizeStr);
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
                 Debug.logError("Error parsing sequence-bank-size value [" + sequenceBankSizeStr + "] for entity [" + this.entityName + "]", MODULE);
             }
         }
@@ -381,7 +381,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
             if (UtilValidate.isNotEmpty(sequenceBankSizeStr)) {
                 try {
                     this.sequenceBankSize = Integer.valueOf(sequenceBankSizeStr);
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException _) {
                     Debug.logError("Error parsing sequence-bank-size value [" + sequenceBankSizeStr + "] for entity [" + this.entityName
                             + "]", MODULE);
                 }
@@ -666,7 +666,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
         synchronized (fieldsLock) {
             if (this.pks.size() == 1) {
                 // REFACTOR: Use sequenced collection method instead
-                return this.pks.get(0);
+                return this.pks.getFirst();
             } else {
                 throw new IllegalArgumentException("Error in getOnlyPk, the [" + this.getEntityName() + "] entity has more than one pk!");
             }
@@ -708,7 +708,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
         String idFieldName = null;
         if (UtilValidate.isNotEmpty(pkFieldNames)) {
             // REFACTOR: Use sequenced collection method instead
-            idFieldName = pkFieldNames.get(0);
+            idFieldName = pkFieldNames.getFirst();
         }
         return idFieldName;
     }
@@ -2277,7 +2277,7 @@ public class ModelEntity implements Comparable<ModelEntity>, Serializable {
                     relationshipMap.put("name", relationship.getCombinedName());
                 } else {
                     // REFACTOR: Use sequenced collection method instead
-                    relationshipMap.put("name", relationship.getKeyMaps().iterator().next().getFieldName());
+                    relationshipMap.put("name", relationship.getKeyMaps().getFirst().getFieldName());
                 }
                 relationshipMap.put("destination", relationship.getRelEntityName());
                 if ("many".equals(relationship.getType())) {

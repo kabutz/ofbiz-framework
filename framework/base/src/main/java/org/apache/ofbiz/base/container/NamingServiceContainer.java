@@ -63,7 +63,7 @@ public class NamingServiceContainer implements Container {
         if (port.value() != null) {
             try {
                 this.namingPort = Integer.parseInt(port.value()) + Start.getInstance().getConfig().getPortOffset();
-            } catch (Exception e) {
+            } catch (Exception _) {
                 throw new ContainerException("Invalid port defined in container [naming-container] configuration or as portOffset; not a valid int");
             }
         }
@@ -99,7 +99,7 @@ public class NamingServiceContainer implements Container {
         if (isRunning) {
             try {
                 isRunning = !UnicastRemoteObject.unexportObject(registry, true);
-            } catch (NoSuchObjectException e) {
+            } catch (NoSuchObjectException _) {
                 throw new ContainerException("Unable to shutdown naming registry");
             }
         }

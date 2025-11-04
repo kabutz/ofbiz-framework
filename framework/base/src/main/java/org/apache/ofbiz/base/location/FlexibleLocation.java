@@ -107,9 +107,7 @@ public final class FlexibleLocation {
         String locationType = getLocationType(location);
         LocationResolver resolver = LOCATION_RESOLVERS.get(locationType);
         if (resolver != null) {
-            if (loader != null && resolver instanceof ClasspathLocationResolver) {
-                // REFACTOR: Pattern Matching for instanceof
-                ClasspathLocationResolver cplResolver = (ClasspathLocationResolver) resolver;
+            if (loader != null && resolver instanceof ClasspathLocationResolver cplResolver) {
                 return cplResolver.resolveLocation(location, loader);
             } else {
                 return resolver.resolveLocation(location);

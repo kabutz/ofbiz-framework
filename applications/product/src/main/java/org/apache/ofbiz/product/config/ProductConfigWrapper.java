@@ -238,7 +238,7 @@ public class ProductConfigWrapper implements Serializable {
                 if (co != null) {
                     co.setSelected(true);
                 } else if (!ci.getOptions().isEmpty()) {
-                    co = ci.getOptions().get(0);
+                    co = ci.getOptions().getFirst();
                     co.setSelected(true);
                 }
             }

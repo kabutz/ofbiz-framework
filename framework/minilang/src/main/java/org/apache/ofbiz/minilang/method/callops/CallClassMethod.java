@@ -64,7 +64,7 @@ public final class CallClassMethod extends MethodOperation {
         Class<?> methodClass = null;
         try {
             methodClass = ObjectType.loadClass(this.className);
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException _) {
             MiniLangValidate.handleError("Class not found with name " + this.className, simpleMethod, element);
         }
         this.methodClass = methodClass;

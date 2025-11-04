@@ -139,14 +139,12 @@ public final class Converters {
                     Object value;
                     try {
                         value = clz.getConstructor().newInstance();
-                    } catch (NoSuchMethodException e) {
+                    } catch (NoSuchMethodException _) {
                         // ignore this, as this class might be some other helper class,
                         // with a non-pubilc constructor
                         continue;
                     }
-                    if (value instanceof ConverterLoader) {
-                        // REFACTOR: Pattern Matching for instanceof
-                        ConverterLoader loader = (ConverterLoader) value;
+                    if (value instanceof ConverterLoader loader) {
                         loader.loadConverters();
                     }
                 }

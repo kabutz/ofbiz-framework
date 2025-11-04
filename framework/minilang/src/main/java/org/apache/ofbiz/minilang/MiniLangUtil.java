@@ -153,8 +153,7 @@ public final class MiniLangUtil {
         if (obj == null || obj == GenericEntity.NULL_FIELD) {
             return null;
         }
-        if (obj instanceof Node) {
-            Node node = (Node) obj;
+        if (obj instanceof Node node) {
             String nodeValue = node.getTextContent();
             if (targetClass == String.class) {
                 return nodeValue;

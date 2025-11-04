@@ -831,7 +831,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
         if (field != null) {
             try {
                 return field.get(this);
-            } catch (IllegalAccessException e) {
+            } catch (IllegalAccessException _) {
                 return null;
             }
         }
@@ -855,7 +855,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
         public Object getValue() {
             try {
                 return field.get(ModelService.this);
-            } catch (IllegalAccessException e) {
+            } catch (IllegalAccessException _) {
                 return null;
             }
         }
@@ -1035,7 +1035,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
     public Map<String, String> getInParamNamesMap() {
         // TODO : Does not yet support getting nested parameters
         return getInModelParamList().stream().filter(param -> !param.getInternal())
-                .collect(Collectors.toMap(ModelParam::getName, param -> param.getType(), (existingValue, newValue) -> newValue));
+                .collect(Collectors.toMap(ModelParam::getName, param -> param.getType(), (_, newValue) -> newValue));
     }
 
     /**
@@ -1046,7 +1046,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
     public Map<String, String> getOutParamNamesMap() {
         // TODO : Does not yet support getting nested parameters
         return getModelParamList().stream().filter(param -> param.isOut() && !param.getInternal())
-                .collect(Collectors.toMap(ModelParam::getName, param -> param.getType(), (existingValue, newValue) -> newValue));
+                .collect(Collectors.toMap(ModelParam::getName, param -> param.getType(), (_, newValue) -> newValue));
     }
 
     /**
@@ -1337,7 +1337,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
         return modelParams.stream()
                 .filter(p -> modes.contains(p.getMode()))
                 .filter(p -> optional == p.isOptional())
-                .collect(Collectors.toMap(ModelParam::getName, p -> p, (p1, p2) -> p1));
+                .collect(Collectors.toMap(ModelParam::getName, p -> p, (p1, _) -> p1));
     }
 
     /**
@@ -1352,7 +1352,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
     public boolean isValid(LocalDispatcher dispatcher, Map<String, Object> context, Locale locale) {
         try {
             validate(dispatcher, context, IN_PARAM, locale);
-        } catch (ServiceValidationException e) {
+        } catch (ServiceValidationException _) {
             return false;
         }
         return true;
@@ -1507,10 +1507,10 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
         Boolean resultBool;
         try {
             resultBool = (Boolean) validatorMethod.invoke(null, params.toArray());
-        } catch (ClassCastException e) {
+        } catch (ClassCastException _) {
             throw new GeneralException("Validation method [" + vali.getMethodName() + "] in class [" + vali.getClassName()
                     + "] did not return expected Boolean");
-        } catch (Exception e) {
+        } catch (Exception _) {
             throw new GeneralException("Unable to run validation method [" + vali.getMethodName() + "] in class [" + vali.getClassName() + "]");
         }
 
@@ -1998,7 +1998,7 @@ public class ModelService extends AbstractMap<String, Object> implements Seriali
         try {
             builder = factory.newDocumentBuilder();
             document = builder.newDocument();
-        } catch (Exception e) {
+        } catch (Exception _) {
             throw new WSDLException("can not create WSDL", MODULE);
         }
         def.setTypes(this.getTypes(document, def));

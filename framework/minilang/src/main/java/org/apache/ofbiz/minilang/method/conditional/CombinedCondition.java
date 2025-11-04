@@ -118,14 +118,14 @@ public abstract class CombinedCondition extends MiniLangElement implements Condi
                     if (getSubConditions().isEmpty()) {
                         return true;
                     }
-                    Conditional subCond = getSubConditions().get(0);
+                    Conditional subCond = getSubConditions().getFirst();
                     return !subCond.checkCondition(methodContext);
                 }
                 @Override
                 public void prettyPrint(StringBuilder messageBuffer, MethodContext methodContext) {
                     messageBuffer.append("( NOT ");
                     if (!getSubConditions().isEmpty()) {
-                        Conditional subCond = getSubConditions().get(0);
+                        Conditional subCond = getSubConditions().getFirst();
                         subCond.prettyPrint(messageBuffer, methodContext);
                     }
                     messageBuffer.append(")");

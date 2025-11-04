@@ -32,7 +32,7 @@ public class IndentingWriter extends FilterWriter {
     private boolean lastWasNewline;
 
     public static IndentingWriter makeIndentingWriter(Writer writer) {
-        return writer instanceof IndentingWriter ? (IndentingWriter) writer : new IndentingWriter(writer);
+        return writer instanceof IndentingWriter iw ? iw : new IndentingWriter(writer);
     }
 
     public IndentingWriter(Writer out, boolean doSpace, boolean doNewline) {

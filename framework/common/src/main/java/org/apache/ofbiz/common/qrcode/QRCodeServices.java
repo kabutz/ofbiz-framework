@@ -141,7 +141,7 @@ public class QRCodeServices {
                             Debug.logError("Your logo image file(" + qrCodeDefaultLogoImage
                                     + ") cannot be read by javax.imageio.ImageIO. Please use png, jpeg formats instead of ico and etc.", MODULE);
                         }
-                    } catch (IllegalArgumentException | IOException e) {
+                    } catch (IllegalArgumentException | IOException _) {
                         defaultLogoImage = null;
                     }
                 }

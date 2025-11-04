@@ -103,7 +103,7 @@ public final class Datasource {
         } else {
             try {
                 this.constraintNameClipLength = Integer.parseInt(constraintNameClipLength);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 throw new GenericEntityConfException("<datasource> element constraint-name-clip-length attribute is invalid" + lineNumberText);
             }
         }
@@ -119,7 +119,7 @@ public final class Datasource {
         } else {
             try {
                 this.resultFetchSize = Integer.parseInt(resultFetchSize);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 throw new GenericEntityConfException("<datasource> element result-fetch-size attribute is invalid" + lineNumberText);
             }
         }
@@ -166,7 +166,7 @@ public final class Datasource {
                     maxWorkerPoolSizeInt = Math.abs(maxWorkerPoolSizeInt) * Runtime.getRuntime().availableProcessors();
                 }
                 this.maxWorkerPoolSize = maxWorkerPoolSizeInt;
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
                 throw new GenericEntityConfException("<datasource> element max-worker-pool-size attribute is invalid" + lineNumberText);
             }
         }

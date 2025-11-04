@@ -122,12 +122,12 @@ public class RmiServiceContainer implements Container {
         }
 
         // set the client auth flag on our custom SSL socket factory
-        if (ssf != null && ssf instanceof org.apache.ofbiz.service.rmi.socket.ssl.SSLServerSocketFactory) {
+        if (ssf != null && ssf instanceof org.apache.ofbiz.service.rmi.socket.ssl.SSLServerSocketFactory factory) {
             // CHECKSTYLE_OFF: ALMOST_ALL
-            ((org.apache.ofbiz.service.rmi.socket.ssl.SSLServerSocketFactory) ssf).setNeedClientAuth(clientAuth);
-            ((org.apache.ofbiz.service.rmi.socket.ssl.SSLServerSocketFactory) ssf).setKeyStoreAlias(ksAlias);
+            factory.setNeedClientAuth(clientAuth);
+            factory.setKeyStoreAlias(ksAlias);
             if (keystore != null) {
-                ((org.apache.ofbiz.service.rmi.socket.ssl.SSLServerSocketFactory) ssf).setKeyStore(keystore, ksType, ksPass);
+                factory.setKeyStore(keystore, ksType, ksPass);
             }
             // CHECKSTYLE_ON: ALMOST_ALL
         }

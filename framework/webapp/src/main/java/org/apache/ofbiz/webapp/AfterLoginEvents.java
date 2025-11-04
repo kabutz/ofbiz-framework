@@ -43,13 +43,15 @@ public class AfterLoginEvents {
 
     static {
         // REFACTOR: Replace fragmented Strings with Text Blocks
-        SCRIPT_SHOW_LAST_VISIT_DATE = "<span id='showLastVisit'></span><script>"
-                + "importLibrary(%s, function () {\n"
-                + "var dateFormat = Date.CultureInfo.formatPatterns.shortDate + ' ' + Date.CultureInfo.formatPatterns.longTime;\n"
-                + "var jsLastVisit = new Date('%s').toString(dateFormat);\n"
-                + "var message = `%s`;\n"
-                + "$('#showLastVisit').replaceWith(message);\n"
-                + "});\n</script>";
+        SCRIPT_SHOW_LAST_VISIT_DATE = """
+                <span id='showLastVisit'></span><script>\
+                importLibrary(%s, function () {
+                var dateFormat = Date.CultureInfo.formatPatterns.shortDate + ' ' + Date.CultureInfo.formatPatterns.longTime;
+                var jsLastVisit = new Date('%s').toString(dateFormat);
+                var message = `%s`;
+                $('#showLastVisit').replaceWith(message);
+                });
+                </script>""";
     }
 
     public static String showLastVisit(HttpServletRequest request, HttpServletResponse response) {
@@ -88,7 +90,7 @@ public class AfterLoginEvents {
                         SimpleDateFormat formatter = new SimpleDateFormat("EE MMM d y H:m:s ZZZ");
                         String dateString = formatter.format(fromDate);
                         String lastVisitedOn = UtilProperties.getMessage("SecurityUiLabels", "LastVisitOn", locale);
-                        request.setAttribute("_UNSAFE_EVENT_MESSAGE_", String.format(SCRIPT_SHOW_LAST_VISIT_DATE, libJs, dateString, lastVisitedOn));
+                        request.setAttribute("_UNSAFE_EVENT_MESSAGE_", SCRIPT_SHOW_LAST_VISIT_DATE.formatted(libJs, dateString, lastVisitedOn));
                     }
                     count++;
                 }

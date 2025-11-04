@@ -59,7 +59,7 @@ public final class IfInstanceOf extends MethodOperation {
         if (!className.isEmpty()) {
             try {
                 compareClass = ObjectType.loadClass(className);
-            } catch (ClassNotFoundException e) {
+            } catch (ClassNotFoundException _) {
                 MiniLangValidate.handleError("Invalid class name " + className, simpleMethod, element);
             }
         }

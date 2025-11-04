@@ -92,10 +92,9 @@ public final class ProductConfigWorker {
         for (int k = 0; k < numOfQuestions; k++) {
             String[] opts = new String[0];
             Object o = combinedMap.get(Integer.toString(k));
-            if (o instanceof String) {
-                opts = new String[]{(String) o};
-            } else if (o instanceof List) {
-                List<?> list = (List<?>) o;
+            if (o instanceof String string) {
+                opts = new String[]{string};
+            } else if (o instanceof List<?> list) {
                 opts = list.toArray(new String[list.size()]);
             }
             if (opts == null) {

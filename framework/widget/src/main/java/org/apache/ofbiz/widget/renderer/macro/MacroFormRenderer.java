@@ -183,17 +183,17 @@ public final class MacroFormRenderer implements FormStringRenderer {
     @Override
     public void renderDisplayField(Appendable writer, Map<String, Object> context, DisplayField displayField)
             throws IOException {
-        if (displayField instanceof DisplayEntityField
-                && ((DisplayEntityField) displayField).needConvertAsHyperlink(context)) {
+        if (displayField instanceof DisplayEntityField field1
+                && field1.needConvertAsHyperlink(context)) {
 
             // When we have a subHyperlink on a display entity, display all as a hyperlink
-            renderHyperlinkField(writer, context, ((DisplayEntityField) displayField).asHyperlink(context));
+            renderHyperlinkField(writer, context, field1.asHyperlink(context));
         } else {
             writeFtlElement(writer,
                     renderableFtlFormElementsBuilder.displayField(context, displayField, this.javaScriptEnabled));
-            if (displayField instanceof DisplayEntityField) {
+            if (displayField instanceof DisplayEntityField field) {
                 writeFtlElement(writer,
-                        renderableFtlFormElementsBuilder.makeHyperlinkString(((DisplayEntityField) displayField).getSubHyperlink(),
+                        renderableFtlFormElementsBuilder.makeHyperlinkString(field.getSubHyperlink(),
                                 context));
             }
         }
@@ -332,8 +332,7 @@ public final class MacroFormRenderer implements FormStringRenderer {
                     checked = checkedByDefault.contains(optionValue.getKey());
                 } else checked = allChecked;
             }
-            String data = String.format(
-                    "{'value':'%s', 'description':'%s', 'checked':'%s'}",
+            String data = "{'value':'%s', 'description':'%s', 'checked':'%s'}".formatted(
                     optionValue.getKey(),
                     encode(optionValue.getDescription(), modelFormField, context),
                     checked);

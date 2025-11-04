@@ -240,9 +240,9 @@ public class ResourceBundleMapWrapper implements Map<String, Object>, Serializab
                     //if so the thrown exception will be caught, if not true will be returned
                     this.resourceBundle.getObject((String) arg0);
                     return true;
-                } catch (NullPointerException e) {
+                } catch (NullPointerException _) {
                     // happens when arg0 is null
-                } catch (MissingResourceException e) {
+                } catch (MissingResourceException _) {
                     // nope, not found... nothing, will automatically return
                     // false below
                 }

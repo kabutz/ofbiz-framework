@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.transaction.Transaction;
 
@@ -142,7 +143,7 @@ public class SequenceUtil {
         private Long getNextSeqId(long staggerMax) {
             long stagger = 1;
             if (staggerMax > 1) {
-                stagger = (long) Math.ceil(Math.random() * staggerMax);
+                stagger = (long) Math.ceil(ThreadLocalRandom.current().nextDouble() * staggerMax);
                 if (stagger == 0) stagger = 1;
             }
             synchronized (this) {
@@ -228,7 +229,7 @@ public class SequenceUtil {
                                     + SequenceUtil.this.idColName + ") VALUES ('" + this.seqName + "', " + START_SEQ_ID + ")";
                             try {
                                 stmt.executeUpdate(sql);
-                            } catch (SQLException sqle) {
+                            } catch (SQLException _) {
                                 // insert failed: this means that another thread inserted the record; then retry to run an update with no changes to
                                 // get a lock on the record
                                 if (stmt.executeUpdate(updateForLockStatement) <= 0) {

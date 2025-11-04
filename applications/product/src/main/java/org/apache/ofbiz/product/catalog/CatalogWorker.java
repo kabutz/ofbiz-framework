@@ -172,7 +172,7 @@ public final class CatalogWorker {
         // get it from the database
         if (prodCatalogId == null) {
             List<String> catalogIds = getCatalogIdsAvailable(request);
-            if (UtilValidate.isNotEmpty(catalogIds)) prodCatalogId = catalogIds.get(0);
+            if (UtilValidate.isNotEmpty(catalogIds)) prodCatalogId = catalogIds.getFirst();
         }
 
         if (!fromSession) {

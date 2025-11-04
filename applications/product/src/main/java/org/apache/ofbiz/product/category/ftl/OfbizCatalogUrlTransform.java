@@ -44,10 +44,10 @@ public class OfbizCatalogUrlTransform implements TemplateTransformModel {
      */
     public String getStringArg(Map<?, ?> args, String key) {
         Object o = args.get(key);
-        if (o instanceof SimpleScalar) {
-            return ((SimpleScalar) o).getAsString();
-        } else if (o instanceof GenericObjectModel) {
-            return ((GenericObjectModel) o).getAsString();
+        if (o instanceof SimpleScalar scalar) {
+            return scalar.getAsString();
+        } else if (o instanceof GenericObjectModel model) {
+            return model.getAsString();
         }
         return null;
     }

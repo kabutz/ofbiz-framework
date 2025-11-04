@@ -163,7 +163,7 @@ public class ShoppingCartHelper {
         if (UtilValidate.isNotEmpty(ddDate)) {
             try {
                 java.sql.Timestamp.valueOf((String) context.get("itemDesiredDeliveryDate"));
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR, "OrderInvalidDesiredDeliveryDateSyntaxError",
                         this.cart.getLocale()));
             }
@@ -330,8 +330,8 @@ public class ShoppingCartHelper {
             while (itemIter.hasNext()) {
                 GenericValue orderItem = null;
                 Object value = itemIter.next();
-                if (value instanceof GenericValue) {
-                    orderItem = (GenericValue) value;
+                if (value instanceof GenericValue genericValue) {
+                    orderItem = genericValue;
                 } else {
                     String orderItemSeqId = (String) value;
                     orderItem = orderHelper.getOrderItem(orderItemSeqId);
@@ -464,7 +464,7 @@ public class ShoppingCartHelper {
 
                 try {
                     quantity = new BigDecimal(quantStr);
-                } catch (NumberFormatException nfe) {
+                } catch (NumberFormatException _) {
                     quantity = BigDecimal.ZERO;
                 }
                 if (quantity.compareTo(BigDecimal.ZERO) > 0) {
@@ -577,7 +577,7 @@ public class ShoppingCartHelper {
                     BigDecimal quantity;
                     try {
                         quantity = (BigDecimal) ObjectType.simpleTypeOrObjectConvert(quantStr, "BigDecimal", null, cart.getLocale());
-                    } catch (GeneralException ge) {
+                    } catch (GeneralException _) {
                         quantity = BigDecimal.ZERO;
                     }
                     if (quantity.compareTo(BigDecimal.ZERO) > 0) {
@@ -1124,7 +1124,7 @@ public class ShoppingCartHelper {
                 List<GenericValue> agreementItems = agreement.getRelated("AgreementItem", UtilMisc.toMap("agreementItemTypeId",
                         "AGREEMENT_PRICING_PR"), null, false);
                 if (!agreementItems.isEmpty()) {
-                    GenericValue agreementItem = agreementItems.get(0);
+                    GenericValue agreementItem = agreementItems.getFirst();
                     String currencyUomId = (String) agreementItem.get("currencyUomId");
                     if (UtilValidate.isNotEmpty(currencyUomId)) {
                         try {

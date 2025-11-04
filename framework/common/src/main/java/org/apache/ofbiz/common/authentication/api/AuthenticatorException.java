@@ -19,6 +19,7 @@
 
 package org.apache.ofbiz.common.authentication.api;
 
+import java.io.Serial;
 import java.util.List;
 
 import org.apache.ofbiz.base.util.GeneralException;
@@ -28,6 +29,7 @@ import org.apache.ofbiz.base.util.GeneralException;
  */
 public class AuthenticatorException extends GeneralException {
 
+    @Serial
     private static final long serialVersionUID = 2836939874682240962L;
 
     /**

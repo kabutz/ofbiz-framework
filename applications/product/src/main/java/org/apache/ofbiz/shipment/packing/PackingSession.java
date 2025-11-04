@@ -168,7 +168,7 @@ public class PackingSession implements java.io.Serializable {
             orderItemSeqIds = this.findOrderItemSeqId(productId, orderId, shipGroupSeqId, quantity);
 
             if (orderItemSeqIds.size() == 1) {
-                orderItemSeqId = orderItemSeqIds.get(0);
+                orderItemSeqId = orderItemSeqIds.getFirst();
 
                 // get the reservations for the item
                 Map<String, Object> invLookup = new HashMap<String, Object>();
@@ -1599,8 +1599,7 @@ public class PackingSession implements java.io.Serializable {
 
         @Override
         public boolean equals(Object o) {
-            if (o instanceof ItemDisplay) {
-                ItemDisplay d = (ItemDisplay) o;
+            if (o instanceof ItemDisplay d) {
                 boolean sameOrderItemProduct = true;
                 if (d.getOrderItem().getString("productId") != null && orderItem.getString("productId") != null) {
                     sameOrderItemProduct = d.getOrderItem().getString("productId").equals(orderItem.getString("productId"));

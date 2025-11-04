@@ -56,7 +56,7 @@ public abstract class GenericXaResource extends Thread implements XAResource {
             } else {
                 throw new XAException("No transaction manager or invalid status");
             }
-        } catch (SystemException e) {
+        } catch (SystemException _) {
             throw new XAException("Unable to get transaction status");
         }
     }
@@ -73,9 +73,9 @@ public abstract class GenericXaResource extends Thread implements XAResource {
             } else {
                 throw new XAException(XAException.XAER_NOTA);
             }
-        } catch (SystemException e) {
+        } catch (SystemException _) {
             throw new XAException("Unable to get transaction status");
-        } catch (RollbackException e) {
+        } catch (RollbackException _) {
             throw new XAException("Unable to enlist resource with transaction");
         }
     }

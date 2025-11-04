@@ -58,13 +58,13 @@ listSize = productIds.size()
 
 try {
     viewIndex = Integer.valueOf(request.getParameter('VIEW_INDEX'))
-} catch (Exception e) {
+} catch (Exception _) {
     viewIndex = 0
 }
 
 try {
     viewSize = Integer.valueOf(request.getParameter('VIEW_SIZE'))
-} catch (Exception e) {
+} catch (Exception _) {
     viewSize = 10
 }
 

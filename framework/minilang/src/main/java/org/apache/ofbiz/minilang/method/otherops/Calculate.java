@@ -258,18 +258,18 @@ public final class Calculate extends MethodOperation {
             boolean isFirst = true;
             Object fieldObj = fieldFma.get(methodContext.getEnvMap());
             if (fieldObj != null) {
-                if (fieldObj instanceof Double) {
-                    resultValue = new BigDecimal((Double) fieldObj);
-                } else if (fieldObj instanceof Long) {
-                    resultValue = BigDecimal.valueOf((Long) fieldObj);
-                } else if (fieldObj instanceof Float) {
-                    resultValue = new BigDecimal((Float) fieldObj);
-                } else if (fieldObj instanceof Integer) {
-                    resultValue = BigDecimal.valueOf(((Integer) fieldObj).longValue());
-                } else if (fieldObj instanceof String) {
-                    resultValue = new BigDecimal((String) fieldObj);
-                } else if (fieldObj instanceof BigDecimal) {
-                    resultValue = (BigDecimal) fieldObj;
+                if (fieldObj instanceof Double double1) {
+                    resultValue = new BigDecimal(double1);
+                } else if (fieldObj instanceof Long long1) {
+                    resultValue = BigDecimal.valueOf(long1);
+                } else if (fieldObj instanceof Float float1) {
+                    resultValue = new BigDecimal(float1);
+                } else if (fieldObj instanceof Integer integer) {
+                    resultValue = BigDecimal.valueOf(integer.longValue());
+                } else if (fieldObj instanceof String string) {
+                    resultValue = new BigDecimal(string);
+                } else if (fieldObj instanceof BigDecimal decimal) {
+                    resultValue = decimal;
                 }
                 if (operator == OPERATOR_NEGATIVE) {
                     resultValue = resultValue.negate();

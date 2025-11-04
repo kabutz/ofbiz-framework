@@ -50,7 +50,7 @@ if (!orderHeader && orderId) {
         } else {
             UtilHttp.setContentDisposition(response, orderId + '.pdf')
         }
-    } catch (MissingPropertyException ignored) {
+    } catch (MissingPropertyException _) {
         // This hack for OFBIZ-6792 to avoid "groovy.lang.MissingPropertyException:
         // No such property: response for class: CompanyHeader" when response does not exist (in sendOrderConfirmation service)
     }
@@ -63,7 +63,7 @@ if (!invoice && invoiceId) {
     invoice = from('Invoice').where('invoiceId', invoiceId).queryOne()
     try {
         UtilHttp.setContentDisposition(response, invoiceId + '.pdf')
-    } catch (MissingPropertyException ignored) {
+    } catch (MissingPropertyException _) {
         // This hack for OFBIZ-6792 to avoid "groovy.lang.MissingPropertyException:
         // No such property: response for class: CompanyHeader" when response does not exist (in sendOrderConfirmation service)
     }
@@ -282,7 +282,7 @@ partyTaxAuthInfoList = from('PartyTaxAuthInfo').where('partyId', partyId)
 if (partyTaxAuthInfoList) {
     if (address?.countryGeoId) {
         // if we have an address with country filter by that
-        partyTaxAuthInfoList.eachWithIndex { partyTaxAuthInfo, i ->
+        partyTaxAuthInfoList.eachWithIndex { partyTaxAuthInfo, _ ->
             if (partyTaxAuthInfo.taxAuthGeoId == address.countryGeoId) {
                 context.sendingPartyTaxId = partyTaxAuthInfo.partyTaxId
             }

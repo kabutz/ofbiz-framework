@@ -60,7 +60,7 @@ public class Digraph<T> {
                 .filter(child -> !nodes.contains(child))
                 .collect(toSet());
         if (!undeclaredNodes.isEmpty()) {
-            String msg = String.format("%s nodes are not present in the graph", undeclaredNodes);
+            String msg = "%s nodes are not present in the graph".formatted(undeclaredNodes);
             throw new IllegalArgumentException(msg);
         }
     }

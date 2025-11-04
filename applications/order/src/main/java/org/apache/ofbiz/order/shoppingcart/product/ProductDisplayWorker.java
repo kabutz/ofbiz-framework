@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
@@ -134,7 +135,7 @@ public final class ProductDisplayWorker {
 
             // randomly remove products while there are more than 3
             while (cartAssocs.size() > 3) {
-                int toRemove = (int) (Math.random() * cartAssocs.size());
+                int toRemove = (int) (ThreadLocalRandom.current().nextDouble() * cartAssocs.size());
                 cartAssocs.remove(toRemove);
             }
         } catch (GenericEntityException e) {
@@ -288,7 +289,7 @@ public final class ProductDisplayWorker {
 
             // remove extra products - only return 5
             while (reorderProds.size() > 5) {
-                reorderProds.remove(reorderProds.size() - 1);
+                reorderProds.removeLast();
             }
 
             results.put("products", reorderProds);
@@ -355,8 +356,7 @@ public final class ProductDisplayWorker {
 
         @Override
         public boolean equals(java.lang.Object obj) {
-            if ((obj != null) && (obj instanceof ProductByMapComparator)) {
-                ProductByMapComparator that = (ProductByMapComparator) obj;
+            if ((obj != null) && (obj instanceof ProductByMapComparator that)) {
 
                 return this.orderByMap.equals(that.orderByMap) && this.descending == that.descending;
             }

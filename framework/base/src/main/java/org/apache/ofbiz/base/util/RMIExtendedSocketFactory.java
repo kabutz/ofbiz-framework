@@ -72,7 +72,7 @@ public class RMIExtendedSocketFactory extends RMISocketFactory {
             for (int i = 0; i < octets.length; i++) {
                 try {
                     ipAddr[i] = (byte) Integer.parseInt(octets[i]);
-                } catch (NumberFormatException nfEx) {
+                } catch (NumberFormatException _) {
                     throw new UnknownHostException("Invalid IP address: " + hostIpAddress);
                 }
             }

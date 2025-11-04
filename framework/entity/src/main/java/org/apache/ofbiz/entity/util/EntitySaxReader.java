@@ -403,7 +403,7 @@ public class EntitySaxReader extends DefaultHandler {
                     reader.setUseTryInsertMethod(this.useTryInsertMethod);
                     try {
                         reader.setTransactionTimeout(this.transactionTimeout);
-                    } catch (GenericTransactionException e1) {
+                    } catch (GenericTransactionException _) {
                         Debug.logWarning("couldn't set tx timeout, hopefully shouldn't be a big deal", MODULE);
                     }
 
@@ -470,7 +470,7 @@ public class EntitySaxReader extends DefaultHandler {
                         if (currentValue.containsPrimaryKey()) {
                             try {
                                 helper.findByPrimaryKey(currentValue.getPrimaryKey());
-                            } catch (GenericEntityNotFoundException e) {
+                            } catch (GenericEntityNotFoundException _) {
                                 exist = false;
                             }
                         }

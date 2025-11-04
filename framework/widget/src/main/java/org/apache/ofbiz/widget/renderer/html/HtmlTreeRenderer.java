@@ -111,7 +111,7 @@ public class HtmlTreeRenderer extends HtmlWidgetRenderer implements TreeStringRe
             } else {
                 context.put("processChildren", Boolean.TRUE);
                 // REFACTOR: Use sequenced collection method instead
-                String lastContentId = currentNodeTrail.remove(currentNodeTrail.size() - 1);
+                String lastContentId = currentNodeTrail.removeLast();
                 currentNodeTrailPiped = StringUtil.join(currentNodeTrail, "|");
                 if (currentNodeTrailPiped == null) {
                     currentNodeTrailPiped = "";

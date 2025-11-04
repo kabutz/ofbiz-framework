@@ -306,7 +306,7 @@ public class WebToolsServices {
                                         locale));
                                 f.delete();
                             }
-                        } catch (Exception e) {
+                        } catch (Exception _) {
                             unprocessedFiles.add(f);
                             messages.add(UtilProperties.getMessage(RESOURCE, "EntityImportFailedFile", UtilMisc.toMap("fileName", f.getName()),
                                     locale));
@@ -316,7 +316,7 @@ public class WebToolsServices {
                             Debug.logInfo("Pausing for [" + pauseLong + "] seconds - " + UtilDateTime.nowTimestamp(), MODULE);
                             try {
                                 Thread.sleep((pauseLong * 1000));
-                            } catch (InterruptedException ie) {
+                            } catch (InterruptedException _) {
                                 Debug.logInfo("Pause finished - " + UtilDateTime.nowTimestamp(), MODULE);
                             }
                         }
@@ -523,7 +523,7 @@ public class WebToolsServices {
                     ModelReader reader = delegator.getModelReader();
                     Collection<String> ec = reader.getEntityNames();
                     passedEntityNames = new TreeSet<>(ec);
-                } catch (Exception exc) {
+                } catch (Exception _) {
                     return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "EntityImportErrorRetrievingEntityNames", locale));
                 }
                 int fileNumber = 1;
@@ -703,7 +703,7 @@ public class WebToolsServices {
                         if (bundle != null) {
                             try {
                                 entityDescription = bundle.getString("EntityDescription." + entity.getEntityName());
-                            } catch (Exception exception) {
+                            } catch (Exception _) {
                                 Debug.logWarning("EntityDescription for entity " + entity.getEntityName() + " is missing", MODULE);
                             }
                         }
@@ -724,7 +724,7 @@ public class WebToolsServices {
                             if (bundle != null) {
                                 try {
                                     fieldDescription = bundle.getString("FieldDescription." + entity.getEntityName() + "." + field.getName());
-                                } catch (Exception exception) {
+                                } catch (Exception _) {
                                     Debug.logWarning("FieldDescription for entity.field " + entity.getEntityName() + "."
                                             + field.getName() + " is missing", MODULE);
                                 }
@@ -735,7 +735,7 @@ public class WebToolsServices {
                             if (UtilValidate.isEmpty(fieldDescription) && bundle != null) {
                                 try {
                                     fieldDescription = bundle.getString("FieldDescription." + field.getName());
-                                } catch (Exception exception) {
+                                } catch (Exception _) {
                                     Debug.logWarning("FieldDescription for field " + field.getName() + " is missing", MODULE);
                                 }
                             }

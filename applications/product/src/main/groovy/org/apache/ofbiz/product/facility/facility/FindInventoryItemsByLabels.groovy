@@ -32,7 +32,7 @@ numberOfFields = 0
 numberOfFieldsStr = parameters.numberOfFields
 try {
     numberOfFields = Integer.parseInt(numberOfFieldsStr)
-} catch (Exception exc) {
+} catch (Exception _) {
     numberOfFields = 0
 }
 

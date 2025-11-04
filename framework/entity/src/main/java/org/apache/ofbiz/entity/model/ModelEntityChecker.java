@@ -223,7 +223,7 @@ public final class ModelEntityChecker {
                         ModelEntity relatedEntity = null;
                         try {
                             relatedEntity = reader.getModelEntity(relation.getRelEntityName());
-                        } catch (GenericEntityException e) {
+                        } catch (GenericEntityException _) {
                             Debug.logInfo("Entity referred to in relation is not defined: " + relation.getRelEntityName(), MODULE);
                         }
                         if (relatedEntity != null) {

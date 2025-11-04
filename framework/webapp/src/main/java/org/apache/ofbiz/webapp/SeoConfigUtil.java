@@ -167,7 +167,7 @@ public final class SeoConfigUtil {
                         Debug.logInfo("  " + ELEMENT_CATEGORY_URL_SUFFIX + ": " + categoryUrlSuffix, MODULE);
                     }
                 }
-            } catch (NullPointerException e) {
+            } catch (NullPointerException _) {
                 // no "category-url" element
                 Debug.logWarning("No category-url element found in " + seoConfigFilename.toString(), MODULE);
             }
@@ -223,7 +223,7 @@ public final class SeoConfigUtil {
                     }
                     Debug.logInfo("  " + ELEMENT_USER + ": " + jSessionIdUserEnabled, MODULE);
                 }
-            } catch (NullPointerException e) {
+            } catch (NullPointerException _) {
                 Debug.logWarning("No jsessionid element found in " + seoConfigFilename.toString(), MODULE);
             }
             // parse url-config elements
@@ -242,7 +242,7 @@ public final class SeoConfigUtil {
                     try {
                         pattern = perlCompiler.compile(urlpattern, Perl5Compiler.READ_ONLY_MASK);
                         seoPatterns.put(urlpattern, pattern);
-                    } catch (MalformedPatternException e) {
+                    } catch (MalformedPatternException _) {
                         Debug.logWarning("Error while creating parttern for seo url-pattern: " + urlpattern, MODULE);
                         continue;
                     }
@@ -278,7 +278,7 @@ public final class SeoConfigUtil {
                         }
                     }
                 }
-            } catch (NullPointerException e) {
+            } catch (NullPointerException _) {
                 // no "url-config" element
                 Debug.logWarning("No " + ELEMENT_URL_CONFIG + " element found in " + seoConfigFilename.toString(), MODULE);
             }
@@ -306,7 +306,7 @@ public final class SeoConfigUtil {
                         }
                     }
                 }
-            } catch (NullPointerException e) {
+            } catch (NullPointerException _) {
                 // no "char-filters" element
                 Debug.logWarning("No " + ELEMENT_CHAR_FILTER + " element found in " + seoConfigFilename.toString(), MODULE);
             }

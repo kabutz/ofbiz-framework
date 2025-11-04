@@ -411,7 +411,7 @@ public class OrderServices {
                             selFixedAssetProduct = EntityQuery.use(delegator).from("FixedAssetProduct").where("productId", orderItem.getString(
                                     "productId"), "fixedAssetProductTypeId", "FAPT_USE").filterByDate(nowTimestamp, "fromDate",
                                     "thruDate").queryList();
-                        } catch (GenericEntityException e) {
+                        } catch (GenericEntityException _) {
                             String excMsg = "Could not find related Fixed Asset for the product: " + orderItem.getString("productId");
                             Debug.logError(excMsg, MODULE);
                             errorMessages.add(excMsg);
@@ -698,7 +698,7 @@ public class OrderServices {
                 Debug.logInfo("find the fixedAsset", MODULE);
                 try {
                     fixedAsset = EntityQuery.use(delegator).from("FixedAsset").where("fixedAssetId", workEffort.get("fixedAssetId")).queryOne();
-                } catch (GenericEntityException e) {
+                } catch (GenericEntityException _) {
                     return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                             "OrderFixedAssetNotFoundFixedAssetId",
                             UtilMisc.toMap("fixedAssetId", workEffort.get("fixedAssetId")), locale));
@@ -713,7 +713,7 @@ public class OrderServices {
                 GenericValue techDataCalendar = null;
                 try {
                     techDataCalendar = fixedAsset.getRelatedOne("TechDataCalendar", false);
-                } catch (GenericEntityException e) {
+                } catch (GenericEntityException _) {
                     Debug.logInfo("TechData calendar does not exist yet so create for fixedAsset: " + fixedAsset.get("fixedAssetId"), MODULE);
                 }
                 if (techDataCalendar == null) {
@@ -768,7 +768,7 @@ public class OrderServices {
                     try {
                         techDataCalendarExcDay = EntityQuery.use(delegator).from("TechDataCalendarExcDay").where("calendarId", fixedAsset.get(
                                 "calendarId"), "exceptionDateStartTime", exceptionDateStartTime).queryOne();
-                    } catch (GenericEntityException e) {
+                    } catch (GenericEntityException _) {
                         Debug.logInfo(" techData excday record not found so creating........", MODULE);
                     }
                     if (techDataCalendarExcDay == null) {
@@ -821,7 +821,7 @@ public class OrderServices {
             for (GenericValue orderAdjustment : orderAdjustments) {
                 try {
                     orderAdjustment.set("orderAdjustmentId", delegator.getNextSeqId("OrderAdjustment"));
-                } catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException _) {
                     return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                             "OrderErrorCouldNotGetNextSequenceIdForOrderAdjustmentCannotCreateOrder", locale));
                 }
@@ -916,7 +916,7 @@ public class OrderServices {
             for (GenericValue oipi : orderItemPriceInfo) {
                 try {
                     oipi.set("orderItemPriceInfoId", delegator.getNextSeqId("OrderItemPriceInfo"));
-                } catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException _) {
                     return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                             "OrderErrorCouldNotGetNextSequenceIdForOrderItemPriceInfoCannotCreateOrder", locale));
                 }
@@ -1176,7 +1176,7 @@ public class OrderServices {
                 productCalculatedInfo.set("totalQuantityOrdered", quantity);
                 productCalculatedInfo.create();
             } else {
-                productCalculatedInfo = productCalculatedInfoList.get(0);
+                productCalculatedInfo = productCalculatedInfoList.getFirst();
                 BigDecimal totalQuantityOrdered = productCalculatedInfo.getBigDecimal("totalQuantityOrdered");
                 if (totalQuantityOrdered == null) {
                     productCalculatedInfo.set("totalQuantityOrdered", quantity);
@@ -1732,7 +1732,7 @@ public class OrderServices {
                     if (shippingAddress == null) {
                         List<GenericValue> billingAddressList = orh.getBillingLocations();
                         if (!billingAddressList.isEmpty()) {
-                            shippingAddress = billingAddressList.get(0);
+                            shippingAddress = billingAddressList.getFirst();
                         }
                     }
 
@@ -1843,7 +1843,7 @@ public class OrderServices {
                 Map<String, Object> createOrderAdjResponse = null;
                 try {
                     createOrderAdjResponse = dispatcher.runSync("createOrderAdjustment", createOrderAdjContext);
-                } catch (GenericServiceException e) {
+                } catch (GenericServiceException _) {
                     String createOrderAdjErrMsg = UtilProperties.getMessage(RES_ERROR,
                             "OrderErrorCallingCreateOrderAdjustmentService", locale);
                     Debug.logError(createOrderAdjErrMsg, MODULE);
@@ -2897,7 +2897,7 @@ public class OrderServices {
                 orderHeader = EntityQuery.use(delegator).from("OrderHeader").where("orderId", sourceReferenceId)
                         .queryOne();
             }
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                     "OrderProblemWithEntityLookup", locale));
         }
@@ -2907,7 +2907,7 @@ public class OrderServices {
         Collection<GenericValue> assignedToEmails = null;
         try {
             party = EntityQuery.use(delegator).from("Party").where("partyId", assignedToUser).queryOne();
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                     "OrderProblemWithEntityLookup", locale));
         }
@@ -3047,7 +3047,7 @@ public class OrderServices {
             if (orderHeader != null) {
                 result.put("orderHeader", orderHeader);
             }
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             result.put(ModelService.RESPONSE_MESSAGE, ModelService.RESPOND_ERROR);
             result.put(ModelService.ERROR_MESSAGE, UtilProperties.getMessage(RESOURCE,
                     "OrderOrderNotFound", UtilMisc.toMap("orderId", orderId), locale));
@@ -3157,7 +3157,7 @@ public class OrderServices {
             shipGroup.set("maySplit", "Y");
             try {
                 shipGroup.store();
-            } catch (GenericEntityException e) {
+            } catch (GenericEntityException _) {
                 Debug.logError("Problem saving OrderItemShipGroup for : " + orderId + " / " + shipGroupSeqId, MODULE);
                 return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                         "OrderCannotUpdateProblemSettingOrderShipmentPreference", locale));
@@ -5225,7 +5225,7 @@ public class OrderServices {
                             // the shipping address is the one of the customer
                             cart.setAllShippingContactMechId(shipGroup.getString("contactMechId"));
                             // associate ship groups of sales and purchase orders
-                            ShoppingCart.CartShipInfo cartShipInfo = cart.getShipGroups().get(0);
+                            ShoppingCart.CartShipInfo cartShipInfo = cart.getShipGroups().getFirst();
                             cartShipInfo.setAssociatedShipGroupSeqId(shipGroup.getString("shipGroupSeqId"));
                             // create the order
                             CheckOutHelper coh = new CheckOutHelper(dispatcher, delegator, cart);
@@ -6120,7 +6120,7 @@ public class OrderServices {
                     if (result.containsKey("shipGroupSeqId")) {
                         shipGroupSeqId = (String) result.get("shipGroupSeqId");
                     }
-                } catch (GenericServiceException e) {
+                } catch (GenericServiceException _) {
                     String errMsg = UtilProperties.getMessage(RESOURCE, mainErrorMessage, locale);
                     return ServiceUtil.returnError(errMsg);
                 }
@@ -6249,7 +6249,7 @@ public class OrderServices {
                     if (rowCountInt == rowNumberInt - 1) {
                         try {
                             message = validateOrderItemShipGroupAssoc(delegator, dispatcher, orderItem, totalQuantity, oisga, userLogin, locale);
-                        } catch (GeneralException e) {
+                        } catch (GeneralException _) {
                             String errMsg = mainErrorMessage + UtilProperties.getMessage(RES_ERROR,
                                     "OrderQuantityAssociatedIsLessThanOrderItemQuantity", locale);
                             Debug.logError(errMsg, MODULE);
@@ -6320,7 +6320,7 @@ public class OrderServices {
                 if (rowCountInt == rowNumberInt - 1) {
                     try {
                         message = validateOrderItemShipGroupAssoc(delegator, dispatcher, orderItem, totalQuantity, oisga, userLogin, locale);
-                    } catch (GeneralException e) {
+                    } catch (GeneralException _) {
                         String errMsg = mainErrorMessage + UtilProperties.getMessage(RES_ERROR, "OrderQuantityAssociatedIsLessThanOrderItemQuantity",
                                 locale);
                         Debug.logError(errMsg, MODULE);
@@ -6667,8 +6667,8 @@ public class OrderServices {
 
                 // set first shipping method from list, if shipping method for ship group is not applicable to new ship address.
                 if (!isShippingMethodAvailable) {
-                    shoppingCart.setShipmentMethodTypeId(groupIdx - 1, shippingMethods.get(0).getString("shipmentMethodTypeId"));
-                    shoppingCart.setCarrierPartyId(groupIdx - 1, shippingMethods.get(0).getString("carrierPartyId"));
+                    shoppingCart.setShipmentMethodTypeId(groupIdx - 1, shippingMethods.getFirst().getString("shipmentMethodTypeId"));
+                    shoppingCart.setCarrierPartyId(groupIdx - 1, shippingMethods.getFirst().getString("carrierPartyId"));
 
                     String newShipMethTypeDesc = null;
                     String shipMethTypeDesc = null;
@@ -6676,13 +6676,13 @@ public class OrderServices {
                         shipMethTypeDesc = EntityQuery.use(delegator).from("ShipmentMethodType").where("shipmentMethodTypeId",
                          shipmentMethodTypeId).queryOne().getString("description");
                         newShipMethTypeDesc = EntityQuery.use(delegator).from("ShipmentMethodType").where("shipmentMethodTypeId",
-                         shippingMethods.get(0).getString("shipmentMethodTypeId")).queryOne().getString("description");
+                         shippingMethods.getFirst().getString("shipmentMethodTypeId")).queryOne().getString("description");
                     } catch (GenericEntityException e) {
                         Debug.logError(e, MODULE);
                     }
                     // message to notify user for not applicability of shipping method
                     message = "Shipping Method " + carrierPartyId + " " + shipMethTypeDesc + " is not applicable to shipping address. "
-                            + shippingMethods.get(0).getString("carrierPartyId") + " " + newShipMethTypeDesc + " has been set for shipping address.";
+                            + shippingMethods.getFirst().getString("carrierPartyId") + " " + newShipMethTypeDesc + " has been set for shipping address.";
                 }
                 shoppingCart.setShippingContactMechId(groupIdx - 1, contactMechId);
             }

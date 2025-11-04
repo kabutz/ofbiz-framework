@@ -121,9 +121,7 @@ public final class SqlJdbcUtil {
             throws GenericEntityException {
         StringBuilder sql = new StringBuilder(" FROM ");
 
-        if (modelEntity instanceof ModelViewEntity) {
-            // REFACTOR: Pattern Matching for instanceof
-            ModelViewEntity modelViewEntity = (ModelViewEntity) modelEntity;
+        if (modelEntity instanceof ModelViewEntity modelViewEntity) {
 
             if ("ansi".equals(datasourceInfo.getJoinStyle()) || "ansi-no-parenthesis".equals(datasourceInfo.getJoinStyle())) {
                 boolean useParenthesis = true;
@@ -335,8 +333,8 @@ public final class SqlJdbcUtil {
             Object item = iter.next();
             Object name = null;
             ModelField modelField = null;
-            if (item instanceof ModelField) {
-                modelField = (ModelField) item;
+            if (item instanceof ModelField field) {
+                modelField = field;
                 sb.append(modelField.getColValue());
                 name = modelField.getName();
             } else {
@@ -390,10 +388,8 @@ public final class SqlJdbcUtil {
     }
 
     public static String makeViewWhereClause(ModelEntity modelEntity, String joinStyle) throws GenericEntityException {
-        if (modelEntity instanceof ModelViewEntity) {
+        if (modelEntity instanceof ModelViewEntity modelViewEntity) {
             StringBuilder whereString = new StringBuilder();
-            // REFACTOR: Pattern Matching for instanceof
-            ModelViewEntity modelViewEntity = (ModelViewEntity) modelEntity;
 
             if ("ansi".equals(joinStyle) || "ansi-no-parenthesis".equals(joinStyle)) {
                 Debug.logVerbose("Nothing to do here, all done in the JOIN clauses...", MODULE);
@@ -484,7 +480,7 @@ public final class SqlJdbcUtil {
 
     public static String makeViewTable(ModelEntity modelEntity, ModelFieldTypeReader modelFieldTypeReader, Datasource datasourceInfo)
             throws GenericEntityException {
-        if (modelEntity instanceof ModelViewEntity) {
+        if (modelEntity instanceof ModelViewEntity modelViewEntity) {
             StringBuilder sql = new StringBuilder("(SELECT ");
             Iterator<ModelField> fieldsIter = modelEntity.getFieldsIterator();
             if (fieldsIter.hasNext()) {
@@ -502,8 +498,6 @@ public final class SqlJdbcUtil {
             }
             sql.append(makeFromClause(modelEntity, modelFieldTypeReader, datasourceInfo));
             String viewWhereClause = makeViewWhereClause(modelEntity, datasourceInfo.getJoinStyle());
-            // REFACTOR: Pattern Matching for instanceof
-            ModelViewEntity modelViewEntity = (ModelViewEntity) modelEntity;
             List<EntityCondition> whereConditions = new LinkedList<>();
             List<EntityCondition> havingConditions = new LinkedList<>();
             List<String> orderByList = new LinkedList<>();
@@ -625,8 +619,8 @@ public final class SqlJdbcUtil {
         if (handler != null) {
             try {
                 Object jdbcValue = handler.getValue(rs, ind);
-                if (jdbcValue instanceof String && curField.getEncryptMethod().isEncrypted()) {
-                    jdbcValue = entity.getDelegator().decryptFieldValue(encryptionKeyName, curField.getEncryptMethod(), (String) jdbcValue);
+                if (jdbcValue instanceof String string && curField.getEncryptMethod().isEncrypted()) {
+                    jdbcValue = entity.getDelegator().decryptFieldValue(encryptionKeyName, curField.getEncryptMethod(), string);
                 }
                 entity.dangerousSetNoCheckButFast(curField, jdbcValue);
                 return;
@@ -897,10 +891,10 @@ public final class SqlJdbcUtil {
                 break;
 
             case 12:
-                if (fieldValue instanceof byte[]) {
-                    sqlP.setBytes((byte[]) fieldValue);
-                } else if (fieldValue instanceof ByteBuffer) {
-                    sqlP.setBytes(((ByteBuffer) fieldValue).array());
+                if (fieldValue instanceof byte[] bytes) {
+                    sqlP.setBytes(bytes);
+                } else if (fieldValue instanceof ByteBuffer buffer) {
+                    sqlP.setBytes(buffer.array());
                 } else {
                     sqlP.setValue((java.sql.Blob) fieldValue);
                 }
@@ -953,8 +947,8 @@ public final class SqlJdbcUtil {
             buffer.append(value);
         } else {
             buffer.append('\'');
-            if (value instanceof String) {
-                buffer.append(((String) value).replace("'", "''"));
+            if (value instanceof String string) {
+                buffer.append(string.replace("'", "''"));
             } else {
                 buffer.append(value);
             }

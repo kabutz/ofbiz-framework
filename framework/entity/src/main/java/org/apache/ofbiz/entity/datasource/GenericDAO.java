@@ -130,7 +130,7 @@ public class GenericDAO {
      */
     public int insertAll(List<GenericValue> entities) throws GenericEntityException {
         // REFACTOR: Use sequenced collection method instead
-        GenericEntity entity = entities.get(0);
+        GenericEntity entity = entities.getFirst();
         ModelEntity modelEntity = entity.getModelEntity();
 
         try (SQLProcessor sqlP = new SQLProcessor(entity.getDelegator(), helperInfo)) {
@@ -177,8 +177,8 @@ public class GenericDAO {
 
     private int singleInsert(GenericEntity entity, ModelEntity modelEntity, List<ModelField> fieldsToSave, SQLProcessor sqlP)
             throws GenericEntityException {
-        if (modelEntity instanceof ModelViewEntity) {
-            return singleUpdateView(entity, (ModelViewEntity) modelEntity, fieldsToSave, sqlP);
+        if (modelEntity instanceof ModelViewEntity viewEntity) {
+            return singleUpdateView(entity, viewEntity, fieldsToSave, sqlP);
         }
 
         // if we have a STAMP_TX_FIELD or CREATE_STAMP_TX_FIELD then set it with NOW, always do this before the STAMP_FIELD
@@ -288,8 +288,8 @@ public class GenericDAO {
 
     private int singleUpdate(GenericEntity entity, ModelEntity modelEntity, List<ModelField> fieldsToSave, SQLProcessor sqlP)
             throws GenericEntityException {
-        if (modelEntity instanceof ModelViewEntity) {
-            return singleUpdateView(entity, (ModelViewEntity) modelEntity, fieldsToSave, sqlP);
+        if (modelEntity instanceof ModelViewEntity viewEntity) {
+            return singleUpdateView(entity, viewEntity, fieldsToSave, sqlP);
         }
 
         // no non-primaryKey fields, update doesn't make sense, so don't do it
@@ -529,7 +529,7 @@ public class GenericDAO {
             } else if (meResult.size() == 1) {
                 // Update existing value
                 // REFACTOR: Use sequenced collection method instead
-                meGenericValue = meResult.iterator().next();
+                meGenericValue = meResult.getFirst();
             } else {
                 throw new GenericEntityException("Found more than one result for member entity " + meName + " in view "
                         + modelViewEntity.getEntityName() + " - this is no updatable view");
@@ -725,8 +725,8 @@ public class GenericDAO {
         }
 
         ModelViewEntity modelViewEntity = null;
-        if (modelEntity instanceof ModelViewEntity) {
-            modelViewEntity = (ModelViewEntity) modelEntity;
+        if (modelEntity instanceof ModelViewEntity entity) {
+            modelViewEntity = entity;
         }
 
         // if no find options passed, use default
@@ -931,8 +931,8 @@ public class GenericDAO {
                                                      EntityCondition whereEntityCondition, List<EntityCondition> viewWhereConditions,
                                                      List<EntityConditionParam> whereEntityConditionParams) throws GenericEntityException {
         ModelViewEntity modelViewEntity = null;
-        if (modelEntity instanceof ModelViewEntity) {
-            modelViewEntity = (ModelViewEntity) modelEntity;
+        if (modelEntity instanceof ModelViewEntity entity) {
+            modelViewEntity = entity;
         }
 
         List<EntityCondition> conditions = new LinkedList<>();
@@ -994,8 +994,8 @@ public class GenericDAO {
                                                       EntityCondition havingEntityCondition, List<EntityCondition> viewHavingConditions,
                                                       List<EntityConditionParam> havingEntityConditionParams) throws GenericEntityException {
         ModelViewEntity modelViewEntity = null;
-        if (modelEntity instanceof ModelViewEntity) {
-            modelViewEntity = (ModelViewEntity) modelEntity;
+        if (modelEntity instanceof ModelViewEntity entity) {
+            modelViewEntity = entity;
         }
 
         String entityCondHavingString = "";
@@ -1219,8 +1219,8 @@ public class GenericDAO {
 
         boolean isGroupBy = false;
         ModelViewEntity modelViewEntity = null;
-        if (modelEntity instanceof ModelViewEntity) {
-            modelViewEntity = (ModelViewEntity) modelEntity;
+        if (modelEntity instanceof ModelViewEntity entity) {
+            modelViewEntity = entity;
             isGroupBy = modelViewEntity.getGroupBysSize() > 0;
         }
 
@@ -1244,7 +1244,7 @@ public class GenericDAO {
              */
             if (selectFields != null && !selectFields.isEmpty()) {
                 // REFACTOR: Use sequenced collection method instead
-                ModelField firstSelectField = selectFields.get(0);
+                ModelField firstSelectField = selectFields.getFirst();
                 ModelViewEntity.ModelAlias firstModelAlias = modelViewEntity != null ? modelViewEntity.getAlias(firstSelectField.getName()) : null;
                 if (firstModelAlias != null && UtilValidate.isNotEmpty(firstModelAlias.getFunction())) {
                     // if the field has a function already we don't want to count just it, would be meaningless

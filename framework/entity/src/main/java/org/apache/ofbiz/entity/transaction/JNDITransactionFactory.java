@@ -157,9 +157,7 @@ public class JNDITransactionFactory implements TransactionFactory {
     public static Connection getJndiConnection(String jndiName, String jndiServerName) throws SQLException, GenericEntityException {
         DataSource ds = DS_CACHE.get(jndiName);
         if (ds != null) {
-            if (ds instanceof XADataSource) {
-                // REFACTOR: Pattern Matching for instanceof
-                XADataSource xads = (XADataSource) ds;
+            if (ds instanceof XADataSource xads) {
 
                 return TransactionUtil.enlistConnection(xads.getXAConnection());
             }
@@ -185,12 +183,10 @@ public class JNDITransactionFactory implements TransactionFactory {
                 ds = DS_CACHE.get(jndiName);
                 Connection con;
 
-                if (ds instanceof XADataSource) {
+                if (ds instanceof XADataSource xads) {
                     if (Debug.infoOn()) {
                         Debug.logInfo("Got XADataSource for name " + jndiName, MODULE);
                     }
-                    // REFACTOR: Pattern Matching for instanceof
-                    XADataSource xads = (XADataSource) ds;
                     XAConnection xac = xads.getXAConnection();
 
                     con = TransactionUtil.enlistConnection(xac);

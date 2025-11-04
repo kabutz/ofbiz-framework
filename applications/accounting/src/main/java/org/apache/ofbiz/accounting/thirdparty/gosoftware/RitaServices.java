@@ -382,7 +382,7 @@ public class RitaServices {
         }
         if (creditCard != null) {
             List<String> expDateList = StringUtil.split(creditCard.getString("expireDate"), "/");
-            String month = expDateList.get(0);
+            String month = expDateList.getFirst();
             String year = expDateList.get(1);
             String y2d = year.substring(2);
 

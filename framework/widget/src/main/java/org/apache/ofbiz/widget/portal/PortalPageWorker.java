@@ -90,7 +90,7 @@ public class PortalPageWorker {
                                 .queryList();
                         if (UtilValidate.isNotEmpty(privatePortalPages)) {
                             // REFACTOR: Use sequenced collection method instead
-                            userPortalPages.add(privatePortalPages.get(0));
+                            userPortalPages.add(privatePortalPages.getFirst());
                         } else {
                             userPortalPages.add(portalPage);
                         }
@@ -173,7 +173,7 @@ public class PortalPageWorker {
                         // Users with PORTALPAGE_ADMIN permission can configure every Portal Page
                         userIsAllowed = (ownerUserLoginId.equals(userLoginId) || hasPortalAdminPermission);
                     }
-                } catch (GenericEntityException e) {
+                } catch (GenericEntityException _) {
                     return false;
                 }
             }

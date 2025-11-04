@@ -20,7 +20,6 @@ package org.apache.ofbiz.widget.renderer.macro;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.net.URI;
@@ -105,7 +104,7 @@ public class MacroMenuRenderer implements MenuStringRenderer {
     private void executeMacro(Appendable writer, String macro) throws IOException, TemplateException {
         Environment environment = getEnvironment(writer);
         environment.setVariable("visualTheme", FreeMarkerWorker.autoWrap(visualTheme, environment));
-        Reader templateReader = new StringReader(macro);
+        Reader templateReader = Reader.of(macro);
         macroCount++;
         String templateName = toString().concat("_") + macroCount;
         Template template = new Template(templateName, templateReader, FreeMarkerWorker.getDefaultOfbizConfig());
@@ -122,9 +121,9 @@ public class MacroMenuRenderer implements MenuStringRenderer {
                 sb.append(parameter.getKey());
                 sb.append("=");
                 Object value = parameter.getValue();
-                if (value instanceof String) {
+                if (value instanceof String string) {
                     sb.append('"');
-                    sb.append(((String) value).replace("\"", "\\\""));
+                    sb.append(string.replace("\"", "\\\""));
                     sb.append('"');
                 } else {
                     sb.append(value);

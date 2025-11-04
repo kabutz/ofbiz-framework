@@ -106,9 +106,7 @@ public class EntityConditionVisitorTests {
             public void visit(EntityExpr expr) {
                 Object lhs = expr.getLhs();
                 Object rhs = expr.getRhs();
-                if (lhs instanceof EntityCondition) {
-                    // REFACTOR: Pattern Matching for instanceof
-                    EntityCondition lhec = (EntityCondition) lhs;
+                if (lhs instanceof EntityCondition lhec) {
                     lhec.accept(this);
                 }
                 if (rhs instanceof EntityCondition) {

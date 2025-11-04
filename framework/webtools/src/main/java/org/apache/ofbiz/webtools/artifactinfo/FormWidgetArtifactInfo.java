@@ -72,8 +72,8 @@ public class FormWidgetArtifactInfo extends ArtifactInfoBase {
         ArtifactInfoContext infoContext = new ArtifactInfoContext();
         ArtifactInfoGatherer infoGatherer = new ArtifactInfoGatherer(infoContext);
         try {
-            if (this.modelForm instanceof ModelSingleForm) {
-                infoGatherer.visit((ModelSingleForm) this.modelForm);
+            if (this.modelForm instanceof ModelSingleForm form) {
+                infoGatherer.visit(form);
             } else {
                 infoGatherer.visit((ModelGrid) this.modelForm);
             }
@@ -101,7 +101,7 @@ public class FormWidgetArtifactInfo extends ArtifactInfoBase {
 
             try {
                 getAif().getModelForm(formName);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 Debug.logWarning("Form [" + formName + "] reference in form [" + this.formName + "] in resource [" + this.formLocation
                         + "] does not exist!", MODULE);
                 return;
@@ -149,7 +149,7 @@ public class FormWidgetArtifactInfo extends ArtifactInfoBase {
             }
             try {
                 getAif().getModelService(serviceName);
-            } catch (GeneralException e) {
+            } catch (GeneralException _) {
                 Debug.logWarning("Service [" + serviceName + "] reference in form [" + this.formName + "] in resource [" + this.formLocation
                         + "] does not exist!", MODULE);
                 continue;
@@ -234,9 +234,9 @@ public class FormWidgetArtifactInfo extends ArtifactInfoBase {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof FormWidgetArtifactInfo) {
-            return (this.modelForm.getName().equals(((FormWidgetArtifactInfo) obj).modelForm.getName())
-                    && this.modelForm.getFormLocation().equals(((FormWidgetArtifactInfo) obj).modelForm.getFormLocation()));
+        if (obj instanceof FormWidgetArtifactInfo info) {
+            return (this.modelForm.getName().equals(info.modelForm.getName())
+                    && this.modelForm.getFormLocation().equals(info.modelForm.getFormLocation()));
         } else {
             return false;
         }

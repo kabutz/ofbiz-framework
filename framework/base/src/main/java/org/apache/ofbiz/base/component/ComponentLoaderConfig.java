@@ -21,7 +21,6 @@ package org.apache.ofbiz.base.component;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -117,7 +116,7 @@ public final class ComponentLoaderConfig {
 
         @Override
         public String toString() {
-            return String.format("ComponentDef [location=%s, type=%s]", location, type);
+            return "ComponentDef [location=%s, type=%s]".formatted(location, type);
         }
 
         /**
@@ -127,7 +126,7 @@ public final class ComponentLoaderConfig {
          */
         private static Path locationToPath(String location) {
             Map<String, ?> systemProps = UtilGenerics.cast(System.getProperties());
-            return Paths.get(FlexibleStringExpander.expandString(location, systemProps));
+            return Path.of(FlexibleStringExpander.expandString(location, systemProps));
         }
 
         /**
@@ -149,7 +148,7 @@ public final class ComponentLoaderConfig {
                         ComponentType.COMPONENT_DIRECTORY);
             default:
                 throw new ComponentException(
-                        String.format("Invalid element '%s' found in component-load file %s", nodeName, configUrl));
+                        "Invalid element '%s' found in component-load file %s".formatted(nodeName, configUrl));
             }
         }
     }

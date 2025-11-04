@@ -72,12 +72,12 @@ public class OrderByItem implements Comparator<GenericEntity> {
     }
 
     public static final OrderByItem parse(Object obj) {
-        if (obj instanceof String) {
-            return parse((String) obj);
-        } else if (obj instanceof EntityConditionValue) {
-            return new OrderByItem((EntityConditionValue) obj, false);
-        } else if (obj instanceof OrderByItem) {
-            return (OrderByItem) obj;
+        if (obj instanceof String string) {
+            return parse(string);
+        } else if (obj instanceof EntityConditionValue conditionValue) {
+            return new OrderByItem(conditionValue, false);
+        } else if (obj instanceof OrderByItem item) {
+            return item;
         } else {
             throw new IllegalArgumentException("unknown orderBy item: " + obj);
         }

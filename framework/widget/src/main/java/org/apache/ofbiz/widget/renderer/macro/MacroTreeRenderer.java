@@ -20,7 +20,6 @@ package org.apache.ofbiz.widget.renderer.macro;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URI;
 import java.util.List;
@@ -70,7 +69,7 @@ public class MacroTreeRenderer implements TreeStringRenderer {
 
     private void executeMacro(String macro) {
         try {
-            Reader templateReader = new StringReader(macro);
+            Reader templateReader = Reader.of(macro);
             // FIXME: I am using a Date as an hack to provide a unique name for the template...
             Template template = new Template((new java.util.Date()).toString(), templateReader,
                     FreeMarkerWorker.getDefaultOfbizConfig());
@@ -176,7 +175,7 @@ public class MacroTreeRenderer implements TreeStringRenderer {
             } else {
                 context.put("processChildren", Boolean.TRUE);
                 // REFACTOR: Use sequenced collection method instead
-                String lastContentId = currentNodeTrail.remove(currentNodeTrail.size() - 1);
+                String lastContentId = currentNodeTrail.removeLast();
                 currentNodeTrailPiped = StringUtil.join(currentNodeTrail, "|");
                 if (currentNodeTrailPiped == null) {
                     currentNodeTrailPiped = "";

@@ -150,7 +150,7 @@ public class BOMTree {
             } else {
                 root.loadChildren(bomTypeId, inDate, productFeatures, type);
             }
-        } catch (GenericEntityException gee) {
+        } catch (GenericEntityException _) {
             root = null;
         }
 

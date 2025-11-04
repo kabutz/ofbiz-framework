@@ -94,7 +94,7 @@ public class MiniLangTests extends OFBizTestCase {
         assertEquals("<assert> error result", methodToTest.getDefaultErrorCode(), result);
         messages = context.getEnv(methodToTest.getServiceErrorMessageListName());
         assertNotNull("<assert> error message list", messages);
-        String errorMessage = messages.get(0);
+        String errorMessage = messages.getFirst();
         assertTrue("<assert> error message text", errorMessage.startsWith("Assertion failed:"));
     }
 

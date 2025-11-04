@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -66,7 +65,7 @@ public final class WebAppUtil {
 
     private static final String MODULE = WebAppUtil.class.getName();
     public static final String CONTROL_MOUNT_POINT = "control";
-    private static final Path WEB_APP_FILE_NAME = Paths.get("WEB-INF", "web.xml");
+    private static final Path WEB_APP_FILE_NAME = Path.of("WEB-INF", "web.xml");
     private static final UtilCache<Path, WebXml> WEB_XML_CACHE = UtilCache.createUtilCache("webapp.WebXml");
 
     /**

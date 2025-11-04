@@ -193,7 +193,7 @@ public class CoreEvents {
                 continue;
             }
 
-            if (value instanceof String && ((String) value).isEmpty()) {
+            if (value instanceof String string && string.isEmpty()) {
                 // interpreting empty fields as null values for each in back end handling...
                 value = null;
             }
@@ -233,10 +233,10 @@ public class CoreEvents {
             try {
                 Timestamp ts1 = Timestamp.valueOf(serviceTime);
                 startTime = ts1.getTime();
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 try {
                     startTime = Long.parseLong(serviceTime);
-                } catch (NumberFormatException nfe) {
+                } catch (NumberFormatException _) {
                     String errMsg = UtilProperties.getMessage(ERR_RESOURCE, "coreEvents.invalid_format_time", locale);
                     errorBuf.append(errMsg);
                 }
@@ -250,10 +250,10 @@ public class CoreEvents {
             try {
                 Timestamp ts1 = Timestamp.valueOf(serviceEndTime);
                 endTime = ts1.getTime();
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 try {
                     endTime = Long.parseLong(serviceEndTime);
-                } catch (NumberFormatException nfe) {
+                } catch (NumberFormatException _) {
                     String errMsg = UtilProperties.getMessage(ERR_RESOURCE, "coreEvents.invalid_format_time", locale);
                     errorBuf.append(errMsg);
                 }
@@ -266,7 +266,7 @@ public class CoreEvents {
         if (UtilValidate.isNotEmpty(serviceIntr)) {
             try {
                 interval = Integer.parseInt(serviceIntr);
-            } catch (NumberFormatException nfe) {
+            } catch (NumberFormatException _) {
                 String errMsg = UtilProperties.getMessage(ERR_RESOURCE, "coreEvents.invalid_format_interval", locale);
                 errorBuf.append(errMsg);
             }
@@ -274,7 +274,7 @@ public class CoreEvents {
         if (UtilValidate.isNotEmpty(serviceCnt)) {
             try {
                 count = Integer.parseInt(serviceCnt);
-            } catch (NumberFormatException nfe) {
+            } catch (NumberFormatException _) {
                 String errMsg = UtilProperties.getMessage(ERR_RESOURCE, "coreEvents.invalid_format_count", locale);
                 errorBuf.append(errMsg);
             }
@@ -287,7 +287,7 @@ public class CoreEvents {
                 if (parsedValue > 0 && parsedValue < 8) {
                     frequency = parsedValue;
                 }
-            } catch (NumberFormatException nfe) {
+            } catch (NumberFormatException _) {
                 parsedValue = 0;
             }
             if (parsedValue == 0) {
@@ -304,7 +304,7 @@ public class CoreEvents {
 
             try {
                 parsedValue = Integer.parseInt(retryCnt);
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
                 parsedValue = -2;
             }
             if (parsedValue > -2) {
@@ -395,9 +395,7 @@ public class CoreEvents {
 
             if (servicePathObject instanceof Map<?, ?>) {
                 servicePathMap = UtilGenerics.cast(servicePathObject);
-            } else if (servicePathObject instanceof GenericEntity) {
-                // REFACTOR: Pattern Matching for instanceof
-                GenericEntity servicePathEntity = (GenericEntity) servicePathObject;
+            } else if (servicePathObject instanceof GenericEntity servicePathEntity) {
                 servicePathMap = new HashMap<>();
                 for (Map.Entry<String, Object> entry: servicePathEntity.entrySet()) {
                     servicePathMap.put(entry.getKey(), entry.getValue());

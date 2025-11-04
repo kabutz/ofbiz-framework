@@ -68,7 +68,7 @@ public final class SecurityUtil {
                             EntityCondition.makeCondition("permissionId", EntityOperator.IN, ADMIN_PERMISSIONS)))
                     .filterByDate("fromDate", "thruDate", "permissionFromDate", "permissionThruDate")
                     .queryCount() != 0;
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             Debug.logError("Failed to resolve user permissions", MODULE);
         }
         return false;
@@ -99,7 +99,7 @@ public final class SecurityUtil {
                             .where("userLoginId", toUserLoginId)
                             .filterByDate("fromDate", "thruDate", "permissionFromDate", "permissionThruDate")
                             .queryList(), "permissionId", true);
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             Debug.logError("Failed to resolve user permissions", MODULE);
             return returnList;
         }
@@ -156,7 +156,7 @@ public final class SecurityUtil {
                 Map<String, Object> claims = JWTManager.validateToken(delegator, jwtToken,
                         userLogin.getString("userLoginId") + userLogin.getString("currentPassword"));
                 return (!ServiceUtil.isError(claims)) && userLoginId.equals(claims.get("userLoginId"));
-            } catch (GenericEntityException e) {
+            } catch (GenericEntityException _) {
                 Debug.logWarning("failed to validate a jwToken for user " + userLoginId, MODULE);
             }
         }

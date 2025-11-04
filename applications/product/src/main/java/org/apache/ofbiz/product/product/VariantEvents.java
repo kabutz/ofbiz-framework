@@ -74,7 +74,7 @@ public class VariantEvents {
 
         try {
             featureTypeSize = Integer.parseInt(featureTypeSizeStr);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException _) {
             Map<String, String> messageMap = UtilMisc.toMap("featureTypeSizeStr", featureTypeSizeStr);
             errMsg = UtilProperties.getMessage(RESOURCE, "variantevents.featureTypeSize_not_number", messageMap, UtilHttp.getLocale(request));
             request.setAttribute("_ERROR_MESSAGE_", errMsg);

@@ -1160,7 +1160,7 @@ public class ModelViewEntity extends ModelEntity {
                 return;
             } else if (complexAliasMembers.size() == 1) {
                 // REFACTOR: Use sequenced collection method instead
-                ComplexAliasMember complexAliasMember = complexAliasMembers.iterator().next();
+                ComplexAliasMember complexAliasMember = complexAliasMembers.getFirst();
                 complexAliasMember.makeAliasColName(colNameBuffer, fieldTypeBuffer, modelViewEntity, modelReader);
             } else {
                 colNameBuffer.append('(');
@@ -1485,7 +1485,7 @@ public class ModelViewEntity extends ModelEntity {
 
         public static Element makeViewEntityCondition(List<Element> children) {
             // REFACTOR: Use sequenced collection method instead
-            Document doc = children.get(0).getOwnerDocument();
+            Document doc = children.getFirst().getOwnerDocument();
             Element entityConditionElement = doc.createElement("entity-condition");
             for (Element child : children) {
                 if (child.getOwnerDocument() != doc) {
@@ -1498,7 +1498,7 @@ public class ModelViewEntity extends ModelEntity {
 
         public static Element makeViewEntityConditionList(String combine, List<Element> children) {
             // REFACTOR: Use sequenced collection method instead
-            Document doc = children.get(0).getOwnerDocument();
+            Document doc = children.getFirst().getOwnerDocument();
             Element conditionListElement = doc.createElement("condition-list");
             if (UtilValidate.isNotEmpty(combine)) {
                 conditionListElement.setAttribute("combine", combine);
@@ -1570,7 +1570,7 @@ public class ModelViewEntity extends ModelEntity {
             String operator = UtilFormatOut.checkEmpty(conditionExprElement.getAttribute("operator"), "equals");
             try {
                 this.operator = EntityOperator.lookupComparison(operator);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 throw new IllegalArgumentException("[" + this.viewEntityCondition.modelViewEntity.getEntityName()
                         + "]: Could not find an entity operator for the name: " + operator);
             }
@@ -1607,15 +1607,15 @@ public class ModelViewEntity extends ModelEntity {
             Object value = this.value;
             // If IN or BETWEEN operator, see if value is a literal list and split it
             if ((this.operator == EntityOperator.IN || this.operator == EntityOperator.BETWEEN)
-                    && value instanceof String) {
+                    && value instanceof String string) {
                 String delim = null;
-                if (((String) value).indexOf('|') >= 0) {
+                if (string.indexOf('|') >= 0) {
                     delim = "|";
-                } else if (((String) value).indexOf(',') >= 0) {
+                } else if (string.indexOf(',') >= 0) {
                     delim = ",";
                 }
                 if (UtilValidate.isNotEmpty(delim)) {
-                    value = StringUtil.split((String) value, delim);
+                    value = StringUtil.split(string, delim);
                 }
             }
 
@@ -1698,7 +1698,7 @@ public class ModelViewEntity extends ModelEntity {
             String combine = conditionListElement.getAttribute("combine");
             try {
                 this.operator = EntityOperator.lookupJoin(combine);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 throw new IllegalArgumentException("[" + this.viewEntityCondition.modelViewEntity.getEntityName()
                         + "]: Could not find an entity operator for the name: " + combine);
             }
@@ -1720,7 +1720,7 @@ public class ModelViewEntity extends ModelEntity {
             this.viewEntityCondition = viewEntityCondition;
             try {
                 this.operator = EntityOperator.lookupJoin(combine);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 throw new IllegalArgumentException("[" + this.viewEntityCondition.modelViewEntity.getEntityName()
                         + "]: Could not find an entity operator for the name: " + combine);
             }
@@ -1736,7 +1736,7 @@ public class ModelViewEntity extends ModelEntity {
             }
             if (this.conditionList.size() == 1) {
                 // REFACTOR: Use sequenced collection method instead
-                ViewCondition condition = this.conditionList.get(0);
+                ViewCondition condition = this.conditionList.getFirst();
                 return condition.createCondition(modelFieldTypeReader, entityAliasStack);
             }
 

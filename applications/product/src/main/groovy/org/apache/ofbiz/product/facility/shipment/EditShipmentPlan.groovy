@@ -249,7 +249,7 @@ if (orderItemShipGroupAssocs) {
         oneRow.quantity = planQuantity
 
         // Planned (unitary) Weight and Volume
-        weight = new Double(0)
+        weight = Double.valueOf(0)
         product = orderItem.getRelatedOne('Product', false)
         if (product.getDouble('productWeight')) {
             weight = product.getDouble('productWeight')

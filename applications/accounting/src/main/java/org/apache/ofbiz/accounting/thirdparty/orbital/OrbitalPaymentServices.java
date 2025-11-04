@@ -369,9 +369,9 @@ public class OrbitalPaymentServices {
                 Debug.logInfo("\nAuth Capture Request:\n ======== " + request.getXML());
             }
             results.put("processAmount", amount);
-        } catch (InitializationException ie) {
+        } catch (InitializationException _) {
             Debug.logInfo("Unable to initialize request object", MODULE);
-        } catch (FieldNotFoundException fnfe) {
+        } catch (FieldNotFoundException _) {
             Debug.logError("Unable to find XML field in template", MODULE);
         } catch (Exception e) {
             Debug.logError(e, MODULE);
@@ -408,7 +408,7 @@ public class OrbitalPaymentServices {
             //Display the request
             Debug.logInfo("\nCapture Request:\n ======== " + request.getXML());
             results.put("captureAmount", amount);
-        } catch (InitializationException ie) {
+        } catch (InitializationException _) {
             Debug.logInfo("Unable to initialize request object", MODULE);
         } catch (FieldNotFoundException fnfe) {
             Debug.logError("Unable to find XML field in template" + fnfe.getMessage(), MODULE);
@@ -440,9 +440,9 @@ public class OrbitalPaymentServices {
 
             Debug.logInfo("\nRefund Request:\n ======== " + request.getXML());
             results.put("refundAmount", amount);
-        } catch (InitializationException ie) {
+        } catch (InitializationException _) {
             Debug.logInfo("Unable to initialize request object", MODULE);
-        } catch (FieldNotFoundException fnfe) {
+        } catch (FieldNotFoundException _) {
             Debug.logError("Unable to find XML field in template", MODULE);
         } catch (Exception e) {
             Debug.logError(e, MODULE);
@@ -464,7 +464,7 @@ public class OrbitalPaymentServices {
             //Display the request
             Debug.logInfo("\nRelease Request:\n ======== " + request.getXML());
             results.put("releaseAmount", amount);
-        } catch (InitializationException ie) {
+        } catch (InitializationException _) {
             Debug.logInfo("Unable to initialize request object", MODULE);
         } catch (FieldNotFoundException fnfe) {
             Debug.logError("Unable to find XML field in template" + fnfe.getMessage(), MODULE);

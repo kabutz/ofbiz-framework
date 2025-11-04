@@ -149,7 +149,7 @@ public class GenericDelegator implements Delegator {
         }
         List<String> curValList = getUserIdentifierStack();
         // REFACTOR: Use sequenced collection method instead
-        curValList.add(0, userIdentifier);
+        curValList.addFirst(userIdentifier);
     }
 
     public static String popUserIdentifier() {
@@ -158,7 +158,7 @@ public class GenericDelegator implements Delegator {
             return null;
         }
         // REFACTOR: Use sequenced collection method instead
-        return curValList.remove(0);
+        return curValList.removeFirst();
     }
 
     public static void clearUserIdentifierStack() {
@@ -181,7 +181,7 @@ public class GenericDelegator implements Delegator {
         }
         List<String> curValList = getSessionIdentifierStack();
         // REFACTOR: Use sequenced collection method instead
-        curValList.add(0, sessionIdentifier);
+        curValList.addFirst(sessionIdentifier);
     }
 
     public static String popSessionIdentifier() {
@@ -190,7 +190,7 @@ public class GenericDelegator implements Delegator {
             return null;
         }
         // REFACTOR: Use sequenced collection method instead
-        return curValList.remove(0);
+        return curValList.removeFirst();
     }
 
     public static void clearSessionIdentifierStack() {
@@ -476,7 +476,7 @@ public class GenericDelegator implements Delegator {
                 } else {
                     throw new IllegalStateException("Could not find entity with name " + entityName);
                 }
-            } catch (GenericEntityException ex) {
+            } catch (GenericEntityException _) {
                 errorCount++;
                 Debug.logError("Entity [" + entityName + "] named in Entity Group with name " + groupName
                         + " are not defined in any Entity Definition file", MODULE);
@@ -819,7 +819,7 @@ public class GenericDelegator implements Delegator {
                 GenericValue existingValue = null;
                 try {
                     existingValue = helper.findByPrimaryKey(value.getPrimaryKey());
-                } catch (GenericEntityException e1) {
+                } catch (GenericEntityException _) {
                     // ignore this error, if not found it'll probably be a GenericEntityNotFoundException
                     // it is important to not let this get thrown because it will mask the original exception
                 }
@@ -1402,7 +1402,7 @@ public class GenericDelegator implements Delegator {
                 GenericValue existing;
                 try {
                     existing = helper.findByPrimaryKey(primaryKey);
-                } catch (GenericEntityNotFoundException e) {
+                } catch (GenericEntityNotFoundException _) {
                     existing = null;
                 }
 
@@ -1534,7 +1534,7 @@ public class GenericDelegator implements Delegator {
             ecaRunner.evalRules(EntityEcaHandler.EV_RUN, EntityEcaHandler.OP_FIND, primaryKey, false);
             try {
                 value = helper.findByPrimaryKey(primaryKey);
-            } catch (GenericEntityNotFoundException e) {
+            } catch (GenericEntityNotFoundException _) {
             }
             if (value != null) {
                 value.setDelegator(this);
@@ -1584,7 +1584,7 @@ public class GenericDelegator implements Delegator {
             ecaRunner.evalRules(EntityEcaHandler.EV_RUN, EntityEcaHandler.OP_FIND, primaryKey, false);
             try {
                 value = helper.findByPrimaryKeyPartial(primaryKey, keys);
-            } catch (GenericEntityNotFoundException e) {
+            } catch (GenericEntityNotFoundException _) {
             }
             if (value != null) {
                 value.setDelegator(this);
@@ -2443,7 +2443,7 @@ public class GenericDelegator implements Delegator {
             ModelEntity seqModelEntity = null;
             try {
                 seqModelEntity = getModelReader().getModelEntity(seqName);
-            } catch (GenericEntityException e) {
+            } catch (GenericEntityException _) {
                 Debug.logInfo("Entity definition not found for sequence name " + seqName, MODULE);
             }
             Long newSeqId = sequencer == null ? null : sequencer.getNextSeqId(seqName, staggerMax, seqModelEntity);
@@ -2878,13 +2878,13 @@ public class GenericDelegator implements Delegator {
     public String getCurrentSessionIdentifier() {
         List<String> curValList = getSessionIdentifierStack();
         // REFACTOR: Use sequenced collection method instead
-        return !curValList.isEmpty() ? curValList.get(0) : null;
+        return !curValList.isEmpty() ? curValList.getFirst() : null;
     }
 
     @Override
     public String getCurrentUserIdentifier() {
         List<String> curValList = getUserIdentifierStack();
         // REFACTOR: Use sequenced collection method instead
-        return !curValList.isEmpty() ? curValList.get(0) : null;
+        return !curValList.isEmpty() ? curValList.getFirst() : null;
     }
 }

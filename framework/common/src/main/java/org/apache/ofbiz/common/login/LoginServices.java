@@ -179,7 +179,7 @@ public class LoginServices {
 
                     try {
                         loginDisableMinutes = Long.parseLong(ldmStr);
-                    } catch (Exception e) {
+                    } catch (Exception _) {
                         loginDisableMinutes = 30;
                         Debug.logWarning("Could not parse login.disable.minutes from security.properties, using default of 30", MODULE);
                     }
@@ -299,7 +299,7 @@ public class LoginServices {
                             long maxFailedLogins = 3;
                             try {
                                 maxFailedLogins = Long.parseLong(mflStr);
-                            } catch (Exception e) {
+                            } catch (Exception _) {
                                 maxFailedLogins = 3;
                                 Debug.logWarning("Could not parse max.failed.logins from security.properties, using default of 3", MODULE);
                             }
@@ -624,7 +624,7 @@ public class LoginServices {
         String currentPassword = userLogin.getString("currentPassword");
         try {
             passwordChangeHistoryLimit = EntityUtilProperties.getPropertyAsInteger("security", "password.change.history.limit", 0);
-        } catch (NumberFormatException nfe) {
+        } catch (NumberFormatException _) {
             // No valid value is found so don't bother to save any password history
             passwordChangeHistoryLimit = 0;
         }
@@ -1131,7 +1131,7 @@ public class LoginServices {
         int passwordChangeHistoryLimit = 0;
         try {
             passwordChangeHistoryLimit = EntityUtilProperties.getPropertyAsInteger("security", "password.change.history.limit", 0);
-        } catch (NumberFormatException nfe) {
+        } catch (NumberFormatException _) {
             // No valid value is found so don't bother to save any password history
             passwordChangeHistoryLimit = 0;
         }
@@ -1160,7 +1160,7 @@ public class LoginServices {
 
         try {
             minPasswordLength = EntityUtilProperties.getPropertyAsInteger("security", "password.length.min", 0);
-        } catch (NumberFormatException nfe) {
+        } catch (NumberFormatException _) {
             minPasswordLength = 0;
         }
 

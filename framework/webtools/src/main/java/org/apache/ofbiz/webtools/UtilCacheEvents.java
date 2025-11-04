@@ -79,7 +79,7 @@ public final class UtilCacheEvents {
 
         try {
             number = Integer.parseInt(numString);
-        } catch (Exception e) {
+        } catch (Exception _) {
             return "error";
         }
 

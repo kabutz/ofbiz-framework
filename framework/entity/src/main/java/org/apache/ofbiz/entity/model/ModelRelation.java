@@ -222,9 +222,7 @@ public final class ModelRelation extends ModelChild {
         if (this == obj) {
             return true;
         }
-        if (obj instanceof ModelRelation) {
-            // REFACTOR: Pattern Matching for instanceof
-            ModelRelation that = (ModelRelation) obj;
+        if (obj instanceof ModelRelation that) {
             return this.fullName.equals(that.fullName);
         }
         return false;

@@ -87,7 +87,7 @@ public class RenderSubContentCacheTransform implements TemplateTransformModel {
         if (view != null) {
             try {
                 dataResourceId = (String) view.get("drDataResourceId");
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 dataResourceId = (String) view.get("dataResourceId");
             }
             subContentIdSub = (String) view.get("contentId");
@@ -98,7 +98,7 @@ public class RenderSubContentCacheTransform implements TemplateTransformModel {
         if (UtilValidate.isEmpty(subDataResourceTypeId) && view != null) {
             try {
                 subDataResourceTypeId = (String) view.get("drDataResourceTypeId");
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 // view may be "Content"
             }
             // TODO: If this value is still empty then it is probably necessary to get a value from
@@ -140,7 +140,7 @@ public class RenderSubContentCacheTransform implements TemplateTransformModel {
                 if (view != null) {
                     thisView = view;
                 } else if (!passedGlobalNodeTrail.isEmpty()) {
-                    Map<String, ? extends Object> map = UtilGenerics.cast(passedGlobalNodeTrail.get(passedGlobalNodeTrail.size() - 1));
+                    Map<String, ? extends Object> map = UtilGenerics.cast(passedGlobalNodeTrail.getLast());
                     if (Debug.infoOn()) {
                         Debug.logInfo("in Render(3), map ." + map, MODULE);
                     }

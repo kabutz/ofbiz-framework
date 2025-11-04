@@ -168,8 +168,7 @@ public final class EntityEcaCondition implements java.io.Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof EntityEcaCondition) {
-            EntityEcaCondition other = (EntityEcaCondition) obj;
+        if (obj instanceof EntityEcaCondition other) {
 
             if (!Objects.equals(this.conditionService, other.conditionService)) return false;
             if (!Objects.equals(this.lhsValueName, other.lhsValueName)) return false;

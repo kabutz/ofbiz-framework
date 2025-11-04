@@ -112,7 +112,7 @@ public class ModelTree extends ModelWidget {
         if (treeElement.hasAttribute("open-depth")) {
             try {
                 openDepth = Integer.parseInt(treeElement.getAttribute("open-depth"));
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
                 throw new IllegalArgumentException("Invalid open-depth attribute value for the tree definition with name: "
                         + getName());
             }
@@ -122,7 +122,7 @@ public class ModelTree extends ModelWidget {
         if (treeElement.hasAttribute("post-trail-open-depth")) {
             try {
                 postTrailOpenDepth = Integer.parseInt(treeElement.getAttribute("post-trail-open-depth"));
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
                 throw new IllegalArgumentException(
                         "Invalid post-trail-open-depth attribute value for the tree definition with name: " + getName());
             }
@@ -281,8 +281,8 @@ public class ModelTree extends ModelWidget {
                 throw new RuntimeException("Tree 'trail' value is empty.");
             }
             // REFACTOR: Use sequenced collection method instead
-            context.put("rootEntityId", trail.get(0));
-            context.put(getDefaultPkName(context), trail.get(0));
+            context.put("rootEntityId", trail.getFirst());
+            context.put(getDefaultPkName(context), trail.getFirst());
         } else {
             trail = new LinkedList<>();
         }
@@ -460,8 +460,8 @@ public class ModelTree extends ModelWidget {
                 List<ModelAction> subNodeActions = subNode.getActions();
                 AbstractModelAction.runSubActions(subNodeActions, context);
                 Iterator<? extends Map<String, ? extends Object>> dataIter = subNode.getListIterator(context);
-                if (dataIter instanceof EntityListIterator) {
-                    try (EntityListIterator eli = (EntityListIterator) dataIter) {
+                if (dataIter instanceof EntityListIterator eli) {
+                    try (eli) {
                         Map<String, Object> val = null;
                         while ((val = eli.next()) != null) {
                             Object[] arr = {node, val };
@@ -566,8 +566,8 @@ public class ModelTree extends ModelWidget {
             Object obj = null;
             if (!this.entryName.isEmpty()) {
                 Map<String, Object> map = UtilGenerics.cast(context.get(this.entryName));
-                if (map instanceof GenericValue) {
-                    ModelEntity modelEntity = ((GenericValue) map).getModelEntity();
+                if (map instanceof GenericValue value) {
+                    ModelEntity modelEntity = value.getModelEntity();
                     if (modelEntity.isField(countFieldName)) {
                         obj = map.get(countFieldName);
                     }

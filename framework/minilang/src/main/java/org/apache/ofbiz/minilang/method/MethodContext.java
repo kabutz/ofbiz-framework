@@ -74,7 +74,7 @@ public final class MethodContext {
         if (this.loader == null) {
             try {
                 this.loader = Thread.currentThread().getContextClassLoader();
-            } catch (SecurityException e) {
+            } catch (SecurityException _) {
                 this.loader = this.getClass().getClassLoader();
             }
         }
@@ -95,7 +95,7 @@ public final class MethodContext {
         if (this.loader == null) {
             try {
                 this.loader = Thread.currentThread().getContextClassLoader();
-            } catch (SecurityException e) {
+            } catch (SecurityException _) {
                 this.loader = this.getClass().getClassLoader();
             }
         }
@@ -146,7 +146,7 @@ public final class MethodContext {
         if (this.loader == null) {
             try {
                 this.loader = Thread.currentThread().getContextClassLoader();
-            } catch (SecurityException e) {
+            } catch (SecurityException _) {
                 this.loader = this.getClass().getClassLoader();
             }
         }

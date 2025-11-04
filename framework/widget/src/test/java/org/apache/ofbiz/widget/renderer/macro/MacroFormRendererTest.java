@@ -1013,15 +1013,15 @@ public class MacroFormRendererTest {
     private void assertMacroAttribute(final String macro, final String attributeName, final Object attributeValue) {
         if (attributeValue instanceof Number) {
             assertThat(macro, containsString(attributeName + "=" + attributeValue));
-        } else if (attributeValue instanceof List<?>) {
-            final String valueString = ((List<?>) attributeValue).stream()
+        } else if (attributeValue instanceof List<?> list) {
+            final String valueString = list.stream()
                     .map(Object::toString)
                     .collect(Collectors.joining(",", "[", "]"));
             assertThat(macro, containsString(attributeName + "=" + valueString));
         } else if (attributeValue instanceof Boolean) {
             assertThat(macro, containsString(attributeName + "=" + attributeValue));
-        } else if (attributeValue instanceof FreemarkerRawString) {
-            final String valueString = ((FreemarkerRawString) attributeValue).getRawString();
+        } else if (attributeValue instanceof FreemarkerRawString string) {
+            final String valueString = string.getRawString();
             assertThat(macro, containsString(attributeName + "=\"" + valueString + "\""));
         } else {
             assertThat(macro, containsString(attributeName + "=\"" + attributeValue + "\""));

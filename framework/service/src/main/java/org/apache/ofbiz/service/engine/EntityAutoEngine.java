@@ -234,9 +234,9 @@ public final class EntityAutoEngine extends GenericAsyncEngine {
             } else {
                 // pkValue passed in, check and if there are problems return an error
 
-                if (pkValue instanceof String) {
+                if (pkValue instanceof String string) {
                     StringBuffer errorDetails = new StringBuffer();
-                    if (!UtilValidate.isValidDatabaseId((String) pkValue, errorDetails)) {
+                    if (!UtilValidate.isValidDatabaseId(string, errorDetails)) {
                         return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE, "ServiceParameterValueNotValid",
                                 UtilMisc.toMap("parameterName", singlePkModelParam.getName(), "errorDetails", errorDetails), locale));
                     }
@@ -294,7 +294,7 @@ public final class EntityAutoEngine extends GenericAsyncEngine {
             if (pkFieldNameOutOnly != null && pkFieldNameOutOnly.size() == 1) {
                 newEntity.setPKFields(parameters, true);
                 // REFACTOR: Use sequenced collection method instead
-                String pkFieldName = pkFieldNameOutOnly.get(0);
+                String pkFieldName = pkFieldNameOutOnly.getFirst();
                 //if it's a fromDate, don't update it now, it's will be done next step
                 if (!"fromDate".equals(pkFieldName)) {
                     String pkValue = dctx.getDelegator().getNextSeqId(modelEntity.getEntityName());
@@ -631,7 +631,7 @@ public final class EntityAutoEngine extends GenericAsyncEngine {
                     Debug.logError("================== Not saved for security reason ==================", MODULE);
                     return false;
                 }
-            } catch (IOException e) {
+            } catch (IOException _) {
                 Debug.logError("================== Not saved for security reason ==================", MODULE);
                 return false;
             }

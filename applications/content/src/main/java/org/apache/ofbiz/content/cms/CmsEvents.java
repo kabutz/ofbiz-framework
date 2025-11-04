@@ -332,12 +332,10 @@ public final class CmsEvents {
                         }
 
                     } catch (IOException e) {
-                        throw new GeneralRuntimeException(String.format(
-                                "Error in the response writer/output stream while rendering content [%s] with path alias [%s]",
+                        throw new GeneralRuntimeException("Error in the response writer/output stream while rendering content [%s] with path alias [%s]".formatted(
                                 contentId, pathInfo), e);
                     } catch (GeneralException e) {
-                        throw new GeneralRuntimeException(String.format(
-                                "Error rendering content [%s] with path alias [%s]", contentId, pathInfo), e);
+                        throw new GeneralRuntimeException("Error rendering content [%s] with path alias [%s]".formatted(contentId, pathInfo), e);
                     }
 
                     return "success";

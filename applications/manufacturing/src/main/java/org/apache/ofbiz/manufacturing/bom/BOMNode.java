@@ -157,7 +157,7 @@ public class BOMNode {
                 BigDecimal ruleQuantity = BigDecimal.ZERO;
                 try {
                     ruleQuantity = rule.getBigDecimal("quantity");
-                } catch (Exception exc) {
+                } catch (Exception _) {
                     ruleQuantity = BigDecimal.ZERO;
                 }
 
@@ -210,7 +210,7 @@ public class BOMNode {
         oneChildNode.setProductAssoc(node);
         try {
             oneChildNode.setQuantityMultiplier(node.getBigDecimal("quantity"));
-        } catch (Exception nfe) {
+        } catch (Exception _) {
             oneChildNode.setQuantityMultiplier(BigDecimal.ONE);
         }
         try {
@@ -225,7 +225,7 @@ public class BOMNode {
                 percScrapFactor = BigDecimal.ONE;
             }
             oneChildNode.setScrapFactor(percScrapFactor);
-        } catch (Exception nfe) {
+        } catch (Exception _) {
             oneChildNode.setScrapFactor(BigDecimal.ONE);
         }
         BOMNode newNode = oneChildNode;
@@ -302,7 +302,7 @@ public class BOMNode {
                             }
                             List<GenericValue> variantProducts = UtilGenerics.cast(storeResult.get("products"));
                             if (variantProducts.size() == 1) {
-                                variantProduct = variantProducts.get(0);
+                                variantProduct = variantProducts.getFirst();
                             }
                         } catch (GenericServiceException e) {
                             Debug.logError("Error calling getProductVariant service " + e.getMessage(), MODULE);
@@ -407,7 +407,7 @@ public class BOMNode {
             BigDecimal bomQuantity = BigDecimal.ZERO;
             try {
                 bomQuantity = oneChild.getBigDecimal("quantity");
-            } catch (Exception exc) {
+            } catch (Exception _) {
                 bomQuantity = BigDecimal.ONE;
             }
             oneChildNode = childrenNodes.get(i);
@@ -436,7 +436,7 @@ public class BOMNode {
                 if (genericService != null && genericService.getString("customMethodName") != null) {
                     serviceName = genericService.getString("customMethodName");
                 }
-            } catch (Exception exc) {
+            } catch (Exception _) {
             }
         }
         if (serviceName != null) {
@@ -624,7 +624,7 @@ public class BOMNode {
                 }
                 productionRunId = (String) serviceResult.get("productionRunId");
                 endDate = (Timestamp) serviceResult.get("estimatedCompletionDate");
-            } catch (GenericServiceException e) {
+            } catch (GenericServiceException _) {
                 Debug.logError("Problem calling the createProductionRun service", MODULE);
             }
             try {
@@ -705,7 +705,7 @@ public class BOMNode {
                     }
                 }
             }
-        } catch (GenericEntityException gee) {
+        } catch (GenericEntityException _) {
             Debug.logError("Problem in BOMNode.isWarehouseManaged()", MODULE);
         }
         return isWarehouseManaged;
@@ -722,7 +722,7 @@ public class BOMNode {
         try {
             supplierProducts = product.getRelated("SupplierProduct", UtilMisc.toMap("supplierPrefOrderId", "10_MAIN_SUPPL"),
                     UtilMisc.toList("minimumOrderQuantity"), false);
-        } catch (GenericEntityException gee) {
+        } catch (GenericEntityException _) {
             Debug.logError("Problem in BOMNode.isManufactured()", MODULE);
         }
         supplierProducts = EntityUtil.filterByDate(supplierProducts, UtilDateTime.nowTimestamp(), "availableFromDate", "availableThruDate", true);

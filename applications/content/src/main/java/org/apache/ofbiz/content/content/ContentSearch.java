@@ -621,8 +621,7 @@ public class ContentSearch {
         public boolean equals(Object obj) {
             if (!(obj instanceof ContentSearchConstraint)) return false;
             ContentSearchConstraint psc = (ContentSearchConstraint) obj;
-            if (psc instanceof ContentAssocConstraint) {
-                ContentAssocConstraint that = (ContentAssocConstraint) psc;
+            if (psc instanceof ContentAssocConstraint that) {
                 if (this.includeSubContents != that.includeSubContents) {
                     return false;
                 }
@@ -757,10 +756,8 @@ public class ContentSearch {
 
         @Override
         public boolean equals(Object obj) {
-            if ((obj instanceof ContentSearchConstraint)) {
-                ContentSearchConstraint psc = (ContentSearchConstraint) obj;
-                if (psc instanceof KeywordConstraint) {
-                    KeywordConstraint that = (KeywordConstraint) psc;
+            if ((obj instanceof ContentSearchConstraint psc)) {
+                if (psc instanceof KeywordConstraint that) {
                     if (this.anyPrefix != that.anyPrefix
                             || this.anySuffix != that.anySuffix
                             || this.isAnd != that.isAnd
@@ -854,10 +851,8 @@ public class ContentSearch {
 
         @Override
         public boolean equals(Object obj) {
-            if (obj instanceof ContentSearchConstraint) {
-                ContentSearchConstraint psc = (ContentSearchConstraint) obj;
-                if (psc instanceof LastUpdatedRangeConstraint) {
-                    LastUpdatedRangeConstraint that = (LastUpdatedRangeConstraint) psc;
+            if (obj instanceof ContentSearchConstraint psc) {
+                if (psc instanceof LastUpdatedRangeConstraint that) {
                     if (this.fromDate == null) {
                         if (that.fromDate != null) {
                             return false;

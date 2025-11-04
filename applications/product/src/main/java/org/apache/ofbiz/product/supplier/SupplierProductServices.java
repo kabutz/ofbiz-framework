@@ -144,7 +144,7 @@ public class SupplierProductServices {
                     GenericValue supplierFeature = null;
 
                     if ((supplierFeatures != null) && (!supplierFeatures.isEmpty())) {
-                        supplierFeature = supplierFeatures.get(0);
+                        supplierFeature = supplierFeatures.getFirst();
                         if (supplierFeature.get("description") != null) {
                             nextFeature.put("description", supplierFeature.get("description"));
                         }

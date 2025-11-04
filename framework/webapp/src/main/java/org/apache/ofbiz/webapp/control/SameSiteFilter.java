@@ -51,11 +51,11 @@ public class SameSiteFilter implements jakarta.servlet.Filter {
         boolean firstHeader = true;
         for (String header : headers) { // there can be multiple Set-Cookie attributes
             if (firstHeader) {
-                response.setHeader(HttpHeaders.SET_COOKIE, String.format("%s; %s", header, "SameSite=" + SAME_SITE_COOKIE_ATTRIBUTE));
+                response.setHeader(HttpHeaders.SET_COOKIE, "%s; %s".formatted(header, "SameSite=" + SAME_SITE_COOKIE_ATTRIBUTE));
                 firstHeader = false;
                 continue;
             }
-            response.addHeader(HttpHeaders.SET_COOKIE, String.format("%s; %s", header, "SameSite=" + SAME_SITE_COOKIE_ATTRIBUTE));
+            response.addHeader(HttpHeaders.SET_COOKIE, "%s; %s".formatted(header, "SameSite=" + SAME_SITE_COOKIE_ATTRIBUTE));
         }
     }
 

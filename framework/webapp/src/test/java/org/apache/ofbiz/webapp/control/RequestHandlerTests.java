@@ -274,30 +274,30 @@ public class RequestHandlerTests {
         @Test
         // Check that the verification fails when the request does not contain any certificate.
         public void checkCertificatesFailure() {
-            assertFalse(RequestHandler.checkCertificates(req, x -> true));
+            assertFalse(RequestHandler.checkCertificates(req, _ -> true));
         }
 
         @Test
         // Check that certificates with 2.2 spec are handled correctly.
         public void checkCertificates22() {
             when(req.getAttribute("jakarta.servlet.request.X509Certificate")).thenReturn(new X509Certificate[] {});
-            assertTrue(RequestHandler.checkCertificates(req, x -> true));
-            assertFalse(RequestHandler.checkCertificates(req, x -> false));
+            assertTrue(RequestHandler.checkCertificates(req, _ -> true));
+            assertFalse(RequestHandler.checkCertificates(req, _ -> false));
         }
 
         @Test
         // Check that certificates with 2.1 spec are handled correctly.
         public void checkCertificates21() {
             when(req.getAttribute("javax.net.ssl.peer_certificates")).thenReturn(new X509Certificate[] {});
-            assertTrue(RequestHandler.checkCertificates(req, x -> true));
-            assertFalse(RequestHandler.checkCertificates(req, x -> false));
+            assertTrue(RequestHandler.checkCertificates(req, _ -> true));
+            assertFalse(RequestHandler.checkCertificates(req, _ -> false));
         }
 
         @Test
         // Check that certificates in an invalid attribute are ignored.
         public void checkCertificatesUnrecognized() {
             when(req.getAttribute("NOT_RECOGNIZED")).thenReturn(new X509Certificate[] {});
-            assertFalse(RequestHandler.checkCertificates(req, x -> true));
+            assertFalse(RequestHandler.checkCertificates(req, _ -> true));
         }
     }
 }

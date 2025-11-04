@@ -94,7 +94,7 @@ public class MapContext<K, V> implements Map<K, V>, LocalizedMap<V> {
         return contexts.stream()
                 .flatMap(ctx -> ctx.keySet().stream())
                 .distinct()
-                .mapToInt(k -> 1)
+                .mapToInt(_ -> 1)
                 .sum();
     }
 

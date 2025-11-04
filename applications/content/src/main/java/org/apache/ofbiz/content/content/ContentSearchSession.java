@@ -308,7 +308,7 @@ public class ContentSearchSession {
         // if the options have changed since the last search, add it to the beginning of the search options history
         if (contentSearchOptions.changed) {
             List<ContentSearchOptions> optionsHistoryList = ContentSearchSession.getSearchOptionsHistoryList(session);
-            optionsHistoryList.add(0, new ContentSearchOptions(contentSearchOptions));
+            optionsHistoryList.addFirst(new ContentSearchOptions(contentSearchOptions));
             contentSearchOptions.changed = false;
         }
     }

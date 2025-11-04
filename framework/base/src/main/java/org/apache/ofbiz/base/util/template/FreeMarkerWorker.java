@@ -159,7 +159,7 @@ public final class FreeMarkerWorker {
      */
     private static Stream<URL> transformsURL(ClassLoader loader) {
         return ComponentConfig.components()
-                .map(cc -> String.format(TRANSFORMS_PROPERTIES, cc.getComponentName()))
+                .map(cc -> TRANSFORMS_PROPERTIES.formatted(cc.getComponentName()))
                 .map(loader::getResource)
                 .filter(Objects::nonNull);
     }
@@ -215,7 +215,7 @@ public final class FreeMarkerWorker {
         CACHED_TEMPLATES.remove(templateLocation);
         try {
             DEFAULT_OFBIZ_CONFIG.removeTemplateFromCache(templateLocation);
-        } catch (Exception e) {
+        } catch (Exception _) {
             Debug.logInfo("Template not found in Fremarker cache with name: " + templateLocation, MODULE);
         }
     }
@@ -325,9 +325,7 @@ public final class FreeMarkerWorker {
             if (obj != null) {
                 if (obj == TemplateModel.NOTHING) {
                     obj = null;
-                } else if (obj instanceof BeanModel) {
-                    // REFACTOR: Pattern Matching for instanceof
-                    BeanModel bean = (BeanModel) obj;
+                } else if (obj instanceof BeanModel bean) {
                     obj = bean.getWrappedObject();
                 } else if (obj instanceof SimpleScalar) {
                     obj = obj.toString();
@@ -359,8 +357,8 @@ public final class FreeMarkerWorker {
                 return returnObj;
             }
             Map<String, ?> ctx = null;
-            if (ctxObj instanceof BeanModel) {
-                ctx = UtilGenerics.cast(((BeanModel) ctxObj).getWrappedObject());
+            if (ctxObj instanceof BeanModel model) {
+                ctx = UtilGenerics.cast(model.getWrappedObject());
                 returnObj = ctx.get(key);
             }
         }
@@ -375,8 +373,8 @@ public final class FreeMarkerWorker {
             returnObj = null;
         } else if (o instanceof SimpleScalar) {
             returnObj = o.toString();
-        } else if (o instanceof BeanModel) {
-            returnObj = ((BeanModel) o).getWrappedObject();
+        } else if (o instanceof BeanModel model) {
+            returnObj = model.getWrappedObject();
         } else {
             returnObj = null;
         }
@@ -520,7 +518,7 @@ public final class FreeMarkerWorker {
             URL locationUrl = null;
             try {
                 locationUrl = FlexibleLocation.resolveLocation(name);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 Debug.logWarning("Unable to locate the template: " + name, MODULE);
             }
             return locationUrl != null && new File(locationUrl.getFile()).exists() ? locationUrl : null;

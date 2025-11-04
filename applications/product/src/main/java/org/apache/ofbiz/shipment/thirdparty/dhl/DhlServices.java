@@ -220,7 +220,7 @@ public class DhlServices {
             if (tmpValue != null) {
                 try {
                     shippableWeight = new BigDecimal(tmpValue);
-                } catch (Exception e) {
+                } catch (Exception _) {
                     return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                             "FacilityShipmentDhlDefaultShippableWeightNotConfigured", locale));
                 }
@@ -639,7 +639,7 @@ public class DhlServices {
                     try {
                         packageWeight = EntityUtilProperties.getPropertyAsBigDecimal(SHIPMENT_PROPERTIES_FILE,
                                 "shipment.default.weight.value", BigDecimal.ZERO);
-                    } catch (NumberFormatException ne) {
+                    } catch (NumberFormatException _) {
                         Debug.logWarning("Default shippable weight not configured (shipment.default.weight.value)", MODULE);
                         packageWeight = BigDecimal.ONE;
                     }
@@ -789,7 +789,7 @@ public class DhlServices {
     // NOTE: Must VOID shipments on errors
     public static Map<String, Object> handleDhlShipmentConfirmResponse(String rateResponseString, GenericValue shipmentRouteSegment,
             List<GenericValue> shipmentPackageRouteSegs, Locale locale) throws GenericEntityException {
-        GenericValue shipmentPackageRouteSeg = shipmentPackageRouteSegs.get(0);
+        GenericValue shipmentPackageRouteSeg = shipmentPackageRouteSegs.getFirst();
 
         // TODO: figure out how to handle validation on return XML, which can be mangled
         // Ideas: try again right away, let user try again, etc.

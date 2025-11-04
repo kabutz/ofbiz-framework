@@ -46,7 +46,7 @@ class AdminClient {
         String status = null;
         try {
             status = sendSocketCommand(OfbizSocketCommand.STATUS, config);
-        } catch (ConnectException e) {
+        } catch (ConnectException _) {
             status = "Not Running";
         } catch (IOException e) {
             status = "IO Error when trying to connect to OFBiz: " + e.getMessage();
@@ -81,8 +81,8 @@ class AdminClient {
             writer.flush();
             // read the reply
             response = reader.readLine();
-        } catch (ConnectException e) {
-            System.out.println("Could not connect to " + config.getAdminAddress() + ":" + config.getAdminPort());
+        } catch (ConnectException _) {
+            IO.println("Could not connect to " + config.getAdminAddress() + ":" + config.getAdminPort());
         }
         return response;
     }

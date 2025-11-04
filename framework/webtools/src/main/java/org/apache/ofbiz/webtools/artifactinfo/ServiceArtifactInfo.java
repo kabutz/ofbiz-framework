@@ -667,8 +667,8 @@ public class ServiceArtifactInfo extends ArtifactInfoBase {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof ServiceArtifactInfo) {
-            return this.modelService.getName().equals(((ServiceArtifactInfo) obj).modelService.getName());
+        if (obj instanceof ServiceArtifactInfo info) {
+            return this.modelService.getName().equals(info.modelService.getName());
         } else {
             return false;
         }

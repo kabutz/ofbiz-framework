@@ -180,7 +180,7 @@ public class PaymentMethodServices {
         if (UtilValidate.isEmpty(newPmId)) {
             try {
                 newPmId = delegator.getNextSeqId("PaymentMethod");
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE,
                         "AccountingCreditCardCreateIdGenerationFailure", locale));
             }
@@ -350,7 +350,7 @@ public class PaymentMethodServices {
         String newPmId = null;
         try {
             newPmId = delegator.getNextSeqId("PaymentMethod");
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE,
                     "AccountingCreditCardUpdateIdGenerationFailure", locale));
 
@@ -518,7 +518,7 @@ public class PaymentMethodServices {
         if (UtilValidate.isEmpty(newPmId)) {
             try {
                 newPmId = delegator.getNextSeqId("PaymentMethod");
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                         "AccountingGiftCardCannotBeCreated", locale));
             }
@@ -629,7 +629,7 @@ public class PaymentMethodServices {
         String newPmId = null;
         try {
             newPmId = delegator.getNextSeqId("PaymentMethod");
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                     "AccountingGiftCardCannotBeCreated", locale));
         }
@@ -714,7 +714,7 @@ public class PaymentMethodServices {
         if (UtilValidate.isEmpty(newPmId)) {
             try {
                 newPmId = delegator.getNextSeqId("PaymentMethod");
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                         "AccountingEftAccountCannotBeCreated", locale));
             }
@@ -844,7 +844,7 @@ public class PaymentMethodServices {
         String newPmId = null;
         try {
             newPmId = delegator.getNextSeqId("PaymentMethod");
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                     "AccountingEftAccountCannotBeCreated", locale));
         }
@@ -953,7 +953,7 @@ public class PaymentMethodServices {
         if (UtilValidate.isEmpty(newPmId)) {
             try {
                 newPmId = delegator.getNextSeqId("PaymentMethod");
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR, "AccountingCheckNotAdded", locale));
             }
         }
@@ -1073,7 +1073,7 @@ public class PaymentMethodServices {
         String newPmId = null;
         try {
             newPmId = delegator.getNextSeqId("PaymentMethod");
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                     "AccountingCheckAccountCannotBeUpdated", locale));
         }

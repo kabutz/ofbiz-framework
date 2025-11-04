@@ -129,6 +129,7 @@ public class RefactoringTasks {
      * {@link HtmlWidgetRenderer#beginNamedBorder(String, String, String)}
      */
     public static void task3_switchExpressions() {
+        // Done some by OpenRewrite
     }
 
     /**
@@ -145,6 +146,7 @@ public class RefactoringTasks {
      * {@link UtilNumber#RULE_SET_TH_TH}
      */
     public static void task4_textBlocks() {
+        // Done by OpenRewrite
     }
 
     /**
@@ -190,6 +192,7 @@ public class RefactoringTasks {
      * {@link DebugManagedDataSource#getConnection()}
      */
     public static void task6_patternMatchingForInstanceof() {
+        // Done by OpenRewrite
     }
 
     /**
@@ -246,6 +249,7 @@ public class RefactoringTasks {
      * {@link UtilProperties.UtilResourceBundle#getBundle(String, Locale, ClassLoader)}
      */
     public static void task9_sequencedCollections() {
+        // Done by OpenRewrite
     }
 
     /**
@@ -292,6 +296,7 @@ public class RefactoringTasks {
      * {@link XmlSerializer#serializeSingle(Object, Document)}
      */
     public static void task12_unnamedVariablesPatterns() {
+        // Done by OpenRewrite
     }
 
     /**
@@ -338,6 +343,7 @@ public class RefactoringTasks {
      * {@link AdminServerContainer#run()}
      */
     public static void task15_compactSourceFiles() {
+        // Done by OpenRewrite
     }
 
     /**

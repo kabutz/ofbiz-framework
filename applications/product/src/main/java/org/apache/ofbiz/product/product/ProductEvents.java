@@ -249,7 +249,7 @@ public class ProductEvents {
             try {
                 fromDate = (Timestamp) ObjectType.simpleTypeOrObjectConvert(fromDateStr, "Timestamp", null, UtilHttp.getTimeZone(request),
                         UtilHttp.getLocale(request), false);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 errMsgList.add("From Date not formatted correctly.");
             }
         }
@@ -323,21 +323,21 @@ public class ProductEvents {
             try {
                 thruDate = (Timestamp) ObjectType.simpleTypeOrObjectConvert(thruDateStr, "Timestamp", null, UtilHttp.getTimeZone(request),
                         UtilHttp.getLocale(request), false);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 errMsgList.add(UtilProperties.getMessage(RESOURCE, "productevents.thru_date_not_formatted_correctly", UtilHttp.getLocale(request)));
             }
         }
         if (UtilValidate.isNotEmpty(quantityStr)) {
             try {
                 quantity = new BigDecimal(quantityStr);
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
                 errMsgList.add(UtilProperties.getMessage(RESOURCE, "productevents.quantity_not_formatted_correctly", UtilHttp.getLocale(request)));
             }
         }
         if (UtilValidate.isNotEmpty(sequenceNumStr)) {
             try {
                 sequenceNum = Long.valueOf(sequenceNumStr);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 errMsgList.add(UtilProperties.getMessage(RESOURCE, "productevents.sequenceNum_not_formatted_correctly", UtilHttp.getLocale(request)));
             }
         }
@@ -574,7 +574,7 @@ public class ProductEvents {
             List<GenericValue> existingProductFeatureList = EntityQuery.use(delegator).from("ProductFeature").where("productFeatureTypeId",
                     productFeatureTypeId, "numberSpecified", numberSpecified, "uomId", uomId).queryList();
             if (!existingProductFeatureList.isEmpty()) {
-                GenericValue existingProductFeature = existingProductFeatureList.get(0);
+                GenericValue existingProductFeature = existingProductFeatureList.getFirst();
                 productFeatureId = existingProductFeature.getString("productFeatureId");
             } else {
                 // doesn't exist, so create it
@@ -750,7 +750,7 @@ public class ProductEvents {
             List<GenericValue> existingProductFeatureList = EntityQuery.use(delegator).from("ProductFeature").where("productFeatureTypeId",
                     productFeatureTypeId, "description", description).queryList();
             if (!existingProductFeatureList.isEmpty()) {
-                GenericValue existingProductFeature = existingProductFeatureList.get(0);
+                GenericValue existingProductFeature = existingProductFeatureList.getFirst();
                 productFeatureId = existingProductFeature.getString("productFeatureId");
             } else {
                 // doesn't exist, so create it
@@ -888,7 +888,7 @@ public class ProductEvents {
                     "productId", productId).filterByDate().queryList();
             if (!prodCatMembs.isEmpty()) {
                 // there is one to modify
-                GenericValue prodCatMemb = prodCatMembs.get(0);
+                GenericValue prodCatMemb = prodCatMembs.getFirst();
                 prodCatMemb.setString("thruDate", thruDate);
                 prodCatMemb.store();
             }

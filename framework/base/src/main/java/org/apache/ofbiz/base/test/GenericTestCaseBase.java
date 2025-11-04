@@ -49,7 +49,7 @@ public abstract class GenericTestCaseBase extends TestCase {
             do {
                 dummy.add(new long[1048576]);
             } while (true);
-        } catch (OutOfMemoryError e) {
+        } catch (OutOfMemoryError _) {
             System.gc();
             Thread.sleep(100);
         }
@@ -76,7 +76,7 @@ public abstract class GenericTestCaseBase extends TestCase {
                                                              String thrownMessage) {
         try {
             assertEquals(label + ": future return", wanted, future.get());
-        } catch (InterruptedException e) {
+        } catch (InterruptedException _) {
             assertTrue(label + ": expected interruption", interruptable);
         } catch (ExecutionException e) {
             assertNotNull(label + ": expecting an exception", thrownClass);
@@ -346,23 +346,23 @@ public abstract class GenericTestCaseBase extends TestCase {
     }
 
     public static void assertEquals(String msg, Object wanted, Object got) {
-        if (wanted instanceof List) {
-            assertEquals(msg, (List<?>) wanted, got);
-        } else if (wanted instanceof Map) {
-            assertEquals(msg, (Map<?, ?>) wanted, got);
+        if (wanted instanceof List<?> list1) {
+            assertEquals(msg, list1, got);
+        } else if (wanted instanceof Map<?, ?> map) {
+            assertEquals(msg, map, got);
         } else if (wanted == null) {
             TestCase.assertEquals(msg, wanted, got);
-        } else if (wanted instanceof Set) {
-            assertEquals(msg, (Set<?>) wanted, got);
-        } else if (wanted instanceof Collection) {
-            assertEquals(msg, (Collection<?>) wanted, got);
+        } else if (wanted instanceof Set<?> set) {
+            assertEquals(msg, set, got);
+        } else if (wanted instanceof Collection<?> collection) {
+            assertEquals(msg, collection, got);
         } else if (wanted.getClass().isArray()) {
             if (got == null) {
                 TestCase.assertEquals(msg, wanted, got);
             } else if (got.getClass().isArray()) {
                 assertEqualsArrayArray(msg, wanted, got);
-            } else if (got instanceof List) {
-                assertEqualsArrayList(msg, wanted, (List<?>) got);
+            } else if (got instanceof List<?> list) {
+                assertEqualsArrayList(msg, wanted, list);
             } else {
                 TestCase.assertEquals(msg, wanted, got);
             }

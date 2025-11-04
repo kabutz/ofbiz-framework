@@ -108,7 +108,7 @@ public final class WebAppCache {
                         try {
                             key = Integer.valueOf(stringKey);
                             key = (key != null) && !acc.containsKey(key) ? key : emptyPosition.incrementAndGet();
-                        } catch (NumberFormatException e) {
+                        } catch (NumberFormatException _) {
                             key = emptyPosition.incrementAndGet();
                         }
                         acc.put(key, wInfo);

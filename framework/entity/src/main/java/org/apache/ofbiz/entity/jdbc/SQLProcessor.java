@@ -304,7 +304,7 @@ public class SQLProcessor implements AutoCloseable {
                     if (Debug.verboseOn()) {
                         Debug.logVerbose("SQLProcessor:setAutoCommit(false) : manualTx=" + manualTx, MODULE);
                     }
-                } catch (SQLException sqle) {
+                } catch (SQLException _) {
                     manualTx = false;
                 }
             }
@@ -817,7 +817,7 @@ public class SQLProcessor implements AutoCloseable {
             SQLProcessor.CONNECTION_TEST_LIST.add(con.toString());
             if (SQLProcessor.CONNECTION_TEST_LIST.size() > SQLProcessor.MAX_CONNECTIONS) {
                 // REFACTOR: Use sequenced collection method instead
-                SQLProcessor.CONNECTION_TEST_LIST.remove(0);
+                SQLProcessor.CONNECTION_TEST_LIST.removeFirst();
             }
         }
     }

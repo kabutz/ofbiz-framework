@@ -30,7 +30,7 @@ public final class MacroCallParameterStringValueStartsWithMatcher extends TypeSa
 
     @Override
     protected boolean matchesSafely(final Object item) {
-        return item != null && item instanceof String && ((String) item).startsWith(startsWith);
+        return item != null && item instanceof String s && s.startsWith(startsWith);
     }
 
     @Override

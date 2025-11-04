@@ -79,9 +79,9 @@ public class UspsServicesTests extends OFBizTestCase {
         List<String> trackingDetailList = UtilGenerics.cast(result.get("trackingDetailList"));
         assertEquals("trackingDetailList has 3 elements", 3, trackingDetailList.size());
 
-        Debug.logInfo("[testUspsTrackConfirm] trackingDetailList[0]: " + trackingDetailList.get(0), MODULE);
+        Debug.logInfo("[testUspsTrackConfirm] trackingDetailList[0]: " + trackingDetailList.getFirst(), MODULE);
         assertEquals("trackingDetailList element 0 is correct",
-                "May 30 11:07 am NOTICE LEFT WILMINGTON DE 19801.", trackingDetailList.get(0));
+                "May 30 11:07 am NOTICE LEFT WILMINGTON DE 19801.", trackingDetailList.getFirst());
 
         Debug.logInfo("[testUspsTrackConfirm] trackingDetailList[1]: " + trackingDetailList.get(1), MODULE);
         assertEquals("trackingDetailList element 0 is correct",

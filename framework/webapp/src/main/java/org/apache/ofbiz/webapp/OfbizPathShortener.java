@@ -135,13 +135,13 @@ public class OfbizPathShortener {
                         "createdDate", UtilDateTime.nowTimestamp(),
                         "createdByUserLogin", "system"));
                 TransactionUtil.commit();
-            } catch (GenericEntityException e) {
+            } catch (GenericEntityException _) {
                 TransactionUtil.rollback();
                 return false;
             } finally {
                 TransactionUtil.resume(trans);
             }
-        } catch (GenericTransactionException e) {
+        } catch (GenericTransactionException _) {
             return false;
         }
         return true;

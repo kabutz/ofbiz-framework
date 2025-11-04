@@ -73,7 +73,7 @@ public class FoPrintServerEvents {
                 try {
                     Writer out = resp.getWriter();
                     out.write(base64String);
-                } catch (IOException e) {
+                } catch (IOException _) {
                     try {
                         resp.sendError(500);
                     } catch (IOException e1) {

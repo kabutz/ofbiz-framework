@@ -143,7 +143,7 @@ public final class UtilHttp {
      * @return a canonicalized parameter map.
      */
     public static Map<String, Object> getParameterMap(HttpServletRequest request) {
-        return getParameterMap(request, x -> true);
+        return getParameterMap(request, _ -> true);
     }
 
     /**
@@ -189,7 +189,7 @@ public final class UtilHttp {
                 for (NameValuePair element : nameValuePairs) {
                     params.put(element.getName(), element.getValue());
                 }
-            } catch (UnsupportedEncodingException | URISyntaxException e) {
+            } catch (UnsupportedEncodingException | URISyntaxException _) {
                 Debug.logError("Can't handle encoded queryString " + requestURI, MODULE);
             }
         }
@@ -260,9 +260,9 @@ public final class UtilHttp {
                             Object mapValue = multiPartMap.get(fieldName);
                             if (mapValue instanceof List<?>) {
                                 UtilGenerics.checkCollection(mapValue, Object.class).add(item.getString());
-                            } else if (mapValue instanceof String) {
+                            } else if (mapValue instanceof String string) {
                                 List<String> newList = new LinkedList<>();
-                                newList.add((String) mapValue);
+                                newList.add(string);
                                 newList.add(item.getString());
                                 multiPartMap.put(fieldName, newList);
                             } else {
@@ -406,7 +406,7 @@ public final class UtilHttp {
 
         // Filter and canonicalize the parameter map.
         // REFACTOR: Use sequenced collection method instead
-        Function<List<String>, Object> canonicalize = val -> (val.size() == 1) ? val.get(0) : val;
+        Function<List<String>, Object> canonicalize = val -> (val.size() == 1) ? val.getFirst() : val;
         return allParams.entrySet().stream()
                 .filter(pair -> pred.test(pair.getKey()))
                 .collect(collectingAndThen(toMap(Map.Entry::getKey, canonicalize.compose(Map.Entry::getValue)),
@@ -416,7 +416,7 @@ public final class UtilHttp {
     public static Map<String, Object> getUrlOnlyParameterMap(HttpServletRequest request) {
         // NOTE: these have already been through canonicalizeParameterMap, so not doing it again here
         Map<String, Object> paramMap = getQueryStringOnlyParameterMap(request.getQueryString());
-        paramMap.putAll(getPathInfoOnlyParameterMap(request.getPathInfo(), x -> true));
+        paramMap.putAll(getPathInfoOnlyParameterMap(request.getPathInfo(), _ -> true));
         return paramMap;
     }
 
@@ -436,7 +436,7 @@ public final class UtilHttp {
                         } else if (UtilValidate.isUrlInString(s) && !s.isEmpty()) {
                             // if the string contains not only an URL => concatenate possible canonicalized before and after, w/o changing the URL
                             // REFACTOR: Use sequenced collection method instead
-                            String url = extractUrls(s).get(0); // There should be only 1 URL in a block, makes no sense else
+                            String url = extractUrls(s).getFirst(); // There should be only 1 URL in a block, makes no sense else
                             int start = s.indexOf(url);
                             String after = (String) s.subSequence(start + url.length(), s.length());
                             params = params + canonicalizeParameter((String) s.subSequence(0, start)) + url + canonicalizeParameter(after) + " ";
@@ -518,8 +518,8 @@ public final class UtilHttp {
             return val;
         } else if (val instanceof Map<?, ?>) {
             return parseJSONAttributeMap(UtilGenerics.cast(val));
-        } else if (val instanceof List<?>) {
-            return ((List<?>) val).stream().map(UtilHttp::parseJSONAttributeValue).collect(Collectors.toList());
+        } else if (val instanceof List<?> list) {
+            return list.stream().map(UtilHttp::parseJSONAttributeValue).collect(Collectors.toList());
         }
         return null;
     }
@@ -1098,8 +1098,8 @@ public final class UtilHttp {
 
                 String valueStr = null;
                 for (Object colValue : col) {
-                    if (colValue instanceof String) {
-                        valueStr = (String) colValue;
+                    if (colValue instanceof String string) {
+                        valueStr = string;
                     } else if (colValue == null) {
                         continue;
                     } else {
@@ -1679,7 +1679,7 @@ public final class UtilHttp {
             try {
                 rowCount = Integer.parseInt(maxRowIndex);
                 rowCount++; // row indexes are zero based
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
                 Debug.logWarning("Invalid value for row index found: " + maxRowIndex, MODULE);
             }
         }
@@ -1735,7 +1735,7 @@ public final class UtilHttp {
 
     private static void setContentDisposition(final HttpServletResponse response, final String filename) {
         String dispositionType = UtilProperties.getPropertyValue("requestHandler", "content-disposition-type", "attachment");
-        response.setHeader("Content-Disposition", String.format("%s; filename=\"%s\"", dispositionType, filename));
+        response.setHeader("Content-Disposition", "%s; filename=\"%s\"".formatted(dispositionType, filename));
     }
 
     public static CloseableHttpClient getAllowAllHttpClient() {
@@ -1759,7 +1759,7 @@ public final class UtilHttp {
             return httpClient;
         } catch (RuntimeException e) {
             throw e;
-        } catch (Exception e) {
+        } catch (Exception _) {
             return HttpClients.createDefault();
         }
     }

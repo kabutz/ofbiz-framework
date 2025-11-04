@@ -105,7 +105,7 @@ public class WebAppCacheTest {
 
         // Ensure that there is a collision between `wInfo0` and `wInfo1`
         // and only one of them are retrieved.
-        assertThat(wac.getAppBarWebInfos("foo").get(0), is(wInfo0));
+        assertThat(wac.getAppBarWebInfos("foo").getFirst(), is(wInfo0));
         assertThat(wac.getAppBarWebInfos("foo").get(1), is(wInfo1));
         assertThat(wac.getAppBarWebInfos("foo").get(2), is(wInfo2));
     }

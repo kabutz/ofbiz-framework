@@ -111,9 +111,7 @@ public final class LabelManagerFactory {
             Element resourceElem = resourceDocument.getDocumentElement();
             String labelKeyComment = "";
             for (Node propertyNode : UtilXml.childNodeList(resourceElem.getFirstChild())) {
-                if (propertyNode instanceof Element) {
-                    // REFACTOR: Pattern Matching for instanceof
-                    Element propertyElem = (Element) propertyNode;
+                if (propertyNode instanceof Element propertyElem) {
                     String labelKey = UtilCodec.canonicalize(propertyElem.getAttribute("key"));
                     if (onlyNotUsedLabels
                             && (labelKey.contains(".description.")
@@ -139,9 +137,7 @@ public final class LabelManagerFactory {
                     }
                     String labelComment = "";
                     for (Node valueNode : UtilXml.childNodeList(propertyElem.getFirstChild())) {
-                        if (valueNode instanceof Element) {
-                            // REFACTOR: Pattern Matching for instanceof
-                            Element valueElem = (Element) valueNode;
+                        if (valueNode instanceof Element valueElem) {
                             // No longer supporting old way of specifying xml:lang value.
                             // Old way: en_AU, new way: en-AU
                             String localeName = valueElem.getAttribute("xml:lang");

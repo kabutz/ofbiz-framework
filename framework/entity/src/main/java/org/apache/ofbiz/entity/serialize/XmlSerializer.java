@@ -153,8 +153,8 @@ public class XmlSerializer {
             return makeElement("std-Boolean", object, document);
         } else if (object instanceof Locale) {
             return makeElement("std-Locale", object, document);
-        } else if (object instanceof BigDecimal) {
-            String stringValue = ((BigDecimal) object).setScale(10, RoundingMode.HALF_UP).toString();
+        } else if (object instanceof BigDecimal decimal) {
+            String stringValue = decimal.setScale(10, RoundingMode.HALF_UP).toString();
             return makeElement("std-BigDecimal", stringValue, document);
             // - SQL Objects -
         } else if (object instanceof java.sql.Timestamp) {
@@ -164,13 +164,13 @@ public class XmlSerializer {
             return makeElement("sql-Date", object, document);
         } else if (object instanceof java.sql.Time) {
             return makeElement("sql-Time", object, document);
-        } else if (object instanceof java.util.Date) {
+        } else if (object instanceof java.util.Date date) {
             // NOTE: make sure this is AFTER the java.sql date/time objects since they inherit from java.util.Date
             DateFormat formatter = getDateFormat();
             String stringValue = null;
 
             synchronized (formatter) {
-                stringValue = formatter.format((java.util.Date) object);
+                stringValue = formatter.format(date);
             }
             return makeElement("std-Date", stringValue, document);
             // return makeElement("std-Date", object, document);
@@ -204,13 +204,10 @@ public class XmlSerializer {
                 element.appendChild(serializeSingle(iter.next(), document));
             }
             return element;
-        } else if (object instanceof GenericPK) {
-            // Do GenericEntity objects as a special case, use std XML import/export routines
-            GenericPK value = (GenericPK) object;
+        } else if (object instanceof GenericPK value) {
 
             return value.makeXmlElement(document, "eepk-");
-        } else if (object instanceof GenericValue) {
-            GenericValue value = (GenericValue) object;
+        } else if (object instanceof GenericValue value) {
 
             return value.makeXmlElement(document, "eeval-");
         } else if (object instanceof Map<?, ?>) {
@@ -348,7 +345,7 @@ public class XmlSerializer {
                 try {
                     Calendar cal = DatatypeConverter.parseDate(valStr);
                     return new java.sql.Timestamp(cal.getTimeInMillis());
-                } catch (Exception e) {
+                } catch (Exception _) {
                     Debug.logWarning("sql-Timestamp does not conform to XML Schema definition, try java.sql.Timestamp format", MODULE);
                     return java.sql.Timestamp.valueOf(valStr);
                 }

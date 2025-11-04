@@ -177,7 +177,7 @@ public class ShipmentServices {
                         if (context.containsKey(prefix + "uom")) {
                             estimate.set(breakType + "UomId", context.get(prefix + "uom"));
                         }
-                        storeAll.add(0, quantityBreak);
+                        storeAll.addFirst(quantityBreak);
                     } catch (Exception e) {
                         Debug.logError(e, MODULE);
                     }
@@ -321,7 +321,7 @@ public class ShipmentServices {
             // locate the highest priority estimate; or the latest entered
             estimate = estimatePriority.descendingMap().pollFirstEntry().getValue();
         } else {
-            estimate = estimateList.get(0);
+            estimate = estimateList.getFirst();
         }
 
         // flat fees

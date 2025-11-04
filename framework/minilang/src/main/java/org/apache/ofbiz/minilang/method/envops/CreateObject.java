@@ -64,7 +64,7 @@ public final class CreateObject extends MethodOperation {
         Class<?> targetClass = null;
         try {
             targetClass = ObjectType.loadClass(this.className);
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException _) {
             MiniLangValidate.handleError("Class not found with name " + this.className, simpleMethod, element);
         }
         this.targetClass = targetClass;

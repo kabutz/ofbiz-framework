@@ -52,8 +52,8 @@ public class Copy extends SimpleMapOperation {
         if (fieldValue == null && !setIfNull) {
             return;
         }
-        if (fieldValue instanceof java.lang.String) {
-            if (((String) fieldValue).isEmpty()) {
+        if (fieldValue instanceof String string) {
+            if (string.isEmpty()) {
                 if (setIfNull && (replace || !results.containsKey(toField))) {
                     results.put(toField, null);
                 }

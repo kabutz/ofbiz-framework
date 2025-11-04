@@ -35,7 +35,6 @@ import org.apache.ofbiz.widget.renderer.macro.renderable.RenderableFtlVisitor;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.io.StringReader;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
@@ -80,7 +79,7 @@ public final class FtlWriter {
             environment.setVariable("visualTheme", FreeMarkerWorker.autoWrap(visualTheme, environment));
             environment.setVariable("modelTheme",
                     FreeMarkerWorker.autoWrap(visualTheme.getModelTheme(), environment));
-            Reader templateReader = new StringReader(ftlString);
+            Reader templateReader = Reader.of(ftlString);
             Template template = new Template(UUID.randomUUID().toString(), templateReader,
                     FreeMarkerWorker.getDefaultOfbizConfig());
             templateReader.close();
@@ -131,7 +130,7 @@ public final class FtlWriter {
                 environment.setVariable("$args$" + name,
                         defaultObjectWrapper.wrap(renderableFtlMacroCall.getParameters()));
 
-                processFtlString(writer, null, String.format("<@%s?with_args($args$%s)/>", name, name));
+                processFtlString(writer, null, "<@%s?with_args($args$%s)/>".formatted(name, name));
             } catch (TemplateException | IOException e) {
                 Debug.logError(e, "Error rendering ftl macro: " + name, MODULE);
             }

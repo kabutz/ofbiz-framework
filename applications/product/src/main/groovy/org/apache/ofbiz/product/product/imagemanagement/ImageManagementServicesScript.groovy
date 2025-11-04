@@ -209,7 +209,7 @@ Map removeProductContentForImageManagement() {
     Map serviceResult = [:]
     List contentRoles = from('ContentRole').where(contentId: parameters.contentId).queryList()
     if (contentRoles) {
-        contentRoles.get(0).remove()
+        contentRoles.getFirst.remove()
     }
     List contentApprovals = from('ContentApproval').where(contentId: parameters.contentId, roleTypeId: 'IMAGEAPPROVER').queryList()
     for (GenericValue contentApproval : contentApprovals) {
@@ -229,7 +229,7 @@ Map removeProductContentForImageManagement() {
     String dataResourceId = content.dataResourceId
     List dataResourceRoles = from('DataResourceRole').where(dataResourceId: dataResourceId).queryList()
     if (dataResourceRoles) {
-        dataResourceRoles.get(0).remove()
+        dataResourceRoles.getFirst.remove()
     }
     GenericValue dataResource = from('DataResource').where(dataResourceId: dataResourceId).queryOne()
     Map removeImageFile = [productId: parameters.productId, contentId: parameters.contentId, objectInfo: dataResource.objectInfo,
@@ -283,7 +283,7 @@ Map updateStatusImageManagement() {
     String checkStatusVal = parameters.checkStatusId
     List statusId = StringUtil.split(checkStatusVal, '/')
     if (statusId) {
-        parameters.checkStatusId = statusId.get(0)
+        parameters.checkStatusId = statusId.getFirst
     }
     String autoApproveImage = UtilProperties.getPropertyValue('catalog.properties', 'image.management.autoApproveImage')
     String multipleApproval = UtilProperties.getPropertyValue('catalog.properties', 'image.management.multipleApproval')

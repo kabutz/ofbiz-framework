@@ -96,8 +96,8 @@ public class EntityArtifactInfo extends ArtifactInfoBase {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof EntityArtifactInfo) {
-            return this.modelEntity.getEntityName().equals(((EntityArtifactInfo) obj).modelEntity.getEntityName());
+        if (obj instanceof EntityArtifactInfo info) {
+            return this.modelEntity.getEntityName().equals(info.modelEntity.getEntityName());
         } else {
             return false;
         }

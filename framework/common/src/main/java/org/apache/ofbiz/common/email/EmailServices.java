@@ -284,15 +284,15 @@ public class EmailServices {
                     Object bodyPartContent = bodyPart.get("content");
                     MimeBodyPart mbp = new MimeBodyPart();
 
-                    if (bodyPartContent instanceof String) {
+                    if (bodyPartContent instanceof String string) {
                         Debug.logInfo("part of type: " + bodyPart.get("type") + " and size: " + bodyPart.get("content").toString().length(), MODULE);
-                        mbp.setText((String) bodyPartContent, "UTF-8", ((String) bodyPart.get("type")).substring(5));
-                    } else if (bodyPartContent instanceof byte[]) {
-                        ByteArrayDataSource bads = new ByteArrayDataSource((byte[]) bodyPartContent, (String) bodyPart.get("type"));
-                        Debug.logInfo("part of type: " + bodyPart.get("type") + " and size: " + ((byte[]) bodyPartContent).length, MODULE);
+                        mbp.setText(string, "UTF-8", ((String) bodyPart.get("type")).substring(5));
+                    } else if (bodyPartContent instanceof byte[] bytes) {
+                        ByteArrayDataSource bads = new ByteArrayDataSource(bytes, (String) bodyPart.get("type"));
+                        Debug.logInfo("part of type: " + bodyPart.get("type") + " and size: " + bytes.length, MODULE);
                         mbp.setDataHandler(new DataHandler(bads));
-                    } else if (bodyPartContent instanceof DataHandler) {
-                        mbp.setDataHandler((DataHandler) bodyPartContent);
+                    } else if (bodyPartContent instanceof DataHandler handler) {
+                        mbp.setDataHandler(handler);
                     } else {
                         mbp.setDataHandler(new DataHandler(bodyPartContent, (String) bodyPart.get("type")));
                     }
@@ -354,9 +354,7 @@ public class EmailServices {
             List<SMTPAddressFailedException> failedAddresses = new LinkedList<>();
             Exception nestedException = null;
             while ((nestedException = e.getNextException()) != null && nestedException instanceof MessagingException) {
-                if (nestedException instanceof SMTPAddressFailedException) {
-                    // REFACTOR: Pattern Matching for instanceof
-                    SMTPAddressFailedException safe = (SMTPAddressFailedException) nestedException;
+                if (nestedException instanceof SMTPAddressFailedException safe) {
                     Debug.logError("Failed to send message to [" + safe.getAddress() + "], return code [" + safe.getReturnCode()
                             + "], return message [" + safe.getMessage() + "]", MODULE);
                     failedAddresses.add(safe);

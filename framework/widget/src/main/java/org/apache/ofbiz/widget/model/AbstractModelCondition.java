@@ -259,7 +259,7 @@ public abstract class AbstractModelCondition implements Serializable, ModelCondi
             Boolean resultBool = BaseCompare.doRealCompare(fieldVal, value, operator, type, format, messages, null, null, true);
             if (!messages.isEmpty()) {
                 // REFACTOR: Use sequenced collection method instead
-                messages.add(0, "Error with comparison in if-compare between field [" + fieldAcsr.toString() + "] with value ["
+                messages.addFirst("Error with comparison in if-compare between field [" + fieldAcsr.toString() + "] with value ["
                         + fieldVal + "] and value [" + value + "] with operator [" + operator + "] and type [" + type + "]: ");
 
                 StringBuilder fullString = new StringBuilder();
@@ -340,7 +340,7 @@ public abstract class AbstractModelCondition implements Serializable, ModelCondi
                     false);
             if (!messages.isEmpty()) {
                 // REFACTOR: Use sequenced collection method instead
-                messages.add(0, "Error with comparison in if-compare-field between field [" + fieldAcsr.toString()
+                messages.addFirst("Error with comparison in if-compare-field between field [" + fieldAcsr.toString()
                         + "] with value [" + fieldVal + "] and to-field [" + toFieldAcsr.toString() + "] with value ["
                         + toFieldVal + "] with operator [" + operator + "] and type [" + type + "]: ");
 
@@ -695,14 +695,14 @@ public abstract class AbstractModelCondition implements Serializable, ModelCondi
             Class<?> valClass;
             try {
                 valClass = ObjectType.loadClass(className);
-            } catch (ClassNotFoundException cnfe) {
+            } catch (ClassNotFoundException _) {
                 Debug.logError("Could not find validation class: " + className, MODULE);
                 return false;
             }
             Method valMethod;
             try {
                 valMethod = valClass.getMethod(methodName, paramTypes);
-            } catch (NoSuchMethodException cnfe) {
+            } catch (NoSuchMethodException _) {
                 Debug.logError("Could not find validation method: " + methodName + " of class " + className, MODULE);
                 return false;
             }

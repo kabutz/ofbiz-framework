@@ -62,7 +62,7 @@ public class TaskEvents {
 
         try {
             fromDate = (java.sql.Timestamp) ObjectType.simpleTypeOrObjectConvert(fromDateStr, "java.sql.Timestamp", null, null);
-        } catch (GeneralException e) {
+        } catch (GeneralException _) {
             request.setAttribute("_ERROR_MESSAGE_", UtilProperties.getMessage(RES_ERROR, "OrderInvalidDateFormatForFromDate", locale));
             return "error";
         }
@@ -78,7 +78,7 @@ public class TaskEvents {
                 Debug.logError(errorMessage, MODULE);
                 return "error";
             }
-        } catch (GenericServiceException e) {
+        } catch (GenericServiceException _) {
             request.setAttribute("_ERROR_MESSAGE_", UtilProperties.getMessage(RES_ERROR,
                     "OrderProblemsInvokingTheCompleteAssignmentService", locale));
             return "error";

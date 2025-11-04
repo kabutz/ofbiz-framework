@@ -366,7 +366,7 @@ public class ProductSearchSession {
         // if the options have changed since the last search, add it to the beginning of the search options history
         if (productSearchOptions.changed) {
             List<ProductSearchOptions> optionsHistoryList = getSearchOptionsHistoryList(session);
-            optionsHistoryList.add(0, new ProductSearchOptions(productSearchOptions));
+            optionsHistoryList.addFirst(new ProductSearchOptions(productSearchOptions));
             productSearchOptions.changed = false;
         }
     }
@@ -442,8 +442,7 @@ public class ProductSearchSession {
             List<ProductSearchConstraint> constraintList = ProductSearchOptions.getConstraintList(session);
             if (constraintList != null) {
                 for (ProductSearchConstraint constraint: constraintList) {
-                    if (constraint instanceof KeywordConstraint) {
-                        KeywordConstraint keywordConstraint = (KeywordConstraint) constraint;
+                    if (constraint instanceof KeywordConstraint keywordConstraint) {
                         Set<String> keywordSet = keywordConstraint.makeFullKeywordSet(delegator);
                         if (keywordSet != null) {
                             keywords.addAll(keywordSet);
@@ -1093,8 +1092,7 @@ public class ProductSearchSession {
         int keywordsCount = 0;
         boolean isNotFirst = false;
         for (ProductSearchConstraint psc: constraintList) {
-            if (psc instanceof ProductSearch.CategoryConstraint) {
-                ProductSearch.CategoryConstraint cc = (ProductSearch.CategoryConstraint) psc;
+            if (psc instanceof ProductSearch.CategoryConstraint cc) {
                 categoriesCount++;
                 if (isNotFirst) {
                     searchParamString.append("&amp;");
@@ -1115,8 +1113,7 @@ public class ProductSearchSession {
                     searchParamString.append("=");
                     searchParamString.append(cc.getExclude() ? "Y" : "N");
                 }
-            } else if (psc instanceof ProductSearch.FeatureConstraint) {
-                ProductSearch.FeatureConstraint fc = (ProductSearch.FeatureConstraint) psc;
+            } else if (psc instanceof ProductSearch.FeatureConstraint fc) {
                 featuresCount++;
                 if (isNotFirst) {
                     searchParamString.append("&amp;");
@@ -1133,8 +1130,7 @@ public class ProductSearchSession {
                     searchParamString.append("=");
                     searchParamString.append(fc.getExclude() ? "Y" : "N");
                 }
-            } else if (psc instanceof ProductSearch.FeatureCategoryConstraint) {
-                ProductSearch.FeatureCategoryConstraint pfcc = (ProductSearch.FeatureCategoryConstraint) psc;
+            } else if (psc instanceof ProductSearch.FeatureCategoryConstraint pfcc) {
                 featureCategoriesCount++;
                 if (isNotFirst) {
                     searchParamString.append("&amp;");
@@ -1151,8 +1147,7 @@ public class ProductSearchSession {
                     searchParamString.append("=");
                     searchParamString.append(pfcc.getExclude() ? "Y" : "N");
                 }
-            } else if (psc instanceof ProductSearch.FeatureGroupConstraint) {
-                ProductSearch.FeatureGroupConstraint pfgc = (ProductSearch.FeatureGroupConstraint) psc;
+            } else if (psc instanceof ProductSearch.FeatureGroupConstraint pfgc) {
                 featureGroupsCount++;
                 if (isNotFirst) {
                     searchParamString.append("&amp;");
@@ -1169,8 +1164,7 @@ public class ProductSearchSession {
                     searchParamString.append("=");
                     searchParamString.append(pfgc.getExclude() ? "Y" : "N");
                 }
-            } else if (psc instanceof ProductSearch.KeywordConstraint) {
-                ProductSearch.KeywordConstraint kc = (ProductSearch.KeywordConstraint) psc;
+            } else if (psc instanceof ProductSearch.KeywordConstraint kc) {
                 keywordsCount++;
                 if (isNotFirst) {
                     searchParamString.append("&amp;");
@@ -1189,8 +1183,7 @@ public class ProductSearchSession {
                 searchParamString.append(keywordsCount);
                 searchParamString.append("=");
                 searchParamString.append(kc.isAnyPrefix() || kc.isAnySuffix() ? "Y" : "N");
-            } else if (psc instanceof ProductSearch.ListPriceRangeConstraint) {
-                ProductSearch.ListPriceRangeConstraint lprc = (ProductSearch.ListPriceRangeConstraint) psc;
+            } else if (psc instanceof ProductSearch.ListPriceRangeConstraint lprc) {
                 if (lprc.getLowPrice() != null || lprc.getHighPrice() != null) {
                     if (isNotFirst) {
                         searchParamString.append("&amp;");
@@ -1207,8 +1200,7 @@ public class ProductSearchSession {
                         searchParamString.append(lprc.getHighPrice());
                     }
                 }
-            } else if (psc instanceof ProductSearch.SupplierConstraint) {
-                ProductSearch.SupplierConstraint suppc = (ProductSearch.SupplierConstraint) psc;
+            } else if (psc instanceof ProductSearch.SupplierConstraint suppc) {
                 if (suppc.getSupplierPartyId() != null) {
                     if (isNotFirst) {
                         searchParamString.append("&amp;");
@@ -1231,16 +1223,13 @@ public class ProductSearchSession {
         ResultSortOrder resultSortOrder = productSearchOptions.getResultSortOrder();
         if (resultSortOrder instanceof ProductSearch.SortKeywordRelevancy) {
             searchParamString.append("&amp;S_O=SKR");
-        } else if (resultSortOrder instanceof ProductSearch.SortProductField) {
-            ProductSearch.SortProductField spf = (ProductSearch.SortProductField) resultSortOrder;
+        } else if (resultSortOrder instanceof ProductSearch.SortProductField spf) {
             searchParamString.append("&amp;S_O=SPF:");
             searchParamString.append(spf.getFieldName());
-        } else if (resultSortOrder instanceof ProductSearch.SortProductPrice) {
-            ProductSearch.SortProductPrice spp = (ProductSearch.SortProductPrice) resultSortOrder;
+        } else if (resultSortOrder instanceof ProductSearch.SortProductPrice spp) {
             searchParamString.append("&amp;S_O=SPP:");
             searchParamString.append(spp.getProductPriceTypeId());
-        } else if (resultSortOrder instanceof ProductSearch.SortProductFeature) {
-            ProductSearch.SortProductFeature spf = (ProductSearch.SortProductFeature) resultSortOrder;
+        } else if (resultSortOrder instanceof ProductSearch.SortProductFeature spf) {
             searchParamString.append("&amp;S_O=SPFT:");
             searchParamString.append(spf.getProductFeatureTypeId());
         }

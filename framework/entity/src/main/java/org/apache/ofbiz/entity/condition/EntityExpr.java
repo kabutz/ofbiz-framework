@@ -76,7 +76,7 @@ public final class EntityExpr implements EntityCondition {
             throw new IllegalArgumentException(msg);
         }
 
-        this.lhs = (lhs instanceof String) ? EntityFieldValue.makeFieldValue((String) lhs) : lhs;
+        this.lhs = (lhs instanceof String s) ? EntityFieldValue.makeFieldValue(s) : lhs;
         this.operator = UtilGenerics.cast(operator);
         this.rhs = rhs;
     }
@@ -149,9 +149,9 @@ public final class EntityExpr implements EntityCondition {
 
     @Override
     public void checkCondition(ModelEntity modelEntity) throws GenericModelException {
-        if (lhs instanceof EntityCondition) {
+        if (lhs instanceof EntityCondition condition) {
             // CHECKSTYLE_OFF: ALMOST_ALL
-            ((EntityCondition) lhs).checkCondition(modelEntity);
+            condition.checkCondition(modelEntity);
             ((EntityCondition) rhs).checkCondition(modelEntity);
             // CHECKSTYLE_ON: ALMOST_ALL
         }
@@ -200,8 +200,7 @@ public final class EntityExpr implements EntityCondition {
 
         String fieldName = null;
         ModelField curField;
-        if (lhs instanceof EntityFieldValue) {
-            EntityFieldValue efv = (EntityFieldValue) lhs;
+        if (lhs instanceof EntityFieldValue efv) {
             fieldName = efv.getFieldName();
             curField = efv.getModelField(modelEntity);
         } else {
@@ -226,12 +225,12 @@ public final class EntityExpr implements EntityCondition {
                     + " probably because there is no datasource (helper) setup for the entity group"
                     + " that this entity is in: [" + deleg.getEntityGroupName(entityName) + "]");
         }
-        if (value instanceof EntityConditionSubSelect) {
+        if (value instanceof EntityConditionSubSelect select) {
             ModelFieldType valueType = null;
             try {
-                ModelEntity valueModelEntity = ((EntityConditionSubSelect) value).getModelEntity();
+                ModelEntity valueModelEntity = select.getModelEntity();
                 valueType = deleg.getEntityFieldType(valueModelEntity,
-                        valueModelEntity.getField(((EntityConditionSubSelect) value).getKeyFieldName()).getType());
+                        valueModelEntity.getField(select.getKeyFieldName()).getType());
             } catch (GenericEntityException e) {
                 Debug.logWarning(e, MODULE);
             }
@@ -265,7 +264,7 @@ public final class EntityExpr implements EntityCondition {
                         MODULE);
             }
         } else if (value instanceof EntityFieldValue) {
-            EntityFieldValue efv = (EntityFieldValue) lhs;
+            efv = (EntityFieldValue) lhs;
             String rhsFieldName = efv.getFieldName();
             ModelField rhsField = efv.getModelField(modelEntity);
             if (rhsField == null) {

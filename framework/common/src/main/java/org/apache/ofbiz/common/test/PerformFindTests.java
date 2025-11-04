@@ -50,7 +50,7 @@ public class PerformFindTests extends OFBizTestCase {
             if (listIt != null) {
                 foundElements = listIt.getCompleteList();
             }
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             Debug.logError(" Failed to extract values from EntityListIterator after a performFind service", MODULE);
         }
         return foundElements;

@@ -118,7 +118,7 @@ public class SimpleContentViewHandler extends AbstractViewHandler {
                         if (UtilValidate.isNotEmpty(fromDateStr)) {
                             try {
                                 fromDate = UtilDateTime.stringToTimeStamp(fromDateStr, null, locale);
-                            } catch (ParseException e) {
+                            } catch (ParseException _) {
                                 fromDate = UtilDateTime.nowTimestamp();
                             }
                         }

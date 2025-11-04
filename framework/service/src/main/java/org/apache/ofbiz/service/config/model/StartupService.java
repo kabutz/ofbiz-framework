@@ -47,7 +47,7 @@ public final class StartupService {
         } else {
             try {
                 this.runtimeDelay = Integer.parseInt(runtimeDelay);
-            } catch (Exception e) {
+            } catch (Exception _) {
                 throw new ServiceConfigException("<startup-service> element runtime-delay attribute value is invalid");
             }
         }

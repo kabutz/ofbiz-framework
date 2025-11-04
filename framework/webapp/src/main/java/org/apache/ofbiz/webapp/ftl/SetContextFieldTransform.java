@@ -43,7 +43,7 @@ public class SetContextFieldTransform implements TemplateMethodModelEx {
         if (args == null || args.size() != 2) {
             throw new TemplateModelException("Invalid number of arguements");
         }
-        if (!(args.get(0) instanceof TemplateScalarModel)) {
+        if (!(args.getFirst() instanceof TemplateScalarModel)) {
             throw new TemplateModelException("First argument not an instance of TemplateScalarModel");
         }
         if (!(args.get(1) instanceof BeanModel) && !(args.get(1) instanceof TemplateNumberModel) && !(args.get(1) instanceof TemplateScalarModel)) {
@@ -54,7 +54,7 @@ public class SetContextFieldTransform implements TemplateMethodModelEx {
         BeanModel req = (BeanModel) env.getVariable("context");
         Map<String, Object> context = UtilGenerics.cast(req.getWrappedObject());
 
-        String name = ((TemplateScalarModel) args.get(0)).getAsString();
+        String name = ((TemplateScalarModel) args.getFirst()).getAsString();
         Object value = null;
         if (args.get(1) instanceof TemplateScalarModel) {
             value = ((TemplateScalarModel) args.get(1)).getAsString();

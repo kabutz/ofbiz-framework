@@ -156,7 +156,7 @@ public class CategoryServices {
             previous = productCategoryMembers.get(index - 1).getString("productId");
             result.put("previousProductId", previous);
         } else {
-            previous = productCategoryMembers.get(productCategoryMembers.size() - 1).getString("productId");
+            previous = productCategoryMembers.getLast().getString("productId");
             result.put("previousProductId", previous);
         }
 
@@ -164,7 +164,7 @@ public class CategoryServices {
             next = productCategoryMembers.get(index + 1).getString("productId");
             result.put("nextProductId", next);
         } else {
-            next = productCategoryMembers.get(0).getString("productId");
+            next = productCategoryMembers.getFirst().getString("productId");
             result.put("nextProductId", next);
         }
         return result;
@@ -250,7 +250,7 @@ public class CategoryServices {
         if (context.containsKey("viewIndexString")) {
             try {
                 viewIndex = Integer.parseInt((String) context.get("viewIndexString"));
-            } catch (Exception e) {
+            } catch (Exception _) {
                 viewIndex = 0;
             }
         }

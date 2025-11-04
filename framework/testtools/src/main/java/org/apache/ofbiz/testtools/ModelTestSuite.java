@@ -183,20 +183,20 @@ public class ModelTestSuite {
     }
 
     private void prepareTest(Test test) {
-        if (test instanceof TestSuite) {
-            Enumeration<Test> subTests = UtilGenerics.cast(((TestSuite) test).tests());
+        if (test instanceof TestSuite suite) {
+            Enumeration<Test> subTests = UtilGenerics.cast(suite.tests());
             while (subTests.hasMoreElements()) {
                 prepareTest(subTests.nextElement());
             }
-        } else if (test instanceof EntityTestCase) {
+        } else if (test instanceof EntityTestCase case2) {
             // CHECKSTYLE_OFF: ALMOST_ALL
-            ((EntityTestCase) test).setDelegator(delegator);
-            if (test instanceof OFBizTestCase) {
-                ((OFBizTestCase) test).setDispatcher(dispatcher);
+            case2.setDelegator(delegator);
+            if (test instanceof OFBizTestCase case1) {
+                case1.setDispatcher(dispatcher);
             }
             // CHECKSTYLE_ON: ALMOST_ALL
-        } else if (test instanceof GroovyScriptAssert) {
-            prepareGroovyScriptAssert((GroovyScriptAssert) test);
+        } else if (test instanceof GroovyScriptAssert assert1) {
+            prepareGroovyScriptAssert(assert1);
         }
     }
 

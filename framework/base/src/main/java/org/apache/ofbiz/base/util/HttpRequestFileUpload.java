@@ -229,7 +229,7 @@ public class HttpRequestFileUpload {
 
                     }
                     String fileTocheck = savePath + filenameToUse;
-                    try (FileOutputStream fos = new FileOutputStream(fileTocheck);) {
+                    try (FileOutputStream fos = new FileOutputStream(fileTocheck)) {
                         boolean bail = (new String(line, 0, i, StandardCharsets.UTF_8).startsWith(boundary));
                         boolean oneByteLine = (i == 1); // handle one-byte lines
 
@@ -337,7 +337,7 @@ public class HttpRequestFileUpload {
             while (endMS > (new Date().getTime())) {
                 try {
                     wait(WAIT_INTERVAL);
-                } catch (InterruptedException e) {
+                } catch (InterruptedException _) {
                     Debug.logInfo(".", MODULE);
                 }
             }

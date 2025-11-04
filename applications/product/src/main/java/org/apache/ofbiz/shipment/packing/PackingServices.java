@@ -194,7 +194,7 @@ public class PackingServices {
                                 if (numPackages < 1) {
                                     numPackages = 1;
                                 }
-                            } catch (NumberFormatException nex) {
+                            } catch (NumberFormatException _) {
                             }
                         }
                         for (int numPackage = 0; numPackage < numPackages; numPackage++) {

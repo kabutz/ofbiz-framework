@@ -104,8 +104,7 @@ public final class ModelKeyMap implements Comparable<ModelKeyMap>, Serializable 
         if (this == other) {
             return true;
         }
-        if (other instanceof ModelKeyMap) {
-            ModelKeyMap otherKeyMap = (ModelKeyMap) other;
+        if (other instanceof ModelKeyMap otherKeyMap) {
             return this.fullName.equals(otherKeyMap.fullName);
         }
         return false;

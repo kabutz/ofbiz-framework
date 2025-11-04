@@ -32,6 +32,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.Future;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -173,12 +174,12 @@ public class EntityTestSuite extends EntityTestCase {
         try {
             testValue.put("description", "New Testing Type #Remove-4");
             fail("Modified an immutable GenericValue");
-        } catch (IllegalStateException e) {
+        } catch (IllegalStateException _) {
         }
         try {
             testValue.remove("description");
             fail("Modified an immutable GenericValue");
-        } catch (UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException _) {
         }
         testValue = EntityQuery.use(getDelegator()).from("TestingType").where("testingTypeId", "TEST-REMOVE-1").queryOne();
         assertEquals("Finding removed value returns null", null, testValue);
@@ -221,12 +222,12 @@ public class EntityTestSuite extends EntityTestCase {
         try {
             testValue.put("description", "New Testing Type #Cache-1");
             fail("Modified an immutable GenericValue");
-        } catch (IllegalStateException e) {
+        } catch (IllegalStateException _) {
         }
         try {
             testValue.remove("description");
             fail("Modified an immutable GenericValue");
-        } catch (UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException _) {
         }
         // Test entity value update operation updates the cache
         // Since the cache uses equals() and hashCode() methods, we test those as well
@@ -280,12 +281,12 @@ public class EntityTestSuite extends EntityTestCase {
         try {
             testValue.put("description", "New Testing Type #2");
             fail("Modified an immutable GenericValue");
-        } catch (IllegalStateException e) {
+        } catch (IllegalStateException _) {
         }
         try {
             testValue.remove("description");
             fail("Modified an immutable GenericValue");
-        } catch (UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException _) {
         }
         // Test entity value create operation updates the cache
         testValue = (GenericValue) testValue.clone();
@@ -1229,7 +1230,7 @@ public class EntityTestSuite extends EntityTestCase {
         };
         double probabilityOfRefresh = 0.1;
         for (int i = 1; i <= 1000; i++) {
-            Callable<Void> randomTask = Math.random() < probabilityOfRefresh ? refreshTask : getSeqIdTask;
+            Callable<Void> randomTask = ThreadLocalRandom.current().nextDouble() < probabilityOfRefresh ? refreshTask : getSeqIdTask;
             futures.add(ExecutionPool.GLOBAL_FORK_JOIN.submit(randomTask));
         }
         long startTime = System.currentTimeMillis();
@@ -1269,7 +1270,7 @@ public class EntityTestSuite extends EntityTestCase {
         } catch (GenericEntityException e) {
             try {
                 TransactionUtil.rollback(transactionStarted, "", e);
-            } catch (GenericTransactionException e2) {
+            } catch (GenericTransactionException _) {
             }
             noErrors = false;
         }

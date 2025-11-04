@@ -38,6 +38,7 @@ plugins {
     id "com.github.ManifestClasspath" version "latest.release"
 //    id "com.github.jakemarsden.git-hooks" version "latest.release"
     id "com.github.node-gradle.node" version "latest.release" apply false
+    id("org.openrewrite.rewrite") version("latest.release")
 }
 
 /* OWASP plugin
@@ -268,6 +269,8 @@ dependencies {
     getDirectoryInActiveComponentsIfExists('lib').each { libDir ->
         implementation fileTree(dir: libDir, include: '**/*.jar')
     }
+
+    rewrite("org.openrewrite.recipe:rewrite-migrate-java:3.20.0")
 }
 
 def excludedJavaSources = [
@@ -1108,4 +1111,9 @@ tasks.startScripts {
         windowsScript.text =
                 windowsScript.text.replace('CLASSPATH=%APP_HOME%\\lib','CLASSPATH=%APP_HOME%\\conf\\;%APP_HOME%\\lib-extra\\*;%APP_HOME%\\lib')
     }
+}
+
+rewrite {
+    activeRecipe("org.openrewrite.java.migrate.UpgradeToJava25")
+    setExportDatatables(true)
 }

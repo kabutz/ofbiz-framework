@@ -264,7 +264,7 @@ public class ServiceMultiEventHandler implements EventHandler {
                             continue;
                         }
 
-                        if (value instanceof String && ((String) value).isEmpty()) {
+                        if (value instanceof String string && string.isEmpty()) {
                             // interpreting empty fields as null values for each in back end handling...
                             value = null;
                         }
@@ -373,7 +373,7 @@ public class ServiceMultiEventHandler implements EventHandler {
                     }
                 }
                 // REFACTOR: Use sequenced collection method instead
-                errorMessages.add(0, errorPrefixStr);
+                errorMessages.addFirst(errorPrefixStr);
                 errorMessages.add(errorSuffixStr);
                 StringBuilder errorBuf = new StringBuilder();
                 for (Object em: errorMessages) {

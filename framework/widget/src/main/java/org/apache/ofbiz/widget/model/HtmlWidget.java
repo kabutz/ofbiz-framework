@@ -86,11 +86,11 @@ public class HtmlWidget extends ModelScreenWidget {
         public TemplateModel wrap(Object object) throws TemplateModelException {
             // This StringHtmlWrapperForFtl option seems to be the best option
             // and handles most things without causing too many problems
-            if (object instanceof String) {
-                return new StringHtmlWrapperForFtl((String) object, this);
-            } else if (object instanceof Collection && !(object instanceof Map)) {
+            if (object instanceof String string) {
+                return new StringHtmlWrapperForFtl(string, this);
+            } else if (object instanceof Collection<?> collection && !(object instanceof Map)) {
                 // An additional wrapper to ensure ${aCollection} is properly encoded for html
-                return new CollectionHtmlWrapperForFtl((Collection<?>) object, this);
+                return new CollectionHtmlWrapperForFtl(collection, this);
             }
             return super.wrap(object);
         }
@@ -215,7 +215,7 @@ public class HtmlWidget extends ModelScreenWidget {
     public static void writeError(Appendable writer, String message) {
         try {
             writer.append(message);
-        } catch (IOException e) {
+        } catch (IOException _) {
         }
     }
 

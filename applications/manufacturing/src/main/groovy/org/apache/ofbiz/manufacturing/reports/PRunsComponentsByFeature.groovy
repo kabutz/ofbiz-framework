@@ -85,7 +85,7 @@ if (allProductionRuns) {
             // populate the products map and sum the quantities
             //
             if (!products.containsKey(productionRunComponent.getString('productId'))) {
-                products.put(productionRunComponent.productId, [product: productionRunProduct, quantity: new Double(0), location: location])
+                products.put(productionRunComponent.productId, [product: productionRunProduct, quantity: Double.valueOf(0), location: location])
             }
             Map productMap = (Map)products.get(productionRunComponent.productId)
             productMapQty = productMap.quantity

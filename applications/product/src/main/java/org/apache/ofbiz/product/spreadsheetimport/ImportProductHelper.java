@@ -70,7 +70,7 @@ public final class ImportProductHelper {
                     && productId.equals(tmpProductGV.getString("productId"))) {
                 productExists = true;
             }
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             Debug.logError("Problem in reading data of product", MODULE);
         }
         return productExists;

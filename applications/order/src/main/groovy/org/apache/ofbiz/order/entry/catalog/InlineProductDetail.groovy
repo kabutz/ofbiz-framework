@@ -80,7 +80,7 @@ String buildNext(Map map, List order, String current, String prefix, Map feature
     buf.append(' }')
     if (order.indexOf(current) < (order.size() - 1)) {
         ct = 0
-        map.each { key, value ->
+        map.each { _, value ->
             String nextOrder = order.get(order.indexOf(current) + 1)
             String newPrefix = prefix + '_' + ct
             buf.append(buildNext(value, order, nextOrder, newPrefix, featureTypes))

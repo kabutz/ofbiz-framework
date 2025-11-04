@@ -101,9 +101,7 @@ public class MimeMessageWrapper implements java.io.Serializable {
 
                 // see if this is a multi-part message
                 Object content = message.getContent();
-                if (content instanceof Multipart) {
-                    // REFACTOR: Pattern Matching for instanceof
-                    Multipart mp = (Multipart) content;
+                if (content instanceof Multipart mp) {
                     this.parts = mp.getCount();
                 } else {
                     this.parts = 0;
@@ -298,8 +296,8 @@ public class MimeMessageWrapper implements java.io.Serializable {
         BodyPart part = getPart(Integer.toString(index));
         try {
             Object content = part.getContent();
-            if (content instanceof Multipart) {
-                return ((Multipart) content).getCount();
+            if (content instanceof Multipart multipart) {
+                return multipart.getCount();
             }
             return 0;
         } catch (Exception e) {
@@ -608,13 +606,13 @@ public class MimeMessageWrapper implements java.io.Serializable {
         if (content == null) {
             return null;
         }
-        if (content instanceof String) {
-            return (String) content;
-        } else if (content instanceof InputStream) {
-            return getTextFromStream((InputStream) content);
-        } else if (content instanceof Message) {
+        if (content instanceof String string) {
+            return string;
+        } else if (content instanceof InputStream stream) {
+            return getTextFromStream(stream);
+        } else if (content instanceof Message message1) {
             try {
-                return getTextFromStream(((Message) content).getInputStream());
+                return getTextFromStream(message1.getInputStream());
             } catch (Exception e) {
                 Debug.logError(e, MODULE);
                 return null;

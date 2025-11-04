@@ -42,7 +42,7 @@ public abstract class EntityFunction<T extends Comparable<?>> extends EntityCond
     }
 
     public enum SQLFunction {
-        LENGTH, TRIM, UPPER, LOWER;
+        LENGTH, TRIM, UPPER, LOWER
     }
 
     public static final int ID_LENGTH = SQLFunction.LENGTH.ordinal();
@@ -158,8 +158,8 @@ public abstract class EntityFunction<T extends Comparable<?>> extends EntityCond
     protected EntityFunction(Fetcher<T> fetcher, SQLFunction function, Object value) {
         this.fetcher = fetcher;
         this.function = function;
-        if (value instanceof EntityConditionValue) {
-            this.nested = (EntityConditionValue) value;
+        if (value instanceof EntityConditionValue conditionValue) {
+            this.nested = conditionValue;
             this.value = null;
         } else {
             this.nested = null;

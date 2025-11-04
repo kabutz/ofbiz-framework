@@ -611,13 +611,12 @@ public class EntityPermissionChecker {
     public static GenericValue getNextEntity(Delegator delegator, String entityName, String pkFieldName, Object obj, Map<String,
             GenericValue> entities) throws GenericEntityException {
         GenericValue entity = null;
-        if (obj instanceof String) {
-            String entityId = (String) obj;
+        if (obj instanceof String entityId) {
             if (entities != null) entity = entities.get(entityId);
 
             if (entity == null) entity = EntityQuery.use(delegator).from(entityName).where(pkFieldName, entityId).cache(true).queryOne();
-        } else if (obj instanceof GenericValue) {
-            entity = (GenericValue) obj;
+        } else if (obj instanceof GenericValue value) {
+            entity = value;
         }
         return entity;
     }
@@ -1038,7 +1037,7 @@ public class EntityPermissionChecker {
                     String sequenceId = privEnum.getString("sequenceId");
                     try {
                         privilegeEnumSeq = Integer.parseInt(sequenceId);
-                    } catch (NumberFormatException e) {
+                    } catch (NumberFormatException _) {
                         // just leave it at -1
                     }
                 }
@@ -1425,7 +1424,7 @@ public class EntityPermissionChecker {
                 String sequenceId = privEnum.getString("sequenceId");
                 try {
                     privilegeEnumSeq = Integer.parseInt(sequenceId);
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException _) {
                     // just leave it at -1
                 }
             }

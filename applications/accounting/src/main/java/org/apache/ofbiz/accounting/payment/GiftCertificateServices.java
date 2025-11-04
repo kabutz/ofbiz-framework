@@ -205,7 +205,7 @@ public class GiftCertificateServices {
                     finAccountId = finAccount.getString("finAccountId");
                 }
             }
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                     "AccountingFinAccountSetting",
                     UtilMisc.toMap("productStoreId", productStoreId,
@@ -220,7 +220,7 @@ public class GiftCertificateServices {
         if (finAccount == null) {
             try {
                 finAccount = EntityQuery.use(delegator).from("FinAccount").where("finAccountId", finAccountId).queryOne();
-            } catch (GenericEntityException e) {
+            } catch (GenericEntityException _) {
                 return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                         "AccountingFinAccountNotFound", UtilMisc.toMap("finAccountId", finAccountId), locale));
             }
@@ -292,7 +292,7 @@ public class GiftCertificateServices {
                 return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                         "AccountingGiftCertificateNumberPinNotValid", locale));
             }
-        } catch (GenericEntityException ex) {
+        } catch (GenericEntityException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                     "AccountingFinAccountSetting",
                     UtilMisc.toMap("productStoreId", productStoreId,
@@ -303,7 +303,7 @@ public class GiftCertificateServices {
         GenericValue finAccount = null;
         try {
             finAccount = EntityQuery.use(delegator).from("FinAccount").where("finAccountId", cardNumber).queryOne();
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                     "AccountingFinAccountNotFound", UtilMisc.toMap("finAccountId", cardNumber), locale));
         }
@@ -357,7 +357,7 @@ public class GiftCertificateServices {
         GenericValue finAccount = null;
         try {
             finAccount = EntityQuery.use(delegator).from("FinAccount").where("finAccountId", cardNumber).queryOne();
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                     "AccountingFinAccountNotFound", UtilMisc.toMap("finAccountId", cardNumber), locale));
         }

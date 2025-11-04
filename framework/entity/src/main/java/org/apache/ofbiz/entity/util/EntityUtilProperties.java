@@ -268,7 +268,7 @@ public final class EntityUtilProperties implements Serializable {
             }
             gv.store();
         } catch (GenericEntityException e) {
-            Debug.logError(String.format("tenantId=%s, exception=%s, message=%s", delegator.getDelegatorTenantId(), e.getClass().getName(),
+            Debug.logError("tenantId=%s, exception=%s, message=%s".formatted(delegator.getDelegatorTenantId(), e.getClass().getName(),
                     e.getMessage()), MODULE);
         }
         return prevValue;

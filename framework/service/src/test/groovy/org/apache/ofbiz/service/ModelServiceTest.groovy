@@ -76,7 +76,7 @@ class ModelServiceTest {
             createModelService(serviceXml)
                     .validate(dispatcher, [message: 'ok'],
                             'IN', Locale.default)
-        } catch (ServiceValidationException ignored) {
+        } catch (ServiceValidationException _) {
             Assert.fail('Required parameters not validated')
         }
     }
@@ -91,7 +91,7 @@ class ModelServiceTest {
             createModelService(serviceXml)
                     .validate(dispatcher, [message: 'ok'],
                             'IN', Locale.default)
-        } catch (ServiceValidationException ignored) {
+        } catch (ServiceValidationException _) {
             Assert.fail('Optional parameter not validated')
         }
     }
@@ -107,7 +107,7 @@ class ModelServiceTest {
             createModelService(serviceXml)
                     .validate(dispatcher, [message: 'ok'],
                             'IN', Locale.default)
-        } catch (ServiceValidationException ignored) {
+        } catch (ServiceValidationException _) {
             Assert.fail('Optional parameter not validated')
         }
     }
@@ -133,7 +133,7 @@ class ModelServiceTest {
             createModelService(serviceXml)
                     .validate(dispatcher, [message: null],
                             'IN', Locale.default)
-        } catch (ServiceValidationException ignored) {
+        } catch (ServiceValidationException _) {
             Assert.fail('Optional parameter not validated')
         }
     }
@@ -161,7 +161,7 @@ class ModelServiceTest {
             createModelService(serviceXml)
                     .validate(dispatcher, [header: [headerParam: 'foo']],
                             'IN', Locale.default)
-        } catch (ServiceValidationException ignored) {
+        } catch (ServiceValidationException _) {
             Assert.fail('Paramètre complexe non identifié')
         }
     }
@@ -193,7 +193,7 @@ class ModelServiceTest {
             createModelService(serviceXml)
                     .validate(dispatcher, [header: [headerParam: 'foo']],
                             'IN', Locale.default)
-        } catch (ServiceValidationException ignored) {
+        } catch (ServiceValidationException _) {
             Assert.fail('Missing optional should not throw exception')
         }
     }
@@ -211,7 +211,7 @@ class ModelServiceTest {
             createModelService(serviceXml)
                     .validate(dispatcher, [header: [headerParam: 'foo', otherParam: 'Good']],
                             'IN', Locale.default)
-        } catch (ServiceValidationException ignored) {
+        } catch (ServiceValidationException _) {
             Assert.fail('Complex parameter control error')
         }
     }
@@ -260,7 +260,7 @@ class ModelServiceTest {
                     .validate(dispatcher, [header: [headerParam: [subHeaderParam: 'true'],
                                                     otherParam: 'true']],
                             'IN', Locale.default)
-        } catch (ServiceValidationException ignored) {
+        } catch (ServiceValidationException _) {
             Assert.fail('Paramètre complexe non identifié')
         }
     }
@@ -293,7 +293,7 @@ class ModelServiceTest {
                     .validate(dispatcher, [header: [headerParam: [subHeaderParam: 'true', otherParam: 'false'],
                                                     otherParam: 'true']],
                             'IN', Locale.default)
-        } catch (ServiceValidationException ignored) {
+        } catch (ServiceValidationException _) {
             Assert.fail('Map should not have been analyzed')
         }
     }
@@ -312,7 +312,7 @@ class ModelServiceTest {
                     .validate(dispatcher, [header: [[headerParam: 'line1', otherParam: 'Good'],
                                                     [headerParam: 'line2', otherParam: 'Good']]],
                             'IN', Locale.default)
-        } catch (ServiceValidationException ignored) {
+        } catch (ServiceValidationException _) {
             Assert.fail('Complex List Parameter Error')
         }
     }
@@ -357,7 +357,7 @@ class ModelServiceTest {
 
         try {
             modelService.validate(dispatcher, [header: [headerParam: 'line1', otherParam: 'Good']], 'IN', Locale.default)
-        } catch (ServiceValidationException ignored) {
+        } catch (ServiceValidationException _) {
             Assert.fail('Complex implement not valid')
         }
     }
@@ -372,7 +372,7 @@ class ModelServiceTest {
         Map sanitizedContext = [:]
         try {
             sanitizedContext = DispatchContext.makeValidContext(fo, 'IN', [quantity: 20])
-        } catch (GeneralServiceException ignored) {
+        } catch (GeneralServiceException _) {
             Assert.fail('Error calling with integer for BigDecimal')
         }
         assert sanitizedContext.quantity instanceof BigDecimal
@@ -390,7 +390,7 @@ class ModelServiceTest {
         Map sanitizedContext = [:]
         try {
             sanitizedContext = DispatchContext.makeValidContext(fo, 'IN', [someMap: [quantity: 20]])
-        } catch (GeneralServiceException ignored) {
+        } catch (GeneralServiceException _) {
             Assert.fail('Error calling with integer for BigDecimal in Map')
         }
         assert sanitizedContext.someMap.quantity instanceof BigDecimal
@@ -408,7 +408,7 @@ class ModelServiceTest {
         Map sanitizedContext = [:]
         try {
             sanitizedContext = DispatchContext.makeValidContext(fo, 'IN', [someList: [[quantity: 20]]])
-        } catch (GeneralServiceException ignored) {
+        } catch (GeneralServiceException _) {
             Assert.fail('Error calling with integer for BigDecimal in List')
         }
         assert sanitizedContext.someList[0].quantity instanceof BigDecimal

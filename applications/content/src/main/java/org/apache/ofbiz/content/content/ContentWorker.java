@@ -448,7 +448,7 @@ public class ContentWorker implements org.apache.ofbiz.widget.content.ContentWor
 
         List<GenericValue> alternateViews = findAlternateLocaleContents(delegator, view, useCache);
         // also check the given view for a matching locale
-        alternateViews.add(0, view);
+        alternateViews.addFirst(view);
 
         for (GenericValue thisView : alternateViews) {
             String currentLocaleString = thisView.getString("localeString");
@@ -780,8 +780,7 @@ public class ContentWorker implements org.apache.ofbiz.widget.content.ContentWor
             try {
                 Object retVal = GroovyUtil.eval(newWhen, context);
                 // retVal should be a Boolean, if not something weird is up...
-                if (retVal instanceof Boolean) {
-                    Boolean boolVal = (Boolean) retVal;
+                if (retVal instanceof Boolean boolVal) {
                     isWhen = boolVal;
                 } else {
                     throw new IllegalArgumentException("Return value from use-when condition eval was not a Boolean: "
@@ -1127,7 +1126,7 @@ public class ContentWorker implements org.apache.ofbiz.widget.content.ContentWor
                     return view;
                     //throw new IOException("No subcontent found.");
                 } else {
-                    view = entityList.get(0);
+                    view = entityList.getFirst();
                 }
             } else {
                 view = EntityQuery.use(delegator).from("ContentDataResourceView")
@@ -1178,7 +1177,7 @@ public class ContentWorker implements org.apache.ofbiz.widget.content.ContentWor
             Debug.log("No subcontent found.");
             //throw new IOException("No subcontent found.");
         } else {
-            view = entityList.get(0);
+            view = entityList.getFirst();
         }
         return view;
     }
@@ -1255,7 +1254,7 @@ public class ContentWorker implements org.apache.ofbiz.widget.content.ContentWor
         String dataResourceId = null;
         try {
             dataResourceId = (String) view.get("drDataResourceId");
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException _) {
             dataResourceId = (String) view.get("dataResourceId");
         }
         content.set("dataResourceId", dataResourceId);
@@ -1455,7 +1454,7 @@ public class ContentWorker implements org.apache.ofbiz.widget.content.ContentWor
 
         GenericValue val = null;
         if (!filteredList.isEmpty()) {
-            val = filteredList.get(0);
+            val = filteredList.getFirst();
         }
         return val;
     }
@@ -1644,15 +1643,14 @@ public class ContentWorker implements org.apache.ofbiz.widget.content.ContentWor
             if ("request response session".indexOf(key) < 0) {
                 Object obj = map.get(key);
                 s.append(spc).append(key).append(sep);
-                if (obj instanceof GenericValue) {
-                    GenericValue gv = (GenericValue) obj;
+                if (obj instanceof GenericValue gv) {
                     GenericPK pk = gv.getPrimaryKey();
                     indent.append(' ');
                     logMap(s, "GMAP[" + key + " name:" + pk.getEntityName() + "]", pk, indent);
                     indent.setLength(indent.length() - 1);
-                } else if (obj instanceof List<?>) {
+                } else if (obj instanceof List<?> list) {
                     indent.append(' ');
-                    logList(s, "LIST[" + ((List<?>) obj).size() + "]", UtilGenerics.cast(obj), indent);
+                    logList(s, "LIST[" + list.size() + "]", UtilGenerics.cast(obj), indent);
                     indent.setLength(indent.length() - 1);
                 } else if (obj instanceof Map<?, ?>) {
                     indent.append(' ');
@@ -1688,15 +1686,14 @@ public class ContentWorker implements org.apache.ofbiz.widget.content.ContentWor
         s.append("=").append(indent).append("==> sz:").append(sz).append(eol);
         for (Object obj : lst) {
             s.append(spc);
-            if (obj instanceof GenericValue) {
-                GenericValue gv = (GenericValue) obj;
+            if (obj instanceof GenericValue gv) {
                 GenericPK pk = gv.getPrimaryKey();
                 indent.append(' ');
                 logMap(s, "MAP[name:" + pk.getEntityName() + "]", pk, indent);
                 indent.setLength(indent.length() - 1);
-            } else if (obj instanceof List<?>) {
+            } else if (obj instanceof List<?> list) {
                 indent.append(' ');
-                logList(s, "LIST[" + ((List<?>) obj).size() + "]", UtilGenerics.cast(obj), indent);
+                logList(s, "LIST[" + list.size() + "]", UtilGenerics.cast(obj), indent);
                 indent.setLength(indent.length() - 1);
             } else if (obj instanceof Map<?, ?>) {
                 indent.append(' ');

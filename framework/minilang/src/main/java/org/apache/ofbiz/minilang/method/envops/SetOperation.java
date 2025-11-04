@@ -120,7 +120,7 @@ public final class SetOperation extends MethodOperation {
         if (!this.type.isEmpty() && !"NewList".equals(this.type) && !"NewMap".equals(this.type)) {
             try {
                 targetClass = ObjectType.loadClass(this.type);
-            } catch (ClassNotFoundException e) {
+            } catch (ClassNotFoundException _) {
                 MiniLangValidate.handleError("Invalid type " + this.type, simpleMethod, element);
             }
         }

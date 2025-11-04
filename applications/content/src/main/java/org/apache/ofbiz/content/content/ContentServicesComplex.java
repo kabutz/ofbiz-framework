@@ -289,7 +289,7 @@ public class ContentServicesComplex {
         Map<String, Object> results = new HashMap<>();
         results.put("entityList", contentAssocDataResourceList);
         if (UtilValidate.isNotEmpty(contentAssocDataResourceList)) {
-            results.put("view", contentAssocDataResourceList.get(0));
+            results.put("view", contentAssocDataResourceList.getFirst());
         }
         return results;
     }

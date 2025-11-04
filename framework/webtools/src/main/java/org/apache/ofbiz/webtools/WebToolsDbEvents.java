@@ -45,7 +45,7 @@ public class WebToolsDbEvents {
     private static Document document;
     private static final String TITLE = "Entities of an Apache Open For Business Project (Apache OFBiz) Component";
     private static final String DESCRIPTION = "None";
-    private static final String COPYRIGHT = String.format("Copyright 2001-%d The Apache Software Foundation",
+    private static final String COPYRIGHT = "Copyright 2001-%d The Apache Software Foundation".formatted(
             LocalDate.now().getYear());
     private static final String AUTHOR = "None";
     private static final String VERSION = "1.0";

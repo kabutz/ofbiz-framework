@@ -74,8 +74,8 @@ public final class Iterate extends MethodOperation {
         }
         Object oldEntryValue = entryFma.get(methodContext.getEnvMap());
         Object objList = listFma.get(methodContext.getEnvMap());
-        if (objList instanceof EntityListIterator) {
-            try (EntityListIterator eli = (EntityListIterator) objList) {
+        if (objList instanceof EntityListIterator eli) {
+            try (eli) {
                 GenericValue theEntry;
                 while ((theEntry = eli.next()) != null) {
                     entryFma.put(methodContext.getEnvMap(), theEntry);

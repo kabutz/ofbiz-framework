@@ -58,7 +58,7 @@ public abstract class ArtifactInfoBase implements Comparable<ArtifactInfoBase> {
         try {
             ArtifactInfoBase that = (ArtifactInfoBase) obj;
             return this.toString().equals(that.toString());
-        } catch (Exception e) {
+        } catch (Exception _) {
             return false;
         }
     }

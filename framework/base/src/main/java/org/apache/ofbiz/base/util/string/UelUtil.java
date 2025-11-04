@@ -247,9 +247,7 @@ public final class UelUtil {
             if (obj == this) {
                 return true;
             }
-            if (obj instanceof ReadOnlyExpression) {
-                // REFACTOR: Pattern Matching for instanceof
-                ReadOnlyExpression other = (ReadOnlyExpression) obj;
+            if (obj instanceof ReadOnlyExpression other) {
                 return this.object.equals(other.object);
             }
             return false;
@@ -285,9 +283,7 @@ public final class UelUtil {
             if (obj == this) {
                 return true;
             }
-            if (obj instanceof BasicValueExpression) {
-                // REFACTOR: Pattern Matching for instanceof
-                BasicValueExpression other = (BasicValueExpression) obj;
+            if (obj instanceof BasicValueExpression other) {
                 return this.varName.equals(other.varName);
             }
             return false;
@@ -394,9 +390,9 @@ public final class UelUtil {
                     List<Object> list = UtilGenerics.cast(base);
                     try {
                         list.add(index, val);
-                    } catch (UnsupportedOperationException ex) {
+                    } catch (UnsupportedOperationException _) {
                         throw new PropertyNotWritableException();
-                    } catch (IndexOutOfBoundsException ex) {
+                    } catch (IndexOutOfBoundsException _) {
                         throw new PropertyNotFoundException();
                     }
                 } else {
@@ -532,7 +528,7 @@ public final class UelUtil {
                 createObjectType = "bigDecimal";
             }
         }
-        if (variables instanceof LocalizedMap<?>) {
+        if (variables instanceof LocalizedMap<?> map) {
             if (locale == null) {
                 locale = (Locale) variables.get(LOCALIZED_MAP_LOCALE_KEY);
                 if (locale == null) {
@@ -542,7 +538,7 @@ public final class UelUtil {
                     }
                 }
             }
-            obj = ((LocalizedMap<?>) variables).get(name, locale);
+            obj = map.get(name, locale);
         } else {
             obj = variables.get(name);
         }

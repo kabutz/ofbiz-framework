@@ -91,7 +91,7 @@ public final class MacroCallMatcher extends TypeSafeMatcher<RenderableFtl> {
                 matchedParameterByName.ifPresent(parameterEntry ->
                         failedParameterMatcher.describeMismatchSafely(parameterEntry, mismatchDescription));
 
-                if (!matchedParameterByName.isPresent()) {
+                if (matchedParameterByName.isEmpty()) {
                     mismatchDescription.appendText("Parameter '" + failedParameterName + "' was missing, ");
                 }
             }

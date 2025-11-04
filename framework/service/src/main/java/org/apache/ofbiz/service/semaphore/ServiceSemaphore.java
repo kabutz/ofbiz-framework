@@ -201,7 +201,7 @@ public final class ServiceSemaphore {
                         lock = value.create();
                     }
                 }
-            } catch (GenericEntityException e) {
+            } catch (GenericEntityException _) {
                 Debug.logError("Cannot obtain unique transaction for semaphore logging", MODULE);
                 isError = true;
             } finally {

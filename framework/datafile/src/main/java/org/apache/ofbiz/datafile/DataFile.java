@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilValidate;
+import org.apache.ofbiz.datafile.Record;
 
 /**
  *  DataFile main class
@@ -210,7 +211,7 @@ public class DataFile {
     public void writeDataFile(String filename) throws DataFileException {
         File outFile = new File(filename);
 
-        try (FileOutputStream fos = new FileOutputStream(outFile);) {
+        try (FileOutputStream fos = new FileOutputStream(outFile)) {
             writeDataFile(fos);
         } catch (IOException e) {
             throw new DataFileException("Error occured while writing data to file" + filename, e);
@@ -223,7 +224,7 @@ public class DataFile {
      */
     public String writeDataFile() throws DataFileException {
         String outString = "";
-        try (ByteArrayOutputStream bos = new ByteArrayOutputStream();) {
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
             writeDataFile(bos);
             outString = bos.toString("UTF-8");
 

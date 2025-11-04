@@ -34,8 +34,8 @@ import org.apache.ofbiz.base.conversion.ConversionException;
 import org.junit.Test;
 
 public class FlexibleStringExpanderTests {
-    private static final Locale LOCALE_TO_TEST = new Locale("en", "US");
-    private static final Locale BAD_LOCALE = new Locale("fr");
+    private static final Locale LOCALE_TO_TEST = Locale.of("en", "US");
+    private static final Locale BAD_LOCALE = Locale.of("fr");
     private static final TimeZone TIME_ZONE_TO_TEST = TimeZone.getTimeZone("PST");
     private static final TimeZone BAD_TIME_ZONE = TimeZone.getTimeZone("GMT");
 

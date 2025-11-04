@@ -163,8 +163,7 @@ public final class EntityEcaRule implements java.io.Serializable {
 
         if (allCondTrue) {
             for (Object actionOrSet: actionsAndSets) {
-                if (actionOrSet instanceof EntityEcaAction) {
-                    EntityEcaAction ea = (EntityEcaAction) actionOrSet;
+                if (actionOrSet instanceof EntityEcaAction ea) {
                     // in order to enable OR logic without multiple calls to the given service,
                     //only execute a given service name once per service call phase
                     if (actionsRun.add(ea.getServiceName())) {
@@ -212,8 +211,7 @@ public final class EntityEcaRule implements java.io.Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof EntityEcaRule) {
-            EntityEcaRule other = (EntityEcaRule) obj;
+        if (obj instanceof EntityEcaRule other) {
             if (!Objects.equals(this.entityName, other.entityName)) {
                 return false;
             }

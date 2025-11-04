@@ -105,9 +105,7 @@ public final class EntityFinderUtil {
                     // REFACTOR: Pattern Matching for instanceof
                     FlexibleMapAccessor<Object> contextEnvAcsr = cast(valueSrc);
                     serviceContextFieldAcsr.put(outContext, contextEnvAcsr.get(context));
-                } else if (valueSrc instanceof FlexibleStringExpander) {
-                    // REFACTOR: Pattern Matching for instanceof
-                    FlexibleStringExpander valueExdr = (FlexibleStringExpander) valueSrc;
+                } else if (valueSrc instanceof FlexibleStringExpander valueExdr) {
                     serviceContextFieldAcsr.put(outContext, valueExdr.expandString(context));
                 //} else {
                     // hmmmm...
@@ -212,15 +210,15 @@ public final class EntityFinderUtil {
 
             // If IN or BETWEEN operator, see if value is a literal list and split it
             if ((operator.equals(EntityOperator.IN) || operator.equals(EntityOperator.BETWEEN) || operator.equals(EntityOperator.NOT_IN))
-                    && value instanceof String) {
+                    && value instanceof String string) {
                 String delim = null;
-                if (((String) value).indexOf('|') >= 0) {
+                if (string.indexOf('|') >= 0) {
                     delim = "|";
-                } else if (((String) value).indexOf(',') >= 0) {
+                } else if (string.indexOf(',') >= 0) {
                     delim = ",";
                 }
                 if (delim != null) {
-                    value = StringUtil.split((String) value, delim);
+                    value = StringUtil.split(string, delim);
                 }
             }
 
@@ -311,7 +309,7 @@ public final class EntityFinderUtil {
             }
             if (this.conditionList.size() == 1) {
                 // REFACTOR: Use sequenced collection method instead
-                Condition condition = this.conditionList.get(0);
+                Condition condition = this.conditionList.getFirst();
                 return condition.createCondition(context, modelEntity, modelFieldTypeReader);
             }
             List<EntityCondition> entityConditionList = new ArrayList<>(this.conditionList.size());

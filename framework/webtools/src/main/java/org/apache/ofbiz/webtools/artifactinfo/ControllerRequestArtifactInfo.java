@@ -162,9 +162,7 @@ public class ControllerRequestArtifactInfo extends ArtifactInfoBase {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof ControllerRequestArtifactInfo) {
-            // REFACTOR: Pattern Matching for instanceof
-            ControllerRequestArtifactInfo that = (ControllerRequestArtifactInfo) obj;
+        if (obj instanceof ControllerRequestArtifactInfo that) {
             return Objects.equals(this.controllerXmlUrl, that.controllerXmlUrl) && Objects.equals(this.requestUri, that.requestUri);
         } else {
             return false;

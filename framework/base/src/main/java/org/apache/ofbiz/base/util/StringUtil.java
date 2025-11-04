@@ -191,7 +191,7 @@ public final class StringUtil {
             if (e.size() != 2) {
                 continue;
             }
-            String name = e.get(0);
+            String name = e.getFirst();
             String value = e.get(1);
             if (trim) {
                 if (name != null) {
@@ -475,7 +475,7 @@ public final class StringUtil {
                 return content;
             }
         }
-        return String.format("%s…%s",
+        return "%s…%s".formatted(
                 content.substring(0, start),
                 textLength <= 5 ? "" : content.substring(end));
     }

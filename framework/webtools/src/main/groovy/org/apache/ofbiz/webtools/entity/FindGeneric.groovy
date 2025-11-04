@@ -39,7 +39,7 @@ context.escapeUrlEncode = 'true'
 
 try {
     modelEntity = delegator.getModelEntity(parameters.entityName)
-} catch (GenericEntityException e) {
+} catch (GenericEntityException _) {
     logError("The entityName ${parameters.entityName} isn't found", 'FindGeneric.groovy')
 }
 

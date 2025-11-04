@@ -57,14 +57,14 @@ public class OfbizContentAltUrlTransforms implements TemplateTransformModel {
      */
     public String getStringArg(Map<String, Object> args, String key) {
         Object o = args.get(key);
-        if (o instanceof SimpleScalar) {
-            return ((SimpleScalar) o).getAsString();
-        } else if (o instanceof GenericObjectModel) {
-            return ((GenericObjectModel) o).getAsString();
-        } else if (o instanceof SimpleNumber) {
-            return ((SimpleNumber) o).getAsNumber().toString();
-        } else if (o instanceof NumberModel) {
-            return ((NumberModel) o).getAsNumber().toString();
+        if (o instanceof SimpleScalar scalar) {
+            return scalar.getAsString();
+        } else if (o instanceof GenericObjectModel model1) {
+            return model1.getAsString();
+        } else if (o instanceof SimpleNumber number) {
+            return number.getAsNumber().toString();
+        } else if (o instanceof NumberModel model) {
+            return model.getAsNumber().toString();
         }
         return null;
     }

@@ -81,7 +81,7 @@ public class ShipmentEvents {
         // It would be nice to store the actual type of the image alongside the image data.
         try {
             UtilHttp.streamContentToBrowser(response, bytes, "image/gif");
-        } catch (IOException e1) {
+        } catch (IOException _) {
             try {
                 UtilHttp.streamContentToBrowser(response, bytes, "image/png");
             } catch (IOException e2) {

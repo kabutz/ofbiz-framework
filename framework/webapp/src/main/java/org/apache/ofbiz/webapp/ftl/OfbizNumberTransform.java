@@ -52,9 +52,7 @@ public class OfbizNumberTransform implements TemplateTransformModel {
             if (Debug.verboseOn()) {
                 Debug.logVerbose("Arg Object : " + o.getClass().getName(), MODULE);
             }
-            if (o instanceof TemplateScalarModel) {
-                // REFACTOR: Pattern Matching for instanceof
-                TemplateScalarModel s = (TemplateScalarModel) o;
+            if (o instanceof TemplateScalarModel s) {
                 try {
                     result = s.getAsString();
                 } catch (TemplateModelException e) {
@@ -80,16 +78,13 @@ public class OfbizNumberTransform implements TemplateTransformModel {
                 o = 0.00;
             }
 
-            if (o instanceof NumberModel) {
-                NumberModel s = (NumberModel) o;
+            if (o instanceof NumberModel s) {
                 return s.getAsNumber().doubleValue();
             }
-            if (o instanceof SimpleNumber) {
-                SimpleNumber s = (SimpleNumber) o;
+            if (o instanceof SimpleNumber s) {
                 return s.getAsNumber().doubleValue();
             }
-            if (o instanceof SimpleScalar) {
-                SimpleScalar s = (SimpleScalar) o;
+            if (o instanceof SimpleScalar s) {
                 return Double.valueOf(s.getAsString());
             }
             return Double.valueOf(o.toString());

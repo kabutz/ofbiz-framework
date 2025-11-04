@@ -754,7 +754,7 @@ public class PaymentGatewayServices {
             } else {
                 orderId = (String) context.get("orderId");
             }
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RES_ERROR,
                     "AccountingProblemGettingOrderPaymentPreferences", locale) + " "
                     + orderPaymentPreferenceId);
@@ -1140,7 +1140,7 @@ public class PaymentGatewayServices {
         List<GenericValue> orderItemBillings = null;
         try {
             orderItemBillings = invoice.getRelated("OrderItemBilling", null, null, false);
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             Debug.logError("Trouble getting OrderItemBilling(s) from Invoice #" + invoiceId, MODULE);
             return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE,
                     "AccountingProblemLookingUpOrderItemBilling",
@@ -1719,7 +1719,7 @@ public class PaymentGatewayServices {
                         "AccountingPaymentServiceMissingAmount",
                         UtilMisc.toMap("serviceName", serviceName, "inParams", inParams), locale));
             }
-        } catch (GenericServiceException ex) {
+        } catch (GenericServiceException _) {
             return ServiceUtil.returnError(UtilProperties.getMessage(RESOURCE,
                     "AccountingPaymentServiceCannotGetModel",
                     UtilMisc.toMap("serviceName", serviceName), locale));

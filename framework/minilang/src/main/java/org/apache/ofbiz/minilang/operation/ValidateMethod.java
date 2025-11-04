@@ -63,7 +63,7 @@ public class ValidateMethod extends SimpleMapOperation {
         Class<?> valClass;
         try {
             valClass = loader.loadClass(className);
-        } catch (ClassNotFoundException cnfe) {
+        } catch (ClassNotFoundException _) {
             String msg = "Could not find validation class: " + className;
             messages.add(msg);
             Debug.logError("[ValidateMethod.exec] " + msg, MODULE);
@@ -72,7 +72,7 @@ public class ValidateMethod extends SimpleMapOperation {
         Method valMethod;
         try {
             valMethod = valClass.getMethod(methodName, paramTypes);
-        } catch (NoSuchMethodException cnfe) {
+        } catch (NoSuchMethodException _) {
             String msg = "Could not find validation method: " + methodName + " of class " + className;
             messages.add(msg);
             Debug.logError("[ValidateMethod.exec] " + msg, MODULE);

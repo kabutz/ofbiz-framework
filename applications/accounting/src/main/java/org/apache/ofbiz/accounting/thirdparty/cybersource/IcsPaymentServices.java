@@ -436,7 +436,7 @@ public class IcsPaymentServices {
             request.put("billTo_firstName", creditCard.getString("firstNameOnCard"));
             request.put("billTo_lastName", creditCard.getString("lastNameOnCard"));
             request.put("card_accountNumber", creditCard.getString("cardNumber"));
-            request.put("card_expirationMonth", expDateList.get(0));
+            request.put("card_expirationMonth", expDateList.getFirst());
             request.put("card_expirationYear", expDateList.get(1));
         } else {
             Debug.logWarning("CreditCard not defined; Cybersource will fail.", MODULE);

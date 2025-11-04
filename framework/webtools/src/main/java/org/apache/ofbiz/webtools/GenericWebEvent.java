@@ -115,7 +115,7 @@ public class GenericWebEvent {
             try {
                 pkFields = EntityUtil.getPkValuesMapFromPath(delegator.getModelEntity(entityName),
                         (String) request.getAttribute("pkValues"));
-            } catch (Exception e) {
+            } catch (Exception _) {
 
                 request.setAttribute("_ERROR_MESSAGE_", UtilProperties.getMessage(ERR_RESOURCE,
                         "genericWebEvent.entity_path_not_valid", locale));
@@ -173,7 +173,7 @@ public class GenericWebEvent {
             if (UtilValidate.isNotEmpty(fval)) {
                 try {
                     findByEntity.setString(field.getName(), fval);
-                } catch (Exception e) {
+                } catch (Exception _) {
                     Map<String, String> messageMap = UtilMisc.toMap("fval", fval);
                     errMsg = errMsg + "<li>" + field.getColName() + UtilProperties.getMessage(ERR_RESOURCE, "genericWebEvent.conversion_failed",
                             messageMap, locale) + type.getJavaType() + ".";
@@ -228,7 +228,7 @@ public class GenericWebEvent {
             if (UtilValidate.isNotEmpty(fval)) {
                 try {
                     findByEntity.setString(field.getName(), fval);
-                } catch (Exception e) {
+                } catch (Exception _) {
                     Map<String, String> messageMap = UtilMisc.toMap("fval", fval);
                     errMsgNonPk += field.getColName() + UtilProperties.getMessage(ERR_RESOURCE,
                             "genericWebEvent.conversion_failed", messageMap, locale) + type.getJavaType() + ".";
@@ -294,7 +294,7 @@ public class GenericWebEvent {
                 try {
                     ClassLoader loader = Thread.currentThread().getContextClassLoader();
                     valClass = loader.loadClass(className);
-                } catch (ClassNotFoundException cnfe) {
+                } catch (ClassNotFoundException _) {
                     Debug.logError("[updateGeneric] Could not find validation class: " + className
                             + "; ignoring.", MODULE);
                     continue;
@@ -303,7 +303,7 @@ public class GenericWebEvent {
 
                 try {
                     valMethod = valClass.getMethod(methodName, paramTypes);
-                } catch (NoSuchMethodException cnfe) {
+                } catch (NoSuchMethodException _) {
                     Debug.logError("[updateGeneric] Could not find validation method: " + methodName
                             + " of class " + className + "; ignoring.", MODULE);
                     continue;
@@ -313,7 +313,7 @@ public class GenericWebEvent {
 
                 try {
                     resultBool = (Boolean) valMethod.invoke(null, params);
-                } catch (Exception e) {
+                } catch (Exception _) {
                     Debug.logError("[updateGeneric] Could not access validation method: " + methodName
                             + " of class " + className + "; returning true.", MODULE);
                     resultBool = Boolean.TRUE;
@@ -326,7 +326,7 @@ public class GenericWebEvent {
                     try {
                         msgField = valClass.getField(curValidate + "Msg");
                         message = (String) msgField.get(null);
-                    } catch (Exception e) {
+                    } catch (Exception _) {
                         Debug.logError("[updateGeneric] Could not find validation message field: " + curValidate
                                 + "Msg of class " + className + "; returning generic validation failure message.", MODULE);
                         message = UtilProperties.getMessage(ERR_RESOURCE, "genericWebEvent.validation_failed", locale) + ".";

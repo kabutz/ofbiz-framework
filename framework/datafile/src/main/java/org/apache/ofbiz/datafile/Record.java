@@ -34,6 +34,7 @@ import java.util.StringTokenizer;
 import org.apache.ofbiz.base.crypto.HashCrypt;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.common.login.LoginServices;
+import org.apache.ofbiz.datafile.Record;
 
 /**
  * Record
@@ -115,8 +116,8 @@ public class Record implements Serializable {
         if (object == null) {
             return null;
         }
-        if (object instanceof java.lang.String) {
-            return (String) object;
+        if (object instanceof String string) {
+            return string;
         }
         return object.toString();
     }
@@ -132,8 +133,8 @@ public class Record implements Serializable {
         if (object == null) {
             return "";
         }
-        if (object instanceof java.lang.String) {
-            return (String) object;
+        if (object instanceof String string) {
+            return string;
         }
         return object.toString();
     }
@@ -220,8 +221,8 @@ public class Record implements Serializable {
             throw new IllegalArgumentException("[Record.set] \"" + name + "\" is not a field of " + recordName);
         }
         if (value != null || setIfNull) {
-            if (value instanceof Boolean) {
-                value = (Boolean) value ? "Y" : "N";
+            if (value instanceof Boolean boolean1) {
+                value = boolean1 ? "Y" : "N";
             }
             fields.put(name, value);
         }

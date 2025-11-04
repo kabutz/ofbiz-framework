@@ -898,10 +898,10 @@ public abstract class AbstractModelAction implements Serializable, ModelAction {
                 } else {
                     newKey = originalName;
                 }
-                if (storeAgent instanceof ServletContext) {
-                    newValue = ((ServletContext) storeAgent).getAttribute(newKey);
-                } else if (storeAgent instanceof HttpSession) {
-                    newValue = ((HttpSession) storeAgent).getAttribute(newKey);
+                if (storeAgent instanceof ServletContext servletContext) {
+                    newValue = servletContext.getAttribute(newKey);
+                } else if (storeAgent instanceof HttpSession session) {
+                    newValue = session.getAttribute(newKey);
                 }
                 if (newValue != null) {
                     break;

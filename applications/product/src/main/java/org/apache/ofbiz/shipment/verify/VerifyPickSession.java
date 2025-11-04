@@ -436,7 +436,7 @@ public class VerifyPickSession implements Serializable {
         this.checkVerifiedQty(orderId, locale);
         // check reserved quantity, it should be equal to verified quantity
         this.checkReservedQty(orderId, locale);
-        String shipmentId = this.createShipment((this.getPickRows(orderId)).get(0));
+        String shipmentId = this.createShipment((this.getPickRows(orderId)).getFirst());
 
         this.issueItemsToShipment(shipmentId, locale);
         this.updateProduct();

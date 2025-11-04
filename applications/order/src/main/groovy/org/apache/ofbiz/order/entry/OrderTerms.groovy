@@ -42,7 +42,7 @@ if (request.getParameter('createNew') == 'Y') {
 
                 context.termIndex = termIndexStr
             }
-        } catch (NumberFormatException nfe) {
+        } catch (NumberFormatException _) {
             Debug.log("Error parsing termIndex: ${termIndexStr}")
             request.setAttribute('_ERROR_MESSAGE', "Error parsing termIndex: ${termIndexStr}")
         }

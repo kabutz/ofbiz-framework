@@ -95,7 +95,7 @@ public final class UtilURL {
         if (loader == null) {
             try {
                 loader = Thread.currentThread().getContextClassLoader();
-            } catch (SecurityException e) {
+            } catch (SecurityException _) {
                 // Huh? The new object will be created by the current thread, so how is this any different than the previous code?
                 loader = UtilURL.class.getClassLoader();
             }
@@ -150,7 +150,7 @@ public final class UtilURL {
         try {
             uri = new URI(urlString);
             url = uri.toURL();
-        } catch (IllegalArgumentException | URISyntaxException | MalformedURLException e) {
+        } catch (IllegalArgumentException | URISyntaxException | MalformedURLException _) {
             // We purposely don't want to do anything here.
         }
         return url;

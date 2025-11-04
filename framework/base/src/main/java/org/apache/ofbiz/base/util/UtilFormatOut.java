@@ -349,9 +349,7 @@ public final class UtilFormatOut {
      */
     public static String makeString(Object obj1) {
         if (obj1 != null) {
-            if (obj1 instanceof byte[]) {
-                // REFACTOR: Pattern Matching for instanceof
-                byte[] data = (byte[]) obj1;
+            if (obj1 instanceof byte[] data) {
                 if (data.length > 5120) {
                     return "[...binary data]";
                 }

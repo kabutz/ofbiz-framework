@@ -96,8 +96,8 @@ public abstract class GenericMap<K, V> implements Appender<StringBuilder>, Map<K
         if (size() != map.size()) {
             return false;
         }
-        if (o instanceof GenericMap<?, ?>) {
-            return equalsGenericMap((GenericMap<?, ?>) o);
+        if (o instanceof GenericMap<?, ?> genericMap) {
+            return equalsGenericMap(genericMap);
         }
         return equalsMap(map);
     }

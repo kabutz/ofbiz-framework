@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilMisc;
@@ -136,7 +137,7 @@ public class GroupModel {
         } else if ("round-robin".equals(this.getSendMode())) {
             return runIndex(dispatcher, localName, context, (++lastServiceRan % services.size()));
         } else if ("random".equals(this.getSendMode())) {
-            int randomIndex = (int) (Math.random() * (services.size()));
+            int randomIndex = (int) (ThreadLocalRandom.current().nextDouble() * (services.size()));
             return runIndex(dispatcher, localName, context, randomIndex);
         } else if ("first-available".equals(this.getSendMode())) {
             return runOne(dispatcher, localName, context);
@@ -203,7 +204,7 @@ public class GroupModel {
         for (GroupServiceModel model : services) {
             try {
                 result = model.invoke(dispatcher, localName, context);
-            } catch (GenericServiceException e) {
+            } catch (GenericServiceException _) {
                 Debug.logError("Service: " + model + " failed.", MODULE);
             }
         }

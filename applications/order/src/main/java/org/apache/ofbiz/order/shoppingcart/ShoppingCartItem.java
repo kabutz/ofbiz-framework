@@ -183,12 +183,12 @@ public class ShoppingCartItem implements java.io.Serializable {
         this.delegator = item.getDelegator();
         try {
             this.product = item.getProduct();
-        } catch (IllegalStateException e) {
+        } catch (IllegalStateException _) {
             this.product = null;
         }
         try {
             this.parentProduct = item.getParentProduct();
-        } catch (IllegalStateException e) {
+        } catch (IllegalStateException _) {
             this.parentProduct = null;
         }
         this.delegatorName = item.delegatorName;
@@ -936,7 +936,7 @@ public class ShoppingCartItem implements java.io.Serializable {
         try {
             selFixedAssetProduct = EntityQuery.use(delegator).from("FixedAssetProduct").where("productId", productId,
                     "fixedAssetProductTypeId", "FAPT_USE").filterByDate(UtilDateTime.nowTimestamp(), "fromDate", "thruDate").queryList();
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             Map<String, Object> messageMap = UtilMisc.<String, Object>toMap("productId", productId);
             String msg = UtilProperties.getMessage(RES_ERROR, "item.cannot_find_Fixed_Asset", messageMap, cart.getLocale());
             return msg;
@@ -954,7 +954,7 @@ public class ShoppingCartItem implements java.io.Serializable {
         GenericValue fixedAsset = null;
         try {
             fixedAsset = fixedAssetProduct.getRelatedOne("FixedAsset", false);
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             Map<String, Object> messageMap = UtilMisc.<String, Object>toMap("fixedAssetId", fixedAssetProduct.getString("fixedAssetId"));
             String msg = UtilProperties.getMessage(RES_ERROR, "item.fixed_Asset_not_found", messageMap, cart.getLocale());
             return msg;
@@ -1261,7 +1261,7 @@ public class ShoppingCartItem implements java.io.Serializable {
                     this.addAdjustment(orderAdjustment);
                 }
             }
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             Debug.logError("Error in fetching deposite price details!!", MODULE);
         }
     }
@@ -1365,7 +1365,7 @@ public class ShoppingCartItem implements java.io.Serializable {
                     // check if a survey is associated with the item and add to the price calculation
                     List<String> surveyResponses = UtilGenerics.cast(getAttribute("surveyResponses"));
                     if (UtilValidate.isNotEmpty(surveyResponses)) {
-                        priceContext.put("surveyResponseId", surveyResponses.get(0));
+                        priceContext.put("surveyResponseId", surveyResponses.getFirst());
                     }
 
                     Map<String, Object> priceResult = dispatcher.runSync("calculateProductPrice", priceContext);

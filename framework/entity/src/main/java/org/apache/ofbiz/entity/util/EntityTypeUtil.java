@@ -44,7 +44,7 @@ public final class EntityTypeUtil {
                 if (isType(related, targetType)) {
                     return true;
                 } // else keep looking
-            } catch (GenericEntityException e) {
+            } catch (GenericEntityException _) {
                 continue;
             }
         }
@@ -117,7 +117,7 @@ public final class EntityTypeUtil {
         GenericValue childTypeValue = null;
         try {
             childTypeValue = EntityQuery.use(delegator).from(entityName).where(primaryKey, childType).cache(true).queryOne();
-        } catch (GenericEntityException e) {
+        } catch (GenericEntityException _) {
             Debug.logError("Error finding " + entityName + " record for type " + childType, MODULE);
         }
         if (childTypeValue != null) {

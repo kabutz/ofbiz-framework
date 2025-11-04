@@ -61,7 +61,7 @@ public class RmiServiceEngine extends GenericAsyncEngine {
             rd = (RemoteDispatcher) Naming.lookup(this.getLocation(service));
         } catch (NotBoundException e) {
             throw new GenericServiceException("RemoteDispatcher not bound to : " + service.getLocation(), e);
-        } catch (java.net.MalformedURLException e) {
+        } catch (java.net.MalformedURLException _) {
             throw new GenericServiceException("Invalid format for location");
         } catch (RemoteException e) {
             throw new GenericServiceException("RMI Error", e);

@@ -67,7 +67,7 @@ public class IssuanceTest extends OFBizTestCase {
         assertFalse("No OrderShipment for order", UtilValidate.isEmpty(orderShipments));
         assertEquals("Incorrect number of OrderShipments for order", 1, orderShipments.size());
 
-        GenericValue orderShipment = orderShipments.get(0);
+        GenericValue orderShipment = orderShipments.getFirst();
         assertEquals(orderItemSeqId, orderShipment.getString("orderItemSeqId"));
         assertEquals(shipGroupSeqId, orderShipment.getString("shipGroupSeqId"));
         assertEquals(shipmentId, orderShipment.getString("shipmentId"));
@@ -80,7 +80,7 @@ public class IssuanceTest extends OFBizTestCase {
         assertFalse("No ItemIssuances for order", UtilValidate.isEmpty(itemIssuances));
         assertEquals("Incorrect number of ItemIssuances for order", 2, itemIssuances.size());
 
-        GenericValue itemIssuance = itemIssuances.get(0);
+        GenericValue itemIssuance = itemIssuances.getFirst();
         assertEquals(orderItemSeqId, itemIssuance.getString("orderItemSeqId"));
         assertEquals(shipGroupSeqId, itemIssuance.getString("shipGroupSeqId"));
         assertEquals(shipmentId, itemIssuance.getString("shipmentId"));

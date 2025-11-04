@@ -388,7 +388,7 @@ public final class ContentManagementWorker {
                 List<GenericValue> filteredList = EntityUtil.filterByDate(contentAssocList);
                 if (!filteredList.isEmpty()) {
                     map.put(publishPointId, "Y");
-                    GenericValue assoc = filteredList.get(0);
+                    GenericValue assoc = filteredList.getFirst();
                     Timestamp fromDate = (Timestamp) assoc.get("fromDate");
                     map.put(publishPointId + "FromDate", fromDate);
                 } else {
@@ -546,7 +546,7 @@ public final class ContentManagementWorker {
                     null, null, assocTypes, contentTypes, Boolean.TRUE, null, null);
             List<GenericValue> valueList = UtilGenerics.cast(results.get("entityList"));
             if (!valueList.isEmpty()) {
-                GenericValue value = valueList.get(0);
+                GenericValue value = valueList.getFirst();
                 authorContent = delegator.makeValue("Content");
                 authorContent.setPKFields(value);
                 authorContent.setNonPKFields(value);

@@ -148,56 +148,35 @@ public final class ServerHitBin {
         String id = makeIdTenantAware(baseId, delegator);
 
         ServerHitBin bin = null;
-        Deque<ServerHitBin> binList = null;
-
         // REFACTOR: Replace old style switch with switch expressions
-        switch (type) {
-        case REQUEST:
-            binList = REQ_HISTORY.get(id);
-            break;
+        Deque<ServerHitBin> binList = switch (type) {
+        case REQUEST -> REQ_HISTORY.get(id);
 
-        case EVENT:
-            binList = EVENT_HISTORY.get(id);
-            break;
+        case EVENT -> EVENT_HISTORY.get(id);
 
-        case VIEW:
-            binList = VIEW_HISTORY.get(id);
-            break;
+        case VIEW -> VIEW_HISTORY.get(id);
 
-        case ENTITY:
-            binList = ENTITY_HISTORY.get(id);
-            break;
+        case ENTITY -> ENTITY_HISTORY.get(id);
 
-        case SERVICE:
-            binList = SERVICE_HISTORY.get(id);
-            break;
-        }
+        case SERVICE -> SERVICE_HISTORY.get(id);
+            default -> null;
+        };
 
         if (binList == null) {
             binList = new ConcurrentLinkedDeque<>();
-            Deque<ServerHitBin> listFromMap = null;
             // REFACTOR: Replace old style switch with switch expressions
-            switch (type) {
-            case REQUEST:
-                listFromMap = REQ_HISTORY.putIfAbsent(id, binList);
-                break;
+            Deque<ServerHitBin> listFromMap = switch (type) {
+            case REQUEST -> REQ_HISTORY.putIfAbsent(id, binList);
 
-            case EVENT:
-                listFromMap = EVENT_HISTORY.putIfAbsent(id, binList);
-                break;
+            case EVENT -> EVENT_HISTORY.putIfAbsent(id, binList);
 
-            case VIEW:
-                listFromMap = VIEW_HISTORY.putIfAbsent(id, binList);
-                break;
+            case VIEW -> VIEW_HISTORY.putIfAbsent(id, binList);
 
-            case ENTITY:
-                listFromMap = ENTITY_HISTORY.putIfAbsent(id, binList);
-                break;
+            case ENTITY -> ENTITY_HISTORY.putIfAbsent(id, binList);
 
-            case SERVICE:
-                listFromMap = SERVICE_HISTORY.putIfAbsent(id, binList);
-                break;
-            }
+            case SERVICE -> SERVICE_HISTORY.putIfAbsent(id, binList);
+                default -> null;
+            };
             binList = listFromMap != null ? listFromMap : binList;
         }
 
@@ -273,56 +252,35 @@ public final class ServerHitBin {
     }
 
     private static void countHitSinceStart(String id, int type, long runningTime, Delegator delegator) {
-        ServerHitBin bin = null;
-
         // REFACTOR: Replace old style switch with switch expressions
-        switch (type) {
-        case REQUEST:
-            bin = REQ_SINCE_STARTED.get(id);
-            break;
+        ServerHitBin bin = switch (type) {
+        case REQUEST -> REQ_SINCE_STARTED.get(id);
 
-        case EVENT:
-            bin = EVENT_SINCE_STARTED.get(id);
-            break;
+        case EVENT -> EVENT_SINCE_STARTED.get(id);
 
-        case VIEW:
-            bin = VIEW_SINCE_STARTED.get(id);
-            break;
+        case VIEW -> VIEW_SINCE_STARTED.get(id);
 
-        case ENTITY:
-            bin = ENTITY_SINCE_STARTED.get(id);
-            break;
+        case ENTITY -> ENTITY_SINCE_STARTED.get(id);
 
-        case SERVICE:
-            bin = SERVICE_SINCE_STARTED.get(id);
-            break;
-        }
+        case SERVICE -> SERVICE_SINCE_STARTED.get(id);
+            default -> null;
+        };
 
         if (bin == null) {
             bin = new ServerHitBin(id, type, false, delegator);
-            ServerHitBin binFromMap = null;
             // REFACTOR: Replace old style switch with switch expressions
-            switch (type) {
-            case REQUEST:
-                binFromMap = REQ_SINCE_STARTED.putIfAbsent(id, bin);
-                break;
+            ServerHitBin binFromMap = switch (type) {
+            case REQUEST -> REQ_SINCE_STARTED.putIfAbsent(id, bin);
 
-            case EVENT:
-                binFromMap = EVENT_SINCE_STARTED.putIfAbsent(id, bin);
-                break;
+            case EVENT -> EVENT_SINCE_STARTED.putIfAbsent(id, bin);
 
-            case VIEW:
-                binFromMap = VIEW_SINCE_STARTED.putIfAbsent(id, bin);
-                break;
+            case VIEW -> VIEW_SINCE_STARTED.putIfAbsent(id, bin);
 
-            case ENTITY:
-                binFromMap = ENTITY_SINCE_STARTED.putIfAbsent(id, bin);
-                break;
+            case ENTITY -> ENTITY_SINCE_STARTED.putIfAbsent(id, bin);
 
-            case SERVICE:
-                binFromMap = SERVICE_SINCE_STARTED.putIfAbsent(id, bin);
-                break;
-            }
+            case SERVICE -> SERVICE_SINCE_STARTED.putIfAbsent(id, bin);
+                default -> null;
+            };
             bin = binFromMap != null ? binFromMap : bin;
         }
         bin.addHit(runningTime);

@@ -224,9 +224,9 @@ public class TraverseSubContentCacheTransform implements TemplateTransformModel 
                 String contentIdEnd = null;
                 String contentIdStart = null;
                 if (globalNodeTrail != null) {
-                    Map<String, ? extends Object> ndEnd = globalNodeTrail.get(globalNodeTrail.size() - 1);
+                    Map<String, ? extends Object> ndEnd = globalNodeTrail.getLast();
                     contentIdEnd = (String) ndEnd.get("contentId");
-                    Map<String, ? extends Object> ndStart = nodeTrail.get(0);
+                    Map<String, ? extends Object> ndStart = nodeTrail.getFirst();
                     contentIdStart = (String) ndStart.get("contentId");
                 } else {
                     globalNodeTrail = new LinkedList<>();

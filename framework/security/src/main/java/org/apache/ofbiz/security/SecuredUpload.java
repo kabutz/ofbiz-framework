@@ -29,14 +29,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
-import java.io.StringReader;
 import java.nio.ByteBuffer;
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -157,7 +155,7 @@ public class SecuredUpload {
         }
 
         String imageServerUrl = EntityUtilProperties.getPropertyValue("catalog", "image.management.url", delegator);
-        Path p = Paths.get(fileToCheck);
+        Path p = Path.of(fileToCheck);
         boolean wrongFile = true;
 
         // Check extensions
@@ -379,7 +377,7 @@ public class SecuredUpload {
      * @throws IOException ImageReadException
      */
     private static boolean isValidImageFile(String fileName) throws ImageReadException, IOException {
-        Path filePath = Paths.get(fileName);
+        Path filePath = Path.of(fileName);
         byte[] bytesFromFile = Files.readAllBytes(filePath);
         ImageFormat imageFormat = Imaging.guessFormat(bytesFromFile);
         return (imageFormat.equals(ImageFormats.PNG)
@@ -506,12 +504,12 @@ public class SecuredUpload {
     private static boolean isValidSvgFile(String fileName) throws IOException {
         String mimeType = getMimeTypeFromFileName(fileName);
         if ("image/svg+xml".equals(mimeType)) {
-            Path filePath = Paths.get(fileName);
+            Path filePath = Path.of(fileName);
             String parser = XMLResourceDescriptor.getXMLParserClassName();
             SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
             try {
                 f.createDocument(filePath.toUri().toString());
-            } catch (IOException e) {
+            } catch (IOException _) {
                 return false;
             }
             return isValidTextFile(fileName, true); // Validate content to prevent webshell
@@ -532,7 +530,7 @@ public class SecuredUpload {
             // Load stream in PDF parser
             new PdfReader(file.getAbsolutePath()); // Just a check
             return true;
-        } catch (Exception e) {
+        } catch (Exception _) {
             // If it's not a PDF then exception will be thrown and return will be false
             return false;
         }
@@ -611,28 +609,18 @@ public class SecuredUpload {
      * @throws IOException
      */
     private static boolean isValidCsvFile(String fileName) throws IOException {
-        Path filePath = Paths.get(fileName);
+        Path filePath = Path.of(fileName);
         String content = new String(Files.readAllBytes(filePath));
-        Reader in = new StringReader(content);
+        Reader in = Reader.of(content);
         String cvsFormatString = UtilProperties.getPropertyValue("security", "csvformat");
-        CSVFormat cvsFormat = CSVFormat.DEFAULT;
         // REFACTOR: Replace old style switch with switch expressions
-        switch (cvsFormatString) {
-        case "EXCEL":
-            cvsFormat = CSVFormat.EXCEL;
-            break;
-        case "MYSQL":
-            cvsFormat = CSVFormat.MYSQL;
-            break;
-        case "ORACLE":
-            cvsFormat = CSVFormat.ORACLE;
-            break;
-        case "POSTGRESQL_CSV":
-            cvsFormat = CSVFormat.POSTGRESQL_CSV;
-            break;
-        default:
-            cvsFormat = CSVFormat.DEFAULT;
-        }
+        CSVFormat cvsFormat = switch (cvsFormatString) {
+        case "EXCEL" -> CSVFormat.EXCEL;
+        case "MYSQL" -> CSVFormat.MYSQL;
+        case "ORACLE" -> CSVFormat.ORACLE;
+        case "POSTGRESQL_CSV" -> CSVFormat.POSTGRESQL_CSV;
+        default -> CSVFormat.DEFAULT;
+        };
 
         // cf. https://commons.apache.org/proper/commons-csv/apidocs/org/apache/commons/csv/CSVFormat.html
         if (!content.contains("</svg>")) {
@@ -847,12 +835,12 @@ public class SecuredUpload {
      * @throws IOException
      */
     private static boolean isValidTextFile(String fileName, Boolean encodedContent) throws IOException {
-        Path filePath = Paths.get(fileName);
+        Path filePath = Path.of(fileName);
         byte[] bytesFromFile = Files.readAllBytes(filePath);
         if (encodedContent) {
             try {
                 Charset.availableCharsets().get("UTF-8").newDecoder().decode(ByteBuffer.wrap(bytesFromFile));
-            } catch (CharacterCodingException e) {
+            } catch (CharacterCodingException _) {
                 return false;
             }
         }
